@@ -82,12 +82,33 @@
     	<managed-bean-class>com.buptjun.p5.RightBB</managed-bean-class>
     	<managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+   
+   
+    <managed-bean>
+    	<managed-bean-name>hello</managed-bean-name>
+    	<managed-bean-class>com.buptjunjun.login.model.bean.HelloBB</managed-bean-class>
+    	<managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 	
 	<navigation-rule>
 	    <from-view-id>/index_login.jsp</from-view-id>
 	    <navigation-case>
 	    <from-outcome>success</from-outcome>
 	    <to-view-id>/login/welcome.jsp</to-view-id>
+	    </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+	    <from-view-id>/6/hello.jsp</from-view-id>
+	    
+	    <navigation-case>
+	    <from-outcome>newFriend</from-outcome>
+	    <to-view-id>/6/howDoYouDo.jsp</to-view-id>
+	    </navigation-case>
+	    
+	    <navigation-case>
+	    <from-outcome>oldfriend</from-outcome>
+	    <to-view-id>/6/howAreYou.jsp</to-view-id>
 	    </navigation-case>
     </navigation-rule>
 	
