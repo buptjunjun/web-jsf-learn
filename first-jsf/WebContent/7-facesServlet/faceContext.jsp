@@ -10,15 +10,28 @@
 <body>
 <f:view>
 	<h:outputText value="show the root path on server"></h:outputText>
-	<br />
-	<h:form>
-	<h:commandButton action="#{faceservettest.showFacesContext}" value="show root path"></h:commandButton>
-	</h:form>
-	
+	<br />	
+	<%-- show the root path --%>
 	<h:panelGrid rendered="#{faceservettest.show}">
 		 <h:outputText value="#{faceservettest.info}">
 		</h:outputText>
 	</h:panelGrid>
+	<br />
+	
+	<%--button to submit --%>
+	<h:form>
+	    <h:commandButton action="#{faceservettest.showFacesContext}" value="show root path"></h:commandButton>
+	</h:form>
+	
+	
+    <h:outputText value="show the messages"></h:outputText>
+	<br />	
+	<%--button to submit --%>
+	<h:form>
+		<h:inputText id = "testMessage" required="true"></h:inputText>
+		<h:message for="testMessage"></h:message>
+	    <h:commandButton action="#{faceservettest.showMessageText}" value="show message"></h:commandButton>
+	</h:form>
 </f:view>
 </body>
 </html>
