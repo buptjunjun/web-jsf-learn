@@ -28,5 +28,6 @@
         </h:form>
         <h:messages globalOnly="true"></h:messages>
       </f:view>
+      <!-- test changed -->
   </body>
 </html>
