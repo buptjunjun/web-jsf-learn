@@ -34,9 +34,11 @@ public class HelloBean
 	}
 	
 	public int getNumControls() {
+		System.out.println("call controls get");
 		return numControls;
 	}
 	public void setNumControls(int numControls) {
+		System.out.println("call controls set");
 		this.numControls = numControls;
 	}
 	public HtmlPanelGrid getControlPanel() {
