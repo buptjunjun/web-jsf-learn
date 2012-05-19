@@ -96,8 +96,7 @@
 	    </navigation-case>
     </navigation-rule>
     <navigation-rule>
-	    <from-view-id>/6/hello.jsp</from-view-id>
-	    
+	    <from-view-id>/6/hello.jsp</from-view-id>    
 	    <navigation-case>
 	    <from-outcome>newFriend</from-outcome>
 	    <to-view-id>/6/howDoYouDo.jsp</to-view-id>
@@ -115,4 +114,20 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	
+	<managed-bean>
+<description>The one and only HelloBean.</description>
+<managed-bean-name>helloBean</managed-bean-name>
+<managed-bean-class>jsf.chapter1.BB.HelloBean
+</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<navigation-rule>
+<description>Navigation from the hello page.</description>
+<from-view-id>/JSFInAction/chapter1/1-1-hello.jsp</from-view-id>
+<navigation-case>
+<from-outcome>success</from-outcome>
+	<to-view-id>/JSFInAction/chapter1/1-1-goodbye.jsp</to-view-id>
+</navigation-case>
+</navigation-rule>
 </faces-config>

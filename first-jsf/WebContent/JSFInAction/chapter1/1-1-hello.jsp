@@ -9,6 +9,11 @@
 </head>
 <body>
 <f:view>
+  <h:inputText id="helloInput"
+	   				value="#{helloBean.numControls}"
+	   				required ="true" >
+	   		<f:validateLongRange minimum="1" maximum = "330" />
+	   </h:inputText>
 <h:form  id="welcomeForm">
 	<h:outputText id="welcomeOutput" 
 				  value="Welcome to JaveServer Faces"
