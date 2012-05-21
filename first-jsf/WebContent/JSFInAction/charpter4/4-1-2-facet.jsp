@@ -9,6 +9,29 @@
 </head>
 <body>
 <f:view>
+
+ 	<h:outputText value=" escape test: <a> hello </a>" escape="false" /> <br />
+	<p>
+		<h:outputFormat value="hello baidu :{0}; hello google:{1} ">
+			<f:param value="#{charpter4.favoriteSites[0]}"></f:param>
+			<f:param value="www.google.com"></f:param>
+		</h:outputFormat>
+	</p>
+	
+	<p>
+		<h:outputFormat value="hello baidu :{0} {0,choice,0#times | 1#time | 2#times} ">
+			<f:param value="#{charpter4.times}"></f:param>
+		</h:outputFormat>
+	</p>
+	
+	<p>
+		<h:outputLink value="http://www.baidu.com">
+			<h:outputText value="go to baidu"></h:outputText>
+			<f:param name="hl" value="zh-CN"></f:param>
+		</h:outputLink>
+	</p>
+	
+	
 	<h:dataTable value="#{charpter4.favoriteSites}" var="site">
 	    <f:facet name="header">
 	    	<h:outputText value="Table Header"></h:outputText>
@@ -20,6 +43,7 @@
 	    	</f:facet>
 	    	<h:outputText value="#{site}"></h:outputText>
 	    </h:column>
+	    <br />	    
 	    
 	    <f:facet name="footer">
 	    	<h:panelGroup>
