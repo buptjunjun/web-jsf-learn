@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
   <display-name>jsf</display-name>
+  
+  <context-param>
+  	 <description>状态是存在server还是存在client</description>
+	  <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+	  <param-value>client</param-value>
+  </context-param>
+  
+  <context-param>
+  	  <description>加载配置文件</description>
+	  <param-name>javax.faces.CONFIG_FILES</param-name>
+	  <param-value>/WEB-INF/navigation.xml,/WEB-INF/BB.xml</param-value>
+  </context-param>
+  
+  <context-param>
+  	  <description>默认后缀是什么</description>
+	  <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+	  <param-value>.jsp</param-value>
+  </context-param>
+  
   <servlet>
+  	<description>所有的/faces/*的请求都由javax.faces.webapp.FacesServlet 来处理</description>
     <servlet-name>Faces Servlet</servlet-name>
     <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
@@ -16,15 +36,18 @@
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>*.faces</url-pattern>
   </servlet-mapping>
+  
   <context-param>
     <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
     <param-value>resources.application</param-value>
   </context-param>
+  
   <context-param>
     <description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
     <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
     <param-value>client</param-value>
   </context-param>
+  
   <context-param>
     <description>
 	This parameter tells MyFaces if javascript code should be allowed in
