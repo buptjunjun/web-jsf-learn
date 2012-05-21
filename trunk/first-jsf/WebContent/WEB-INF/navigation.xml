@@ -5,6 +5,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
     version="2.0">   
+    
     <!-- temprature test -->	
 	<navigation-rule>
 	    <from-view-id>/index_conventor.jsp</from-view-id>
@@ -55,12 +56,15 @@
 	    </navigation-case>
     </navigation-rule>
 	
-<navigation-rule>
-<description>Navigation from the hello page.</description>
-<from-view-id>/JSFInAction/chapter1/1-1-hello.jsp</from-view-id>
-<navigation-case>
-<from-outcome>success</from-outcome>
-	<to-view-id>/JSFInAction/chapter1/1-1-goodbye.jsp</to-view-id>
-</navigation-case>
-</navigation-rule>
+	<navigation-rule>
+	<description>Navigation from the hello page.</description>
+	<icon>
+		<large-icon>/images/chinaMap.jpg</large-icon>
+	</icon>
+	<from-view-id>/JSFInAction/chapter1/1-1-hello.jsp</from-view-id>
+	<navigation-case>
+	<from-outcome>success</from-outcome>
+		<to-view-id>/JSFInAction/chapter1/1-1-goodbye.jsp</to-view-id>
+	</navigation-case>
+	</navigation-rule>
 </faces-config>
