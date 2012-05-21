@@ -79,4 +79,24 @@
 	<managed-bean-scope>session</managed-bean-scope>
 </managed-bean>
 
+<managed-bean>
+	<managed-bean-name>defaultfavouriteSites</managed-bean-name>
+	<managed-bean-class>java.util.ArrayList</managed-bean-class>
+	<managed-bean-scope>session</managed-bean-scope>
+	<list-entries>
+		<value>www.baidu.com</value>
+		<value>www.google.com</value>
+		<value>www.xiaonei.com</value>
+	</list-entries>
+</managed-bean>
+
+<managed-bean>	
+	<managed-bean-name>charpter4</managed-bean-name>
+	<managed-bean-class>jsf.chapter4.BB.Charpter4BB</managed-bean-class>
+	<managed-bean-scope>session</managed-bean-scope>
+	<managed-property>
+		 <property-name>favoriteSites</property-name>
+	  <value>#{defaultfavouriteSites}</value> 
+	</managed-property>
+</managed-bean>
 </faces-config>
