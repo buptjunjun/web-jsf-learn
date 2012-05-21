@@ -4,22 +4,48 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>JSF in action - hello world</title>
 </head>
 <body>
 <f:view>
-  <h:inputText id="helloInput"
-	   				value="#{helloBean.numControls}"
+
+<h:form  id="welcomeForm">
+ 	   <%-- testBind在back bean中没有申明，自动在session中生成 --%>
+ 	   <h:outputText  style="font-size:30;color:green">the variable not declared in back bean</h:outputText>
+ 	   <h:inputText id="testBind"
+	   				value="#{sessionScope.testBind}"
 	   				required ="true" >
 	   		<f:validateLongRange minimum="1" maximum = "330" />
 	   </h:inputText>
-<h:form  id="welcomeForm">
-	<h:outputText id="welcomeOutput" 
-				  value="Welcome to JaveServer Faces"
-				  style="font-size:24;color:green"
-				  >
-	</h:outputText>
+	   <br />
+	   
+	   <%-- 跟一个 list绑定 --%>
+	   <h:outputText  style="font-size:30;color:green" value="bind to a list"></h:outputText>
+	   <h:dataTable value="#{helloBean.websites}" var="site">
+	     <h:column>
+	         <h:outputText value="#{site}"></h:outputText>
+	     </h:column>
+	   </h:dataTable>
+	    <br />
+	    
+	    <%-- 跟一个 list中的某一个元素绑定 --%>
+	     <h:inputText id="testheader"
+	   				value="#{helloBean.websites[2]}"
+	   				required ="true" >
+	   </h:inputText>
+	    <br />
+	    
+	    <%-- 跟一个 map绑定 --%>
+	   <h:outputText  style="font-size:30;color:green" value="bind to a map"></h:outputText> <br />
+	   <h:outputText value="map to baidu : #{helloBean.map['baidu']}"></h:outputText>
+	    <br />
+	    
+		<h:outputText id="welcomeOutput" 
+					  value="Welcome to JaveServer Faces"
+					  style="font-size:24;color:green"
+					  >
+		</h:outputText>
 	<p>
 	    <h:message id="errors" for="helloInput" style="color:red"></h:message>
 	</p>
@@ -50,7 +76,7 @@
 					 >
 	</h:commandButton>
 	
-		<h:commandButton id ="goodbyeCommand"
+	<h:commandButton id ="goodbyeCommand"
 					 type="submit"
 					 value="goodBye"
 					 action="#{helloBean.goodbye}"
