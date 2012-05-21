@@ -77,26 +77,47 @@
 	<managed-bean-name>helloBean</managed-bean-name>
 	<managed-bean-class>jsf.chapter1.BB.HelloBean</managed-bean-class>
 	<managed-bean-scope>session</managed-bean-scope>
-</managed-bean>
-
-<managed-bean>
-	<managed-bean-name>defaultfavouriteSites</managed-bean-name>
-	<managed-bean-class>java.util.ArrayList</managed-bean-class>
-	<managed-bean-scope>session</managed-bean-scope>
-	<list-entries>
-		<value>www.baidu.com</value>
-		<value>www.google.com</value>
-		<value>www.xiaonei.com</value>
-	</list-entries>
-</managed-bean>
-
-<managed-bean>	
-	<managed-bean-name>charpter4</managed-bean-name>
-	<managed-bean-class>jsf.chapter4.BB.Charpter4BB</managed-bean-class>
-	<managed-bean-scope>session</managed-bean-scope>
 	<managed-property>
-		 <property-name>favoriteSites</property-name>
-	  <value>#{defaultfavouriteSites}</value> 
+		<property-name>numControls</property-name>
+		<value>22</value>
 	</managed-property>
+	
+	<managed-property>
+		<property-name>websites</property-name>
+		<list-entries>
+		<value-class>java.lang.String</value-class>
+			<value>www.baidu.com</value>
+			<value>www.google.com</value>
+			<value>www.yahoo.com</value>
+		</list-entries>
+	</managed-property>
+	
+	<managed-property>
+		<property-name>map</property-name>
+		<map-entries>
+			<map-entry>
+				<key>baidu</key>
+				<value>www.baidu.com</value>
+			</map-entry>
+			
+			<map-entry>
+				<key>google</key>
+				<value>www.google.com</value>
+			</map-entry>
+			
+			<map-entry>
+				<key>yahoo</key>
+				<value>www.yahoo.com</value>
+			</map-entry>			
+		</map-entries>
+	</managed-property>
+</managed-bean>
+<managed-bean>
+
+
+<description> charpter3 section 2</description>
+<managed-bean-name>example</managed-bean-name>
+<managed-bean-class>jsf.chapter3.BB.ExampleBean</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
 </managed-bean>
 </faces-config>
