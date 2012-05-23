@@ -120,4 +120,20 @@
 <managed-bean-class>jsf.chapter3.BB.ExampleBean</managed-bean-class>
 <managed-bean-scope>session</managed-bean-scope>
 </managed-bean>
+
+
+<managed-bean>
+<managed-bean-name>charpter5</managed-bean-name>
+<managed-bean-class>jsf.chapter5.BB.Charpter5BB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+<managed-property>
+	<property-name>favoriteColors</property-name>
+	<list-entries>
+	<value>blue</value>
+	<value>red</value>
+	<value>yellow</value>
+	</list-entries>
+</managed-property>
+</managed-bean>
+
 </faces-config>
