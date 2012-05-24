@@ -1,5 +1,6 @@
 package jsf.chapter5.BB;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,67 +11,55 @@ import javax.faces.model.SelectItem;
 
 public class Charpter5BB 
 {
-	public class User
-	{
-		private String firstName;
-		private String lastName;
-		private int currency;
-		private boolean registered;
+	
 
-		public User(String firstName, String lastName, int currency, boolean registered)
-		{
-			this.setfirstName(firstName);
-			this.setLastName(lastName);
-			this.setCurrency(currency);
-			this.setRegistered(registered);
-		}
-		
-
-		public boolean isRegistered() {
-			return registered;
-		}
-
-
-		public void setRegistered(boolean registered) {
-			this.registered = registered;
-		}
-
-		
-		public String getfirstName() {
-			return firstName;
-		}
-
-		public void setfirstName(String firstName) {
-			this.firstName = firstName;
-		}
-
-		public String getLastName() {
-			return lastName;
-		}
-
-		public void setLastName(String lastName) {
-			this.lastName = lastName;
-		}
-
-		public int getCurrency() {
-			return currency;
-		}
-
-		public void setCurrency(int currency) {
-			this.currency = currency;
-		}
-
-	}
 	
 	private List<String> favoriteColors;
 	private int times = 3;
 	private List<SelectItem> colors;
-	private List<String> seletedItems;
+	private List<Object> seletedItems;
 	private List<User> userList;
 	private UIData dataTable;
 	private String view = "firstName";
 	private List<SelectItem> showItems;
+	private List<SelectItem> userSelectItems;
+	private List<String> selectedColorItems;
 	
+	public List<String> getSelectedColorItems() {
+		return selectedColorItems;
+	}
+
+
+	public void setSelectedColorItems(List<String> selectedColorItems) {
+		if(selectedColorItems != null)
+		{
+			for(String str : selectedColorItems)
+			{
+				System.out.println(str);
+			}
+		}
+		
+		this.selectedColorItems = selectedColorItems;
+	}
+
+
+	public List<SelectItem> getUserSelectItems() {
+		if(this.userSelectItems == null)
+		{
+			this.userSelectItems = new ArrayList<SelectItem>();
+			this.userSelectItems.add(new SelectItem(new User("a","aa",1,true),"aa"));
+			this.userSelectItems.add(new SelectItem(new User("b","bb",1,true),"bb"));
+			this.userSelectItems.add(new SelectItem(new User("c","cc",1,true),"cc"));
+		}
+		return userSelectItems;
+	}
+
+
+	public void setUserSelectItems(List<SelectItem> userSelectItems) {
+		this.userSelectItems = userSelectItems;
+	}
+
+
 	public List<SelectItem> getShowItems() {
 		if(this.showItems == null)
 		{
@@ -123,19 +112,19 @@ public class Charpter5BB
 		this.userList = userList;
 	}
 
-	public List<String> getSeletedItems() {
+	public List<Object> getSeletedItems() {
 		return seletedItems;
 	}
 
-	public void setSeletedItems(List<String> seletedItems) {
+	public void setSeletedItems(List<Object> seletedItems) {
 		
 		System.out.println("in setSelectedItems");
 		
 		if(seletedItems !=null) 
 		{
-			for(String str: seletedItems)
+			for(Object str: seletedItems)
 			{
-				System.out.println(str);
+				System.out.println(str.toString());
 			}
 		}
 		this.seletedItems = seletedItems;
@@ -172,7 +161,7 @@ public class Charpter5BB
 		{
 			colors = new ArrayList<SelectItem>();
 			for(String c: this.favoriteColors)
-				colors.add(new SelectItem(c,c));
+				colors.add(new SelectItem(c,c+"--"));
 		}
 		return colors;
 	}

@@ -90,10 +90,7 @@
 	  <h:selectBooleanCheckbox title="Registered?" value="#{charpter5.registered}"></h:selectBooleanCheckbox>
 	</p>
 	
-	<h:selectManyCheckbox id="selectManyCheckbox" value="#{charpter5.seletedItems}">
-		<f:selectItems value="#{charpter5.colors}"/>
-	</h:selectManyCheckbox>
-	
+
 	<h:selectOneListbox id ="selectOneList" value="#{charpter5.view}"  size="1" onchange="onClick(this)">
 		<f:selectItem itemValue="firstName" itemLabel="firstName"  />
 		<f:selectItem itemValue="lastName" itemLabel="lastName" />
@@ -139,6 +136,15 @@
 			</h:column>		
 		</h:dataTable>
 	</p>
+	
+	
+
+	<h:selectManyCheckbox id="selectManyCheckboxColor" value="#{charpter5.selectedColorItems}">
+		<f:selectItems value="#{charpter5.colors}"/>
+	</h:selectManyCheckbox>
+	
+	
+	
 	
 	<h:panelGroup>
 		<h:commandButton value="Submit"/>

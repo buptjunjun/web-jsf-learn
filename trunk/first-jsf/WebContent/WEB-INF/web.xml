@@ -11,7 +11,7 @@
   <context-param>
   	  <description>加载配置文件</description>
 	  <param-name>javax.faces.CONFIG_FILES</param-name>
-	  <param-value>/WEB-INF/navigation.xml,/WEB-INF/BB.xml</param-value>
+	  <param-value>/WEB-INF/navigation.xml, /WEB-INF/BB.xml, /WEB-INF/validator.xml </param-value>
   </context-param>
   
   <context-param>
