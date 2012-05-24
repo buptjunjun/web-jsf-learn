@@ -6,6 +6,12 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
     version="2.0">
     
+        
+   <validator>
+   		<validator-id>IpValidator</validator-id>
+   		<validator-class>jsf.chapter6.BB.IpValidator</validator-class>
+   </validator>
+    
     <!-- temprature test -->
 	<managed-bean>
 		<managed-bean-name>temperatureConvertor</managed-bean-name>
@@ -135,5 +141,13 @@
 	</list-entries>
 </managed-property>
 </managed-bean>
+
+<managed-bean>
+<managed-bean-name>charpter6</managed-bean-name>
+<managed-bean-class>jsf.chapter6.BB.Chapter6BB</managed-bean-class>
+<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+
 
 </faces-config>
