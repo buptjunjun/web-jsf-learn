@@ -2,6 +2,10 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
   <display-name>jsf</display-name>
   
+  <welcome-file-list>
+      <welcome-file>/JSFInAction/charpter8/login.jsp</welcome-file>
+  </welcome-file-list>
+  
   <context-param>
   	 <description>状态是存在server还是存在client</description>
 	  <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
@@ -11,8 +15,8 @@
   <context-param>
   	  <description>加载配置文件</description>
 	  <param-name>javax.faces.CONFIG_FILES</param-name>
-	  <param-value>/WEB-INF/navigation.xml, /WEB-INF/BB.xml, /WEB-INF/validator.xml </param-value>
-  </context-param>
+	  <param-value>/WEB-INF/navigation.xml, /WEB-INF/BB.xml</param-value>	  
+  </context-param>	  
   
   <context-param>
   	  <description>默认后缀是什么</description>
@@ -34,7 +38,7 @@
   
   <servlet-mapping>
     <servlet-name>Faces Servlet</servlet-name>
-    <url-pattern>*.faces</url-pattern>
+    <url-pattern>/faces/*</url-pattern>
   </servlet-mapping>
   
   <context-param>

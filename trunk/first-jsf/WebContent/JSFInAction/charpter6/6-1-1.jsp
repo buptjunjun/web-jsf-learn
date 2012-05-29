@@ -22,8 +22,8 @@
 	</h:inputText>
 	 --%>
 	 
-	<h:inputText id="date2" value="#{charpter6.ipv4}">
-		<t:ipValidator ipVersion="4"/>
+	<h:inputText id="date2" required="true" value="#{charpter6.ipv4}">
+		<%-- <t:ipValidator ipVersion="4"/> --%>
 	</h:inputText>
 	
 	<h:commandButton  type="submit" value="submit"></h:commandButton> <br />

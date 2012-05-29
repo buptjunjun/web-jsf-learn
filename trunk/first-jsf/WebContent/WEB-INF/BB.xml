@@ -6,6 +6,15 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
     version="2.0">
     
+ <application>
+	<message-bundle>CustomMessages</message-bundle>
+	<locale-config>
+	<default-locale>zh_gb</default-locale>
+	<supported-locale>zh_gb</supported-locale>
+	<supported-locale>es</supported-locale>
+	</locale-config>
+</application>
+    
         
    <validator>
    		<validator-id>IpValidator</validator-id>
