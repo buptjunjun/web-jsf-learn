@@ -43,7 +43,8 @@
 	    <to-view-id>/login/welcome.jsp</to-view-id>
 	    </navigation-case>
     </navigation-rule>
-    <navigation-rule>
+   
+<navigation-rule>
 	    <from-view-id>/6/hello.jsp</from-view-id>    
 	    <navigation-case>
 	    <from-outcome>newFriend</from-outcome>
@@ -67,4 +68,19 @@
 		<to-view-id>/JSFInAction/chapter1/1-1-goodbye.jsp</to-view-id>
 	</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<display-name>ProjectTrack for login.jsp</display-name>
+		<from-view-id>/JSFInAction/charpter8/login.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/JSFInAction/charpter8/login.jsp</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/JSFInAction/charpter8/inbox.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
 </faces-config>
