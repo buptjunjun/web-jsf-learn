@@ -43,6 +43,7 @@ public class PrintContainer
 		System.out.println(fill(new TreeSet<String>())); //TreeSet 是按照升序来排序的
 		System.out.println(fill(new LinkedHashSet<String>())); // linkedHashSet按照add的顺序来保持而起保存了 hashset的有点
 		
+		HashMap map = new HashMap();
 
 
 	}
