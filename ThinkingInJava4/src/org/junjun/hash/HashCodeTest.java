@@ -5,6 +5,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * 重写hashcode
+ * @author andyWebsense
+ *
+ */
 class People
 {
 	String name = null;
@@ -13,7 +18,9 @@ class People
 		this.name = name;
 	}
 	
-	@Override
+	/**
+	 * 重写equals
+	 */
 	public boolean equals(Object obj) 
 	{
 		if(obj == null)
@@ -27,10 +34,11 @@ class People
 			else
 				return false;
 		}
-
 	}
 	
-	@Override
+	/**
+	 * 重写hashCode
+	 */
 	public int hashCode() {
 		// TODO Auto-generated method stub
 		if(this.name != null)
@@ -45,37 +53,32 @@ public class HashCodeTest
 	{
 		List<People> plist = new ArrayList<People>();
 		Collection<People> hlist = new HashSet<People>();
-		try
+
+		String [] people = "wan,xiao,lan,wan,wan".split(",");
+		for(int i = 0; i < people.length; i++)
 		{
-			String [] people = "wan,xiao,lan,wan,wan".split(",");
-			for(int i = 0; i < people.length; i++)
-			{
-				plist.add(new People(people[i]));
-				hlist.add(new People(people[i]) );
-			}
-			
-			hlist.add(new People(null));
-			hlist.add(new People(null));
-		
-			
-			for(People p: plist)
-			{
-				System.out.println(p.hashCode()+"");
-				
-			}
-			
-			System.out.println("-------------"+hlist.size()+"-----------------");
-			
-			for(People p: hlist)
-			{
-				if(p!=null)
-				System.out.println(p.name + ",  " + p.hashCode() + "--" );
-				else System.out.println(p+"--" );			
-			}
+			plist.add(new People(people[i]) );
+			hlist.add(new People(people[i]) );
 		}
-		catch(Exception e)
+		
+		hlist.add(new People(null));
+		hlist.add(new People(null));
+		hlist.add(null);
+		hlist.add(null);
+		
+		// 打印hashcode
+		for(People p: plist)
+			System.out.println(p.name +"   " + p.hashCode()+"");
+				
+		System.out.println("-------------"+hlist.size()+"-----------------");
+		
+		//打印HashSet的情况
+		for(People p: hlist)
 		{
-			e.printStackTrace();
+			if (p != null)
+			    System.out.println(p.name + ",  " + p.hashCode() + "--" );
+			else 
+			    System.out.println(p+"--" );			
 		}
 	}
 }
