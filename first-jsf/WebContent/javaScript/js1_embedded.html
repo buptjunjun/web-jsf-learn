@@ -1,0 +1,26 @@
+<html>
+	<head>
+		<title>
+			"在文档中嵌入javaScript代码"
+		</title>
+	</head>
+	
+	<script language="javaScript">
+		window.defaultStatus="使用HTML标记嵌入JavaScript代码";
+		function getnews()
+		{
+		    document.form1.textbox.value="在文档中嵌入javaScript代码";
+		}
+	</script>
+	
+	<body>
+		<center>
+		  <h1>使用javaScript</h1>
+		  <form name="form1">
+		  	<input type="text" name="textbox" size="40" value="点击按钮查看信息"  />
+		  	<br /><br />
+		  	<input type="button" value="查看信息" onclick="getnews()" />
+		  </form>
+		</center>
+	</body>
+</html>
