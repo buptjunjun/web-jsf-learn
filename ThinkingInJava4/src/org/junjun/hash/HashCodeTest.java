@@ -80,5 +80,7 @@ public class HashCodeTest
 			else 
 			    System.out.println(p+"--" );			
 		}
+		
+		Integer[] ii = new Integer[0];
 	}
 }
