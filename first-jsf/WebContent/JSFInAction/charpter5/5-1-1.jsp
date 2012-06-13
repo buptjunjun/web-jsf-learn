@@ -97,7 +97,7 @@
 	</h:selectOneListbox>
 	
 	<p>
-		<h:dataTable value="#{charpter5.userList}" var="user" binding="#{charpter5.dataTable}">
+		<h:dataTable border="1" value="#{charpter5.userList}" var="user" binding="#{charpter5.dataTable}">
 			<h:column rendered="#{charpter5.view == 'firstName'}">
 				<f:facet name="header">
 					<h:outputText value="Fist Name"></h:outputText>
@@ -106,7 +106,7 @@
 			</h:column>
 			
 			<h:column rendered="#{charpter5.view == 'lastName'}" >
-				<f:facet name="header">
+				<f:facet name="header"  >
 					<h:outputText value="last Name"></h:outputText>
 				</f:facet>
 				<h:outputText value="#{user.lastName}"  ></h:outputText>
