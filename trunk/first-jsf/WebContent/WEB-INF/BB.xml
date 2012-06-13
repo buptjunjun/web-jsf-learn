@@ -157,6 +157,18 @@
 <managed-bean-scope>session</managed-bean-scope>
 </managed-bean>
 
+<managed-bean>
+	<managed-bean-name>TestBean</managed-bean-name>
+	<managed-bean-class>com.buptjunjun.test.TestBean</managed-bean-class>
+	<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
+<managed-bean>
+	<managed-bean-name>BBLog</managed-bean-name>
+	<managed-bean-class>com.websense.log.BBLog</managed-bean-class>
+	<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+
 
 
 </faces-config>
