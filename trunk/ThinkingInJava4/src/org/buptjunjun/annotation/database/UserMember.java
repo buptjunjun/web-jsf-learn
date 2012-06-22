@@ -1,6 +1,6 @@
 package org.buptjunjun.annotation.database;
 
-@DBTable(name="Member")
+@DBTable(name="UserMember")
 public class UserMember 
 {
 	@SQLString(30) String firstName;
