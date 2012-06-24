@@ -1,5 +1,4 @@
 package org.buptjunjun.annotation.database;
-
 @DBTable(name="UserMember")
 public class UserMember 
 {

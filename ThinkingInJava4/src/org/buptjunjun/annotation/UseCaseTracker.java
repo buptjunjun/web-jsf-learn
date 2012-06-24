@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
 public class UseCaseTracker {
 	public static void trackUseCases(List<Integer> useCases, Class<?> cl)
 	{
