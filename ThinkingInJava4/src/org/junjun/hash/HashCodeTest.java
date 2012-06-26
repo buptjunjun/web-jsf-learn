@@ -2,6 +2,7 @@ package org.junjun.hash;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -82,5 +83,15 @@ public class HashCodeTest
 		}
 		
 		Integer[] ii = new Integer[0];
+		
+		HashMap testmap = new HashMap();
+		testmap.put("1", "aaaa");
+		testmap.put("2", new String [] {"123","222"});
+		testmap.put("1", "bbbbb");
+		System.out.println(testmap);
+		
+		HashMap hclone = (HashMap) testmap.clone();
+		String [] strs = (String[]) testmap.get("2");
+		System.out.println(strs.length);
 	}
 }
