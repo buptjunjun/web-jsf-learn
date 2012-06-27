@@ -1,0 +1,75 @@
+
+<html>
+<head>   
+ <title> createElement() example</title>   
+ <style type="text/css">
+ a.test{ font-weight: bold; background-color:blue;}
+ </style>
+ 
+
+ <script type="text/javascript" > 
+	// 使用 dom来读取一个节点的属性
+	function readAttrUseDom( img)
+	{
+		alert(img.getAttribute("src"));
+		alert(img.getAttribute("border"));		
+	}
+	
+	// 使用 dom来读取一个节点的属性
+	function readAttrUseHTMLDom( img)
+	{
+		alert(img.src);
+		alert(img.border);		
+	}
+	
+	// 使用 html 创建一个table
+	function createATable()
+	{
+		//alert("table ......");
+		// 创建一个table 节点
+		var table  = document.createElement("table");
+		
+		//设置属性
+		table.setAttribute("border", "1");
+		table.setAttribute("width", "100%");
+		
+		// 创建元素集合
+		var tBody = document.createElement("tbody");
+		table.appendChild(tBody);
+		
+		// 创建第一行
+		tBody.insertRow(0);
+		tBody.rows[0].insertCell(0);
+		tBody.rows[0].cells[0].appendChild(document.createTextNode("cell (1,,1)"));
+		
+		tBody.rows[0].insertCell(1);
+		tBody.rows[0].cells[1].appendChild(document.createTextNode("cell (1,,1)"));
+		
+		// 创建第二行
+		tBody.insertRow(1);
+		tBody.rows[1].insertCell(0);
+		tBody.rows[1].cells[0].appendChild(document.createTextNode("cell (2,,1)"));
+		
+		tBody.rows[1].insertCell(1);
+		tBody.rows[1].cells[1].appendChild(document.createTextNode("cell (2,,2)"));
+		
+		//加入到body中去
+		document.body.appendChild(table);
+	}
+ </script>
+ </head>
+ 
+ 
+ <body onload="insertdocumentFragment()">   
+ <p>读取element属性</p><br />
+<img onclick = "readAttrUseDom( this)" alt="this a picture for test"   src="logo_cn.png" border = "1">
+<img onclick = "readAttrUseHTMLDom( this)"   alt="this a picture for test"   src="logo_cn.png" border = "1">
+  <br />
+  
+  <input type="button"  value="创建一个table"  onclick="createATable()"/>
+  <br />
+  
+ </body>
+ </html>
+ 
+	
