@@ -83,4 +83,29 @@
 		</navigation-case>
 	</navigation-rule>
 	
+	<navigation-rule>
+	<description>navigation for header.jsp</description>
+	<from-view-id>/*</from-view-id>
+	
+	<navigation-case>
+		<from-outcome>inbox</from-outcome>
+		<to-view-id>/JSFInAction/charpter8/inbox.jsp</to-view-id>
+	</navigation-case>
+	
+	<navigation-case>
+		<from-outcome>show_all</from-outcome>
+		<to-view-id>/JSFInAction/charpter8/show_all.jsp</to-view-id>
+	</navigation-case>
+	
+	<navigation-case>
+		<from-outcome>create</from-outcome>
+		<to-view-id>/JSFInAction/charpter8/create.jsp</to-view-id>
+	</navigation-case>
+	
+	<navigation-case>
+		<from-outcome>logout</from-outcome>
+		<to-view-id>/JSFInAction/charpter8/logout.jsp</to-view-id>
+	</navigation-case>
+	
+	</navigation-rule>
 </faces-config>
