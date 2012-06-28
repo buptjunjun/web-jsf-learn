@@ -8,6 +8,7 @@
 	<h:outputText value="ProjectTrack"></h:outputText>
 </head>
 <body>
+	<jsp:include page="header.jsp"></jsp:include>
 	<h:form>
 	<h:panelGrid columns="2" border="0" cellpadding="3" cellspacing="3">
 				<h:graphicImage url="/images/logo_cn.png"
