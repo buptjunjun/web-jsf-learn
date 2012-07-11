@@ -86,22 +86,64 @@
 	}
 </script>
 
+<style>
+	.header1
+	{
+		border-right: solid 1px;
+		margin: 0px ; padding: 0px; 
+	}
+	
+	.header2
+	{
+		margin: 0px ; padding: 0px; 
+	}
+	
+		.column1
+	{
+		border-right: solid 1px;
+		margin: 0px ; padding: 0px; 
+	}
+	
+	.column2
+	{
+		margin: 0px ; padding: 0px; 
+	}
+</style>
 
 <body>
 <f:view>
 <h:form id="logForm">
-	  	<h:dataTable id="moduleTable"   value="#{BBLog.modules}"  var="row"  binding="#{BBLog.dataTable}" >
-				<h:column id="moduleCheckbox">
+	  
+	  	<h:dataTable id="moduleTableHead"   
+	  	style =" margin: 0px ; padding: 0px;  border-top: solid 1px ; ;  border-left: solid 1px ;  border-right: solid 1px ; width: 200px; background: none repeat scroll 0 0 #EEEEEE"
+	  	columnClasses="column1,column2"
+	  	>
+				<h:column id="moduleCheckbox"  headerClass="header1">
 					<f:facet name="header" >
 							<h:selectBooleanCheckbox id="selectAll"  value=""  onclick="selectAllCheckBox(this,'logForm:moduleTable' )"   ></h:selectBooleanCheckbox>
-					 </f:facet>
+					 </f:facet>				 
+				  </h:column>		
+				  		
+				<h:column  headerClass="header2">
+					<f:facet name="header">
+						<h:outputText value="Selecte All"></h:outputText>
+					</f:facet>
+			</h:column>
+			</h:dataTable>
+			
+	  	<h:dataTable id="moduleTable"   value="#{BBLog.modules}"  var="row" 
+	  					     binding="#{BBLog.dataTable}"
+	  					      style ="margin: 0px ; padding: 0px;  border-top: solid 1px ;   border-bottom: solid 1px; border-left: solid 1px ;  border-right: solid 1px ;;width: 200px ;"
+	  					        	columnClasses="column1,column2"
+	  					      >
+	  					     
+				<h:column id="moduleCheckbox">
+				
 					 <h:selectBooleanCheckbox  value="#{row.selected }"    onclick="selectOneCheckbox(this , 'logForm:moduleTable:selectAll', 'logForm:moduleTable' )"></h:selectBooleanCheckbox>
 				  </h:column>	
 			
 				<h:column >
-				<f:facet name="header">
-					<h:outputText value="Selecte All"></h:outputText>
-				</f:facet>
+				
 				<h:outputText  value="#{row.name }"  />
 			</h:column>
 			</h:dataTable>
