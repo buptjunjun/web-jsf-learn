@@ -15,11 +15,7 @@ class SimpleException extends Exception {}
  * @author junjun
  *
  */
-class MyException extends Exception
-{
-	public MyException(){}
-	public MyException(String e){super(e);}
-}
+
 public class ExceptionTest1
 {
 	static public void func()throws MyException
