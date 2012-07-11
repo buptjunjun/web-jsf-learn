@@ -13,7 +13,7 @@ public class BBLog
 	public BBLog()
 	{
 		
-		String [] modules = "wcg, wsc, na".split(",");
+		String [] modules = "wcg, wsc, na,wcg, wsc, na,wcg, wsc, na".split(",");
 		for(int i = 0; i < modules.length; i++)
 		{
 			this.modules.add(new MyItem(modules[i]));
