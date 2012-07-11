@@ -89,24 +89,61 @@
 <style>
 	.header1
 	{
+		text-align:left;
 		border-right: solid 1px;
-		margin: 0px ; padding: 0px; 
+		border-spacing :                         0px;
+		padding-left: 10px;
+		padding-right: 10px;
+		padding-top: 2px;
+		padding-bottom: 2px;
+		FONT-FAMILY: 'Tahoma';
+		FONT-SIZE: 11px;
+		width: 20%;
 	}
 	
 	.header2
 	{
-		margin: 0px ; padding: 0px; 
+		margin: 0 ; padding: 0;
+		border-spacing :                         1px; 
+		padding-left: 10px;
+		padding-right: 10px;
+		padding-top: 2px;
+		padding-bottom: 2px;
+		FONT-FAMILY: 'Tahoma';
+		FONT-SIZE: 11px;
 	}
 	
 		.column1
 	{
+		text-align:left;
 		border-right: solid 1px;
-		margin: 0px ; padding: 0px; 
+		border-bottom: solid 1px;	
+		border-spacing :                         0px;
+		width: 20%;
+		padding-left: 10px;
+		padding-right: 10px;
+		padding-top: 2px;
+		padding-bottom: 2px;
+		FONT-FAMILY: 'Tahoma';
+		FONT-SIZE: 11px;
 	}
 	
 	.column2
 	{
-		margin: 0px ; padding: 0px; 
+		margin: 0; padding: 0; 
+	    border-bottom: solid 1px;
+		border-spacing :                         0px;
+		padding-left: 10px;
+		padding-right: 10px;
+		padding-top: 2px;
+		padding-bottom: 2px;
+		FONT-FAMILY: 'Tahoma';
+		FONT-SIZE: 11px;
+	}
+	
+	.row
+	{
+		border-bottom: solid 1px;
 	}
 </style>
 
@@ -115,7 +152,7 @@
 <h:form id="logForm">
 	  
 	  	<h:dataTable id="moduleTableHead"   
-	  	style =" margin: 0px ; padding: 0px;  border-top: solid 1px ; ;  border-left: solid 1px ;  border-right: solid 1px ; width: 200px; background: none repeat scroll 0 0 #EEEEEE"
+	  	style =" margin: 0 ; padding: 0;  border-top: solid 1px ; ;  border-left: solid 1px ;  border-right: solid 1px ; width: 200px; background: none repeat scroll 0 0 #EEEEEE"
 	  	columnClasses="column1,column2"
 	  	>
 				<h:column id="moduleCheckbox"  headerClass="header1">
@@ -133,8 +170,9 @@
 			
 	  	<h:dataTable id="moduleTable"   value="#{BBLog.modules}"  var="row" 
 	  					     binding="#{BBLog.dataTable}"
-	  					      style ="margin: 0px ; padding: 0px;  border-top: solid 1px ;   border-bottom: solid 1px; border-left: solid 1px ;  border-right: solid 1px ;;width: 200px ;"
+	  					      style ="margin: 0 ; padding: 0;  border-top: solid 1px ;   border-bottom: solid 1px; border-left: solid 1px ;  border-right: solid 1px ;;width: 200px ;"
 	  					        	columnClasses="column1,column2"
+	  					        	rowClasses="row"
 	  					      >
 	  					     
 				<h:column id="moduleCheckbox">
