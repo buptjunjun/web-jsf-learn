@@ -1,6 +1,5 @@
 # # 2012-7-31 君君 weibobee@gmail.com
 #测试 推荐系统
-#import recommendation.recommendations as r
 import recommendations as r
 critics = {"andy": {"ghost rider":1.5, "2012":2.5,"star war":3.5,"star war":3,"qing se":5,"haha":3.5},
            "xiaolan": {"ghost rider":1, "2012":3,"star war":3.0},
@@ -9,6 +8,13 @@ critics = {"andy": {"ghost rider":1.5, "2012":2.5,"star war":3.5,"star war":3,"q
            "xiaohai": {"ghost rider":2.0, "2012":1,"star war":2.0, "bb":4.5,"xiao bing zhang ga":1,"xixi ":3},
 }
 
+def loadMovieLens(path = "D:\\work\\myself\\machine learning\\python\\collective intelligence\\ml-100k\\"):
+    movie = {}
+    item_url = path,"u.item"
+    for line in open(item_url):
+       (id,title) =  line.split("|")[0,2]
+       movie[id] = title
+        
 # 测试欧氏距离
 sim_score1 = r.sim_distance_euclidean(critics,"andy","xiaolan")
 sim_score2 = r.sim_distance_euclidean(critics,"andy","wanhai")
