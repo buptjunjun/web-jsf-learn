@@ -138,6 +138,13 @@ def getRecommendation(prefs, person, n = 3 , sim_fun = sim_distance_euclidean):
     recommendation.reverse()
     return recommendation[0:n]
             
-                
-        
+#  将物品与人的位置交换
+def transformPrefs(prefs):
+    result = {}
+    for person in prefs:
+        for item in prefs[person]:
+            result.setdefault(item,{})
+            #将物品与人的位置交换
+            result[item][person] = prefs[person][item]
+    return result
     
