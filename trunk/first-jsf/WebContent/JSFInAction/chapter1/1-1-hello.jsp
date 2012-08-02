@@ -29,6 +29,16 @@
 	   </h:dataTable>
 	    <br />
 	    
+	      <%-- 跟一个 list绑定 --%>
+	   <h:outputText  style="font-size:30;color:green" value="map datatable test"></h:outputText>
+	   <h:dataTable value="#{helloBean.map}" var="map">
+	     <h:column>
+	         <h:outputText value="#{map}"></h:outputText>
+	     </h:column>
+	   </h:dataTable>
+	    <br />
+	    
+	    
 	    <%-- 跟一个 list中的某一个元素绑定 --%>
 	     <h:inputText id="testheader"
 	   				value="#{helloBean.websites[2]}"

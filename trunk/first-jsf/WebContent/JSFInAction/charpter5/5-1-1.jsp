@@ -142,10 +142,7 @@
 	<h:selectManyCheckbox id="selectManyCheckboxColor" value="#{charpter5.selectedColorItems}">
 		<f:selectItems value="#{charpter5.colors}"/>
 	</h:selectManyCheckbox>
-	
-	
-	
-	
+
 	<h:panelGroup>
 		<h:commandButton value="Submit"/>
 		<h:commandButton value="Reset" type="reset"/>
