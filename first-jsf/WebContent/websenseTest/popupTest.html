@@ -1,60 +1,271 @@
+
 <html>
 <head>
 <style type="text/css">
-body {
-	margin-left: 0px;
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-}
-/*ҳ����������ʽ*/
-#container{
-	width:90%;
-	 margin: 1 auto;
-	}
-/*ҳ��ͷ*/
-#header{
- width:780px;
- height: 130px;
- margin: 0 auto;
- overflow:hidden;
-
-}
-/*ҳ���м�*/
-#midbody{
-width:780px;
-height: 380px;
-margin:0 auto;
-overflow:hidden;
-border-style:solid
-
-}
-/*foot*/
-#foot{
-width:780px;
-height: auto;
-height:auto;
-margin:0 auto;
-overflow:hidden;
-
+.prog-border-cpu {
+	height: 15px;
+	width: 220px;
+	background: #fff;
+	border: 1px solid #EBEBEB;
+	margin: 0;
+	padding: 0;
 }
 
+.prog-bar {
+	height: 15px;
+	margin: 0px;
+	padding: 0px;
+	background: #178399;
+	font-size: 10pt;
+}
 </style>
+<script type="text/javascript">
+//平时在应用ajax完成一些操作后总会使用alert来给用户返回一些提示信息。但是介于alert的样式过于单调。所以有时候需要自己写一个类似的提示框来稍微的美化一下。那天从网上找了一个现成的提示框。不过那个提示框还是有一些缺陷的，在出现浏览器测滚轮情况下和在IE与FF之间的兼容问题。自己修改了一下现在能够正常的在两个浏览器上使用。以下是代码：//提交完毕后弹出提示信息并自动关闭
+function Alert(str) {
+    var msgw,msgh,bordercolor;
+    msgw=350;//提示窗口的宽度
+    msgh=80;//提示窗口的高度
+    titleheight=25 //提示窗口标题高度
+    bordercolor="#336699";//提示窗口的边框颜色
+    titlecolor="#99CCFF";//提示窗口的标题颜色
+    var sWidth,sHeight;
+    //获取当前窗口尺寸
+    sWidth = document.body.offsetWidth;
+    sHeight = document.body.scrollHeight;
+    //背景div
+    var bgObj=document.createElement("div");
+    bgObj.setAttribute('id','alertbgDiv');
+    bgObj.style.position="absolute";
+    bgObj.style.top="0";
+    bgObj.style.background="#E8E8E8";
+    bgObj.style.filter="progid:DXImageTransform.Microsoft.Alpha(style=3,opacity=25,finishOpacity=75";
+    bgObj.style.opacity="0.6";
+    bgObj.style.left="0";
+    bgObj.style.width = sWidth + "px";
+    bgObj.style.height = sHeight + "px";
+    bgObj.style.zIndex = "10000";
+    document.body.appendChild(bgObj);
+    //创建提示窗口的div
+    var msgObj = document.createElement("div")
+    msgObj.setAttribute("id","alertmsgDiv");
+    msgObj.setAttribute("align","left");
+    msgObj.style.background="white";
+    msgObj.style.border="2px";
+    msgObj.style.border="1px solid " + bordercolor;
+    msgObj.style.position = "absolute";
+    msgObj.style.left = "50%";
+    msgObj.style.font="12px/1.6em Verdana, Geneva, Arial, Helvetica, sans-serif";
+    //窗口距离左侧和顶端的距离 
+    msgObj.style.marginLeft = "-225px";
+    //窗口被卷去的高+（屏幕可用工作区高/2）-150
+    msgObj.style.top = document.body.scrollTop+(window.screen.availHeight/2)-150 +"px";
+    msgObj.style.width = msgw + "px";
+    msgObj.style.height = msgh + "px";
+    msgObj.style.textAlign = "center";
+    msgObj.style.lineHeight ="25px";
+    msgObj.style.zIndex = "10001";
+    document.body.appendChild(msgObj);
+    //提示信息标题
+    var title=document.createElement("h4");
+    title.setAttribute("id","alertmsgTitle");
+    title.setAttribute("align","left");
+    title.style.margin="0";
+    title.style.padding="3px";
+    title.style.background = bordercolor;
+    title.style.filter="progid:DXImageTransform.Microsoft.Alpha(startX=20, startY=20, finishX=100, finishY=100,style=1,opacity=75,finishOpacity=100);";
+    title.style.opacity="0.75";
+    title.style.border="1px solid " + bordercolor;
+    title.style.height="18px";
+    title.style.font="12px Verdana, Geneva, Arial, Helvetica, sans-serif";
+    title.style.color="white";
+    title.innerHTML="Digg Alpha 0.1";
+    document.getElementById("alertmsgDiv").appendChild(title);
+    //提示信息
+    var txt = document.createElement("p");
+    txt.setAttribute("id","msgTxt");
+    txt.style.margin="16px 0";
+    txt.innerHTML = str;
+    document.getElementById("alertmsgDiv").appendChild(txt);
+    //1.5秒钟后窗口自动关闭
+    window.setTimeout("closewin()",4500); 
+}
+function Alert1(str) {
+    var msgw,msgh,bordercolor;
+    msgw=350;//提示窗口的宽度
+    msgh=80;//提示窗口的高度
+    titleheight=25 //提示窗口标题高度
+    bordercolor="#336699";//提示窗口的边框颜色
+    titlecolor="#99CCFF";//提示窗口的标题颜色
+    var sWidth,sHeight;
+    //获取当前窗口尺寸
+    sWidth = document.body.offsetWidth;
+    sHeight = document.body.scrollHeight;
+    //背景div
+    var bgObj=document.createElement("div");
+    bgObj.setAttribute('id','alertbgDiv');
+    bgObj.style.position="absolute";
+    bgObj.style.top="0";
+    bgObj.style.background="#E8E8E8";
+    bgObj.style.filter="progid:DXImageTransform.Microsoft.Alpha(style=3,opacity=25,finishOpacity=75";
+    bgObj.style.opacity="0.6";
+    bgObj.style.left="0";
+    bgObj.style.width = sWidth + "px";
+    bgObj.style.height = sHeight + "px";
+    bgObj.style.zIndex = "10000";
+    document.body.appendChild(bgObj);
+    //创建提示窗口的div
+    var msgObj = document.createElement("div")
+    msgObj.setAttribute("id","alertmsgDiv");
+    msgObj.setAttribute("align","left");
+    msgObj.style.background="white";
+    msgObj.style.border="2px";
+    msgObj.style.border="1px solid " + bordercolor;
+    msgObj.style.position = "absolute";
+    msgObj.style.left = "50px";
+    msgObj.style.font="12px/1.6em Verdana, Geneva, Arial, Helvetica, sans-serif";
+    //窗口距离左侧和顶端的距离 
+    msgObj.style.marginLeft = "-25px";
+    //窗口被卷去的高+（屏幕可用工作区高/2）-150
+    msgObj.style.top = document.body.scrollTop+(window.screen.availHeight/2)-450 +"px";
+    msgObj.style.width = msgw + "px";
+    msgObj.style.height = msgh + "px";
+    msgObj.style.textAlign = "center";
+    msgObj.style.lineHeight ="25px";
+    msgObj.style.zIndex = "10001";
+    document.body.appendChild(msgObj);
+    //提示信息标题
+    var title=document.createElement("h4");
+    title.setAttribute("id","alertmsgTitle");
+    title.setAttribute("align","left");
+    title.style.margin="0";
+    title.style.padding="3px";
+    title.style.background = bordercolor;
+    title.style.filter="progid:DXImageTransform.Microsoft.Alpha(startX=20, startY=20, finishX=100, finishY=100,style=1,opacity=75,finishOpacity=100);";
+    title.style.opacity="0.75";
+    title.style.border="1px solid " + bordercolor;
+    title.style.height="18px";
+    title.style.font="12px Verdana, Geneva, Arial, Helvetica, sans-serif";
+    title.style.color="white";
+    title.innerHTML="Digg Alpha 0.1";
+    
+    var cpuPanel = document.createElement("div");
+	for(var i = 0;i <10; i++)
+	{ 
+		var oncpu= creatCpuPro("proBar","60%","red")    
+    	cpuPanel.appendChild(oncpu);
+	
+	}
+	 document.getElementById("alertmsgDiv").appendChild(cpuPanel);
+    //提示信息
+    var txt = document.createElement("p");
+    txt.setAttribute("id","msgTxt");
+    txt.style.margin="16px 0";
+    txt.innerHTML = str;
+    document.getElementById("alertmsgDiv").appendChild(txt);
+    //1.5秒钟后窗口自动关闭
+    window.setTimeout("closewin()",4500); 
+}
+
+function closewin(  ) {
+	document.getElementById("alertbgDiv").style.display="none";
+	 document.getElementById("alertmsgDiv").style.display="none";
+}
+function sAlert(txt)
+{
+//var eSrc=(document.all)?window.event.srcElement:arguments[1];
+var shield = document.createElement("DIV");
+shield.id = "shield";
+shield.style.position = "absolute";
+shield.style.left = "0px";
+shield.style.top = "100px";
+shield.style.width = "100%";
+//window.alert(document.body.scrollHeight);
+shield.style.height = document.body.scrollHeight+"px";
+shield.style.background = "white";
+shield.style.textAlign = "center";
+shield.style.zIndex = "10000";
+shield.style.filter = "alpha(opacity=80)";
+shield.style.opacity = 0.8;
+//shield.style.border-width=thick;
+
+strHtml = "<input type=\"button\" value=\" ok \" id=\"do_OK\" onclick=\"doOk()\" />\n";
+shield.innerHTML = strHtml;
+
+document.body.appendChild(shield);
+this.doOk = function(){
+document.body.removeChild(shield);
+
+}
+document.getElementById("do_OK").focus();
+}
+
+
+
+function creatCpuPro( name,width,color)
+{
+	 //创建cpu的div
+    var onecpu = document.createElement("div");
+    onecpu.style.display = "";
+    onecpu.style.top = "50px";   //弹出窗口位置
+    onecpu.style.left = "100px";
+
+    onecpu.setAttribute('id','prog-border');
+	onecpu.className="prog-border-cpu";
+	onecpu.style.width ="60px";
+	onecpu.style.display = "block";
+    
+   var probar = document.createElement("div");
+	probar.setAttribute('id','prog-bar');
+	probar.className="prog-bar";
+	probar.style.width =width;
+	probar.style.background = color;
+
+	onecpu.appendChild(probar);
+	return onecpu;
+}
+
+</script>
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
 </head>
 <body>
-<div id = "container">
-       <div id="header">
-	 head
-	</div>
 
-	<div id="midbody">
-	 body
-	</div>
-        
-       <div id="foot">
-	 foot
-	</div>
-</div>
+<input type="button" onMouseOver="Alert1('hello')"></input>
+<div id="showAlert"></div>
+<a>A blog (a portmanteau of the term web log)[1] is a discussion or information site published on the World Wide Web consisting of discrete entries ("posts") typically displayed in reverse chronological order so the most recent post appears first. Until 2009 blogs were usually the work of a single individual, occasionally of a small group, and often were themed on a single subject. More recently "multi-author blogs" (MABs) have developed, with posts written by large numbers of authors and professionally edited. MABs from newspapers, other media outlets, universities, think tanks, interest groups and similar institutions account for an increasing proportion of blog traffic. The rise of Twitter and other "microblogging" systems helps integrate MABs and single-author blogs into societal newstreams. Blog can also be used as a verb, meaning to maintain or add content to a blog.
+The emergence and growth of blogs in the late 1990s coincided with the advent of web publishing tools that facilitated the posting of content by non-technical users. (Previously, a knowledge of such technologies as HTML and FTP had been required to publish content on the Web.)
+Although not a must, most good quality blogs are interactive, allowing visitors to leave comments and even message each other via GUI widgets on the blogs, and it is this interactivity that distinguishes them from other static websites.[2] In that sense, blogging can be seen as a form of social networking. Indeed, bloggers do not only produce content to post on their blogs but also build social relations with their readers and other bloggers.[3]
+Many blogs provide commentary on a particular subject; others function as more personal online diaries; yet still others function more as online brand advertising of a particular individual or company. In education blogs can be used as instructional resources. These blogs are referred to as an Edublog. A typical blog combines text, images, and links to other blogs, Web pages, and other media related to its topic. The ability of readers to leave comments in an interactive format is an important part of many blogs. Most blogs are primarily textual, although some focus on art (art blogs), photographs (photoblogs), videos (video blogs or "vlogs"), music (MP3 blogs), and audio (podcasts). Microblogging is another type of blogging, featuring very short posts.
+As of 16 February 2011, there were over 156 million public blogs in existence.[4A blog (a portmanteau of the term web log)[1] is a discussion or information site published on the World Wide Web consisting of discrete entries ("posts") typically displayed in reverse chronological order so the most recent post appears first. Until 2009 blogs were usually the work of a single individual, occasionally of a small group, and often were themed on a single subject. More recently "multi-author blogs" (MABs) have developed, with posts written by large numbers of authors and professionally edited. MABs from newspapers, other media outlets, universities, think tanks, interest groups and similar institutions account for an increasing proportion of blog traffic. The rise of Twitter and other "microblogging" systems helps integrate MABs and single-author blogs into societal newstreams. Blog can also be used as a verb, meaning to maintain or add content to a blog.
+The emergence and growth of blogs in the late 1990s coincided with the advent of web publishing tools that facilitated the posting of content by non-technical users. (Previously, a knowledge of such technologies as HTML and FTP had been required to publish content on the Web.)
+Although not a must, most good quality blogs are interactive, allowing visitors to leave comments and even message each other via GUI widgets on the blogs, and it is this interactivity that distinguishes them from other static websites.[2] In that sense, blogging can be seen as a form of social networking. Indeed, bloggers do not only produce content to post on their blogs but also build social relations with their readers and other bloggers.[3]
+Many blogs provide commentary on a particular subject; others function as more personal online diaries; yet still others function more as online brand advertising of a particular individual or company. In education blogs can be used as instructional resources. These blogs are referred to as an Edublog. A typical blog combines text, images, and links to other blogs, Web pages, and other media related to its topic. The ability of readers to leave comments in an interactive format is an important part of many blogs. Most blogs are primarily textual, although some focus on art (art blogs), photographs (photoblogs), videos (video blogs or "vlogs"), music (MP3 blogs), and audio (podcasts). Microblogging is another type of blogging, featuring very short posts.
+As of 16 February 2011, there were over 156 million public blogs in existence.[4]A blog (a portmanteau of the term web log)[1] is a discussion or information site published on the World Wide Web consisting of discrete entries ("posts") typically displayed in reverse chronological order so the most recent post appears first. Until 2009 blogs were usually the work of a single individual, occasionally of a small group, and often were themed on a single subject. More recently "multi-author blogs" (MABs) have developed, with posts written by large numbers of authors and professionally edited. MABs from newspapers, other media outlets, universities, think tanks, interest groups and similar institutions account for an increasing proportion of blog traffic. The rise of Twitter and other "microblogging" systems helps integrate MABs and single-author blogs into societal newstreams. Blog can also be used as a verb, meaning to maintain or add content to a blog.
+The emergence and growth of blogs in the late 1990s coincided with the advent of web publishing tools that facilitated the posting of content by non-technical users. (Previously, a knowledge of such technologies as HTML and FTP had been required to publish content on the Web.)
+Although not a must, most good quality blogs are interactive, allowing visitors to leave comments and even message each other via GUI widgets on the blogs, and it is this interactivity that distinguishes them from other static websites.[2] In that sense, blogging can be seen as a form of social networking. Indeed, bloggers do not only produce content to post on their blogs but also build social relations with their readers and other bloggers.[3]
+Many blogs provide commentary on a particular subject; others function as more personal online diaries; yet still others function more as online brand advertising of a particular individual or company. In education blogs can be used as instructional resources. These blogs are referred to as an Edublog. A typical blog combines text, images, and links to other blogs, Web pages, and other media related to its topic. The ability of readers to leave comments in an interactive format is an important part of many blogs. Most blogs are primarily textual, although some focus on art (art blogs), photographs (photoblogs), videos (video blogs or "vlogs"), music (MP3 blogs), and audio (podcasts). Microblogging is another type of blogging, featuring very short posts.
+As of 16 February 2011, there were over 156 million public blogs in existence.[4]A blog (a portmanteau of the term web log)[1] is a discussion or information site published on the World Wide Web consisting of discrete entries ("posts") typically displayed in reverse chronological order so the most recent post appears first. Until 2009 blogs were usually the work of a single individual, occasionally of a small group, and often were themed on a single subject. More recently "multi-author blogs" (MABs) have developed, with posts written by large numbers of authors and professionally edited. MABs from newspapers, other media outlets, universities, think tanks, interest groups and similar institutions account for an increasing proportion of blog traffic. The rise of Twitter and other "microblogging" systems helps integrate MABs and single-author blogs into societal newstreams. Blog can also be used as a verb, meaning to maintain or add content to a blog.
+The emergence and growth of blogs in the late 1990s coincided with the advent of web publishing tools that facilitated the posting of content by non-technical users. (Previously, a knowledge of such technologies as HTML and FTP had been required to publish content on the Web.)
+Although not a must, most good quality blogs are interactive, allowing visitors to leave comments and even message each other via GUI widgets on the blogs, and it is this interactivity that distinguishes them from other static websites.[2] In that sense, blogging can be seen as a form of social networking. Indeed, bloggers do not only produce content to post on their blogs but also build social relations with their readers and other bloggers.[3]
+Many blogs provide commentary on a particular subject; others function as more personal online diaries; yet still others function more as online brand advertising of a particular individual or company. In education blogs can be used as instructional resources. These blogs are referred to as an Edublog. A typical blog combines text, images, and links to other blogs, Web pages, and other media related to its topic. The ability of readers to leave comments in an interactive format is an important part of many blogs. Most blogs are primarily textual, although some focus on art (art blogs), photographs (photoblogs), videos (video blogs or "vlogs"), music (MP3 blogs), and audio (podcasts). Microblogging is another type of blogging, featuring very short posts.
+As of 16 February 2011, there were over 156 million public blogs in existence.[4]A blog (a portmanteau of the term web log)[1] is a discussion or information site published on the World Wide Web consisting of discrete entries ("posts") typically displayed in reverse chronological order so the most recent post appears first. Until 2009 blogs were usually the work of a single individual, occasionally of a small group, and often were themed on a single subject. More recently "multi-author blogs" (MABs) have developed, with posts written by large numbers of authors and professionally edited. MABs from newspapers, other media outlets, universities, think tanks, interest groups and similar institutions account for an increasing proportion of blog traffic. The rise of Twitter and other "microblogging" systems helps integrate MABs and single-author blogs into societal newstreams. Blog can also be used as a verb, meaning to maintain or add content to a blog.
+The emergence and growth of blogs in the late 1990s coincided with the advent of web publishing tools that facilitated the posting of content by non-technical users. (Previously, a knowledge of such technologies as HTML and FTP had been required to publish content on the Web.)
+Although not a must, most good quality blogs are interactive, allowing visitors to leave comments and even message each other via GUI widgets on the blogs, and it is this interactivity that distinguishes them from other static websites.[2] In that sense, blogging can be seen as a form of social networking. Indeed, bloggers do not only produce content to post on their blogs but also build social relations with their readers and other bloggers.[3]
+Many blogs provide commentary on a particular subject; others function as more personal online diaries; yet still others function more as online brand advertising of a particular individual or company. In education blogs can be used as instructional resources. These blogs are referred to as an Edublog. A typical blog combines text, images, and links to other blogs, Web pages, and other media related to its topic. The ability of readers to leave comments in an interactive format is an important part of many blogs. Most blogs are primarily textual, although some focus on art (art blogs), photographs (photoblogs), videos (video blogs or "vlogs"), music (MP3 blogs), and audio (podcasts). Microblogging is another type of blogging, featuring very short posts.
+As of 16 February 2011, there were over 156 million public blogs in existence.[4]A blog (a portmanteau of the term web log)[1] is a discussion or information site published on the World Wide Web consisting of discrete entries ("posts") typically displayed in reverse chronological order so the most recent post appears first. Until 2009 blogs were usually the work of a single individual, occasionally of a small group, and often were themed on a single subject. More recently "multi-author blogs" (MABs) have developed, with posts written by large numbers of authors and professionally edited. MABs from newspapers, other media outlets, universities, think tanks, interest groups and similar institutions account for an increasing proportion of blog traffic. The rise of Twitter and other "microblogging" systems helps integrate MABs and single-author blogs into societal newstreams. Blog can also be used as a verb, meaning to maintain or add content to a blog.
+The emergence and growth of blogs in the late 1990s coincided with the advent of web publishing tools that facilitated the posting of content by non-technical users. (Previously, a knowledge of such technologies as HTML and FTP had been required to publish content on the Web.)
+Although not a must, most good quality blogs are interactive, allowing visitors to leave comments and even message each other via GUI widgets on the blogs, and it is this interactivity that distinguishes them from other static websites.[2] In that sense, blogging can be seen as a form of social networking. Indeed, bloggers do not only produce content to post on their blogs but also build social relations with their readers and other bloggers.[3]
+Many blogs provide commentary on a particular subject; others function as more personal online diaries; yet still others function more as online brand advertising of a particular individual or company. In education blogs can be used as instructional resources. These blogs are referred to as an Edublog. A typical blog combines text, images, and links to other blogs, Web pages, and other media related to its topic. The ability of readers to leave comments in an interactive format is an important part of many blogs. Most blogs are primarily textual, although some focus on art (art blogs), photographs (photoblogs), videos (video blogs or "vlogs"), music (MP3 blogs), and audio (podcasts). Microblogging is another type of blogging, featuring very short posts.
+As of 16 February 2011, there were over 156 million public blogs in existence.[4]A blog (a portmanteau of the term web log)[1] is a discussion or information site published on the World Wide Web consisting of discrete entries ("posts") typically displayed in reverse chronological order so the most recent post appears first. Until 2009 blogs were usually the work of a single individual, occasionally of a small group, and often were themed on a single subject. More recently "multi-author blogs" (MABs) have developed, with posts written by large numbers of authors and professionally edited. MABs from newspapers, other media outlets, universities, think tanks, interest groups and similar institutions account for an increasing proportion of blog traffic. The rise of Twitter and other "microblogging" systems helps integrate MABs and single-author blogs into societal newstreams. Blog can also be used as a verb, meaning to maintain or add content to a blog.
+The emergence and growth of blogs in the late 1990s coincided with the advent of web publishing tools that facilitated the posting of content by non-technical users. (Previously, a knowledge of such technologies as HTML and FTP had been required to publish content on the Web.)
+Although not a must, most good quality blogs are interactive, allowing visitors to leave comments and even message each other via GUI widgets on the blogs, and it is this interactivity that distinguishes them from other static websites.[2] In that sense, blogging can be seen as a form of social networking. Indeed, bloggers do not only produce content to post on their blogs but also build social relations with their readers and other bloggers.[3]
+Many blogs provide commentary on a particular subject; others function as more personal online diaries; yet still others function more as online brand advertising of a particular individual or company. In education blogs can be used as instructional resources. These blogs are referred to as an Edublog. A typical blog combines text, images, and links to other blogs, Web pages, and other media related to its topic. The ability of readers to leave comments in an interactive format is an important part of many blogs. Most blogs are primarily textual, although some focus on art (art blogs), photographs (photoblogs), videos (video blogs or "vlogs"), music (MP3 blogs), and audio (podcasts). Microblogging is another type of blogging, featuring very short posts.
+As of 16 February 2011, there were over 156 million public blogs in existence.[4]A blog (a portmanteau of the term web log)[1] is a discussion or information site published on the World Wide Web consisting of discrete entries ("posts") typically displayed in reverse chronological order so the most recent post appears first. Until 2009 blogs were usually the work of a single individual, occasionally of a small group, and often were themed on a single subject. More recently "multi-author blogs" (MABs) have developed, with posts written by large numbers of authors and professionally edited. MABs from newspapers, other media outlets, universities, think tanks, interest groups and similar institutions account for an increasing proportion of blog traffic. The rise of Twitter and other "microblogging" systems helps integrate MABs and single-author blogs into societal newstreams. Blog can also be used as a verb, meaning to maintain or add content to a blog.
+The emergence and growth of blogs in the late 1990s coincided with the advent of web publishing tools that facilitated the posting of content by non-technical users. (Previously, a knowledge of such technologies as HTML and FTP had been required to publish content on the Web.)
+Although not a must, most good quality blogs are interactive, allowing visitors to leave comments and even message each other via GUI widgets on the blogs, and it is this interactivity that distinguishes them from other static websites.[2] In that sense, blogging can be seen as a form of social networking. Indeed, bloggers do not only produce content to post on their blogs but also build social relations with their readers and other bloggers.[3]
+Many blogs provide commentary on a particular subject; others function as more personal online diaries; yet still others function more as online brand advertising of a particular individual or company. In education blogs can be used as instructional resources. These blogs are referred to as an Edublog. A typical blog combines text, images, and links to other blogs, Web pages, and other media related to its topic. The ability of readers to leave comments in an interactive format is an important part of many blogs. Most blogs are primarily textual, although some focus on art (art blogs), photographs (photoblogs), videos (video blogs or "vlogs"), music (MP3 blogs), and audio (podcasts). Microblogging is another type of blogging, featuring very short posts.
+As of 16 February 2011, there were over 156 million public blogs in existence.[4]] </a>
 </body>
-
 </html>
