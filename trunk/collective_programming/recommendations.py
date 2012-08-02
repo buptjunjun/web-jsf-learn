@@ -1,36 +1,40 @@
-# 2012-7-31 君君 weibobee@gmail.com
-# 电影评论的字典 {名字：{电影名字：评分}}
+# 2012-7-31 鍚涘悰 weibobee@gmail.com
+# 鐢靛奖璇勮鐨勫瓧鍏�{鍚嶅瓧锛歿鐢靛奖鍚嶅瓧锛氳瘎鍒唥}
 
 import math
 threshhold = 0.1
 
-# 根据欧氏距离 计算两个人 在多个move上的计算相似度 ，每一个人的n个movie 看成一个n维空间向量
+# 鏍规嵁娆ф皬璺濈 璁＄畻涓や釜浜�鍦ㄥ涓猰ove涓婄殑璁＄畻鐩镐技搴�锛屾瘡涓�釜浜虹殑n涓猰ovie 鐪嬫垚涓�釜n缁寸┖闂村悜閲�
 def sim_distance_euclidean(prefs, person1, person2):
-    '''计算两个人的欧氏距离'''
+    '''璁＄畻涓や釜浜虹殑娆ф皬璺濈'''
     
-    # 如果名字不存在
+    # 濡傛灉鍚嶅瓧涓嶅瓨鍦�
     if not (person1 in prefs) or not (person2 in prefs):
         return 0;
 
     sum = 0;
 
+    flag = True
     for item in prefs[person1]:
         if item in prefs[person2]:
             score1 = prefs[person1][item]
             score2 = prefs[person2][item]
             sum += math.pow((score1 - score2),2)
+            flag = False
 
+    if flag == True:
+        return 0;
     return 1/(1 + math.sqrt(sum))
 
 
-# 计算两个人 的关于movie的相关系数 每个人的n个movie可以看成movie的n个抽样
+# 璁＄畻涓や釜浜�鐨勫叧浜巑ovie鐨勭浉鍏崇郴鏁�姣忎釜浜虹殑n涓猰ovie鍙互鐪嬫垚movie鐨刵涓娊鏍�
 def sim_distance_correlation_score(prefs, person1, person2):
 
-    # 如果名字不存在
+    # 濡傛灉鍚嶅瓧涓嶅瓨鍦�
     if not (person1 in prefs) or not (person2 in prefs):
         return 0;
 
-    # 找出共有的东西
+    # 鎵惧嚭鍏辨湁鐨勪笢瑗�
     share_item = {}
     for item in prefs[person1]:
         if item in prefs[person2]:
@@ -39,21 +43,22 @@ def sim_distance_correlation_score(prefs, person1, person2):
     if len(share_item) <= 0:
         return 0
     
-    # 计算分数的和
+    # 璁＄畻鍒嗘暟鐨勫拰
     sum1 = sum([prefs[person1][it] for it in share_item])
     sum2 = sum([prefs[person2][it] for it in share_item])    
 
     
     total_items = len(share_item)
-    
-    # 计算平均
+    if total_items == 0:
+        return 0;
+    # 璁＄畻骞冲潎
     average1 = sum1 / total_items
     average2 = sum2 / total_items
 
     # print("varage1 = " ,average1)
     # print("average2 = " ,average2)
     
-    # x-x均值
+    # x-x鍧囧�
     list1 = [prefs[person1][it1] - average1 for it1 in share_item]           
     list2 = [prefs[person2][it2] - average2 for it2 in share_item]                  
 
@@ -64,7 +69,7 @@ def sim_distance_correlation_score(prefs, person1, person2):
     d1_sum = 0
     d2_sum = 0
     
-    # 计算协方差 和 方差
+    # 璁＄畻鍗忔柟宸�鍜�鏂瑰樊
     for i in range(0,total_items):
         cov_sum += list1[i] * list2[i]
          
@@ -78,13 +83,17 @@ def sim_distance_correlation_score(prefs, person1, person2):
     #print("D1 " ,D1)
     #print("D2 ", D2)
     
-    # 计算相关系数
-    result = COV / (math.sqrt(D1) * math.sqrt(D2))
+    # 璁＄畻鐩稿叧绯绘暟
+    bellow = (math.sqrt(D1) * math.sqrt(D2))
+    if bellow == 0:
+        return 0
+    
+    result = COV / bellow
 
     return result;
 
 
-# 使用sim_fun找出prefs中与person最match的前n个人
+# 浣跨敤sim_fun鎵惧嚭prefs涓笌person鏈�atch鐨勫墠n涓汉
 def topNMatch(prefs,person, n = 3 ,sim_fun = sim_distance_euclidean):
         scores = [(sim_fun(prefs,person,other),other) for other in prefs if other != person]
         scores.sort()
@@ -92,59 +101,59 @@ def topNMatch(prefs,person, n = 3 ,sim_fun = sim_distance_euclidean):
         return scores[0:n]
     
     
-# 向 person 推荐最多n个item 使用sim_fun计算相似度
-# 推荐的item是 person 没有的,与他相似度最大的几个人 对item加权评价分数最大的几个item
+# 鍚�person 鎺ㄨ崘鏈�n涓猧tem 浣跨敤sim_fun璁＄畻鐩镐技搴�
+# 鎺ㄨ崘鐨刬tem鏄�person 娌℃湁鐨�涓庝粬鐩镐技搴︽渶澶х殑鍑犱釜浜�瀵筰tem鍔犳潈璇勪环鍒嗘暟鏈�ぇ鐨勫嚑涓猧tem
 def getRecommendation(prefs, person, n = 3 , sim_fun = sim_distance_euclidean):
     global threshhold
     
-    # totals 代表要推荐的item
+    # totals 浠ｈ〃瑕佹帹鑽愮殑item
     totals = {}
 
-    # sum 要推荐的item的 相似度之和
+    # sum 瑕佹帹鑽愮殑item鐨�鐩镐技搴︿箣鍜�
     sims = {}
     
     for other in prefs:
-        #如果是自己 继续
+        #濡傛灉鏄嚜宸�缁х画
         if other == person:continue
               
-        # 计算相似度
+        # 璁＄畻鐩镐技搴�
         sim = sim_fun(prefs,person,other)
 
-        # 如果相似度小于某值 继续
+        # 濡傛灉鐩镐技搴﹀皬浜庢煇鍊�缁х画
         if sim < threshhold : continue
 
-        # 推荐person没有看过的item
+        # 鎺ㄨ崘person娌℃湁鐪嬭繃鐨刬tem
         for item in prefs[other]:
-            # 如果person看过的 pass
+            # 濡傛灉person鐪嬭繃鐨�pass
             if item  in prefs[person]:
                 continue
             
             if not item in totals:
                 totals[item] = 0          
-            #  other 评分乘以相似度
+            #  other 璇勫垎涔樹互鐩镐技搴�
             totals[item] += prefs[other][item] * sim
 
             if not item in sims:
                 sims[item] = 0           
-            # 相似度的和
+            # 鐩镐技搴︾殑鍜�
             sims[item] += sim
 
     #print(totals)
     #print(sims)
-    # 每一个推荐的item 分数相对于相似度的加权
+    # 姣忎竴涓帹鑽愮殑item 鍒嗘暟鐩稿浜庣浉浼煎害鐨勫姞鏉�
     recommendation = [ (total / sims[item] ,item) for item, total in totals.items()]
 
     recommendation.sort()
     recommendation.reverse()
     return recommendation[0:n]
             
-#  将物品与人的位置交换
+#  灏嗙墿鍝佷笌浜虹殑浣嶇疆浜ゆ崲
 def transformPrefs(prefs):
     result = {}
     for person in prefs:
         for item in prefs[person]:
             result.setdefault(item,{})
-            #将物品与人的位置交换
+            #灏嗙墿鍝佷笌浜虹殑浣嶇疆浜ゆ崲
             result[item][person] = prefs[person][item]
     return result
     
