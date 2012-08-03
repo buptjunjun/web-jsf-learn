@@ -38,3 +38,6 @@ reversePrefs = r.transformPrefs(critics)
 print(reversePrefs)
 rTopMatch = r.topNMatch(reversePrefs, "2012")
 print(rTopMatch)
+
+recomItems = r.getRecommendItems(critics,reversePrefs,'200')
+print(recomItems)
