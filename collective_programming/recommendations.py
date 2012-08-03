@@ -3,33 +3,35 @@
 
 import math
 threshhold = 0.1
-
+incommon = 2
 # 鏍规嵁娆ф皬璺濈 璁＄畻涓や釜浜�鍦ㄥ涓猰ove涓婄殑璁＄畻鐩镐技搴�锛屾瘡涓�釜浜虹殑n涓猰ovie 鐪嬫垚涓�釜n缁寸┖闂村悜閲�
 def sim_distance_euclidean(prefs, person1, person2):
     '''璁＄畻涓や釜浜虹殑娆ф皬璺濈'''
-    
+    global incommon
     # 濡傛灉鍚嶅瓧涓嶅瓨鍦�
     if not (person1 in prefs) or not (person2 in prefs):
         return 0;
 
     sum = 0;
 
-    flag = True
+    flag = 0
     for item in prefs[person1]:
         if item in prefs[person2]:
             score1 = prefs[person1][item]
             score2 = prefs[person2][item]
             sum += math.pow((score1 - score2),2)
-            flag = False
+            flag += 1
 
-    if flag == True:
-        return 0;
+   # if the have few item in common  return 0
+    if flag < incommon :
+        return 0.01;
+    
     return 1/(1 + math.sqrt(sum))
 
 
-# 璁＄畻涓や釜浜�鐨勫叧浜巑ovie鐨勭浉鍏崇郴鏁�姣忎釜浜虹殑n涓猰ovie鍙互鐪嬫垚movie鐨刵涓娊鏍�
-def sim_distance_correlation_score(prefs, person1, person2):
 
+def sim_distance_correlation_score(prefs, person1, person2):
+    global incommon
     # 濡傛灉鍚嶅瓧涓嶅瓨鍦�
     if not (person1 in prefs) or not (person2 in prefs):
         return 0;
@@ -40,7 +42,7 @@ def sim_distance_correlation_score(prefs, person1, person2):
         if item in prefs[person2]:
             share_item[item] = 1
 
-    if len(share_item) <= 0:
+    if len(share_item) < incommon:
         return 0
     
     # 璁＄畻鍒嗘暟鐨勫拰
@@ -157,3 +159,50 @@ def transformPrefs(prefs):
             result[item][person] = prefs[person][item]
     return result
     
+# item based filter 
+# create a dic of items showing which items they are most fi
+def  caculateSimilarItems(prefs):
+    tr = transformPrefs(prefs)
+    
+    result = {}
+    count = 0
+    for item in tr:
+        count+=1
+        #if count%100 == 0: print("%d , %d" %(count, len(tr)))
+      #  print(item)
+        
+        topMatch = topNMatch(tr,item,20)
+        result[item] = topMatch
+    return result
+
+# recommend item for user based on Item similarity Matrix 
+def getRecommendItems(prefs, simMatrix, user):
+    if not user in prefs:
+        return None
+    # which movies the user have seen
+    userRating = prefs[user]
+    
+    scores = {}
+    totalSim = {}
+    
+    for (item,ratting) in userRating.items():
+        for (sim, item2) in simMatrix[item]:
+            
+            # if user has watched the movie
+            if item2 in userRating:
+                continue;
+            
+            scores.setdefault(item2,0)
+            # print("ratting = %d, sim = %d" %(ratting, sim))
+            scores[item2] += ratting * sim
+            totalSim.setdefault(item2,0)
+            totalSim[item2]+=sim;
+            
+    ranking = [(score/totalSim[item],item) for (item, score) in scores.items()]
+    ranking.sort();
+    ranking.reverse()
+    
+    return ranking;
+            
+        
+         
