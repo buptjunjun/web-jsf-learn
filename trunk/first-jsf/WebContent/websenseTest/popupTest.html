@@ -90,7 +90,8 @@ function Alert(str) {
     window.setTimeout("closewin()",4500); 
 }
 function Alert1(str) {
-    
+	 var p = getXY();
+	 
     //创建提示窗口的div
     var msgObj = document.createElement("div")
     msgObj.setAttribute("id","alertmsgDiv");
@@ -99,23 +100,33 @@ function Alert1(str) {
     msgObj.style.border="2px";
     msgObj.style.border="1px solid " ;
     msgObj.style.position = "absolute";
-    msgObj.style.left = "50px";
+   
     msgObj.style.font="12px/1.6em Verdana, Geneva, Arial, Helvetica, sans-serif";
     //窗口距离左侧和顶端的距离 
     msgObj.style.marginLeft = "-25px";
     //窗口被卷去的高+（屏幕可用工作区高/2）-150
     msgObj.style.top = document.body.scrollTop+(window.screen.availHeight/2)-450 +"px";
-    msgObj.style.width = 200 + "px";
+  
+  
+    if (p != "undefined" && p != null)
+    {
+    	 msgObj.style.left = p.x+"px";
+    	 msgObj.style.top = p.y +"px"
+    }
+ 
+    msgObj.style.width = 220 + "px";
     msgObj.style.height = 200 + "px";
     msgObj.style.textAlign = "center";
     msgObj.style.lineHeight ="25px";
     msgObj.style.zIndex = "10001";
 
-    var names = new Array ("cpu1" , "cpu2" , "cpu3");
+/*     var names = new Array ("cpu1" , "cpu2" , "cpu3");
     var colors = new Array ("10%" , "50%" , "70%");
     
-    var cputable = createCpuTable(names,colors,"60%");
-    msgObj.appendChild(cputable);
+    var cputable = createCpuTable(names,colors,"60%"); */
+    
+    var div = createDivCpu();
+    msgObj.appendChild(div);
     document.body.appendChild(msgObj);
     //提示信息
     //1.5秒钟后窗口自动关闭
@@ -125,11 +136,35 @@ function Alert1(str) {
 function closewin(  ) {
     alertbg = document.getElementById("alertmsgDiv");
 	document.body.removeChild(alertbg);
-	
 }
 
 
-function createCpuTable( namelist, percentList,width)
+function createDivCpu()
+{
+	var  div = document.createElement("div");
+	var  divl = document.createElement("div");
+	divl.style.cssFloat = "left";
+	var  divr = document.createElement("div");
+	divl.style.cssFloat = "right";
+	
+	  var names = new Array ("cpu1" , "cpu2" , "cpu3");
+	  var percents = new Array ("10%" , "50%" , "70%");
+	  var colors = new Array ("red" , "green" , "green");
+	  
+	  var cputable1 = createCpuTable(names,percents,colors,"50%");
+	  divl.appendChild(cputable1);
+	  
+	  var cputable2 = createCpuTable(names,percents,colors,"50%");
+	  divl.appendChild(cputable2);
+	  
+	  div.appendChild(divl);
+	  div.appendChild(divr);
+	  return div;	
+}
+/**
+ * create a table with progress bar
+ */
+function createCpuTable( namelist, percentList, colorList, width)
 {
 	    var cupTable = document.createElement("table");   
 	    cupTable.setAttribute("width", width);
@@ -142,7 +177,7 @@ function createCpuTable( namelist, percentList,width)
 			var td1 = document.createElement("td");
 			var td2 = document.createElement("td");
 			
-			var onecpu= creatCpuPro(percentList[i],"red")
+			var onecpu= creatCpuPro(percentList[i],colorList[i])
 			var text = document.createTextNode(namelist[i]);
 			
 			td1.appendChild(text);
@@ -159,7 +194,9 @@ function createCpuTable( namelist, percentList,width)
 		return cupTable;
 }
 
-
+/*
+ *  create a cpu progress bar
+ */
 function creatCpuPro(width,color)
 {	 
     var onecpu = document.createElement("div");
@@ -183,6 +220,64 @@ function creatCpuPro(width,color)
 	return onecpu;
 }
 
+
+/**
+ *  get the position of the mouse
+ * @param ev		enent
+ * @return			x:  coordinate x of mouse  y:coordinate y of mouse  
+ */
+function getMousePoint(ev) {
+	// postion of the mouse
+	var point = {
+		x:0,
+		y:0
+	};
+ 
+	if(typeof window.pageYOffset != 'undefined') {
+		point.x = window.pageXOffset;
+		point.y = window.pageYOffset;
+	}
+	
+	else if(typeof document.compatMode != 'undefined' && document.compatMode != 'BackCompat') {
+		point.x = document.documentElement.scrollLeft;
+		point.y = document.documentElement.scrollTop;
+	}
+	
+	else if(typeof document.body != 'undefined') {
+		point.x = document.body.scrollLeft;
+		point.y = document.body.scrollTop;
+	}
+ 
+	
+	point.x += ev.clientX;
+	point.y += ev.clientY;
+
+	return point;
+}
+
+/**
+ * get the current event
+ */
+function getEvent(){
+	if(window.event){
+		return window.event;
+	}
+	var f = arguments.callee.caller;
+	do{
+		var e = f.arguments[0];
+		if(e && (e.constructor === Event || e.constructor===MouseEvent || e.constructor===KeyboardEvent)){
+			return e;
+		}
+	}while(f=f.caller);
+}
+
+// get the position of mouse
+function getXY()
+{
+	var e = getEvent();
+	var point = getMousePoint(e);
+	return point;
+}
 </script>
 
 
@@ -191,7 +286,7 @@ function creatCpuPro(width,color)
 </head>
 <body>
 
-<input type="button" onMouseOver="Alert1('hello')"></input>
+
 <div id="showAlert"></div>
 <a>A blog (a portmanteau of the term web log)[1] is a discussion or information site published on the World Wide Web consisting of discrete entries ("posts") typically displayed in reverse chronological order so the most recent post appears first. Until 2009 blogs were usually the work of a single individual, occasionally of a small group, and often were themed on a single subject. More recently "multi-author blogs" (MABs) have developed, with posts written by large numbers of authors and professionally edited. MABs from newspapers, other media outlets, universities, think tanks, interest groups and similar institutions account for an increasing proportion of blog traffic. The rise of Twitter and other "microblogging" systems helps integrate MABs and single-author blogs into societal newstreams. Blog can also be used as a verb, meaning to maintain or add content to a blog.
 The emergence and growth of blogs in the late 1990s coincided with the advent of web publishing tools that facilitated the posting of content by non-technical users. (Previously, a knowledge of such technologies as HTML and FTP had been required to publish content on the Web.)
@@ -205,7 +300,14 @@ As of 16 February 2011, there were over 156 million public blogs in existence.[4
 The emergence and growth of blogs in the late 1990s coincided with the advent of web publishing tools that facilitated the posting of content by non-technical users. (Previously, a knowledge of such technologies as HTML and FTP had been required to publish content on the Web.)
 Although not a must, most good quality blogs are interactive, allowing visitors to leave comments and even message each other via GUI widgets on the blogs, and it is this interactivity that distinguishes them from other static websites.[2] In that sense, blogging can be seen as a form of social networking. Indeed, bloggers do not only produce content to post on their blogs but also build social relations with their readers and other bloggers.[3]
 Many blogs provide commentary on a particular subject; others function as more personal online diaries; yet still others function more as online brand advertising of a particular individual or company. In education blogs can be used as instructional resources. These blogs are referred to as an Edublog. A typical blog combines text, images, and links to other blogs, Web pages, and other media related to its topic. The ability of readers to leave comments in an interactive format is an important part of many blogs. Most blogs are primarily textual, although some focus on art (art blogs), photographs (photoblogs), videos (video blogs or "vlogs"), music (MP3 blogs), and audio (podcasts). Microblogging is another type of blogging, featuring very short posts.
-As of 16 February 2011, there were over 156 million public blogs in existence.[4]A blog (a portmanteau of the term web log)[1] is a discussion or information site published on the World Wide Web consisting of discrete entries ("posts") typically displayed in reverse chronological order so the most recent post appears first. Until 2009 blogs were usually the work of a single individual, occasionally of a small group, and often were themed on a single subject. More recently "multi-author blogs" (MABs) have developed, with posts written by large numbers of authors and professionally edited. MABs from newspapers, other media outlets, universities, think tanks, interest groups and similar institutions account for an increasing proportion of blog traffic. The rise of Twitter and other "microblogging" systems helps integrate MABs and single-author blogs into societal newstreams. Blog can also be used as a verb, meaning to maintain or add content to a blog.
+As of 16 February 2011, there 
+
+<br />
+    <a  href="*** most good quality ***"  onMouseOver="Alert1('hello')" onMouseOut="closewin( )" >adsfasdfasdfa</a>
+<br />
+
+
+were over 156 million public blogs in existence.[4]A blog (a portmanteau of the term web log)[1] is a discussion or information site published on the World Wide Web consisting of discrete entries ("posts") typically displayed in reverse chronological order so the most recent post appears first. Until 2009 blogs were usually the work of a single individual, occasionally of a small group, and often were themed on a single subject. More recently "multi-author blogs" (MABs) have developed, with posts written by large numbers of authors and professionally edited. MABs from newspapers, other media outlets, universities, think tanks, interest groups and similar institutions account for an increasing proportion of blog traffic. The rise of Twitter and other "microblogging" systems helps integrate MABs and single-author blogs into societal newstreams. Blog can also be used as a verb, meaning to maintain or add content to a blog.
 The emergence and growth of blogs in the late 1990s coincided with the advent of web publishing tools that facilitated the posting of content by non-technical users. (Previously, a knowledge of such technologies as HTML and FTP had been required to publish content on the Web.)
 Although not a must, most good quality blogs are interactive, allowing visitors to leave comments and even message each other via GUI widgets on the blogs, and it is this interactivity that distinguishes them from other static websites.[2] In that sense, blogging can be seen as a form of social networking. Indeed, bloggers do not only produce content to post on their blogs but also build social relations with their readers and other bloggers.[3]
 Many blogs provide commentary on a particular subject; others function as more personal online diaries; yet still others function more as online brand advertising of a particular individual or company. In education blogs can be used as instructional resources. These blogs are referred to as an Edublog. A typical blog combines text, images, and links to other blogs, Web pages, and other media related to its topic. The ability of readers to leave comments in an interactive format is an important part of many blogs. Most blogs are primarily textual, although some focus on art (art blogs), photographs (photoblogs), videos (video blogs or "vlogs"), music (MP3 blogs), and audio (podcasts). Microblogging is another type of blogging, featuring very short posts.
