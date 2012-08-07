@@ -6,17 +6,18 @@
 import urllib3
 import urllib
 from bs4 import BeautifulSoup
+import MySQLdb
 
-class crawler:
+class Crawler:
     # Initialize the crawler with the name of database
     def __init__(self,dbname):
-        pass
+        self.con = MySQLdb.Connect(host = '127.0.0.1', user = 'root', passwd = '',db=dbname)
     
     def __del__(self):
-        pass
+        self.con.close()
     
     def dbmommit(self):
-        pass
+        self.con.commit()
     
     # Auxilliary function for getting a entryid and 
     # adding it if it is not present
@@ -25,14 +26,34 @@ class crawler:
     
     # index an individula page
     def addtoindex(self, url, soup):
+        if self.isindexed(url):return
+        
         print("indexing %s " %url)
+
+        #get the individual words
+        text = self.gettextonly(soup)
+        words = self.seperatewords(text)
+        
     
     # extract the text from an HTML page(no tags)
     def gettextonly(self, soup):
-        return None
+        v = soup.string
+        if v == None:
+            c=soup.contents
+            resulttext = ""
+            for t in c:
+                subtext = self.gettextonly(t)
+                resulttext+=subtext+"\n"
+            return resulttext
+        else :
+            return v.strip()
+        
+        
     # seperate the words by any no-whitespace character
     def seperatewords(self, text):
-        return None
+       splitter=re.compile('\\W*')
+       return [s.lower( ) for s in splitter.split(text) if s!='']
+   
     # return true if the url is already indexed
     def isindexed(self,url):
         return False
@@ -66,19 +87,21 @@ class crawler:
                         self.addlinkref(page, url, linkText)
                 self.dbmommit()
             pages =newpages
+    
     # create the database tables
-    def crateIndexTable(self):
-        pass
+    def crateIndexTable(self): 
+        cur = self.con.cursor()
+        cur.execute("CREATE TABLE urllist (rowid INT primary key, url VARCHAR(100))")
+        cur.execute("CREATE TABLE wordlist (rowid INT primary key, word VARCHAR(100))")
+        cur.execute("CREATE TABLE wordlocation (urlid INT, wordid INT, location INT)")
+        cur.execute("CREATE TABLE link (fromid INT , toid INT)")
+        cur.execute("CREATE TABLE linkwords (wordid INT , linkid INT)")
+        cur.close()
+        self.dbmommit();
     
     
-    
-    
-    
-    
-    
-    
-    
-    
+crawler = Crawler("searchengine")
+crawler.crateIndexTable() 
     
     
     
