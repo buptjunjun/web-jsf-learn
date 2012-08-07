@@ -1,18 +1,16 @@
-# -*- coding: utf-8 -*-
-# author: txw1958
-# website: http://www.cnblogs.com/txw1958/
 import MySQLdb
+
 #连接
 cxn = MySQLdb.Connect(host = '127.0.0.1', user = 'root', passwd = '')
 #游标
 cur = cxn.cursor()
 try:  
-    cur.execute("DROP DATABASE txw1958")
+    cur.execute("DROP DATABASE searchengine")
 except Exception as e:  
     print(e)
 finally:    pass
 #创建数据库
-cur.execute("CREATE DATABASE txw1958")
+cur.execute("CREATE DATABASE searchengine")
 cur.execute("USE txw1958")
 #创建表
 cur.execute("CREATE TABLE users (id INT, name VARCHAR(8))")
