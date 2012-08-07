@@ -271,12 +271,31 @@ function getEvent(){
 	}while(f=f.caller);
 }
 
+function CPU ()
+{
+	this.name='';
+	this.percent =0;
+}
 // get the position of mouse
 function getXY()
-{
+{ 
+	var cpus = new Array();
+	var cpu1 =  new CPU();
+	var cpu2 =  new CPU();
+	
+	cpu1.name="aaaaa";
+	cpu2.name = "bbbb";
+	
+	cpus.push(cpu1);
+	cpus.push(cpu2);
+	
+	alert(cpu1.name);
+	alert(cpu2.name);
+	
 	var e = getEvent();
 	var point = getMousePoint(e);
 	return point;
+	
 }
 </script>
 
