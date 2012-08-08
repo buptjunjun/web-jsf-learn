@@ -103,7 +103,14 @@ class Crawler:
     
     #Add a link between two pages
     def addlinkref(self,urlFrom, urlTo, linkText):
-        pass   
+
+        fromID = self.getentryid("urllist", "url", urlFrom)
+        toID = self.getentryid("urllist", "url", urlTo)
+               
+        cursor = self.con.cursor()
+        cursor.execute("insert into link value (%d,%d)" % (fromID,toID))
+        self.dbmommit()
+        
     #Start with a list of pages, 
     #search to the given depth
     def crawl(self, pages,depth=2):
@@ -136,27 +143,43 @@ class Crawler:
         cursor = self.con.cursor()
         # create pagerank table
         cursor.execute("drop table if exists pagerank")
-        cursor.execute("create table pagerank(urlid primary key,score float)")
+        cursor.execute("create table pagerank (urlid int primary key,score float(20,19))")
     
         # initialize every url with PageRank of 1
-        cursor.execute("insert into pagerank select rowid,1.0 from urllist")
+        cursor.execute("insert into pagerank select rowid,100.0 from urllist")
         self.dbmommit()
         for i in range(iterations):
             print("iteration: %d" %i)
-            cursor.execute("select * form urllist")
+            cursor.execute("select * from urllist")
             urls = cursor.fetchall()
             for url in urls:
-                pre = 0.15
+                pr = 0.15
                 
                 urlid = url[0]
-                cursor.execute("select distinct fromid where toid = %d " %urlid )
+                cursor.execute("select distinct fromid from link where toid = %d " %urlid )
                 fromids = cursor.fetchall()
                 
                 # 
                 for fromid in fromids:
                     fromid = fromid[0]
-                    cursor.execute("select score form pagerank where urlid = %d" % fromid)
-                    cursor.fetchall()[0]
+                    cursor.execute("select score from pagerank where urlid = %d" % fromid)
+                    ret = cursor.fetchone()
+                    if ret ==None : continue
+                    score = ret[0]
+                    if score == 0 : score = 100
+                    
+                    cursor.execute("select count(*) from link where fromid = %d" % fromid)
+                    ret = cursor.fetchone()
+                    if ret == None:continue
+                    outlinks = ret[0]
+                   # print("score = %d outlinks = %d" %(score,outlinks))
+                    if outlinks == 0: 
+                        continue
+                    
+                    pr += 0.85*score/outlinks;
+               # print("url = %s urlid = %d pr = %f" %(url,urlid,pr))
+                self.con.cursor().execute('update pagerank set score=%d where urlid=%d' % (pr,urlid))
+                self.dbmommit()
                 # get the
                     
                     
@@ -293,17 +316,18 @@ class Query:
         for (score,urlid) in rankedscores[0:10]:
             print("%f\t%s" % (score,self.geturlname(urlid)))
   
-#crawler = Crawler("searchengine")
+crawler = Crawler("searchengine")
 #crawler.crateIndexTable() 
 #id = crawler.getentryid("wordlist", 'word', "abcddd3ds3")
 #print(id)
+crawler.caculatepagerank(iterations=20)
 
-query = Query("searchengine")
-q = "site index andy  programming"
+#query = Query("searchengine")
+#q = "site index andy  programming"
 #query.getmatchrows(q)
-urlname = query.geturlname(2)
-print(urlname)
-query.query(q)
+#urlname = query.geturlname(2)
+#print(urlname)
+#query.query(q)
     
     
 
