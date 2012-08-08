@@ -108,4 +108,35 @@
 	</navigation-case>
 	
 	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/JSFInAction/charpter8/inbox.jsp</from-view-id>
+		
+		<navigation-case>
+			<from-outcome>details</from-outcome>
+			<to-view-id>/JSFInAction/charpter8/details.jsp</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>approve</from-outcome>
+			<to-view-id>/JSFInAction/charpter8/approve.jsp</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>reject</from-outcome>
+			<to-view-id>/JSFInAction/charpter8/reject.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/JSFInAction/charpter8/show_all.jsp</from-view-id>
+		
+		<navigation-case>
+			<from-outcome>details</from-outcome>
+			<to-view-id>/JSFInAction/charpter8/details.jsp</to-view-id>
+		</navigation-case>
+		
+	</navigation-rule>
+	
+	
 </faces-config>
