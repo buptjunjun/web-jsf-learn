@@ -8,7 +8,7 @@ import urllib
 from bs4 import BeautifulSoup
 import MySQLdb
 import re
-
+from math import tanh 
 ignoreWords = ["is","are","am"]
 class Crawler:
        
@@ -38,6 +38,7 @@ class Crawler:
             return ret[0]
         else:
             return ret[0]
+        cursor.close()
     
     # index an individula page
     def addtoindex(self, url, soup):
@@ -63,6 +64,7 @@ class Crawler:
             print("inert into wordlocation (urlid,wordid,location) value (%d,%d,%d)" %(urlid,wordid,i))
             #cursor.execute("inert into wordlocation (urlid,wordid,location) value (%d,%d,%d)" %(urlid,urlid,i))
             cursor.execute("insert into wordlocation  value (%d,%d,%d)" %(urlid,wordid,i))
+            cursor.close()
         self.dbmommit()
     
     
@@ -97,7 +99,7 @@ class Crawler:
             ret = cursor.fetchone()
             if ret != None:
                 return True
-            
+        cursor.close()      
         return False
     
     
@@ -109,6 +111,7 @@ class Crawler:
                
         cursor = self.con.cursor()
         cursor.execute("insert into link value (%d,%d)" % (fromID,toID))
+        cursor.close()
         self.dbmommit()
         
     #Start with a list of pages, 
@@ -180,6 +183,7 @@ class Crawler:
                # print("url = %s urlid = %d pr = %f" %(url,urlid,pr))
                 self.con.cursor().execute('update pagerank set score=%d where urlid=%d' % (pr,urlid))
                 self.dbmommit()
+                cursor.close()
                 # get the
                     
                     
@@ -238,6 +242,7 @@ class Query:
         cur=cursor.fetchall()
         rows=[row for row in cur]
         print(rows)
+        cursor.close()
         return rows,wordids 
            
 
@@ -246,6 +251,7 @@ class Query:
         cursor = self.con.cursor()
         cursor.execute("select * from urllist where rowid = %d " % id)
         ret = cursor.fetchone()
+        cursor.close()
         if ret == None:
             return None
         return ret[1]
@@ -315,12 +321,134 @@ class Query:
         rankedscores = sorted([ (score,url) for (url,score) in scores.items()],reverse = 1)
         for (score,urlid) in rankedscores[0:10]:
             print("%f\t%s" % (score,self.geturlname(urlid)))
-  
+
+#artifical nerus network
+class Searchnet:
+    def __init__(self,dbname):
+        self.con = MySQLdb.Connect(host = '127.0.0.1', user = 'root', passwd = '',db=dbname)
+    def __del__(self):
+        self.con.close()
+        
+    def maketable(self):
+        cur = self.con.cursor()
+        cur.execute("CREATE TABLE hiddennode (create_key varchar(200))")
+        cur.execute("CREATE TABLE wordhidden (fromid int, toid int,strength float)")
+        cur.execute("CREATE TABLE hiddenurl (fromid int, toid int ,strength float)")
+        cur.close()
+        self.dbmommit();
+    def dbmommit(self):
+        self.con.commit()
+          
+    def getstrength(self,fromid,toid,layer):
+        cursor = self.con.cursor()
+        if layer == 0:
+            table = "wordhidden"
+        elif layer == 1:
+            table = "hiddenurl"
+        cursor.execute("select strength from %s where fromid = %d and toid = %d" %(table,fromid,toid))
+        ret = cursor.fetchone()
+        if ret == None:
+            #cursor.execute("insert into %s (fromid,toid,strength) value (%d,%d,%f)" %(table,fromid,toid,strength))
+            if layer == 0: return -0.2
+            if layer == 1: return 0
+        return ret[0]
+        
+    def setstrength(self,fromid,toid,layer,strength):
+        cursor = self.con.cursor()
+        if layer == 0:
+            table = "wordhidden"
+        elif layer == 1:
+            table = "hiddenurl"
+        cursor.execute("select strength from %s where fromid = %d and toid = %d"  % (table,fromid,toid))
+        ret = cursor.fetchone()
+        if ret == None:
+            cursor.execute("insert into %s (fromid,toid,strength) value (%d,%d,%f)" %(table,fromid,toid,strength))
+        else: 
+            cursor.execute("update %s set strength = %f where  fromid = %d and toid = %d" %(table,strength,fromid,toid))
+        cursor.close()
+        
+    def generatehiddennode(self,wordids,urls):
+        if len(wordids) > 3 :return None
+        
+        # Check if we already created a node for this set of words
+        createkey="_".join(sorted(str(wi) for wi in wordids))
+        cursor = self.con.cursor()
+        cursor.execute("select * from hiddennode where create_key = '%s' " % createkey )
+        res = cursor.fetchone() 
+        
+        # if not create if
+        if res == None:
+            cursor.execute("insert into hiddennode (create_key) value ('%s')" % createkey)
+            hiddenid = cursor.lastrowid
+            for wordid in wordids:
+                self.setstrength(wordid, hiddenid, 0, 1.0/len(wordids))
+            for urlid in urls:
+                self.setstrength(hiddenid, urlid, 1, 0.1)
+            self.dbmommit()
+            cursor.close()
+            
+    def getallhiddenids(self,wordids,urlids):
+        l1={}
+        cursor = self.con.cursor()
+        for wordid in wordids:   
+            cursor.execute("select toid from wordhidden where fromid = %d " % wordid )
+            res = cursor.fetchall()
+            for row in res:
+                l1[row[0]] = 1 
+        for urlid in urlids:   
+            cursor.execute("select fromid from hiddenurl where toid = %d " % urlid )
+            res = cursor.fetchall()
+            for row in res:
+                l1[row[0]] = 1 
+        return l1.keys()
+    
+    def setupnetwork(self,wordids,urlids): 
+         # value lists
+        self.wordids=wordids
+        self.hiddenids=self.getallhiddenids(wordids,urlids)
+        self.urlids=urlids
+        # node outputs
+        self.ai = [1.0]*len(self.wordids)
+        self.ah = [1.0]*len(self.hiddenids)
+        self.ao = [1.0]*len(self.urlids)
+        # create weights matrix
+        self.wi = [[self.getstrength(wordid,hiddenid,0)
+        for hiddenid in self.hiddenids]
+        for wordid in self.wordids]
+        self.wo = [[self.getstrength(hiddenid,urlid,1)
+        for urlid in self.urlids]
+        for hiddenid in self.hiddenids]
+      
+    def feedforward(self):
+        # the only inputs are the query words
+        for i in range(len(self.wordids)):
+            self.ai[i] = 1.0
+     
+        # hidden activateions
+        for j in range(len(self.hiddenids)):
+            sum = 0.0
+            for i in range(len(self.wordids)):
+                sum = sum + self.ai[i] * self.wi[i][j]
+            self.ah[j] = tanh(sum)
+        
+        # output activations
+        for k in range(len(self.urlids)):
+            sum = 0.0
+            for j in range(len(self.hiddenids)):
+                sum = sum + self.ah[j]*self.wo[j][k]
+            self.ao[k] = tanh(sum)
+        
+        return self.ao[:]
+    
+    def getresult(self,wordids,urlids):
+          self.setupnetwork(wordids, urlids)
+          return self.feedforward()
+         
 crawler = Crawler("searchengine")
 #crawler.crateIndexTable() 
 #id = crawler.getentryid("wordlist", 'word', "abcddd3ds3")
 #print(id)
-crawler.caculatepagerank(iterations=20)
+#crawler.caculatepagerank(iterations=20)
 
 #query = Query("searchengine")
 #q = "site index andy  programming"
@@ -329,6 +457,13 @@ crawler.caculatepagerank(iterations=20)
 #print(urlname)
 #query.query(q)
     
+searchnet = Searchnet("searchengine")
+#searchnet.maketable()
+wWorld,wRiver,wBank =101,102,103
+uWorldBank,uRiver,uEarth =201,202,203
+#searchnet.generatehiddennode([wWorld,wBank],[uWorldBank,uRiver,uEarth])
+res = searchnet.getresult([wWorld,wBank],[uWorldBank,uRiver,uEarth])
+print(res)
     
 
     
