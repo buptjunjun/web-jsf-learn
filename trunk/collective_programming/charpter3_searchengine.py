@@ -20,7 +20,7 @@ class Crawler:
     def __del__(self):
         self.con.close()
     
-    def dbmommit(self):
+    def dbcommit(self):
         self.con.commit()
     
     # Auxilliary function for getting a entryid and 
@@ -32,7 +32,7 @@ class Crawler:
         if ret == None:
             print("insert into %s (%s) value ('%s')" %(table,field,value))
             cur = cursor.execute("insert into %s (%s) value ('%s')" %(table,field,value))
-            self.dbmommit()
+            self.dbcommit()
             cursor.execute("select rowid from %s where %s = '%s'"% (table,field,value))
             ret = cursor.fetchone()
             return ret[0]
@@ -65,7 +65,7 @@ class Crawler:
             #cursor.execute("inert into wordlocation (urlid,wordid,location) value (%d,%d,%d)" %(urlid,urlid,i))
             cursor.execute("insert into wordlocation  value (%d,%d,%d)" %(urlid,wordid,i))
             cursor.close()
-        self.dbmommit()
+        self.dbcommit()
     
     
     # extract the text from an HTML page(no tags)
@@ -112,7 +112,7 @@ class Crawler:
         cursor = self.con.cursor()
         cursor.execute("insert into link value (%d,%d)" % (fromID,toID))
         cursor.close()
-        self.dbmommit()
+        self.dbcommit()
         
     #Start with a list of pages, 
     #search to the given depth
@@ -139,7 +139,7 @@ class Crawler:
                             newpages.add(url)
                         linkText = self.gettextonly(link)
                         self.addlinkref(page, url, linkText)
-                self.dbmommit()
+                self.dbcommit()
             pages =newpages
     
     def caculatepagerank(self,iterations = 20):
@@ -150,7 +150,7 @@ class Crawler:
     
         # initialize every url with PageRank of 1
         cursor.execute("insert into pagerank select rowid,100.0 from urllist")
-        self.dbmommit()
+        self.dbcommit()
         for i in range(iterations):
             print("iteration: %d" %i)
             cursor.execute("select * from urllist")
@@ -182,7 +182,7 @@ class Crawler:
                     pr += 0.85*score/outlinks;
                # print("url = %s urlid = %d pr = %f" %(url,urlid,pr))
                 self.con.cursor().execute('update pagerank set score=%d where urlid=%d' % (pr,urlid))
-                self.dbmommit()
+                self.dbcommit()
                 cursor.close()
                 # get the
                     
@@ -198,7 +198,7 @@ class Crawler:
         cur.execute("CREATE TABLE link (fromid INT , toid INT)")
         cur.execute("CREATE TABLE linkwords (wordid INT , linkid INT)")
         cur.close()
-        self.dbmommit();
+        self.dbcommit();
     
 class Query:
    
@@ -335,8 +335,8 @@ class Searchnet:
         cur.execute("CREATE TABLE wordhidden (fromid int, toid int,strength float)")
         cur.execute("CREATE TABLE hiddenurl (fromid int, toid int ,strength float)")
         cur.close()
-        self.dbmommit();
-    def dbmommit(self):
+        self.dbcommit();
+    def dbcommit(self):
         self.con.commit()
           
     def getstrength(self,fromid,toid,layer):
@@ -384,7 +384,7 @@ class Searchnet:
                 self.setstrength(wordid, hiddenid, 0, 1.0/len(wordids))
             for urlid in urls:
                 self.setstrength(hiddenid, urlid, 1, 0.1)
-            self.dbmommit()
+            self.dbcommit()
             cursor.close()
             
     def getallhiddenids(self,wordids,urlids):
@@ -400,7 +400,7 @@ class Searchnet:
             res = cursor.fetchall()
             for row in res:
                 l1[row[0]] = 1 
-        return l1.keys()
+        return [ key for key in l1.keys()]
     
     def setupnetwork(self,wordids,urlids): 
          # value lists
@@ -443,7 +443,63 @@ class Searchnet:
     def getresult(self,wordids,urlids):
           self.setupnetwork(wordids, urlids)
           return self.feedforward()
-         
+      
+    def dtanh(self,y):
+        return 1-y*y
+    
+    def backPropagate(self,targets,N=0.5):
+        #caculate errors for output
+        output_deltas = [0.0]*len(self.urlids)
+        for k in range(len(self.urlids)):
+            error = targets[k] - self.ao[k]
+            output_deltas[k] =self.dtanh(self.ao[k])*error
+        
+        # caculate error for hidden layer
+        hidden_deltas = [0.0] * len(self.hiddenids)
+        for j in range(len(self.hiddenids)):
+            error = 0.0
+            for k in range(len(self.urlids)):
+                error += output_deltas[k] * self.wo[j][k]
+            hidden_deltas[j] = self.dtanh(self.ah[j]) * error
+             
+        # update output weight
+        for j in range(len(self.hiddenids)):
+            for k in range(len(self.urlids)):
+                change = output_deltas[k] * self.ah[j]
+                self.wo[j][k] += N * change
+
+        # upate input weights
+        for j in range(len(self.wordids)):
+            for k in range(len(self.hiddenids)):
+                change = hidden_deltas[k] * self.ai[j]
+                self.wi[j][k] += N * change
+            
+    def trainquery(self,wordids,urlids,selectedurls):
+        # generate a hidden node if necessary
+        self.generatehiddennode(wordids, urlids)
+        
+        self.setupnetwork(wordids, urlids)
+        self.feedforward()
+        
+        targets = [0.0] * len(urlids)
+        for selectedurl in selectedurls:
+            targets[urlids.index(selectedurl)] = 1.0
+        
+        error = self.backPropagate(targets)
+        self.updatedatabase()
+    
+    def updatedatabase(self):
+        #set them to database value
+        
+        for i in range(len(self.wordids)):
+            for j in range(len(self.hiddenids)):              
+                self.setstrength(self.wordids[i], self.hiddenids[j], 0, self.wi[i][j])
+                
+        for i in range(len(self.hiddenids)):
+            for j in range(len(self.urlids)):
+                self.setstrength(self.hiddenids[i], self.urlids[j], 1, self.wo[i][j])
+        self.dbcommit()
+            
 crawler = Crawler("searchengine")
 #crawler.crateIndexTable() 
 #id = crawler.getentryid("wordlist", 'word', "abcddd3ds3")
@@ -462,6 +518,7 @@ searchnet = Searchnet("searchengine")
 wWorld,wRiver,wBank =101,102,103
 uWorldBank,uRiver,uEarth =201,202,203
 #searchnet.generatehiddennode([wWorld,wBank],[uWorldBank,uRiver,uEarth])
+searchnet.trainquery([wWorld,wBank],[uWorldBank,uRiver,uEarth],[uWorldBank,uRiver])
 res = searchnet.getresult([wWorld,wBank],[uWorldBank,uRiver,uEarth])
 print(res)
     
