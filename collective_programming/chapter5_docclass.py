@@ -85,24 +85,73 @@ def sampletrain(cl):
 
 #naive bayesian classifier
 class naivebayes(classifier):
+    def __init__(self,getfeatures):
+        classifier.__init__(self,getfeatures)
+        self.threshold={}
+        
+    def setthreshold(self,cat,t):
+        self.threshold[cat] = t
+    
+    def getthreshold(self,cat):
+        if not cat in self.threshold: return 1.0
+        return self.threshold[cat]
+    
     def docprob(self, item, cat):
         features = self.getfeatures(item)
         
         # mulitiply all the probabilities  of all features together
         p = 1
-        for f in features: p *= self.weightedprob(f, cat, self.fprob)
+        for f in features: p *= self.weightedprob(f, cat, self.fprob)        
+        return p
+
+    def prob(self,item,cat):
+        catprob = self.catcount(cat) / self.totalcount()
+        docprob = self.docprob(item, cat)
+        return docprob * catprob
+
+    def classify(self,item, default=None):
+        probs = {}
+        # Find the category with the highest probability
+        max = 0.0
+        for cat in self.categories():
+            probs[cat] = self.prob(item, cat)
+            if probs[cat] > max:
+                max  = probs[cat]
+                best = cat
+                
+        for cat in probs: 
+            if cat == best:continue
+            if probs[cat] * self.getthreshold(best) > probs[best]:
+                return default
+            return best
+
+
+class fisherclassifier(classifier):
+    def cprob(self,f,cat):
+        # the frequency of this feature in this categroy
+        clf = self.fprob(f, cat)
+        
+        if clf == 0: return 0
+        
+        # the frequency of this feature in all categories
+        freqsum = sum([self.frpb(f,c) for c in self.categories()])
+        
+        # the probablility is the frequency in thsi category divided by
+        # the overall frequency
+        p = clf/freqsum
         
         return p
 
-
-cl=classifier(getwords)
+cl=naivebayes(getwords)
 sampletrain(cl)
-print(cl.fcount("quick", "good")) 
-bp =  cl.weightedprob("money","good",cl.fprob)
-print(bp)
-sampletrain(cl)
-bp =  cl.weightedprob("money","good",cl.fprob)
-print(bp)
+print(cl.cc)
 
+print("quick fc " , cl.fc["quick"])
+
+#cl.setthreshold('bad',3.0)
+#print(cl.catcount("bad"))
+#print(cl.fcount("rabbit","good")+cl.fcount("rabbit","bad"))
+#cat = cl.classify(("quick money"))
+#print(cat)
 #ret = getwords('make quick money in the online casino')
 #print(ret)
