@@ -75,13 +75,7 @@ class classifier:
         bp = (weight*ap + totals*basicprob)/(weight + totals)
         return bp
 
-def sampletrain(cl):
-        cl.train('Nobody owns the water.','good')
-        cl.train('the quick rabbit jumps fences','good')
-        cl.train('buy pharmaceuticals now','bad')
-        cl.train('make quick money at the online casino','bad')
-        cl.train('the quick brown fox jumps','good')
-        
+   
 
 #naive bayesian classifier
 class naivebayes(classifier):
@@ -127,6 +121,17 @@ class naivebayes(classifier):
 
 
 class fisherclassifier(classifier):
+    def __init__(self,getfeatures):
+        classifier.__init__(self,getfeatures)
+        self.minimums = {}
+        
+    def setminimum(self,cat,min):
+        self.minimums[cat]=min
+        
+    def getminimum(self,cat):
+        if cat not in self.minimums: return 0
+        return self.minimums[cat]
+    
     def cprob(self,f,cat):
         # the frequency of this feature in this categroy
         clf = self.fprob(f, cat)
@@ -134,24 +139,52 @@ class fisherclassifier(classifier):
         if clf == 0: return 0
         
         # the frequency of this feature in all categories
-        freqsum = sum([self.frpb(f,c) for c in self.categories()])
+        freqsum = sum([self.fprob(f,c) for c in self.categories()])
         
         # the probablility is the frequency in thsi category divided by
         # the overall frequency
-        p = clf/freqsum
-        
+        p = clf/freqsum       
         return p
 
-cl=naivebayes(getwords)
+    def fisherprob(self,item,cat):
+        # multiply all the probabilities togeter
+        p = 1
+        features = self.getfeatures(item)
+        for f in features:
+            p *= self.weightedprob(f, cat, self.cprob)           
+        return p
+    
+    def classify(self,item,default=None):
+        best = default
+        max = 0.0
+        for cat in self.categories():
+            p = self.fisherprob(item, cat)
+            print(p)
+            if p > max and p > self.getminimum(cat):
+                max = p
+                best = cat
+        return best
+
+def sampletrain(cl):
+        cl.train('Nobody owns the water.','good')
+        cl.train('the quick rabbit jumps fences','good')
+        cl.train('buy pharmaceuticals now','bad')
+        cl.train('make quick money at the online casino','bad')
+        cl.train('the quick brown fox jumps','good')
+     
+
+cl=fisherclassifier(getwords)
 sampletrain(cl)
+fp = print(cl.cprob("quick" , "good"))
+print(fp)
+print("quick fc " , cl.fc["quick"])
 print(cl.cc)
 
-print("quick fc " , cl.fc["quick"])
 
 #cl.setthreshold('bad',3.0)
 #print(cl.catcount("bad"))
 #print(cl.fcount("rabbit","good")+cl.fcount("rabbit","bad"))
-#cat = cl.classify(("quick money"))
-#print(cat)
+cat = cl.classify(("rabbit jumps"))
+print(cat)
 #ret = getwords('make quick money in the online casino')
 #print(ret)
