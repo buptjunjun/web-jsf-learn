@@ -64,8 +64,16 @@ class classifier:
         # category divided by to total number of items in this category
         return self.fcount(f,cat)/self.catcount(cat)
     
+    def weightedprob(self, f, cat, prf, weight=1.0, ap=0.5):
+        # caculate current probability
+        basicprob=prf(f,cat)
         
+        # count the number of times thsi feature has appeared in all categories
+        totals = sum([self.fcount(f, c) for c in self.categories()])
     
+        # caculate the weighted average
+        bp = (weight*ap + totals*basicprob)/(weight + totals)
+        return bp
 
 def sampletrain(cl):
         cl.train('Nobody owns the water.','good')
@@ -74,10 +82,27 @@ def sampletrain(cl):
         cl.train('make quick money at the online casino','bad')
         cl.train('the quick brown fox jumps','good')
         
+
+#naive bayesian classifier
+class naivebayes(classifier):
+    def docprob(self, item, cat):
+        features = self.getfeatures(item)
         
+        # mulitiply all the probabilities  of all features together
+        p = 1
+        for f in features: p *= self.weightedprob(f, cat, self.fprob)
+        
+        return p
+
+
 cl=classifier(getwords)
 sampletrain(cl)
 print(cl.fcount("quick", "good")) 
-print(cl.fprob("quick","good"))
+bp =  cl.weightedprob("money","good",cl.fprob)
+print(bp)
+sampletrain(cl)
+bp =  cl.weightedprob("money","good",cl.fprob)
+print(bp)
+
 #ret = getwords('make quick money in the online casino')
 #print(ret)
