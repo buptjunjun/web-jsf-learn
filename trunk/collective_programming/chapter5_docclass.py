@@ -176,7 +176,6 @@ def sampletrain(cl):
 cl=fisherclassifier(getwords)
 sampletrain(cl)
 print(cl.cprob("quick" , "good"))
-print(fp)
 print("quick fc " , cl.fc["quick"])
 print(cl.cc)
 
