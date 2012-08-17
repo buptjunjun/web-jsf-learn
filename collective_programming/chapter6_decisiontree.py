@@ -129,7 +129,23 @@ def classify(observation,tree):
             if v == tree.value: branch = tree.tb
             else :branch = tree.fb
         return classify(observation,branch)
-    
+
+def prune(tree,mingain):
+    # if the branches are not leaves then prune them 
+    if tree.tb.result == None:
+        prune(tree.tb,mingain)
+        
+    if tree.fb.result == None:
+        prune(tree.fb,mingain)
+
+    # if both nodes are now leaves see if they should merge
+    if tree.tb.result != None and  tree.fb.result != None:
+        #build a combined dataset
+        tb,fb =[],[]
+        for v,c in tree.tb.results.items():
+            tb+=
+
+   
 # print tree on console
 def printtree(tree,indent=" "):
     # is this a leaf node?
