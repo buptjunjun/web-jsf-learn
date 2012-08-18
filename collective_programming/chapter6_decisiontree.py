@@ -130,22 +130,62 @@ def classify(observation,tree):
             else :branch = tree.fb
         return classify(observation,branch)
 
+# observation = ['(direct)','USA','yes',5]
+# deal with the missing feature when classifying a observation
+def mdclassify(observation,tree):
+    if tree.results != None:
+        return tree.results
+    else : 
+        v = observation[tree.col]
+        # deal with missing feature
+        if v==None:
+            tr,fr = mdclassify(observation,tree.tb), mdclassify(observation,tree.fb)
+            tcount = sum(tr.values())
+            fcount = sum(fr.values())
+            # true weight,and false weight
+            tw = float(tcount)/(fcount+tcount)
+            fw =  float(fcount)/(fcount+tcount)
+            result = {}
+            
+            for k,v in tr.items(): result[k]=v*tw
+            for k,v in fr.items(): result[k]=v*tw
+            return result
+        else:
+            branch = None
+            if isinstance(v,int) or isinstance(v,float):
+                if v > tree.value: branch = tree.tb
+                else : branch = tree.fb()
+            else :
+                if v == tree.value: branch = tree.tb
+                else :branch = tree.fb
+            return mdclassify(observation,branch)
+
+
 def prune(tree,mingain):
     # if the branches are not leaves then prune them 
-    if tree.tb.result == None:
+    if tree.tb.results == None:
         prune(tree.tb,mingain)
         
-    if tree.fb.result == None:
+    if tree.fb.results == None:
         prune(tree.fb,mingain)
 
     # if both nodes are now leaves see if they should merge
-    if tree.tb.result != None and  tree.fb.result != None:
+    if tree.tb.results != None and  tree.fb.results != None:
         #build a combined dataset
         tb,fb =[],[]
         for v,c in tree.tb.results.items():
-            tb+=
-
-   
+            tb+=[[v]]*c
+        for v,c in tree.fb.results.items():
+            fb+=[[v]]*c
+        print(tb+fb)  
+        # test the reduction in entropy
+        delta = entropy(tb+fb) - (entropy(tb)+entropy(fb))/2
+        
+        if delta < mingain:
+        # Merge the branches 
+            tree.tb, tree.fb = None,None
+            tree.results=uniquecounts(tb+fb)
+        
 # print tree on console
 def printtree(tree,indent=" "):
     # is this a leaf node?
@@ -155,7 +195,7 @@ def printtree(tree,indent=" "):
         #print the vriteria
         print (str(tree.col)+":"+str(tree.value)+"?")
         #print the branches
-        print(indent+"T->",end="")
+        print(indent+"T->",end=" ")
         printtree(tree.tb,indent+" ")
         print(indent+"F->",end="")
         printtree(tree.fb,indent+" ")
@@ -215,8 +255,10 @@ def drawnode(draw,tree,x,y):
 #print(gini1)
 #gini2 = entropy(s2)
 #print(gini2)         
-tree= buildtree(my_data)
-printtree(tree)
-drawtree(tree)
-ret = classify(['(direct)','USA','yes',5],tree)
-print(ret)
+#tree= buildtree(my_data)
+#drawtree(tree)
+#ret = mdclassify(['(direct)','USA',None,None],tree)
+#print(ret)
+#prune(tree,0.9)
+#printtree(tree)
+#drawtree(tree)
