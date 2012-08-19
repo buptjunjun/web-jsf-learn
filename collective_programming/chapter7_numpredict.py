@@ -1,5 +1,6 @@
 from random import random,randint
 import math
+import chapter4_groupTravel
 
 # use wineprice and winset1 to create random wine price 
 def wineprice(rating, age):
@@ -125,7 +126,7 @@ def testalgorithm(algf,trainset,testset):
         # the guess value of row['input']
         guessvalue = algf(trainset,row['input'])
         error  += (guessvalue-row['result'])**2;
-    # return the average of 
+    # return the average of  error
     return error / len(testset)
 
 # now process cross validation
@@ -136,11 +137,24 @@ def crossvalidate(algf ,data, trails=100,testp=0.15):
         errors+= testalgorithm(algf,trainset,testset)
     return errors/trails
 
+# normalize the  input data
+def rescale(data,scale):
+    scaleddata = []
+    for row in data:
+        scaled = [scale[i]*row['input'][i] for i in range(len(scale))]
+        scaleddata.append({'input':scaled,'result':row['result']})
+    return scaleddata
+
+# using optimize algorithm to choose the most suitable scale vector
+def createcostfunction(algf,data):
+    def costf(scale):
+        sdata=rescale(data,scale)
+        return crossvalidate(algf,sdata,trails=10)
+    return costf;
 
 
 
-
-dataset1 = wineset1()
+dataset1 = wineset1();
 print(dataset1)
 input = [92.01363472818139, 47.079372404427744]
 result = knnestimate(dataset1,input)
@@ -153,17 +167,32 @@ trainset,testset = dividedata(dataset1)
 print(len(trainset))
 print(len(testset))
 
-print("-------------------------")
-def knn1(d,v): return  weightedknn(d,v,1)
-def knn2(d,v): return  weightedknn(d,v,2)
-def knn3(d,v): return  weightedknn(d,v,3)
-def knn4(d,v): return  weightedknn(d,v,4)
+#print("-------------------------")
+#def knn1(d,v): return  weightedknn(d,v,1)
+#def knn2(d,v): return  weightedknn(d,v,2)
+#def knn3(d,v): return  weightedknn(d,v,3)
+#def knn4(d,v): return  weightedknn(d,v,4)
+#
+#error1 = crossvalidate(knn1,dataset1)
+#print("error1 = %d " % error1 )
+#error2 = crossvalidate(knn2,dataset1)
+#print("error2 = %d " % error2 )
+#error3 = crossvalidate(knn3,dataset1)
+#print("error3 = %d " % error3 )
+#error4 = crossvalidate(knn4,dataset1)
+#print("error4 = %d " % error4 )
 
-error1 = crossvalidate(knn1,dataset1)
-print("error1 = %d " % error1 )
-error2 = crossvalidate(knn2,dataset1)
-print("error2 = %d " % error2 )
-error3 = crossvalidate(knn3,dataset1)
-print("error3 = %d " % error3 )
-error4 = crossvalidate(knn4,dataset1)
-print("error4 = %d " % error4 )
+#weightDomain = [(0,20)]*2
+#costfunction = createcostfunction(knnestimate,dataset1)
+#vect = chapter4_groupTravel.annealingoptimize(weightDomain,costfunction)
+#print(vect)
+
+from matplotlib.pyplot import *
+a=array([1,2,3,4])
+b=array([4,2,3,1])
+plot(a,b)
+show( )
+t1=arange(0.0,10.0,0.1)
+plot(t1,sin(t1))
+show()
+

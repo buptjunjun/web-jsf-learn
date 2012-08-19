@@ -130,7 +130,7 @@ def hillclimb(domain, costf):
             break;
     return sol
 
-def annealingoptimize(domain,costf,T=10000.0,cool=0.995,step=1):
+def annealingoptimize(domain,costf,T=1000.0,cool=0.995,step=1):
     # initialize the values randomly
         vec = [random.randint(int(domain[j][0]),int(domain[j][1])) for j in range(len(domain))]
         
@@ -156,7 +156,9 @@ def annealingoptimize(domain,costf,T=10000.0,cool=0.995,step=1):
             # is it better or does it make the probability
             if costb < costa or float(random.random()) < float(p):
                 vec = vecb
-            
+                print("vect = ",vec)
+                print ("cost = ", costb)
+                print("temprature=",T)
             # Decrease the temprature
             T =  T * cool
         return vec
@@ -218,11 +220,11 @@ def geneticoptionmize(domain, costf, popsize = 50, step=1, mutprod=0.2, elite=0.
         print(scores[0][0])
     return scores[0][1]
 
-domainTest = [(0,8)]*2*len(people)
-#r = randomoptimize(domainTest,schedulecost)
-#r = hillclimb(domainTest,schedulecost)
-#r = annealingoptimize(domainTest,schedulecost)
-r = geneticoptionmize(domainTest,schedulecost)
-printschedule(r)     
-cost = schedulecost(r)
-print(cost)
+#domainTest = [(0,8)]*2*len(people)
+##r = randomoptimize(domainTest,schedulecost)
+##r = hillclimb(domainTest,schedulecost)
+##r = annealingoptimize(domainTest,schedulecost)
+#r = geneticoptionmize(domainTest,schedulecost)
+#printschedule(r)     
+#cost = schedulecost(r)
+#print(cost)
