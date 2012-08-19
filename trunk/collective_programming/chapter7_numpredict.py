@@ -15,14 +15,14 @@ def wineprice(rating, age):
       # increases to 5x original value as it approches its peak
       price = price * (5 * ((age+1)/peak_age))
     
-    if price < 0:price = 0
+    if price < 0:price = 2+5*random()
     return price
 def wineset1():
     rows = []
     for i in range(300):
         # create a random age and rating
-        rating = random()*50 + 50
-        age=random()*50
+        rating = random()*50 + 60
+        age=random()*50+2
         
         # get reference price 
         price  = wineprice(rating,age)
@@ -80,7 +80,7 @@ def subtracteweight(dist,const=1.0):
 # use weight to improve the KNN algorithm
 #Gaussian function
 def gaussion(dist,sigma=10.0):
-    return math.e**(dist**2/(2*sigma**2))
+    return math.e**(-dist**2/(2*sigma**2))
  
 # weighted KNN using the 3 weighted function
 def weightedknn(data,vect1,k=3,weightf=gaussion):
@@ -153,6 +153,51 @@ def createcostfunction(algf,data):
     return costf;
 
 
+# guess the probability of the guess of price range fron a to b
+# for example the probability between 10 and 100 
+def probguess (data, vec1,low ,high, k = 3, weightf = gaussion):
+    dlist = getdistances(data,vec1)
+    nweight = 0.0
+    tweight = 0.0
+    
+    for i in range(k):
+        dist = dlist[i][0] # distance
+        idx = dlist[i][1]  # data index
+        weight = weightf(dist)
+        v = data[idx]['result']
+        
+        # is this point in the range?
+        if v >= low and v <=high:
+            nweight += weight
+        tweight+=weight
+        
+    if tweight == 0:return 0
+        
+    # the probability  is the weights in the range divided by all the weights
+    return float(nweight / tweight)
+
+# graph the probability 
+def probabilitygraph(data,vec1,high,k=5,weightf=gaussion,ss = 5.0):
+    # make the range for the prices
+    t1 = arange(0.0,high,0.1)
+    
+    # get the probabilities of the entire range
+    probs = [probguess(data,vec1,v,v+0.5,k,weightf) for v in t1]
+    
+    # smooth them by adding the gaussian of nearby probilites
+    smoothed=[]
+    for i in range(len(probs)):
+        sv = 0.0
+        for j in range(0,len(probs)):
+            dist = abs(i-j)*0.5
+            weight = gaussion(dist)
+            sv += weight * probs[j]
+        smoothed.append(sv)
+        
+    smoothed = array(smoothed)
+    print(smoothed)
+    plot(t1,smoothed)
+    show()
 
 dataset1 = wineset1();
 print(dataset1)
@@ -187,12 +232,18 @@ print(len(testset))
 #vect = chapter4_groupTravel.annealingoptimize(weightDomain,costfunction)
 #print(vect)
 
-from matplotlib.pyplot import *
-a=array([1,2,3,4])
-b=array([4,2,3,1])
-plot(a,b)
-show( )
-t1=arange(0.0,10.0,0.1)
-plot(t1,sin(t1))
-show()
+prob =probguess(dataset1,[99,20],80,120)
+print(prob)
 
+from pylab import *
+#a=array([1,2,3,4])
+#b=array([4,2,3,1])
+##plot(a,b)
+##show( )
+#t1=arange(0.0,10.0,1)
+#plot(t1,sin(t1))
+#show( )
+print("------------------")
+cost = weightedknn(dataset1,[79,40])
+print(cost)
+probabilitygraph(dataset1,[79,40],200)
