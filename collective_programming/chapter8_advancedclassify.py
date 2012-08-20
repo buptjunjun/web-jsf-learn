@@ -1,4 +1,6 @@
 from pylab import *
+from random import random
+import math
 
 class matchrow:
     
@@ -73,6 +75,87 @@ def dpclassify(point,avgs):
     y=dotproduct(point,avgs[0])-dotproduct(point,avgs[1])+b
     if y>0: return 0
     else: return 1   
+
+
+def matchcount(interest1,interest2):
+    '''
+      the number of interests they both hvae
+    '''
+    l1 = interest1.split(":")
+    l2 = interest2.split(":")
+    x = 0
+    for v in l1:
+        if v in l2:x+=1
+    return x
+
+def yesno(v):
+    '''
+    map yes and no to number
+    '''
+    if v=='yes': return 1
+    elif v == "no":return -1
+    else:return 0
+
+def miledistance(a1,a2):
+    '''
+    the distance of two people
+    '''
+    return 10* random() +10
+
+def veclength(a):
+    '''
+    caculate the length of a vector ----|a|
+    '''
+    return sum([a[i] for i in range(len(a))])**.5
+
+def loadnumerical():
+    oldrows = loadmatch('matchmaker.csv')
+    newrows = []
+    for row in oldrows:
+        d = row.data
+        data
+
+def rbf(v1,v2,gamma = 20):
+    '''
+    rbf = radial-basis function
+    '''
+    dv = [v1[i] - v2[i] for i in range(len(v1))]
+    l = veclength(dv)
+    return  math.e **(-gamma*l)
+
+
+def nlclassify(point,rows,offset,gamma=10):
+    '''
+    nlclassify = none linear classify
+    '''
+    sum0 = 0.0
+    sum1 = 0.0
+    count0 = 0
+    count1 = 0
+    for row in rows:
+        if row.match == 0:
+            sum0+=rbf(point,row.data,gamma)
+            count0+=1   
+        else: 
+            sum1 += rbf(point,row.data,gamma)
+            count1 += 1
+    y = (1.0/count0)*sum0-(1.0/count1)*sum1 + offset
+    
+    if y < 0: return 0
+    else : return 1
+    
+def getoffset(rows,gamma=10):
+    l0=[]
+    l1=[]
+    
+    for row in rows:
+        if row.match ==0:l0.append(row.data)
+        else : l1.append(row.data)
+    sum0 = sum(sum([rbf(v1,v2,gamma) for v1 in l0]) for v2 in l0)
+    sum1 = sum(sum([rbf(v1,v2,gamma) for v1 in l1]) for v2 in l1)
+    
+    return (1.0/(len(l1)**2))*sum1 - (1.0/(len(l0)**2))*sum0
+
 
 agesonly = loadmatch('agesonly.csv',allnum = True)
 matchmaker = loadmatch('matchmaker.csv')
