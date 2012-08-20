@@ -113,8 +113,39 @@ def loadnumerical():
     newrows = []
     for row in oldrows:
         d = row.data
-        data
+        data = [float(d[0]),yesno(d[1]),yesno(d[2]),
+                float(d[5]),yesno(d[6]),yesno(d[7]),
+                matchcount(d[3],d[8]),
+                miledistance(d[4],d[9]),
+                row.match]
+        newrows.append(matchrow(data))
+    return newrows
 
+
+def scaledata(rows):
+    '''
+    scale data to 0-1
+    '''
+    low=[99999999.0] * len(rows[0].data)
+    high=[-99999999.0] * len(rows[0].data)
+    
+    # Find the lowest and highest values
+    for row in rows:
+        d = row.data
+        for i in range(len(d)):
+            if d[i] < low[i] : low[i] = d[i]
+            if d[i] > high[i]:high[i] = d[i]
+    
+    # Create a function that scales data
+    def scaleinput(d):
+        return [(d.data[i] - low[i]) / (high[i] - low[i]) for i in range(len(low))]
+    
+    # Scale all the data
+    newrows = [matchrow(scaleinput(row) + [row.match]) for row in rows]
+    
+    # return the new data and the function
+    return newrows,scaleinput
+    
 def rbf(v1,v2,gamma = 20):
     '''
     rbf = radial-basis function
@@ -157,14 +188,23 @@ def getoffset(rows,gamma=10):
     return (1.0/(len(l1)**2))*sum1 - (1.0/(len(l0)**2))*sum0
 
 
-agesonly = loadmatch('agesonly.csv',allnum = True)
-matchmaker = loadmatch('matchmaker.csv')
-print(agesonly)
-print(matchmaker)
+#agesonly = loadmatch('agesonly.csv',allnum = True)
+#matchmaker = loadmatch('matchmaker.csv')
+#print(agesonly)
+#print(matchmaker)
+#
+#plotagematches(agesonly)
+#
+#average = lineartrain(agesonly)
+#print(average)
+#cls = dpclassify([30,30],average)
+#print(cls)
 
-plotagematches(agesonly)
+numericalData = loadnumerical()
+scaledset,scalef=scaledata(numericalData)
+average = lineartrain(scaledset)
+print(scaledset[2].data)
+print(scaledset[2].match)
 
-average = lineartrain(agesonly)
-print(average)
-cls = dpclassify([30,30],average)
-print(cls)
+test = dpclassify(scaledset[2].data,average)
+print(test)
