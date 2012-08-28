@@ -38,6 +38,8 @@ public class TxtSearcher
 	 * @throws ParseException
 	 */
 	
+	
+	
 	static public void search(String indexDir,String q) throws IOException, ParseException
 	{
 		Directory dir = FSDirectory.open(new File(indexDir));
