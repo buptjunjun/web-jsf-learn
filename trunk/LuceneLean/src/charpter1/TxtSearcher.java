@@ -23,7 +23,7 @@ public class TxtSearcher
 	public static void main(String [] args) throws IOException, ParseException
 	{
 		String indexDir = "."; // path of index file
-		String queryString = "cpu";
+		String queryString = "wan";
 		
 		search(indexDir,queryString);
 		
@@ -38,8 +38,6 @@ public class TxtSearcher
 	 * @throws ParseException
 	 */
 	
-	
-	
 	static public void search(String indexDir,String q) throws IOException, ParseException
 	{
 		Directory dir = FSDirectory.open(new File(indexDir));
@@ -48,9 +46,9 @@ public class TxtSearcher
 		
 		//contents是要进行search的field名字,在index时候建立的 使用QueryParser可以对query的文本进行分词
 		QueryParser parser = new QueryParser(Version.LUCENE_36,"contents",new StandardAnalyzer(Version.LUCENE_36));
-		//Query query = parser.parse(q);
+		Query query = parser.parse(q);
 		//不对Term的value进行分词。
-		Query query = new TermQuery(new Term("fullpath","D:\\work\\myself\\java books\\lucene\\charpter1\\testTxtFile\\name2 - 副本 (10).txt"));
+		//Query query = new TermQuery(new Term("fullpath","D:\\work\\myself\\java books\\lucene\\charpter1\\testTxtFile\\name2 - 副本 (10).txt"));
 		
 		
 		long start = System.currentTimeMillis();

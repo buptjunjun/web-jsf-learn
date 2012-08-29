@@ -2,6 +2,7 @@ package charpter1;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -11,6 +12,7 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Field.Index;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
@@ -49,6 +51,7 @@ public class TxtIndexer {
 				indexFile(f);
 			}
 		}
+		this.writer.commit();
 		
 		return this.writer.numDocs();
 	}
@@ -102,6 +105,41 @@ public class TxtIndexer {
 		this.writer.addDocument(doc);
 	}
 	
+	/**
+	 *  在index中加入一个doc
+	 * @param fileName
+	 * @throws IOException 
+	 * @throws CorruptIndexException 
+	 */
+	public void addAdocument(String fileName) throws CorruptIndexException, IOException
+	{
+		File f = new File(fileName);
+		Document doc = new Document();
+		doc.add(new Field("contents",new FileReader(f)));
+		// Field.Index.ANALYZED 和 NOT_ANALYZED 代表是否需要分析（分词)
+		doc.add(new Field("filename",f.getName(),Field.Store.YES,Field.Index.ANALYZED));
+		doc.add(new Field("fullpath",f.getPath(),Field.Store.YES,Field.Index.NOT_ANALYZED));
+		this.writer.addDocument(doc);
+		this.writer.commit();
+	}
+	
+	/**
+	 *  在index中加入一个doc
+	 * @param fileName
+	 * @throws IOException 
+	 * @throws CorruptIndexException 
+	 */
+	public void updateAdocument(String fileName) throws CorruptIndexException, IOException
+	{
+		File f = new File(fileName);
+		Document doc = new Document();
+		doc.add(new Field("contents",new FileReader(f)));
+		// Field.Index.ANALYZED 和 NOT_ANALYZED 代表是否需要分析（分词)
+		doc.add(new Field("filename",f.getName(),Field.Store.YES,Field.Index.ANALYZED));
+		doc.add(new Field("fullpath",f.getPath(),Field.Store.YES,Field.Index.NOT_ANALYZED));
+		this.writer.updateDocument(new Term("filename","-"),doc);
+		this.writer.commit();
+	}
 	
 	
 	/**
@@ -120,9 +158,10 @@ public class TxtIndexer {
 		try
 		{
 			indexer =  new TxtIndexer(indexDir);
-			numIndexed = indexer.index(dataDir, new TxtFileFilter());
-			
-			
+			//numIndexed = indexer.index(dataDir, new TxtFileFilter());
+			//indexer.addAdocument("D:\\work\\myself\\java books\\lucene\\charpter1\\testTxtFile\\wan xiao lan.txt");
+			indexer.updateAdocument("D:\\work\\myself\\java books\\lucene\\charpter1\\testTxtFile\\wan xiao lan.txt");
+			System.out.println("docs = " + indexer.writer.numDocs());
 		}
 		catch(Exception e)
 		{
