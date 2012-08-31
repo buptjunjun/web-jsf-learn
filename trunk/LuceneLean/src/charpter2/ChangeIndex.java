@@ -9,6 +9,7 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Field.TermVector;
 import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
@@ -42,8 +43,7 @@ public class ChangeIndex {
 	    //the "create" variable of indexWriter constructor must be "false"
 	    //IndexWriter(Directory d, Analyzer a, boolean create, IndexWriter.MaxFieldLength mfl) 
 		this.writer = new IndexWriter(dir,new StandardAnalyzer(Version.LUCENE_36),IndexWriter.MaxFieldLength.UNLIMITED);
-		
-		
+		//IndexReader reader = writer.getReader();
 	}
 	
 	/**
@@ -174,23 +174,23 @@ public class ChangeIndex {
 	public static void main(String[] args) throws IOException, ParseException {
 		// TODO Auto-generated method stub
 		ChangeIndex ci = new ChangeIndex("charpter2-1");
-		
-		//test add index
-		ci.addDocuments();
-		ci.commit();
-		
-		//test delete index
-		// the term to delete
-		//Term [] terms = {new Term("id","1"),new Term("id","10")};
-		//ci.deleteDocuments(terms);
-		
-		//test update index
-		System.out.println("before udpate");
-		ci.search("contents", "Haag");
-		ci.updateDocuments(new Term("id","1"));
-		ci.commit();
-		System.out.println("after udpate");
-		ci.search("contents", "Haag");
+		ci.writer.optimize(3);
+//		//test add index
+//		ci.addDocuments();
+//		ci.commit();
+//		
+//		//test delete index
+//		// the term to delete
+//		//Term [] terms = {new Term("id","1"),new Term("id","10")};
+//		//ci.deleteDocuments(terms);
+//		
+//		//test update index
+//		System.out.println("before udpate");
+//		ci.search("contents", "Haag");
+//		ci.updateDocuments(new Term("id","1"));
+//		ci.commit();
+//		System.out.println("after udpate");
+//		ci.search("contents", "Haag");
 	}
 
 }

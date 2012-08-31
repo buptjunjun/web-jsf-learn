@@ -24,7 +24,7 @@ public class TxtIndexer {
 	public TxtIndexer(String indexDir) throws IOException
 	{
 		Directory dir = FSDirectory.open(new File(indexDir));
-		this.writer = new IndexWriter(dir,new StandardAnalyzer(Version.LUCENE_36),true,IndexWriter.MaxFieldLength.UNLIMITED);
+		this.writer = new IndexWriter(dir,new StandardAnalyzer(Version.LUCENE_36),false,IndexWriter.MaxFieldLength.UNLIMITED);
 		
 		
 	}
@@ -158,10 +158,12 @@ public class TxtIndexer {
 		try
 		{
 			indexer =  new TxtIndexer(indexDir);
-			//numIndexed = indexer.index(dataDir, new TxtFileFilter());
+			numIndexed = indexer.index(dataDir, new TxtFileFilter());
+			// optimize all segment to one
+			//indexer.writer.optimize();
 			//indexer.addAdocument("D:\\work\\myself\\java books\\lucene\\charpter1\\testTxtFile\\wan xiao lan.txt");
-			indexer.updateAdocument("D:\\work\\myself\\java books\\lucene\\charpter1\\testTxtFile\\wan xiao lan.txt");
-			System.out.println("docs = " + indexer.writer.numDocs());
+			//indexer.updateAdocument("D:\\work\\myself\\java books\\lucene\\charpter1\\testTxtFile\\wan xiao lan.txt");
+			//System.out.println("docs = " + indexer.writer.numDocs());
 		}
 		catch(Exception e)
 		{
