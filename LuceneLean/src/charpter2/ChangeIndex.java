@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.document.CompressionTools;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.Field.TermVector;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
@@ -123,6 +125,9 @@ public class ChangeIndex {
 				Field.Index.ANALYZED));
 		writer.updateDocument(new Term("id", "1"),
 				doc);
+		Field f = new Field("city", "Den Haag",
+				Field.Store.YES,
+				Field.Index.ANALYZED,TermVector.WITH_POSITIONS);
 		
 		System.out.println("docs = " + writer.numDocs());
 
