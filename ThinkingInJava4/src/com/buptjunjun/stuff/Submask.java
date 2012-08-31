@@ -20,7 +20,8 @@ public class Submask {
 		String maskPattern1 = "([0-2]?\\d\\d\\.){3}\\d+";
 		String maskPattern2 = "/[1-9]\\d*";
 		String maskPattern3 = "1*0*";
-				
+		String maskPattern4 = "[1-9]\\d*";
+		
 		if(Pattern.matches(maskPattern1, mask))
 		{
 			System.out.println("mask 1");
@@ -30,6 +31,9 @@ public class Submask {
 				System.out.print(num+"  ");
 				try
 				{
+					if(!Pattern.matches(maskPattern4, num))
+						return false;
+						
 					int number = Integer.parseInt(num);
 					// if is between 0 and 255
 					if(number > 255 || number < 0)
@@ -86,7 +90,7 @@ public class Submask {
 		String maskStr1 = "255.255.255.0";
 		String maskStr2 = "/26";
 		
-		System.out.println(isValidSubmask("255.111.255.000"));
+		System.out.println(isValidSubmask("255.255.255.002"));
 		System.out.println(isValidSubmask("255.255.255.0"));
 		System.out.println(isValidSubmask("/31"));
 		System.out.println(isValidSubmask("33"));
@@ -96,6 +100,7 @@ public class Submask {
 		System.out.println("-------------");
 		System.out.println(isValidIP("10.231.56.72"));
 		System.out.println(isValidIP("10.231.56.2"));
+		System.out.println(isvalidVLAN("022"));
 
 	}
 	
@@ -129,4 +134,27 @@ public class Submask {
 		return Pattern.matches(regex, str);
 	}
 
+	/**
+	 * check if it is a valid vlan
+	 * @param vlan
+	 * @return  VLAN number if it is valid vlan else return -1
+	 */
+	public static int isvalidVLAN(String vlan)
+	{
+		String pattern = "[1-9]\\d*";
+		
+		if(vlan == null || !Pattern.matches(pattern, vlan))
+			return -1;
+		
+		try
+		{
+			int ret = Integer.parseInt(vlan);
+			return ret;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return -1;
+		}
+	}
 }
