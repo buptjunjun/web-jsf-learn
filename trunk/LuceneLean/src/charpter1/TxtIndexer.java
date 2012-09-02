@@ -12,6 +12,8 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Field.Index;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.LogByteSizeMergePolicy;
+import org.apache.lucene.index.SerialMergeScheduler;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
@@ -21,11 +23,22 @@ public class TxtIndexer {
 
 	private IndexWriter writer;
 
+	class myscheduler extends SerialMergeScheduler
+	{
+		public myscheduler() {
+			// TODO Auto-generated constructor stub
+			System.out.println("SerialMergeScheduler ----");
+		}
+	}
 	public TxtIndexer(String indexDir) throws IOException
 	{
 		Directory dir = FSDirectory.open(new File(indexDir));
-		this.writer = new IndexWriter(dir,new StandardAnalyzer(Version.LUCENE_36),false,IndexWriter.MaxFieldLength.UNLIMITED);
-		
+		this.writer = new IndexWriter(dir,new StandardAnalyzer(Version.LUCENE_36),IndexWriter.MaxFieldLength.UNLIMITED);
+		LogByteSizeMergePolicy size = new LogByteSizeMergePolicy();
+		size.setMinMergeMB(1);
+		size.setMaxMergeDocs(500);
+		size.setMergeFactor(4);
+		size.setIndexWriter(writer);
 		
 	}
 
@@ -86,7 +99,7 @@ public class TxtIndexer {
 		@Override
 		public boolean accept(File arg0) {
 			// TODO Auto-generated method stub
-			return arg0.getName().toLowerCase().endsWith(".txt");
+			return arg0.getName().toLowerCase().endsWith(".html");
 		}
 		
 	}
@@ -147,7 +160,7 @@ public class TxtIndexer {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String dataDir = "D:\\work\\myself\\java books\\lucene\\charpter1\\testTxtFile"; // path of a directory
+		String dataDir = "D:\\myfile\\lucene\\lucene-3.6.1\\lucene-3.6.1\\docs\\api\\core\\org\\apache\\lucene\\util"; // path of a directory
 		String indexDir = "."; // path of index file
 
 		long start = System.currentTimeMillis();
@@ -156,9 +169,12 @@ public class TxtIndexer {
 		TxtIndexer indexer = null;
 		
 		try
-		{
-			indexer =  new TxtIndexer(indexDir);
+		{indexer =  new TxtIndexer(indexDir);
+			for(int i = 0;i < 10; i++)
+			{
+			
 			numIndexed = indexer.index(dataDir, new TxtFileFilter());
+			}
 			// optimize all segment to one
 			//indexer.writer.optimize();
 			//indexer.addAdocument("D:\\work\\myself\\java books\\lucene\\charpter1\\testTxtFile\\wan xiao lan.txt");

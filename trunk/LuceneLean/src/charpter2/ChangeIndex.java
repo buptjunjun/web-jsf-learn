@@ -24,7 +24,7 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 
 /**
- *  test addDocument ，deleteDocument ， updateDocument of index
+ *  test addDocument 锛宒eleteDocument 锛�updateDocument of index
  * @author andyWebsense
  *
  */
@@ -40,10 +40,14 @@ public class ChangeIndex {
 	public ChangeIndex(String indexDir) throws IOException
 	{
 	    dir = FSDirectory.open(new File(indexDir));
+	    //dir.setLockFactory(lockFactory)
 	    //the "create" variable of indexWriter constructor must be "false"
 	    //IndexWriter(Directory d, Analyzer a, boolean create, IndexWriter.MaxFieldLength mfl) 
 		this.writer = new IndexWriter(dir,new StandardAnalyzer(Version.LUCENE_36),IndexWriter.MaxFieldLength.UNLIMITED);
+	    this.writer.setInfoStream(System.out);
+		//IndexWriter anotherIndexWriter = new IndexWriter(dir,new StandardAnalyzer(Version.LUCENE_36),IndexWriter.MaxFieldLength.UNLIMITED);
 		//IndexReader reader = writer.getReader();
+	    
 	}
 	
 	/**
@@ -101,8 +105,8 @@ public class ChangeIndex {
 	 * 	test updateDocuments   the "create" variable of indexWriter constructor must be "false"
 	 *  IndexWriter(Directory d, Analyzer a, boolean create, IndexWriter.MaxFieldLength mfl) 
 	 *  
-	 * updateDocument(Term, Document) first deletes all documents containing the provided term and then adds the new document using the writer’s default analyzer.
-	 * updateDocument(Term, Document, Analyzer) does the same but uses the provided analyzer instead of the writer’s default analyzer.
+	 * updateDocument(Term, Document) first deletes all documents containing the provided term and then adds the new document using the writer鈥檚 default analyzer.
+	 * updateDocument(Term, Document, Analyzer) does the same but uses the provided analyzer instead of the writer鈥檚 default analyzer.
 	 * 
 	 * @throws CorruptIndexException
 	 * @throws IOException
@@ -153,10 +157,12 @@ public class ChangeIndex {
 
 		for(ScoreDoc doc : hits.scoreDocs)
 		{
-			// 取得命中的文档
+			// 鍙栧緱鍛戒腑鐨勬枃妗�
 			Document d = searcher.doc(doc.doc);
 			System.out.println(d.get("contents"));
 		}
+
+		
 	}
 	
 	
@@ -174,23 +180,23 @@ public class ChangeIndex {
 	public static void main(String[] args) throws IOException, ParseException {
 		// TODO Auto-generated method stub
 		ChangeIndex ci = new ChangeIndex("charpter2-1");
-		ci.writer.optimize(3);
-//		//test add index
-//		ci.addDocuments();
-//		ci.commit();
-//		
-//		//test delete index
-//		// the term to delete
-//		//Term [] terms = {new Term("id","1"),new Term("id","10")};
-//		//ci.deleteDocuments(terms);
-//		
-//		//test update index
-//		System.out.println("before udpate");
-//		ci.search("contents", "Haag");
-//		ci.updateDocuments(new Term("id","1"));
-//		ci.commit();
-//		System.out.println("after udpate");
-//		ci.search("contents", "Haag");
+		//ci.writer.optimize(3);
+		//test add index
+		//ci.addDocuments();
+		//ci.commit();
+		
+		//test delete index
+		// the term to delete
+		//Term [] terms = {new Term("id","1"),new Term("id","10")};
+		//ci.deleteDocuments(terms);
+		
+		//test update index
+		System.out.println("before udpate");
+		ci.search("contents", "Haag");
+		ci.updateDocuments(new Term("id","1"));
+		ci.commit();
+		System.out.println("after udpate");
+		ci.search("contents", "Haag");
 	}
 
 }
