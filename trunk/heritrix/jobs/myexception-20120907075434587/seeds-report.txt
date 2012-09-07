@@ -1,2 +1,0 @@
-[code] [status] [seed] [redirect]
--50 NOTCRAWLED http://www.myexception.cn/
