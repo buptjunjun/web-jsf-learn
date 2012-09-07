@@ -148,7 +148,7 @@ public class PreconditionEnforcer
      */
     private boolean considerRobotsPreconditions(CrawlURI curi) {
         // treat /robots.txt fetches specially
-        UURI uuri = curi.getUURI();
+/*        UURI uuri = curi.getUURI();
         try {
             if (uuri != null && uuri.getPath() != null &&
                     curi.getUURI().getPath().equals("/robots.txt")) {
@@ -211,6 +211,10 @@ public class PreconditionEnforcer
             logger.fine("robots.txt prerequisite failed " + curi);
         }
         return true;
+        */
+    	
+    	// ignore the robost.txt
+    	return false;
     }
 
     /**
