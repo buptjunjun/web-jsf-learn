@@ -1,6 +1,0 @@
-[#urls] [#bytes] [host] [#robots] [#remaining] [#novel-urls] [#novel-bytes] [#dup-by-hash-urls] [#dup-by-hash-bytes] [#not-modified-urls] [#not-modified-bytes]
-51 1544675 www.myexception.cn 0 1734 51 1544675 0 0 0 0 
-4 943 dns: 0 0 4 943 0 0 0 0 
-3 126719 cpro.baidu.com 0 0 3 126719 0 0 0 0 
-2 23406 www.google-analytics.com 0 0 2 23406 0 0 0 0 
-1 283 pagead2.googlesyndication.com 1 0 1 283 0 0 0 0 
