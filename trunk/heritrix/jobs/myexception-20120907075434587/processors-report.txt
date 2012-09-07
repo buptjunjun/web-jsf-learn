@@ -1,0 +1,5 @@
+Processors report - 201209070754
+  Job being crawled:    myexception
+  Number of Processors: 3
+  NOTE: Some processors may not return a report!
+

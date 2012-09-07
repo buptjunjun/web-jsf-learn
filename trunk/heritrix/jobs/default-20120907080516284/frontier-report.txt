@@ -1,0 +1,12 @@
+
+ -----===== IN-PROCESS QUEUES =====-----
+
+ -----===== READY QUEUES =====-----
+
+ -----===== SNOOZED QUEUES =====-----
+queue currentSize totalEnqueues sessionBalance lastCost (averageCost) lastDequeueTime wakeTime totalSpend/totalBudget errorCount lastPeekUri lastQueuedUri
+www.myexception.cn 1734 1786 3000 0(0) 2012-09-07T08:11:31.516Z 5s606ms 0/-1 0 http://www.myexception.cn/meego/ http://www.myexception.cn/meego/267866.html
+
+ -----===== INACTIVE QUEUES =====-----
+
+ -----===== RETIRED QUEUES =====-----
