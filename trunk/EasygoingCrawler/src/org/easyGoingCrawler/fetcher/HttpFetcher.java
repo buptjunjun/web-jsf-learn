@@ -36,7 +36,10 @@ public class HttpFetcher implements Fetcher{
 	@Override
 	public String fetch(String url) 
 	{
-		if (url == null)
+		String ret = "fetch <html></html>";
+		System.out.println(ret);
+		return ret;
+		/*if (url == null)
 		{
 			return null;
 		}
@@ -86,7 +89,7 @@ public class HttpFetcher implements Fetcher{
 		}
 
 		
-		return null;
+		return null;*/
 	}
 	
 	

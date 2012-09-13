@@ -14,12 +14,12 @@ import java.util.concurrent.TimeUnit;
 public class CrawlTask  implements Runnable
 {
 	  // flag to control this thread
-	  int flag = CrawlTask.STOP;
+	  private int flag = CrawlTask.PAUSE;
 	  
 	  // command to contrl a crawlTask
-	  public static final int RUN = 0;	  
-	  public static final int PAUSE = 1;
-	  public static final int STOP = 2;
+	  private static final int RUN = 0;	  
+	  private static final int PAUSE = 1;
+	  private static final int STOP = 2;
 	  
 	  
 	  // fecher to fetcher a uri
@@ -45,9 +45,10 @@ public class CrawlTask  implements Runnable
 	  
 	  
 	  public CrawlTask(Setting setting)
-		{
+	  {
 			this.setting = setting;
-		}
+	  }
+	  
 	  
 	@Override
 	public void run() 
@@ -60,12 +61,17 @@ public class CrawlTask  implements Runnable
 				// if the state is PAUSE , do nothing and continue;
 				if(flag == CrawlTask.PAUSE)
 				{
+					System.out.println("pause");
 					TimeUnit.SECONDS.sleep(1);
 					continue;
 				}
 				
+				System.out.println("do one task");
 				// do a crawl job
-				this.doOneTask();				
+				this.doOneTask();			
+				
+				// sleep 1 second	
+				TimeUnit.SECONDS.sleep(1);
 			}
 			catch(Exception e)
 			{
@@ -73,6 +79,8 @@ public class CrawlTask  implements Runnable
 			}
 			
 		}
+		
+		System.out.println("stop");
 	}
 	
 	/**
@@ -124,16 +132,31 @@ public class CrawlTask  implements Runnable
 	}
 	
 	
-	public int getFlag()
+	/**
+	 * make the crawler thread pasue
+	 */
+	public void pause()
 	{
-		return flag;
+		this.flag = PAUSE;
+	}
+	
+	/**
+	 * stop this crawler thread
+	 */
+	public void stop()
+	{
+		this.flag = STOP;
 	}
 
-	public void setFlag(int flag)
+	/**
+	 * make the crawler thread pasue
+	 */	
+	public void start()
 	{
-		this.flag = flag;
+		this.flag = RUN;
 	}
-
+	
+	
 	public Fetcher getFetcher()
 	{
 		return fetcher;

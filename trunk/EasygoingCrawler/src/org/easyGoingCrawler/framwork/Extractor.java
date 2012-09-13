@@ -8,7 +8,7 @@ import java.util.List;
  * @author Andy  weibobee@gmail.com 2012-9-13
  *
  */
-interface  Extractor
+public interface  Extractor
 {
 	/**
 	 * 
