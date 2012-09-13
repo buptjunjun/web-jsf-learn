@@ -13,8 +13,8 @@ import org.easyGoingCrawler.setting.EGCrawlerSetting;
 
 /**
 *  
-*  The Main Method of EasyGoing crawler
-*  @author Andy  weibobee@gmail.com  2012-9-12
+*  The entrance of EasyGoing crawler
+*  @author Andy  weibobee@gmail.com  2012-9-13
 *
 */
 public class Main 
