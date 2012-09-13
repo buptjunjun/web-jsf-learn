@@ -9,5 +9,5 @@ package org.easyGoingCrawler.framwork;
 
 public interface Setting 
 {
-	void readSetting(String path);
+	void readSetting();
 }

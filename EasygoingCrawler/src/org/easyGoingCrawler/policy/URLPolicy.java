@@ -21,7 +21,7 @@ public class URLPolicy implements Policy
 	@Override
 	public boolean process(String url) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }

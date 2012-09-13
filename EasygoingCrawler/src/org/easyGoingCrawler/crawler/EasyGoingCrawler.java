@@ -1,13 +1,15 @@
 package org.easyGoingCrawler.crawler;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import org.easyGoingCrawler.docWriter.MirrorWriter;
-import org.easyGoingCrawler.extractor.HTMLExtractor;
-import org.easyGoingCrawler.fetcher.HttpFetcher;
-import org.easyGoingCrawler.framwork.CrawlTask;
-import org.easyGoingCrawler.policy.URLPolicy;
-import org.easyGoingCrawler.urlStore.URLStoreMysql;
+import org.easyGoingCrawler.framwork.*;
+import org.easyGoingCrawler.setting.EGCrawlerSetting;
+
 
 /**
 *  
@@ -19,15 +21,14 @@ public class EasyGoingCrawler
 {
 	public  static void  main(String [] args)
 	{
-		CrawlTask task = new CrawlTask(null);
-		task.setUrlStore(new URLStoreMysql());
-		task.setExtractor(new HTMLExtractor());
-		task.setExtractPolicy(new URLPolicy());
-		task.setFetcher(new HttpFetcher());
-		task.setFetchPolicy(new URLPolicy());
-		task.setDocWriter(new MirrorWriter());
+
+		EGCrawlerSetting setting = new EGCrawlerSetting("conf/setting.properties");
+		
+		EGCrawler task = new EGCrawler(setting);
 		Thread t = new Thread(task);
+		t.setDaemon(true);
 		t.start();
+		
 		
 		try
 		{
@@ -42,8 +43,7 @@ public class EasyGoingCrawler
 			e.printStackTrace();
 		}
 		
-		
-		
+	
 		
 		try
 		{
