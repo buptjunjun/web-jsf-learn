@@ -18,7 +18,7 @@ import org.easyGoingCrawler.setting.EGCrawlerSetting;
  *			<li>urlstoreBackup  </li>  
  *			<br>
  *
- *  EGCrawler will continuous do one task.
+ *  EGCrawler will continuously do one task.
  *  One task is all the things one instance of web crawler must do as following :<br/>
  *   <li>use urlStoreto get a url from the url database</li>
  *   <li>use fetchPolicy to check if it is accepted</li>
