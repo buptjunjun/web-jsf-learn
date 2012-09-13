@@ -15,5 +15,5 @@ public interface DocWriter
 	 * @param doc the document you want to store
 	 * @return true if success or false
 	 */
-	boolean store(Object doc);
+	boolean write(Object doc);
 }
