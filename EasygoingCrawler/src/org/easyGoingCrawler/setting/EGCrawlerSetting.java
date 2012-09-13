@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * get all the setting information one EGCrawler needed form a .properties file
+ * save all the setting information one EGCrawler needed form a .properties file
  * 
  * @author Andy  weibobee@gmail.com 2012-9-13
  */
