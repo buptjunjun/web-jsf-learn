@@ -35,6 +35,7 @@ import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.DefaultRedirectHandler;
 import org.apache.http.impl.client.RedirectLocations;
+import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.ExecutionContext;
@@ -72,11 +73,13 @@ public class HttpFetcher implements Fetcher{
 	   {
 		   // 初始化，此处构造函数就与3.1中不同
 	       HttpClient httpclient = new DefaultHttpClient();
-	
+	       httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,20000);//连接时间20s
+	       httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 60000);//数据传输时间60s
+
+
 	      // HttpHost targetHost = new HttpHost("blog.sina.com.cn");
 	       //HttpGet httpget = new HttpGet("http://www.apache.org/"); 
 	       HttpGet httpget = new HttpGet(url);
-	
 	       // 查看默认request头部信息
 	       System.out.println("Accept-Charset:" + httpget.getFirstHeader("Accept-Charset"));
 	       // 以下这条如果不加会发现无论你设置Accept-Charset为gbk还是utf-8，他都会默认返回gb2312（本例针对google.cn来说）
@@ -173,7 +176,7 @@ public class HttpFetcher implements Fetcher{
 	
 	public static void main(String [] args) throws IOException
 	{
-		String content = new HttpFetcher ().fetch("http://www.xiangping.com/");
+		String content = new HttpFetcher ().fetch("http://www.baidu.com");
 		
 		//System.out.println(content);
 		
