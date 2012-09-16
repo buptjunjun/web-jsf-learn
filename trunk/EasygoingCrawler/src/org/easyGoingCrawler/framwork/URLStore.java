@@ -24,5 +24,5 @@ public interface URLStore
 	  *   it mean you want to get a url about music on www.baidu.com<p>
 	  * @return the url of certain condition
 	  */
-	 public String  get(String condition);
+	 public String  get();
 }
