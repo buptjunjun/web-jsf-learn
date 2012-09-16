@@ -175,7 +175,7 @@ public class EGCrawler  implements Runnable
 	private void  doOneTask()
 	{
 		// use urlStoreto get a url from the url database
-		String url = this.urlStore.get("");
+		String url = this.urlStore.get();
 		
 		// use fetchPolicy to check if it is accepted
 		if (!this.fetchPolicy.process(url))
