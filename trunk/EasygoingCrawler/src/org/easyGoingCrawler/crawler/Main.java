@@ -29,8 +29,18 @@ public class Main
 		t.setDaemon(true);
 		t.start();
 		
+		while(true)
+		{
+			try {
+				TimeUnit.SECONDS.sleep(1);
+				task.start();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
-		try
+		/*try
 		{
 			System.out.println("main thread sleep 5 seconds");
 			TimeUnit.SECONDS.sleep(5);
@@ -81,7 +91,7 @@ public class Main
 			e.printStackTrace();
 		}
 		
-		
+		*/
 		
 	}
 }

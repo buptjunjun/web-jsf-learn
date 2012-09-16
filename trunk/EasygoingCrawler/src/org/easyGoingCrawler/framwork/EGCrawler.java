@@ -143,6 +143,7 @@ public class EGCrawler  implements Runnable
 					TimeUnit.SECONDS.sleep(1);
 					continue;
 				}
+				System.out.println("do one task");
 				
 				// do a crawl job
 				this.doOneTask();			
@@ -189,6 +190,8 @@ public class EGCrawler  implements Runnable
 		// ues extractor to extract  urls in this document
 		List<String> urls = this.extractor.extract(content);
 		
+		System.out.println("urls:" + urls);
+		
 		//use urlStore to store the urls to the database
 		if(urls != null)
 		{
@@ -210,7 +213,7 @@ public class EGCrawler  implements Runnable
 		
 		
 		// write this document somewhere
-		this.docWriter.write(content);
+		this.docWriter.write(content,url);
 		
 	}
 	

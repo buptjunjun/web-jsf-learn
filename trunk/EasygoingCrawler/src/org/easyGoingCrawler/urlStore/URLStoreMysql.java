@@ -35,7 +35,7 @@ public class URLStoreMysql implements URLStore
 	public boolean put(String url)
 	{
 		// TODO Auto-generated method stub
-		URLInfo urlinfo = new URLInfo(url,0,new Date().toGMTString(),new Date().toGMTString());
+		URLInfo urlinfo = new URLInfo(url,0,new Date().toLocaleString(),new Date().toLocaleString());
 		this.mysqldb.insertURL(urlinfo, "urlstore");
 		return false;
 	}
@@ -73,6 +73,8 @@ public class URLStoreMysql implements URLStore
 */
 		URLStoreMysql uslstore = new URLStoreMysql();
 		String url = uslstore.get();
+		System.out.println(url);
+		uslstore.put("http://www.myexception.cn");
 		System.out.println(url);
 		
 	}
