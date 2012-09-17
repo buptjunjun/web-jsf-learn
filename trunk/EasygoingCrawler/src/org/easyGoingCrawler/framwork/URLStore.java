@@ -16,13 +16,20 @@ public interface URLStore
 	  */
 	 public boolean put(String url);
 	 
-	 /**
-	  * 
-	  * @param condition 
-	  *   <p> get a url according to  a condition. for example , 
-	  *   if condition was "http://www.baidu.com/music/*" ,
-	  *   it mean you want to get a url about music on www.baidu.com<p>
-	  * @return the url of certain condition
+	 /**get a url from store
+	  * @return the url 
 	  */
 	 public String  get();
+
+	 /**
+	  *  update status of a url if crawling is ok
+	  * @param url
+	  */
+	 public void  updateSucceed(String url);
+	 
+	 /**
+	  *  update status of a url if crawling failed
+	  * @param url
+	  */
+	 public void  updateFailed(String url);
 }

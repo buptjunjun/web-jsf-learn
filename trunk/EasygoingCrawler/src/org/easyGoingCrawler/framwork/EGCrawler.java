@@ -185,12 +185,22 @@ public class EGCrawler  implements Runnable
 		//ues fetcher to fecth the docuemnt of  the url
 		String content = this.fetcher.fetch(url);
 		
-		if(content == null) return;
+		// if crawling failed
+		if(content == null)
+		{
+			// update the status of this url and return;
+			this.urlStore.updateFailed(url);
+			return;
+		}
+		else // if crawling succeeded
+		{
+			// update the status of this url
+			this.urlStore.updateSucceed(url);
+		}
 		
 		// ues extractor to extract  urls in this document
 		List<String> urls = this.extractor.extract(content);
 		
-		System.out.println("urls:" + urls);
 		
 		//use urlStore to store the urls to the database
 		if(urls != null)
