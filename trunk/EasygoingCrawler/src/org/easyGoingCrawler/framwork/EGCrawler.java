@@ -204,7 +204,7 @@ public class EGCrawler  implements Runnable
 		}
 		
 		// ues extractor to extract  urls in this document
-		List<String> urls = this.extractor.extract(content);
+		List<String> urls = this.extractor.extract(url,content);
 		
 		
 		//use urlStore to store the urls to the database

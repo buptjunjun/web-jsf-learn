@@ -100,7 +100,7 @@ public class URLStoreMysql implements URLStore
 	public void updateSucceed(String url)
 	{
 		// TODO Auto-generated method stub
-		if(urls.contains(url))
+		if(urls.containsKey(url))
 		{
 			System.out.println("update succeed :" + url);	
 			URLInfo urlinfo = (URLInfo) urls.get(url);	
@@ -115,7 +115,7 @@ public class URLStoreMysql implements URLStore
 	@Override
 	public void updateFailed(String url)
 	{
-		if(urls.contains(url))
+		if(urls.containsKey(url))
 		{
 			System.out.println("update Failed :" + url);
 			URLInfo urlinfo = (URLInfo) urls.get(url);			
@@ -179,11 +179,12 @@ public class URLStoreMysql implements URLStore
 	{
 		
 		URLStoreMysql uslstore = new URLStoreMysql();
-		String url = uslstore.get();
-		System.out.println(url);
+		//String url = uslstore.get();
+		uslstore.put("http://www.myexception.cn/");
+		//System.out.println(url);
 		//uslstore.updateFailed("http://www.myexception.cn");
 		//uslstore.updateSucceed("http://www.myexception.cn");
-		uslstore.updateFailed("http://www.myexception.cn");
+		
 		
 	}
 }
@@ -310,7 +311,7 @@ class MysqlDB
 		 Connection connect = null;
 		 try {
 			  connect = DriverManager.getConnection(
-			 "jdbc:mysql://localhost/"+daName+"?useUnicode=true&characterEncoding=gbk", "root", "");
+			 "jdbc:mysql://localhost/"+daName+"?useUnicode=true&characterEncoding=utf-8", "root", "");
 			//连接URL为 jdbc:mysql//服务器地址/数据库名
 			//后面的2个参数分别是登陆用户名和密码
 			 System.out.println("Success connect Mysql server!");

@@ -11,9 +11,9 @@ import java.util.List;
 public interface  Extractor
 {
 	/**
-	 * 
+	 * @param url
 	 * @param docContent for example a html
 	 * @return list of the url in this document
 	 */
-	 List<String> extract(String docContent);
+	 List<String> extract(String url,String docContent);
 }
