@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -21,14 +23,19 @@ public class URLStoreMysql implements URLStore
 {
 	protected MysqlDB mysqldb = null;
 	
+	private static  final Hashtable urls = new Hashtable();
+	private static  int   MaxCachedURLS = 200;
+	private  String tableName = null;
+	
 	public URLStoreMysql() 
 	{
-		mysqldb = new MysqlDB("urldb");
+		mysqldb = new MysqlDB("urldb");		
 	}
 	
-	public URLStoreMysql(String dbName) 
+	public URLStoreMysql(String dbName,String tableName) 
 	{
 		mysqldb = new MysqlDB(dbName);
+		this.tableName = tableName;
 	}
 
 	@Override
@@ -36,8 +43,24 @@ public class URLStoreMysql implements URLStore
 	{
 		// TODO Auto-generated method stub
 		URLInfo urlinfo = new URLInfo(url,0,new Date().toLocaleString(),new Date().toLocaleString());
-		this.mysqldb.insertURL(urlinfo, "urlstore");
-		return false;
+		boolean ret = this.mysqldb.insertURL(urlinfo, tableName);
+		
+		// if urls size is bigger than a threshold. put some urls to db
+		if( urls!=null && urls.size() > MaxCachedURLS)
+		{
+			while (urls.size() > MaxCachedURLS - MaxCachedURLS/5)
+			{
+				Iterator i = urls.entrySet().iterator();
+				if(i.hasNext())
+				{
+					URLInfo u = (URLInfo) i.next();
+					u.setLastCrawlTime(new Date().toLocaleString());
+					this.mysqldb.insertURL(u,tableName);
+					urls.remove(u.getUrl());
+				}
+			}
+		}
+		return ret;
 	}
 
 	@Override
@@ -45,16 +68,46 @@ public class URLStoreMysql implements URLStore
 	{
 		String condition = " where status=0 order by lastCrawlTime   asc limit 1";
 		// TODO Auto-generated method stub		
-		URLInfo urlinfo = this.mysqldb.getURL(condition, "urlstore");
+		URLInfo urlinfo = this.mysqldb.getURL(condition, tableName);
+
 		if (urlinfo != null)
-		{
-			urlinfo.setLastCrawlTime(new Date().toLocaleString());
-			urlinfo.setStatus(1);
-			this.mysqldb.updateURLInfo(urlinfo, "urlstore");
+		{			
+			urls.put(urlinfo.getUrl(), urlinfo);
+			this.mysqldb.deleteURL(urlinfo, tableName);
 			return urlinfo.getUrl();
 		}
 		
 		return null;
+	}
+	
+	@Override
+	public void updateSucceed(String url)
+	{
+		// TODO Auto-generated method stub
+		if(urls.containsKey(url))
+		{
+			URLInfo urlinfo = (URLInfo) urls.get(url);			
+			urlinfo.setLastCrawlTime(new Date().toLocaleString());
+			urlinfo.setStatus(1);
+			urls.remove(url);
+			this.mysqldb.insertURL(urlinfo, tableName);
+		}
+		
+		
+	}
+
+	@Override
+	public void updateFailed(String url)
+	{
+		// TODO Auto-generated method stub
+		if(urls.containsKey(url))
+		{
+			URLInfo urlinfo = (URLInfo) urls.get(url);			
+			urlinfo.setLastCrawlTime(new Date().toLocaleString());
+			urlinfo.setStatus(-1);
+			urls.remove(url);
+			this.mysqldb.insertURL(urlinfo, tableName);
+		}
 	}
 
 	/**
@@ -62,15 +115,7 @@ public class URLStoreMysql implements URLStore
 	 */
 	public static void main(String[] args)
 	{
-		/*// TODO Auto-generated method stub
-		URLInfo urlinfo = new URLInfo("aa.asdfaa.com",33,new Date().toLocaleString(),"2010-10-07 17:40:49");
-		URLStoreMysql urlstore = new URLStoreMysql();
-		//urlstore.mysqldb.updateURLInfo(urlinfo, "urlstore");
 		
-		//urlinfo = new URLInfo("aa.aba.com",32,new Date().toLocaleString(),"2010-10-07 17:40:49");
-		urlstore.mysqldb.insertURL(urlinfo, "urlstore");
-		//urlstore.mysqldb.deleteURL(urlinfo, "urlstore");
-*/
 		URLStoreMysql uslstore = new URLStoreMysql();
 		String url = uslstore.get();
 		System.out.println(url);
@@ -92,10 +137,9 @@ class URLInfo
 	public String url = null;   
 	
 	/**
+	 * status = -1: url is crawled but failed
 	 * status = 0: url is not crawled
 	 * status = 1: url is crawled 
-	 * status = 2: url is not Intresting and not crawled
-	 * status = 3: url is not Intresting and  crawled
 	 */
 	public int status = 0; 
     
