@@ -1,6 +1,11 @@
 package org.easyGoingCrawler.urlStore;
 
 import org.easyGoingCrawler.framwork.URLStore;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,6 +17,7 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * URLStoreMysql will store the URL in MYSQL.
@@ -23,19 +29,34 @@ public class URLStoreMysql implements URLStore
 {
 	protected MysqlDB mysqldb = null;
 	
+	// the cached to store the currently being  crawled urls
 	private static  final Hashtable urls = new Hashtable();
+	
+	// max size of the urls
 	private static  int   MaxCachedURLS = 200;
+	
+	// the table name  storing the urls 
 	private  String tableName = null;
 	
+	// configuring file name
+	private String configureFile = "conf/urlstoreMysql.properties";
+	
+	// this string defined how to get a url from url store
+	private String condition4get = null;;
+		
+
 	public URLStoreMysql() 
 	{
-		mysqldb = new MysqlDB("urldb");		
+		mysqldb = new MysqlDB("urldb");	
+		readSetting();
+		
 	}
 	
 	public URLStoreMysql(String dbName,String tableName) 
 	{
 		mysqldb = new MysqlDB(dbName);
 		this.tableName = tableName;
+		readSetting();
 	}
 
 	@Override
@@ -66,7 +87,7 @@ public class URLStoreMysql implements URLStore
 	@Override
 	public String get()
 	{
-		String condition = " where status=0 order by lastCrawlTime   asc limit 1";
+		String condition = " ";
 		// TODO Auto-generated method stub		
 		URLInfo urlinfo = this.mysqldb.getURL(condition, tableName);
 
@@ -110,6 +131,51 @@ public class URLStoreMysql implements URLStore
 		}
 	}
 
+	/**
+	 * read setting of urlstoreMysql
+	 */
+	public  void readSetting()
+	{
+
+		Properties p = new Properties();
+		FileInputStream fi = null;		
+		try
+		{
+			File f = new File(this.configureFile);
+			if (!f.exists() || !f.canRead() || f.isHidden())
+				return ;
+			fi = new FileInputStream(f);
+			
+			p.load(fi);
+			
+			 // all the component names that one EGCrawler needed 
+			 this.condition4get = p.getProperty("condition4get");
+			
+		}
+		catch (FileNotFoundException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
+		catch (IOException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if (fi != null)
+					fi.close();
+			} 
+			catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 	/**
 	 * @param args
 	 */

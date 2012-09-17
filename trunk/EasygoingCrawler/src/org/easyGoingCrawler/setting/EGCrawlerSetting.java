@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.easyGoingCrawler.framwork.Setting;
+
 /**
  * save all the setting information one EGCrawler needed form a .properties file
  * 
