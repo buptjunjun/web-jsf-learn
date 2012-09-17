@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.easyGoingCrawler.framwork.*;
@@ -24,13 +25,19 @@ public class Main
 
 		EGCrawlerSetting setting = new EGCrawlerSetting("conf/setting.properties");
 		
-		for(int i = 0; i < 10; i++)
+		for(int i = 0; i < 15; i++)
 		{
 			EGCrawler task = new EGCrawler(setting);
 			Thread t = new Thread(task);
 			t.setDaemon(true);
 			t.start();
 			task.start();
+			try {
+				TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		while(true)
 		{
