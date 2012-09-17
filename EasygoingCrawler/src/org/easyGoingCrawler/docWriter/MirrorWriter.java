@@ -59,8 +59,9 @@ public class MirrorWriter implements DocWriter
 		
 		
 		MirrorWriter mw = new MirrorWriter();
-		mw.write(null, "http://www.baidu.com/");
+		mw.write(null, "http://www.baidu.com/abc/aaa");
 	}
+
 
 	@Override
 	public boolean write(Object doc,String u)
@@ -73,25 +74,35 @@ public class MirrorWriter implements DocWriter
 		FileOutputStream fo = null;
 		
 		try {
-			URL url = new URL(u);		
+			
+			URL url = new URL(u);	
+			
+			// get the host name
 			host = url.getHost();
+			
+			// get the file path of the url
 			String file = url.getFile();
 			
-			if(file.endsWith("/"))
+			// if this is a directory already
+			if (file.endsWith("/"))
 			{
-				file =  file.substring(0, file.length()-1);			
-			}
-			String [] sss = file.split("/");
-			fileName = sss[sss.length-1];		
-			directory = file.replace(fileName,"");	
-			
-			if(fileName.equals(""))
+				directory=file;
 				fileName = "index.html";
+			}
+			else // get the file name
+			{
+				String [] sss = file.split("/");
+				fileName = sss[sss.length-1];	
+				directory = file.replace(fileName,"");
+			}
+				
+			directory = host + directory;
+			fileName = directory+fileName;
 			
-			if(directory.startsWith("/"))
-				directory = directory.substring(1);
-			directory = host +"/"+ directory;
-			fileName = directory+"/"+fileName;
+			System.out.println("directory = " + directory);
+			System.out.println("fileName = " + fileName);
+			
+			
 			// create directory and file for this url
 			File f = new File(directory);
 			
@@ -108,7 +119,8 @@ public class MirrorWriter implements DocWriter
 			// write html content to this file
 			String content = (String)doc;
 			fo.write(content.getBytes());
-			return false;
+			return true;
+			
 		}
 		catch (Exception e) 
 		{
@@ -126,17 +138,6 @@ public class MirrorWriter implements DocWriter
 				}
 			
 		}
-	/*	System.out.println(host);
-		System.out.println(directory);
-		System.out.println(fileName);
-		System.out.println("--------------");*/
-		
-	
-		
-		
-	/*	System.out.println(directory);
-		System.out.println(fileName );
-		System.out.println(directory+fileName);*/
 		return false;
 		
 	}
