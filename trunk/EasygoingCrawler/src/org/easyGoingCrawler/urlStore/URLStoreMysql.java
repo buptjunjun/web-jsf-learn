@@ -36,13 +36,13 @@ public class URLStoreMysql implements URLStore
 	private static  int   MaxCachedURLS = 200;
 	
 	// the table name  storing the urls 
-	private  String tableName = null;
+	private  String tableName = "urlstore";
 	
 	// configuring file name
 	private String configureFile = "conf/urlstoreMysql.properties";
 	
 	// this string defined how to get a url from url store
-	private String condition4get = null;;
+	private String condition4get = null;
 		
 
 	public URLStoreMysql() 
@@ -87,48 +87,44 @@ public class URLStoreMysql implements URLStore
 	@Override
 	public String get()
 	{
-		String condition = " ";
+		String condition = condition4get;
 		// TODO Auto-generated method stub		
 		URLInfo urlinfo = this.mysqldb.getURL(condition, tableName);
-
-		if (urlinfo != null)
-		{			
-			urls.put(urlinfo.getUrl(), urlinfo);
-			this.mysqldb.deleteURL(urlinfo, tableName);
-			return urlinfo.getUrl();
-		}
+		this.urls.put(urlinfo.getUrl(), urlinfo);
+		this.updateSucceed(urlinfo.getUrl());
 		
-		return null;
+		return  urlinfo.getUrl();
 	}
 	
 	@Override
 	public void updateSucceed(String url)
 	{
 		// TODO Auto-generated method stub
-		if(urls.containsKey(url))
+		if(urls.contains(url))
 		{
-			URLInfo urlinfo = (URLInfo) urls.get(url);			
+			System.out.println("update succeed :" + url);	
+			URLInfo urlinfo = (URLInfo) urls.get(url);	
 			urlinfo.setLastCrawlTime(new Date().toLocaleString());
 			urlinfo.setStatus(1);
-			urls.remove(url);
-			this.mysqldb.insertURL(urlinfo, tableName);
+			this.urls.remove(urlinfo.getUrl());
+			this.mysqldb.updateURLInfo(urlinfo, tableName);
 		}
-		
-		
+
 	}
 
 	@Override
 	public void updateFailed(String url)
 	{
-		// TODO Auto-generated method stub
-		if(urls.containsKey(url))
+		if(urls.contains(url))
 		{
+			System.out.println("update Failed :" + url);
 			URLInfo urlinfo = (URLInfo) urls.get(url);			
 			urlinfo.setLastCrawlTime(new Date().toLocaleString());
 			urlinfo.setStatus(-1);
-			urls.remove(url);
-			this.mysqldb.insertURL(urlinfo, tableName);
+			this.urls.remove(urlinfo.getUrl());
+			this.mysqldb.updateURLInfo(urlinfo, tableName);
 		}
+	
 	}
 
 	/**
@@ -185,8 +181,9 @@ public class URLStoreMysql implements URLStore
 		URLStoreMysql uslstore = new URLStoreMysql();
 		String url = uslstore.get();
 		System.out.println(url);
-		uslstore.put("http://www.myexception.cn");
-		System.out.println(url);
+		//uslstore.updateFailed("http://www.myexception.cn");
+		//uslstore.updateSucceed("http://www.myexception.cn");
+		uslstore.updateFailed("http://www.myexception.cn");
 		
 	}
 }
@@ -313,7 +310,7 @@ class MysqlDB
 		 Connection connect = null;
 		 try {
 			  connect = DriverManager.getConnection(
-			 "jdbc:mysql://localhost/"+daName+"?useUnicode=true&characterEncoding=utf-8", "root", "");
+			 "jdbc:mysql://localhost/"+daName+"?useUnicode=true&characterEncoding=gbk", "root", "");
 			//连接URL为 jdbc:mysql//服务器地址/数据库名
 			//后面的2个参数分别是登陆用户名和密码
 			 System.out.println("Success connect Mysql server!");

@@ -180,7 +180,12 @@ public class EGCrawler  implements Runnable
 		
 		// use fetchPolicy to check if it is accepted
 		if (!this.fetchPolicy.process(url))
+		{
+		
+			// update the status of this url and return;
+			this.urlStore.updateFailed(url);
 			return;
+		}
 		
 		//ues fetcher to fecth the docuemnt of  the url
 		String content = this.fetcher.fetch(url);
