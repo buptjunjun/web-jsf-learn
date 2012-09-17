@@ -1,5 +1,8 @@
 package org.easyGoingCrawler.fetcher;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.easyGoingCrawler.framwork.Fetcher;
 
 /**
@@ -24,13 +27,23 @@ public class DNSFetcher implements Fetcher
 	@Override
 	public String fetch(String website) 
 	{
-		// TODO Auto-generated method stub
+		if (website == null ) return null;
+		
+		try
+		{
+		  InetAddress address = InetAddress.getByName(website);
+		  return address.getHostAddress();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	
 	public static void main(String [] args)
 	{
-		new HttpFetcher().fetch("");
+
 	}
 }

@@ -6,9 +6,9 @@ import org.easyGoingCrawler.framwork.URLStore;
 
 
 /**
- * URLStoreMysql will store the URL in MYSQL.
+ * URLStoreBackupMysql will store the URL in MYSQL. it will use the urls that we are not interesting but do not want to discard 
  * 
- * @author Andy  weibobee@gmail.com 2012-9-13
+ * @author Andy  weibobee@gmail.com 2012-9-17
  *
  */
 public class URLStoreBackupMysql extends URLStoreMysql

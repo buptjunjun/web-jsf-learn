@@ -11,8 +11,10 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -52,9 +54,11 @@ import org.easyGoingCrawler.framwork.Fetcher;
  *
  */
 
-public class HttpFetcher implements Fetcher{
+public class HttpFetcher implements Fetcher
+{
 
-
+	// map from host name to ip address
+	private static Hashtable host2ip = new Hashtable(); 
 	/**
 	 * fetch a html file 
 	 * @param url the url of one html file
@@ -63,23 +67,141 @@ public class HttpFetcher implements Fetcher{
 	@Override
 	public String fetch(String url) 
 	{	
+		String newurl = reconstructURL(url);
+		
+		// use newurl (like http://61.135.169.105/abc) to get html
+		String html = this.getHTML(newurl);
+		
+		if(html != null)
+			return html;
+		
+		//if   newurl  failed, use original url to get html
+		html = this.getHTML(url);
+		
+		// if using url like "http://61.135.169.105/abc" failed and using "www.baidu.com/abc" succeed
+		// then modified host2ip;
+		if(html != null)
+		{
+			resetHost2ip(url);
+		}
+			
+		return html;
+		
+	}
+	
+	
+	/**
+	 *    reconstruct the url using ip instead of host
+	 *	  for example "http://www.baidu.com/abc" will replaced by "http://61.135.169.105/abc"
+	 * @param url
+	 * @return new url if secceeded ,or return null
+	 */
+	private String reconstructURL(String url)
+	{
+		
+		if (url == null)
+		{
+			return null;
+		}
+		   
+	   try
+	   {
+		   URL u = new URL(url);
+		   String host = u.getHost();
+		   
+		   if (host == null)
+			   return null;
+		   
+		   // check if we already have the ip of this host
+		   String hostip =  (String) host2ip.get(host);
+		   
+		   // if we do not cached the ip of this host
+		   if (hostip == null)
+		   {
+			   hostip = new DNSFetcher().fetch(host); 
+			   if (hostip != null)
+			   {
+				   host2ip.put(host, hostip);
+			   }
+		   }
+		   
+		   // if hostip is valide ,reconstruct the url using ip instead of host
+		   if( hostip != null )
+		   {
+			   url = url.replace(host, hostip);
+		   }
+		   
+		   return url;
+	   }
+	   catch( Exception e)
+	   {
+		   e.printStackTrace();
+	   }
+		   
+		return null;
+	}
+	
+	
+	/**
+	 *    reconstruct the url using ip instead of host
+	 *	  for example "http://www.baidu.com/abc" will replaced by "http://61.135.169.105/abc"
+	 * @param url
+	 * @return new url if secceeded ,or return null
+	 */
+	private void resetHost2ip(String url)
+	{
+		
+		if (url == null)
+			return;
+		   
+	   try
+	   {
+		   URL u = new URL(url);
+		   		  
+		   String host = u.getHost();
+		   
+		   if (host == null)
+			   return;
+		   this.host2ip.put(host, host);
+	   }
+	   catch( Exception e)
+	   {
+		   e.printStackTrace();
+	   }
+		   
+		return;
+	}
+	
+	/**
+	 * get html form a url
+	 * @param url
+	 * @return the html if succeed , or return null
+	 */
+	private String getHTML(String url)
+	{
 		if (url == null)
 		{
 			return null;
 		}
 		
-	
+		HttpEntity entity = null;
+		HttpClient httpclient = null;
+		HttpGet httpget  = null;
 	   try
 	   {
+		  
+		   
+		   System.out.println("url = " + url);
+		   
 		   // 初始化，此处构造函数就与3.1中不同
-	       HttpClient httpclient = new DefaultHttpClient();
+	       httpclient = new DefaultHttpClient();
 	       httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,20000);//连接时间20s
-	       httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 60000);//数据传输时间60s
+	       httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 30000);//数据传输时间60s
 
 
 	      // HttpHost targetHost = new HttpHost("blog.sina.com.cn");
 	       //HttpGet httpget = new HttpGet("http://www.apache.org/"); 
-	       HttpGet httpget = new HttpGet(url);
+	       httpget = new HttpGet(url);
 	       // 查看默认request头部信息
 	       System.out.println("Accept-Charset:" + httpget.getFirstHeader("Accept-Charset"));
 	       // 以下这条如果不加会发现无论你设置Accept-Charset为gbk还是utf-8，他都会默认返回gb2312（本例针对google.cn来说）
@@ -119,7 +241,7 @@ public class HttpFetcher implements Fetcher{
 	       }
 	
 	       // Get hold of the response entity
-	       HttpEntity entity = response.getEntity();
+	        entity = response.getEntity();
 	      
 	       // 查看所有返回头部信息
 	    /*   Header headers[] = response.getAllHeaders();
@@ -140,7 +262,6 @@ public class HttpFetcher implements Fetcher{
 	         
 	         // 如果头部Content-Type中包含了编码信息，那么我们可以直接在此处获取
 	          charSet = EntityUtils.getContentCharSet(entity);
-	
 	         System.out.println("In header: " + charSet);
 	         // 如果头部中没有，那么我们需要 查看页面源码，这个方法虽然不能说完全正确，因为有些粗糙的网页编码者没有在页面中写头部编码信息
 	         if (charSet == "") {
@@ -168,17 +289,27 @@ public class HttpFetcher implements Fetcher{
     	   e.printStackTrace();
     	  
        }
+	   finally
+	   {
+		   try
+		   {
+			   // release the connection
+			   httpclient.getConnectionManager().closeExpiredConnections();
+			   httpget.abort();
+		   }
+		   catch(Exception e)
+		   {
+			   e.printStackTrace();
+		   }
+	   }
        return null;
 	}
 	
-	
-	
-	
 	public static void main(String [] args) throws IOException
 	{
-		String content = new HttpFetcher ().fetch("http://www.baidu.com");
-		
-		//System.out.println(content);
-		
+		HttpFetcher f = new HttpFetcher ();		
+		String ret = f.fetch("http://www.baidu.com/");
+		f.fetch("http://www.baidu.com/");
+		System.out.println(ret);		
 	}
 }
