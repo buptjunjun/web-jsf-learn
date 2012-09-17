@@ -24,16 +24,18 @@ public class Main
 
 		EGCrawlerSetting setting = new EGCrawlerSetting("conf/setting.properties");
 		
-		EGCrawler task = new EGCrawler(setting);
-		Thread t = new Thread(task);
-		t.setDaemon(true);
-		t.start();
-		
+		for(int i = 0; i < 10; i++)
+		{
+			EGCrawler task = new EGCrawler(setting);
+			Thread t = new Thread(task);
+			t.setDaemon(true);
+			t.start();
+			task.start();
+		}
 		while(true)
 		{
 			try {
 				TimeUnit.SECONDS.sleep(1);
-				task.start();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
