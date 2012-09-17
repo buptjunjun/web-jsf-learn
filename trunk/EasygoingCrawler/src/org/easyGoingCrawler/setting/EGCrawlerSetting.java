@@ -29,7 +29,7 @@ public class EGCrawlerSetting
 	private String urlstoreBackup = null;
 	
 	// task interval in millisecond
-	private int interval = 500;
+	private int interval = 1000;
 	
 
 	public EGCrawlerSetting(String configureFile)
