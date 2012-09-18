@@ -1,6 +1,9 @@
 package org.easyGoingCrawler.urlStore;
 
 import org.easyGoingCrawler.framwork.URLStore;
+import org.jsoup.helper.StringUtil;
+
+import com.mysql.jdbc.StringUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,10 +17,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.Queue;
+import java.util.Stack;
 
 /**
  * URLStoreMysql will store the URL in MYSQL.
@@ -33,7 +39,7 @@ public class URLStoreMysql implements URLStore
 	private static  final Hashtable urls = new Hashtable();
 	
 	// max size of the urls
-	private static  int   MaxCachedURLS = 200;
+	private static  int   MaxputCachedURLS = 100;
 	
 	// the table name  storing the urls 
 	private  String tableName = "urlstore";
@@ -44,7 +50,12 @@ public class URLStoreMysql implements URLStore
 	// this string defined how to get a url from url store
 	private String condition4get = null;
 		
-
+	private static  HashSet<String> putCachedURLS =  new HashSet<String>();
+	private static  Stack<URLInfo>  getCachedURLS = new Stack<URLInfo>();
+	
+ 	private static  Boolean lockPutputCachedURLS = true;
+	private static  Boolean lockGetputCachedURLS = true;
+	
 	public URLStoreMysql() 
 	{
 		mysqldb = new MysqlDB("urldb");	
@@ -60,40 +71,53 @@ public class URLStoreMysql implements URLStore
 	}
 
 	@Override
-	public boolean put(String url)
+	public  boolean  put(String url)
 	{
-		// TODO Auto-generated method stub
-		URLInfo urlinfo = new URLInfo(url,0,new Date().toLocaleString(),new Date().toLocaleString());
-		boolean ret = this.mysqldb.insertURL(urlinfo, tableName);
-		
-		// if urls size is bigger than a threshold. put some urls to db
-		if( urls!=null && urls.size() > MaxCachedURLS)
+		synchronized (lockPutputCachedURLS)
 		{
-			while (urls.size() > MaxCachedURLS - MaxCachedURLS/5)
+			if (putCachedURLS.contains(url) || StringUtils.isNullOrEmpty(url))
+				return false;
+			
+			putCachedURLS.add(url);
+			
+			if (putCachedURLS.size() > MaxputCachedURLS)
 			{
-				Iterator i = urls.entrySet().iterator();
-				if(i.hasNext())
+				Iterator iter = putCachedURLS.iterator();
+				while( iter.hasNext())
 				{
-					URLInfo u = (URLInfo) i.next();
-					u.setLastCrawlTime(new Date().toLocaleString());
-					this.mysqldb.insertURL(u,tableName);
-					urls.remove(u.getUrl());
+					String str = (String) iter.next();
+					URLInfo urlinfo = new URLInfo(str,0,new Date().toLocaleString(),new Date().toLocaleString());
+					boolean ret = this.mysqldb.insertURL(urlinfo, tableName);
 				}
+				
 			}
+			return true;
 		}
-		return ret;
+		
 	}
 
 	@Override
 	public String get()
 	{
 		String condition = condition4get;
-		// TODO Auto-generated method stub		
-		URLInfo urlinfo = this.mysqldb.getURL(condition, tableName);
-		this.urls.put(urlinfo.getUrl(), urlinfo);
-		this.updateSucceed(urlinfo.getUrl());
 		
-		return  urlinfo.getUrl();
+		synchronized(lockGetputCachedURLS)
+		{
+			if(getCachedURLS.size() <= 0)
+			{// TODO Auto-generated method stub		
+				List<URLInfo> urlinfos = this.mysqldb.getURL(condition, tableName);
+				if (urlinfos == null || urlinfos.size() == 0)
+					return null;
+				
+				for(URLInfo urlinfo: urlinfos)
+				{
+					this.updateSucceed(urlinfo.getUrl());	
+					getCachedURLS.add(urlinfo);
+				}
+			}
+			URLInfo u = getCachedURLS.pop();
+			return u.getUrl();	
+		}
 	}
 	
 	@Override
@@ -521,12 +545,13 @@ class MysqlDB
 	  * @param table
 	  * @return
 	  */
-	 public URLInfo getURL(String situation,String table)
+	 public List<URLInfo> getURL(String situation,String table)
 	 {
+		 List<URLInfo> returls = new ArrayList<URLInfo>();
 		 ResultSet r = Query(table, situation);
 		 try 
 		 {
-			 if(r.next() == true)
+			 while(r.next() == true)
 			 {
 				 String url = r.getString(1);
 				 int status = r.getInt(2);
@@ -534,11 +559,14 @@ class MysqlDB
 				 String lastCrawlTime = r.getString(4);
 				 
 				 URLInfo urlInfo = new URLInfo(url,status,collectTime,lastCrawlTime);
-				 return urlInfo;
+				 returls.add(urlInfo);
 			 }
+			 
+			 return returls;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
 		finally
 		{
@@ -554,7 +582,6 @@ class MysqlDB
 			}
 		}	 
 		
-		return null;
 	 }
 	
 	 /**
