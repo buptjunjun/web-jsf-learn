@@ -25,7 +25,7 @@ public class Main
 
 		EGCrawlerSetting setting = new EGCrawlerSetting("conf/setting.properties");
 		
-		for(int i = 0; i < 20; i++)
+		for(int i = 0; i < 5; i++)
 		{
 			EGCrawler task = new EGCrawler(setting);
 			Thread t = new Thread(task);

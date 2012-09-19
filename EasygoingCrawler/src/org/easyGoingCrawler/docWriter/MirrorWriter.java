@@ -59,7 +59,7 @@ public class MirrorWriter implements DocWriter
 		
 		
 		MirrorWriter mw = new MirrorWriter();
-		mw.write(null, "http://www.baidu.com/abc/aaa");
+		mw.write(null, "http://blog.csdn.net/fengyarongaa");
 	}
 
 

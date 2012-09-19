@@ -67,16 +67,16 @@ public class HttpFetcher implements Fetcher
 	@Override
 	public String fetch(String url) 
 	{	
-		String newurl = reconstructURL(url);
+		/*String newurl = reconstructURL(url);
 		
 		// use newurl (like http://61.135.169.105/abc) to get html
 		String html = this.getHTML(newurl);
 		
 		if(html != null)
-			return html;
+			return html;*/
 		
 		//if   newurl  failed, use original url to get html
-		html = this.getHTML(url);
+		String html = this.getHTML(url);
 		
 		// if using url like "http://61.135.169.105/abc" failed and using "www.baidu.com/abc" succeed
 		// then modified host2ip;

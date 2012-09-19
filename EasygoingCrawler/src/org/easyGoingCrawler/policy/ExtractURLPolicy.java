@@ -94,7 +94,7 @@ public class ExtractURLPolicy implements Policy
 	public static void main(String [] args)
 	{
 		ExtractURLPolicy p = new ExtractURLPolicy();
-		boolean ret = p.process("http://www.baidu.com/music%SDF");		
+		boolean ret = p.process("http://webdev.csdn.net/a");		
 		System.out.println(ret);
 	}
 }
