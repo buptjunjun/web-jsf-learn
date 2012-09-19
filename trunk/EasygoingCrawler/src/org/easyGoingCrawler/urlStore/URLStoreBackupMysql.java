@@ -15,7 +15,7 @@ public class URLStoreBackupMysql extends URLStoreMysql
 {
 	public URLStoreBackupMysql() 
 	{
-		super("urldb","urlstoreBackup");
+		super("urldb","urlstorebackup");
 	}
 	
 	/**
@@ -23,7 +23,10 @@ public class URLStoreBackupMysql extends URLStoreMysql
 	 */
 	public static void main(String[] args)
 	{
-		// TODO Auto-generated method stu
+
+		URLStore uslstore = new URLStoreBackupMysql();
+		//String url = uslstore.get();
+		uslstore.put("http://www.myexception.cn/abcdefg");
 	}
 
 
