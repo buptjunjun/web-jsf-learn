@@ -116,6 +116,7 @@ public class URLStoreMysql implements URLStore
 				}
 			}
 			URLInfo u = getCachedURLS.pop();
+			this.urls.put(u.getUrl(), u);
 			return u.getUrl();	
 		}
 	}
@@ -124,7 +125,7 @@ public class URLStoreMysql implements URLStore
 	public void updateSucceed(String url)
 	{
 		// TODO Auto-generated method stub
-		if(urls.containsKey(url))
+		if(url != null && urls.containsKey(url))
 		{
 			System.out.println("update succeed :" + url);	
 			URLInfo urlinfo = (URLInfo) urls.get(url);	
@@ -139,7 +140,7 @@ public class URLStoreMysql implements URLStore
 	@Override
 	public void updateFailed(String url)
 	{
-		if(urls.containsKey(url))
+		if(url != null && urls.containsKey(url))
 		{
 			System.out.println("update Failed :" + url);
 			URLInfo urlinfo = (URLInfo) urls.get(url);			

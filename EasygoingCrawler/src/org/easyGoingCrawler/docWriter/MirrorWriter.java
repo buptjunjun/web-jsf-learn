@@ -99,8 +99,8 @@ public class MirrorWriter implements DocWriter
 			directory = host + directory;
 			fileName = directory+fileName;
 			
-			System.out.println("directory = " + directory);
-			System.out.println("fileName = " + fileName);
+		/*	System.out.println("directory = " + directory);
+			System.out.println("fileName = " + fileName);*/
 			
 			
 			// create directory and file for this url
@@ -119,6 +119,7 @@ public class MirrorWriter implements DocWriter
 			// write html content to this file
 			String content = (String)doc;
 			fo.write(content.getBytes());
+			System.out.println(Thread.currentThread().getName() + " writing file :" + fileName);
 			return true;
 			
 		}
