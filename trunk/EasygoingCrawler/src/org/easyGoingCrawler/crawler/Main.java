@@ -25,7 +25,7 @@ public class Main
 
 		EGCrawlerSetting setting = new EGCrawlerSetting("conf/setting.properties");
 		
-		for(int i = 0; i < 15; i++)
+		for(int i = 0; i < 20; i++)
 		{
 			EGCrawler task = new EGCrawler(setting);
 			Thread t = new Thread(task);
@@ -33,7 +33,7 @@ public class Main
 			t.start();
 			task.start();
 			try {
-				TimeUnit.MILLISECONDS.sleep(new Random().nextInt(1000));
+				TimeUnit.MILLISECONDS.sleep(new Random().nextInt(2000)+ 300);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

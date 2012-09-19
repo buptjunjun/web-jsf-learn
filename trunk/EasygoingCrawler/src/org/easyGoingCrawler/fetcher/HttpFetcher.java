@@ -191,7 +191,7 @@ public class HttpFetcher implements Fetcher
 	   {
 		  
 		   
-		   System.out.println("url = " + url);
+		  // System.out.println("url = " + url);
 		   
 		   // 初始化，此处构造函数就与3.1中不同
 	       httpclient = new DefaultHttpClient();
@@ -203,17 +203,17 @@ public class HttpFetcher implements Fetcher
 	       //HttpGet httpget = new HttpGet("http://www.apache.org/"); 
 	       httpget = new HttpGet(url);
 	       // 查看默认request头部信息
-	       System.out.println("Accept-Charset:" + httpget.getFirstHeader("Accept-Charset"));
+	     //  System.out.println("Accept-Charset:" + httpget.getFirstHeader("Accept-Charset"));
 	       // 以下这条如果不加会发现无论你设置Accept-Charset为gbk还是utf-8，他都会默认返回gb2312（本例针对google.cn来说）
 	       httpget.setHeader("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1.2)");
 	       // 用逗号分隔显示可以同时接受多种编码
 	       httpget.setHeader("Accept-Language", "zh-cn,zh;q=0.5");
 	       httpget.setHeader("Accept-Charset", "utf-8;q=0.7,*;q=0.7");
 	       // 验证头部信息设置生效
-	       System.out.println("Accept-Charset:" + httpget.getFirstHeader("Accept-Charset").getValue());
+	      // System.out.println("Accept-Charset:" + httpget.getFirstHeader("Accept-Charset").getValue());
 	
 	       // Execute HTTP request
-	       System.out.println("executing request " + httpget.getURI());
+	       System.out.println(Thread.currentThread().getName() + "executing request " + httpget.getURI());
 	       HttpResponse response = httpclient.execute( httpget);
 	       //HttpResponse response = httpclient.execute(httpget);
 	
@@ -262,7 +262,7 @@ public class HttpFetcher implements Fetcher
 	         
 	         // 如果头部Content-Type中包含了编码信息，那么我们可以直接在此处获取
 	          charSet = EntityUtils.getContentCharSet(entity);
-	         System.out.println("In header: " + charSet);
+	         //System.out.println("In header: " + charSet);
 	         // 如果头部中没有，那么我们需要 查看页面源码，这个方法虽然不能说完全正确，因为有些粗糙的网页编码者没有在页面中写头部编码信息
 	         if (charSet == "") {
 	        	String regEx="(?=<meta).*?(?<=charset=[//'|//\"]?)([[a-z]|[A-Z]|[0-9]|-]*)";
@@ -278,7 +278,7 @@ public class HttpFetcher implements Fetcher
 	         
 	         if (charSet == null || charSet.equals(""))
 	        	 charSet = "utf-8";
-	         System.out.println("Last get: " + charSet);
+	        // System.out.println("Last get: " + charSet);
 	         // 至此，我们可以将原byte数组按照正常编码专成字符串输出（如果找到了编码的话）
 	         String content =  new String(bytes, charSet);
 	         return content;

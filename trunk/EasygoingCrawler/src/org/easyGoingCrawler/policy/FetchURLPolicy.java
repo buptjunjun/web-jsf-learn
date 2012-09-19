@@ -74,10 +74,10 @@ public class FetchURLPolicy implements Policy
 	 */
 	@Override
 	public boolean process(String url) {
-		if(StringUtils.isEmptyOrWhitespaceOnly(this.regx))
+		if(StringUtils.isNullOrEmpty(this.regx))
 			return true;
 		
-		if(StringUtils.isEmptyOrWhitespaceOnly(url))
+		if(StringUtils.isNullOrEmpty(url))
 			return false;
 		
 		Pattern p = Pattern.compile(regx);
