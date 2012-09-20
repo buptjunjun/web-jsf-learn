@@ -3,6 +3,7 @@ package org.easyGoingCrawler.framwork;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.easyGoingCrawler.common.FetchedFile;
 import org.easyGoingCrawler.setting.EGCrawlerSetting;
 
 

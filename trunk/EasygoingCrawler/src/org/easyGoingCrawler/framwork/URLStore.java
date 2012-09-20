@@ -14,7 +14,7 @@ public interface URLStore
 	  * @param url the url to store
 	  * @return true if succeed, or false
 	  */
-	 public boolean put(String url);
+	 public boolean put(FetchedFile f);
 	 
 	 /**get a url from store
 	  * @return the url 
@@ -25,11 +25,11 @@ public interface URLStore
 	  *  update status of a url if crawling is ok
 	  * @param url
 	  */
-	 public void  updateSucceed(String url);
+	 public void  updateSucceed(FetchedFile f);
 	 
 	 /**
 	  *  update status of a url if crawling failed
 	  * @param url
 	  */
-	 public void  updateFailed(String url);
+	 public void  updateFailed(FetchedFile f);
 }

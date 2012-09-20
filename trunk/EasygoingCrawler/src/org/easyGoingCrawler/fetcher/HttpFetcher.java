@@ -14,6 +14,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -45,6 +46,7 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
+import org.easyGoingCrawler.common.FetchedFile;
 import org.easyGoingCrawler.extractor.HTMLExtractor;
 import org.easyGoingCrawler.framwork.Fetcher;
 
@@ -65,7 +67,7 @@ public class HttpFetcher implements Fetcher
 	 * @return the content of a html file. null for error
 	 */
 	@Override
-	public String fetch(String url) 
+	public FetchedFile fetch(String url) 
 	{	
 		/*String newurl = reconstructURL(url);
 		
@@ -76,16 +78,18 @@ public class HttpFetcher implements Fetcher
 			return html;*/
 		
 		//if   newurl  failed, use original url to get html
-		String html = this.getHTML(url);
-		
+		FetchedFile ret = this.getHTML(url);
+		if()
+	
+		if(ret == null )
 		// if using url like "http://61.135.169.105/abc" failed and using "www.baidu.com/abc" succeed
 		// then modified host2ip;
 		if(html != null)
 		{
 			resetHost2ip(url);
 		}
-			
-		return html;
+		ret.setUrl(url);
+		return ret;
 		
 	}
 	
@@ -177,7 +181,7 @@ public class HttpFetcher implements Fetcher
 	 * @param url
 	 * @return the html if succeed , or return null
 	 */
-	private String getHTML(String url)
+	private FetchedFile getHTML(String url)
 	{
 		if (url == null)
 		{
@@ -254,11 +258,13 @@ public class HttpFetcher implements Fetcher
 	      
 	       // If the response does not enclose an entity, there is no need
 	       // to bother about connection release
+	        byte[] bytes = null;
+	        String charSet = "";
 	       if (entity != null) 
 	       {
 	         // 将源码流保存在一个byte数组当中，因为可能需要两次用到该流，
-	          byte[] bytes = EntityUtils.toByteArray(entity);
-	         String charSet = "";
+	          bytes = EntityUtils.toByteArray(entity);
+
 	         
 	         // 如果头部Content-Type中包含了编码信息，那么我们可以直接在此处获取
 	          charSet = EntityUtils.getContentCharSet(entity);
@@ -282,8 +288,7 @@ public class HttpFetcher implements Fetcher
 	        	 charSet = "utf-8";
 	         System.out.println("Last get: " + charSet);
 	         // 至此，我们可以将原byte数组按照正常编码专成字符串输出（如果找到了编码的话）
-	         String content =  new String(bytes, charSet);
-	         return content;
+	         return new FetchedFile("",bytes,charSet,new Date());
 	       }
 	   }
        catch(Exception e)

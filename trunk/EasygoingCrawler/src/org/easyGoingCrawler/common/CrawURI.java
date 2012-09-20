@@ -3,23 +3,38 @@ package org.easyGoingCrawler.common;
 import java.util.Date;
 
 /**
- * this class represent one file which has been fetched , the file can be a html or javascript file etc.
+ * this class represent one file which has been fetched , the file can be a html or javascript file or etc.
  * @author andyWebsense
  *
  */
 public class FetchedFile
 {
-
-	private String content=null;
-	private String encode = "utf-8";
+	// the url of this file
 	private String url=null;
+	
+	// content of this file 
+	private byte[] content=null;
+	
+	// encode of this file  ,default is utf-8
+	private String encode = "utf-8";
+	
+	// time when the file fetched
 	private Date   time = null;
 	
-	public String getContent()
+	public FetchedFile(String url,byte[] content,String encode ,Date   time  )
+	{
+		this.content=content;
+		this.encode = encode;
+		this.encode=encode;
+		this.time = time;
+	}
+	
+	
+	public byte[] getContent()
 	{
 		return content;
 	}
-	public void setContent(String content)
+	public void setContent(byte[] content)
 	{
 		this.content = content;
 	}
