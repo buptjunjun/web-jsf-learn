@@ -274,9 +274,9 @@ public class URLStoreMysql implements URLStore
 	public static void main(String[] args)
 	{
 		
-//		URLStoreMysql uslstore = new URLStoreMysql();
+		URLStoreMysql uslstore = new URLStoreMysql();
 //	
-//		uslstore.put("http://www.myexception.cn/abcdefg");
+		uslstore.put("http://www.myexception.cn/abcdefg");
 //		String url = uslstore.get();
 //		System.out.println(url);
 		//uslstore.updateFailed("http://www.myexception.cn");
