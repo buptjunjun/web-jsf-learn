@@ -18,7 +18,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 /**
- *  extract url from  HTML document
+ *  extract url from  FetchedFile document
  *  Use jsoup to extract the urls
  * 
  * @author Andy  weibobee@gmail.com 2012-9-13

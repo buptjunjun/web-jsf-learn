@@ -264,6 +264,7 @@ public class HttpFetcher implements Fetcher
 	          charSet = EntityUtils.getContentCharSet(entity);
 	         //System.out.println("In header: " + charSet);
 	         // 如果头部中没有，那么我们需要 查看页面源码，这个方法虽然不能说完全正确，因为有些粗糙的网页编码者没有在页面中写头部编码信息
+	            System.out.println(charSet +"0");
 	         if (charSet == "") {
 	        	String regEx="(?=<meta).*?(?<=charset=[//'|//\"]?)([[a-z]|[A-Z]|[0-9]|-]*)";
 	        	Pattern p=Pattern.compile(regEx, Pattern.CASE_INSENSITIVE);
@@ -274,11 +275,12 @@ public class HttpFetcher implements Fetcher
 	            } else {
 	                   charSet = "";
 	            }
+	            System.out.println(charSet +"1");
 	         }
 	         
 	         if (charSet == null || charSet.equals(""))
 	        	 charSet = "utf-8";
-	        // System.out.println("Last get: " + charSet);
+	         System.out.println("Last get: " + charSet);
 	         // 至此，我们可以将原byte数组按照正常编码专成字符串输出（如果找到了编码的话）
 	         String content =  new String(bytes, charSet);
 	         return content;
@@ -308,8 +310,24 @@ public class HttpFetcher implements Fetcher
 	public static void main(String [] args) throws IOException
 	{
 		HttpFetcher f = new HttpFetcher ();		
-		String ret = f.fetch("http://www.baidu.com/");
-		f.fetch("http://www.baidu.com/");
-		System.out.println(ret);		
+		String ret = f.fetch("http://www.myexception.cn/");
+		//f.fetch("http://www.myexception.cn/");
+		test(ret);
+	}
+
+	
+	public static void test(String html)
+	{
+		String charSet = null;
+		String regEx="(?=<meta).*?(?<=charset=[//'|//\"]?)([[a-z]|[A-Z]|[0-9]|-]*)";
+    	Pattern p=Pattern.compile(regEx, Pattern.CASE_INSENSITIVE);
+    	Matcher m=p.matcher(html);   // 默认编码转成字符串，因为我们的匹配中无中文，所以串中可能的乱码对我们没有影响
+        boolean result=m.find();
+        if (m.groupCount() == 1) {
+               charSet = m.group(1);
+        } else {
+               charSet = "";
+        }
+        System.out.println(charSet +"1");
 	}
 }
