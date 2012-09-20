@@ -188,7 +188,7 @@ public class EGCrawler  implements Runnable
 		}
 		
 		//ues fetcher to fecth the docuemnt of  the url
-		String content = this.fetcher.fetch(url);
+		FetchedFile content = this.fetcher.fetch(url);
 		
 		// if crawling failed
 		if(content == null)

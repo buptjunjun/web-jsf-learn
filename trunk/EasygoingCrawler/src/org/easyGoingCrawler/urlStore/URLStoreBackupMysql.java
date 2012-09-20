@@ -1,6 +1,7 @@
 package org.easyGoingCrawler.urlStore;
 
 import java.util.Date;
+import java.util.List;
 
 import org.easyGoingCrawler.framwork.URLStore;
 
@@ -24,9 +25,16 @@ public class URLStoreBackupMysql extends URLStoreMysql
 	public static void main(String[] args)
 	{
 
-		URLStore uslstore = new URLStoreBackupMysql();
-		//String url = uslstore.get();
-		uslstore.put("http://www.myexception.cn/abcdefg");
+		URLStoreBackupMysql uslstore = new URLStoreBackupMysql();
+		List<URLInfo> l = uslstore.mysqldb.getURL("", "urlstorebackup");
+		URLStoreMysql uslstore1 = new URLStoreMysql();
+		
+		for(int i = 0;i < l.size(); i++)
+		{
+			String url = l.get(i).getUrl();
+			uslstore1.put(url);
+		}
+		
 	}
 
 

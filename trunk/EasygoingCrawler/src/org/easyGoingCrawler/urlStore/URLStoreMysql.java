@@ -1,6 +1,7 @@
 package org.easyGoingCrawler.urlStore;
 
 import org.easyGoingCrawler.framwork.URLStore;
+import org.easyGoingCrawler.util.ZipUtil;
 import org.jsoup.helper.StringUtil;
 
 import com.mysql.jdbc.StringUtils;
@@ -45,7 +46,7 @@ public class URLStoreMysql implements URLStore
 	private static  final Hashtable urls = new Hashtable();
 	
 	// max size of the urls
-	private static  int   MaxputCachedURLS = 100;
+	private static  int   MaxputCachedURLS = 250;
 	
 	// the table name  storing the urls 
 	private  String tableName = "urlstore";
@@ -65,6 +66,8 @@ public class URLStoreMysql implements URLStore
 	private static  Boolean lockGetputCachedURLS = true;
 	
 	private static List<String>  seedList = null;
+	
+	public static final int MAX_URL_LENGTH= 50; 
 	
 	public URLStoreMysql() 
 	{
@@ -87,6 +90,10 @@ public class URLStoreMysql implements URLStore
 	@Override
 	public  boolean  put(String url)
 	{
+		
+		if(url == null || url.length() > MAX_URL_LENGTH)
+			return false;
+		 
 		//url.replaceAll("%[//d]", replacement)
 		synchronized (lockPutputCachedURLS)
 		{
@@ -276,20 +283,30 @@ public class URLStoreMysql implements URLStore
 		
 		URLStoreMysql uslstore = new URLStoreMysql();
 //	
-		uslstore.put("http://www.myexception.cn/abcdefg");
+	/*	for(int i = 0; i < seedList.size(); i++)
+			uslstore.put(seedList.get(i));*/
 //		String url = uslstore.get();
 //		System.out.println(url);
 		//uslstore.updateFailed("http://www.myexception.cn");
 		//uslstore.updateSucceed("http://www.myexception.cn");
 		
+		
 		String url = "http://www.iteye.com/blogs/tag/C++%20%20%20%20%E6%8E%92%E5%BA%8F%20%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%20%E7%AE%97%E6%B3%95%20%20%E7%90%86%E8%AE%BA";
-		System.out.println(URLEncoder.encode("http://www.iteye.com/abcd  aa"));
+		uslstore.put(url);
+		/*where url like '%compressed%'
 		try {
 			System.out.println(URLDecoder.decode(url,"utf-8"));
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
+		
+		List<URLInfo> l = uslstore.mysqldb.getURL("where url like '%compressed'", "urlstore");
+		String url1 = l.get(0).getUrl();
+		System.out.println(url1);
+		url1 = url1.replaceAll("compressed", "");
+		String deurl = ZipUtil.decompress(url1.getBytes());
+		System.out.println(deurl.equals(url));
 	}
 }
 
@@ -310,6 +327,8 @@ class URLInfo
 	 * status = 1: url is crawled 
 	 */
 	public int status = 0; 
+	
+	String encode   = "utf-8";
     
     /**
      * the time one url was collected
@@ -325,11 +344,12 @@ class URLInfo
     {
 		// TODO Auto-generated constructor stub
 	}
-    public URLInfo(String url,int status, String collectTime,String lastCrawlTime) 
+    public URLInfo(String url,int status,String encode, String collectTime,String lastCrawlTime) 
     {
 		// TODO Auto-generated constructor stub
     	this.url = url;
     	this.status = status;
+    	this.encode = encode;
     	this.collectTime = collectTime;
     	this.lastCrawlTime = lastCrawlTime;
 	}
@@ -635,10 +655,11 @@ class MysqlDB
 			 {
 				 String url = r.getString(1);
 				 int status = r.getInt(2);
-				 String collectTime = r.getString(3);
-				 String lastCrawlTime = r.getString(4);
+				 String encode = r.getString(3);
+				 String collectTime = r.getString(4);
+				 String lastCrawlTime = r.getString(5);
 				 
-				 URLInfo urlInfo = new URLInfo(url,status,collectTime,lastCrawlTime);
+				 URLInfo urlInfo = new URLInfo(url,status,encode,collectTime,lastCrawlTime);
 				 returls.add(urlInfo);
 			 }
 			 

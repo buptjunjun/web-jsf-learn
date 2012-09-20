@@ -127,6 +127,8 @@ public class MirrorWriter implements DocWriter
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("file = " + directory);
+			System.out.println("file = " + fileName);
 		}
 		finally
 		{
