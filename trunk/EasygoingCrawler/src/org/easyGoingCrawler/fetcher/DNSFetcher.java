@@ -14,32 +14,8 @@ import org.easyGoingCrawler.framwork.Fetcher;
  * @author Andy  weibobee@gmail.com 2012-9-12
  *
  */
-public class DNSFetcher implements Fetcher
+public class DNSFetcher extends Fetcher
 {
-
-	/**
-	 * fetch the ip address of a website.
-	 * For example we query "ditu.baidu.com" form DNS server. will return "http://123.125.114.86/" 
-	 * 
-	 * @param url the url of one html file
-	 * @return the IP address of a Website 
-	 */
-	@Override
-	public String fetch(String website) 
-	{
-		if (website == null ) return null;
-		
-		try
-		{
-		  InetAddress address = InetAddress.getByName(website);
-		  return address.getHostAddress();
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		return null;
-	}
 
 	
 	public static void main(String [] args)

@@ -5,9 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import org.easyGoingCrawler.framwork.DocWriter;
-
 import com.mysql.jdbc.StringUtils;
 
 
@@ -20,9 +18,9 @@ import com.mysql.jdbc.StringUtils;
  *
  */
 
-public class MirrorWriter implements DocWriter
+public class MirrorWriter extends DocWriter
 {
-
+	
 	/**
 	 * @param args
 	 */
@@ -59,15 +57,16 @@ public class MirrorWriter implements DocWriter
 		
 		
 		MirrorWriter mw = new MirrorWriter();
-		mw.write(null, "http://blog.csdn.net/fengyarongaa");
+		//mw.write(null, "http://blog.csdn.net/fengyarongaa");
 	}
 
 
 	@Override
-	public boolean write(Object doc,String u)
+	public void write(org.easyGoingCrawler.framwork.CrawlURI curl) 
 	{
+		String u = curl.getUrl();
 		if(StringUtils.isNullOrEmpty(u))
-			return false;
+			return ;
 		String directory = null;
 		String fileName = null;
 		String host = null;
@@ -117,16 +116,20 @@ public class MirrorWriter implements DocWriter
 			fo = new FileOutputStream(html);
 			
 			// write html content to this file
-			String content = (String)doc;
+			String content = new String(curl.getContent(),curl.getEncode());
 			fo.write(content.getBytes());
 			System.out.println(Thread.currentThread().getName() + " writing file :" + fileName);
-			return true;
-			
+		
+			// set the status to true when write the file successfully 
+			curl.setStatus(true);
+			return ;			
 		}
 		catch (Exception e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			// set the status to false when failed to write the file  
+			curl.setStatus(false);
 			System.out.println("file = " + directory);
 			System.out.println("file = " + fileName);
 		}
@@ -141,7 +144,7 @@ public class MirrorWriter implements DocWriter
 				}
 			
 		}
-		return false;
+		return;	
 		
 	}
 

@@ -3,9 +3,6 @@ package org.easyGoingCrawler.urlStore;
 import java.util.Date;
 import java.util.List;
 
-import org.easyGoingCrawler.framwork.URLStore;
-
-
 /**
  * URLStoreBackupMysql will store the URL in MYSQL. it will use the urls that we are not interesting but do not want to discard 
  * 

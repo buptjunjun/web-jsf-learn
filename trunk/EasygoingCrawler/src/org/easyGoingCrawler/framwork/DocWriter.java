@@ -1,4 +1,6 @@
 package org.easyGoingCrawler.framwork;
+
+
 /**
  *  DocWriter will do the job of storing the documents you have fetched to some place, it depends on the implementation
  *  of DocWriter.
@@ -8,12 +10,12 @@ package org.easyGoingCrawler.framwork;
  * @author Andy  weibobee@gmail.com 2012-9-12
  *
  */
-public interface DocWriter 
+public abstract class  DocWriter 
 {
 	/**
 	 * 
 	 * @param doc the document you want to store
 	 * @return true if success or false
 	 */
-	boolean write(Object doc,String url);
+	public void write(CrawlURI curl) {};
 }

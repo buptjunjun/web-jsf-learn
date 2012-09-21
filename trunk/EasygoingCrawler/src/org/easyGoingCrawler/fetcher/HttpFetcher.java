@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -45,9 +46,9 @@ import org.apache.http.protocol.ExecutionContext;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
-
-import org.easyGoingCrawler.common.FetchedFile;
+import org.apache.log4j.Logger;
 import org.easyGoingCrawler.extractor.HTMLExtractor;
+import org.easyGoingCrawler.framwork.CrawlURI;
 import org.easyGoingCrawler.framwork.Fetcher;
 
 /**
@@ -56,9 +57,9 @@ import org.easyGoingCrawler.framwork.Fetcher;
  *
  */
 
-public class HttpFetcher implements Fetcher
+public class HttpFetcher extends Fetcher
 {
-
+	private Logger logger = Logger.getLogger(HttpFetcher.class);
 	// map from host name to ip address
 	private static Hashtable host2ip = new Hashtable(); 
 	/**
@@ -67,7 +68,7 @@ public class HttpFetcher implements Fetcher
 	 * @return the content of a html file. null for error
 	 */
 	@Override
-	public FetchedFile fetch(String url) 
+	public void fetch(CrawlURI curl) 
 	{	
 		/*String newurl = reconstructURL(url);
 		
@@ -78,19 +79,11 @@ public class HttpFetcher implements Fetcher
 			return html;*/
 		
 		//if   newurl  failed, use original url to get html
-		FetchedFile ret = this.getHTML(url);
-		if()
-	
-		if(ret == null )
-		// if using url like "http://61.135.169.105/abc" failed and using "www.baidu.com/abc" succeed
-		// then modified host2ip;
-		if(html != null)
+		this.getHTML(curl);
+		if(curl.isStatus())
 		{
-			resetHost2ip(url);
+			resetHost2ip(curl.getUrl());
 		}
-		ret.setUrl(url);
-		return ret;
-		
 	}
 	
 	
@@ -122,7 +115,7 @@ public class HttpFetcher implements Fetcher
 		   // if we do not cached the ip of this host
 		   if (hostip == null)
 		   {
-			   hostip = new DNSFetcher().fetch(host); 
+			   hostip = fetchDNS(host); 
 			   if (hostip != null)
 			   {
 				   host2ip.put(host, hostip);
@@ -181,11 +174,12 @@ public class HttpFetcher implements Fetcher
 	 * @param url
 	 * @return the html if succeed , or return null
 	 */
-	private FetchedFile getHTML(String url)
+	private void getHTML(CrawlURI curl)
 	{
+		String url = curl.getUrl();
 		if (url == null)
 		{
-			return null;
+			return;
 		}
 		
 		HttpEntity entity = null;
@@ -243,7 +237,8 @@ public class HttpFetcher implements Fetcher
 	         httpget = new HttpGet(newUri);
 	         response = httpclient.execute(httpget);
 	       }
-	
+	       
+	       statusCode = response.getStatusLine().getStatusCode();
 	       // Get hold of the response entity
 	        entity = response.getEntity();
 	      
@@ -264,8 +259,6 @@ public class HttpFetcher implements Fetcher
 	       {
 	         // 将源码流保存在一个byte数组当中，因为可能需要两次用到该流，
 	          bytes = EntityUtils.toByteArray(entity);
-
-	         
 	         // 如果头部Content-Type中包含了编码信息，那么我们可以直接在此处获取
 	          charSet = EntityUtils.getContentCharSet(entity);
 	         //System.out.println("In header: " + charSet);
@@ -288,13 +281,26 @@ public class HttpFetcher implements Fetcher
 	        	 charSet = "utf-8";
 	         System.out.println("Last get: " + charSet);
 	         // 至此，我们可以将原byte数组按照正常编码专成字符串输出（如果找到了编码的话）
-	         return new FetchedFile("",bytes,charSet,new Date());
+	         
+	         
+	         curl.setContent(bytes);
+	         curl.setHttpstatus(statusCode);
+	         curl.setEncode(charSet);
+	         curl.setLastCrawlDate(new Date());
+	         curl.setStatus(true);
+	         return;
+	       }
+	       else //error
+	       {
+	    	   curl.setStatus(false);
+	    	   return;
 	       }
 	   }
        catch(Exception e)
        {
     	   e.printStackTrace();
-    	  
+    	   logger.error("error when fetching " + url + "  "+ e.getMessage());
+    	   curl.setStatus(false);
        }
 	   finally
 	   {
@@ -309,15 +315,14 @@ public class HttpFetcher implements Fetcher
 			   e.printStackTrace();
 		   }
 	   }
-       return null;
 	}
 	
 	public static void main(String [] args) throws IOException
 	{
 		HttpFetcher f = new HttpFetcher ();		
-		String ret = f.fetch("http://www.myexception.cn/");
+		//String ret = f.fetch("http://www.myexception.cn/");
 		//f.fetch("http://www.myexception.cn/");
-		test(ret);
+		//test(ret);
 	}
 
 	
@@ -335,4 +340,30 @@ public class HttpFetcher implements Fetcher
         }
         System.out.println(charSet +"1");
 	}
+	
+	
+	/**
+	 * fetch the ip address of a website.
+	 * For example we query "ditu.baidu.com" form DNS server. will return "http://123.125.114.86/" 
+	 * 
+	 * @param url the url of one html file
+	 * @return the IP address of a Website 
+	 */
+	public String fetchDNS(String website) 
+	{
+		if (website == null ) return null;
+		
+		try
+		{
+		  InetAddress address = InetAddress.getByName(website);
+		  return address.getHostAddress();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	
 }
