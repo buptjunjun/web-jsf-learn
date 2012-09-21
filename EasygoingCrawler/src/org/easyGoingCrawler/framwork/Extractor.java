@@ -8,12 +8,12 @@ import java.util.List;
  * @author Andy  weibobee@gmail.com 2012-9-13
  *
  */
-public interface  Extractor
+public abstract class  Extractor
 {
 	/**
 	 * @param url
 	 * @param docContent for example a html
 	 * @return list of the url in this document
 	 */
-	 List<String> extract(String url,String docContent);
+	 public void extract(CrawlURI curl){};
 }

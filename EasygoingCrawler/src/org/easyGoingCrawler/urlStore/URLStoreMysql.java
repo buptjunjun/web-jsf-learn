@@ -1,6 +1,5 @@
 package org.easyGoingCrawler.urlStore;
 
-import org.easyGoingCrawler.framwork.URLStore;
 import org.easyGoingCrawler.util.ZipUtil;
 import org.jsoup.helper.StringUtil;
 
@@ -38,7 +37,7 @@ import java.util.Stack;
  * @author Andy  weibobee@gmail.com 2012-9-13
  *
  */
-public class URLStoreMysql implements URLStore
+public class URLStoreMysql 
 {
 	protected MysqlDB mysqldb = null;
 	
@@ -87,8 +86,7 @@ public class URLStoreMysql implements URLStore
 			seedList = this.readSeeds(seedsFile);
 	}
 
-	@Override
-	public  boolean  put(String url)
+	public  boolean  put(String url,int encode)
 	{
 		
 		if(url == null || url.length() > MAX_URL_LENGTH)
@@ -108,7 +106,7 @@ public class URLStoreMysql implements URLStore
 				while( iter.hasNext())
 				{
 					String str = (String) iter.next();
-					URLInfo urlinfo = new URLInfo(str,0,new Date().toLocaleString(),new Date().toLocaleString());
+					URLInfo urlinfo = new URLInfo(str,0,new Date().toLocaleString(),new Date().toLocaleString(), str);
 					boolean ret = this.mysqldb.insertURL(urlinfo, tableName);
 				}
 				
@@ -118,7 +116,6 @@ public class URLStoreMysql implements URLStore
 		
 	}
 
-	@Override
 	public String get()
 	{
 		if(seedList == null || seedList.size() <=0)
@@ -150,7 +147,6 @@ public class URLStoreMysql implements URLStore
 		}
 	}
 	
-	@Override
 	public void updateSucceed(String url)
 	{
 		// TODO Auto-generated method stub
@@ -166,7 +162,6 @@ public class URLStoreMysql implements URLStore
 
 	}
 
-	@Override
 	public void updateFailed(String url)
 	{
 		if(url != null && urls.containsKey(url))
@@ -280,112 +275,36 @@ public class URLStoreMysql implements URLStore
 	 */
 	public static void main(String[] args)
 	{
-		
-		URLStoreMysql uslstore = new URLStoreMysql();
-//	
-	/*	for(int i = 0; i < seedList.size(); i++)
-			uslstore.put(seedList.get(i));*/
-//		String url = uslstore.get();
-//		System.out.println(url);
-		//uslstore.updateFailed("http://www.myexception.cn");
-		//uslstore.updateSucceed("http://www.myexception.cn");
-		
-		
-		String url = "http://www.iteye.com/blogs/tag/C++%20%20%20%20%E6%8E%92%E5%BA%8F%20%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%20%E7%AE%97%E6%B3%95%20%20%E7%90%86%E8%AE%BA";
-		uslstore.put(url);
-		/*where url like '%compressed%'
-		try {
-			System.out.println(URLDecoder.decode(url,"utf-8"));
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
-		List<URLInfo> l = uslstore.mysqldb.getURL("where url like '%compressed'", "urlstore");
-		String url1 = l.get(0).getUrl();
-		System.out.println(url1);
-		url1 = url1.replaceAll("compressed", "");
-		String deurl = ZipUtil.decompress(url1.getBytes());
-		System.out.println(deurl.equals(url));
+//		
+//		URLStoreMysql uslstore = new URLStoreMysql();
+////	
+//	/*	for(int i = 0; i < seedList.size(); i++)
+//			uslstore.put(seedList.get(i));*/
+////		String url = uslstore.get();
+////		System.out.println(url);
+//		//uslstore.updateFailed("http://www.myexception.cn");
+//		//uslstore.updateSucceed("http://www.myexception.cn");
+//		
+//		
+//		String url = "http://www.iteye.com/blogs/tag/C++%20%20%20%20%E6%8E%92%E5%BA%8F%20%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%20%E7%AE%97%E6%B3%95%20%20%E7%90%86%E8%AE%BA";
+//		uslstore.put(url);
+//		/*where url like '%compressed%'
+//		try {
+//			System.out.println(URLDecoder.decode(url,"utf-8"));
+//		} catch (UnsupportedEncodingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}*/
+//		
+//		List<URLInfo> l = uslstore.mysqldb.getURL("where url like '%compressed'", "urlstore");
+//		String url1 = l.get(0).getUrl();
+//		System.out.println(url1);
+//		url1 = url1.replaceAll("compressed", "");
+//		String deurl = ZipUtil.decompress(url1.getBytes());
+//		System.out.println(deurl.equals(url));
 	}
 }
 
 
-/**
- * the URL class 
- * 
- * @author Andy  weibobee@gmail.com 2012-9-15
- *
- */
-class URLInfo
-{	
-	public String url = null;   
-	
-	/**
-	 * status = -1: url is crawled but failed
-	 * status = 0: url is not crawled
-	 * status = 1: url is crawled 
-	 */
-	public int status = 0; 
-	
-	String encode   = "utf-8";
-    
-    /**
-     * the time one url was collected
-     */
-	public String collectTime = new Date().toLocaleString();
-    
-    /**
-     * the time one url last crawled
-     */
-	public String lastCrawlTime = new Date().toLocaleString();
-    
-    public URLInfo() 
-    {
-		// TODO Auto-generated constructor stub
-	}
-    public URLInfo(String url,int status,String encode, String collectTime,String lastCrawlTime) 
-    {
-		// TODO Auto-generated constructor stub
-    	this.url = url;
-    	this.status = status;
-    	this.encode = encode;
-    	this.collectTime = collectTime;
-    	this.lastCrawlTime = lastCrawlTime;
-	}
-    
-    
-    public String getUrl()
-    {
-	return url;
-     }
-	public void setUrl(String url) 
-	{
-		this.url = url;
-	}
-	public int getStatus() {
-		return status;
-	}
-	public void setStatus(int status)
-	{
-		this.status = status;
-	}
-	public String getCollectTime() 
-	{
-		return collectTime;
-	}
-	public void setCollecttime(String collectTime) 
-	{
-		this.collectTime = collectTime;
-	}
-	public String getLastCrawlTime() 
-	{
-		return lastCrawlTime;
-	}
-	public void setLastCrawlTime(String lastCrawlTime) 
-	{
-		this.lastCrawlTime = lastCrawlTime;
-	}
-}
 
 

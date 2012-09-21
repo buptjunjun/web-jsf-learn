@@ -6,11 +6,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+import org.easyGoingCrawler.crawler.EGCrawlerFactory;
+import org.easyGoingCrawler.framwork.CrawlURI;
 import  org.easyGoingCrawler.framwork.Extractor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -24,8 +28,9 @@ import org.jsoup.select.Elements;
  * @author Andy  weibobee@gmail.com 2012-9-13
  *
  */
-public class HTMLExtractor implements Extractor
+public class HTMLExtractor extends Extractor
 {
+	private Logger logger = Logger.getLogger(EGCrawlerFactory.class);
 	public HTMLExtractor ()
 	{
 	}
@@ -36,10 +41,28 @@ public class HTMLExtractor implements Extractor
 	 * @return list of the url in this document
 	 */
 	@Override
-	public List<String> extract(String originalURL,String docContent)
+	public void extract(CrawlURI curl)
 	{
-		if (docContent == null)
-			return null;
+		if (curl.getContent() == null || curl.getEncode() == null)
+		{
+			curl.setStatus(false);
+			return;
+		}
+		String originalURL = curl.getUrl();
+		String encode = curl.getEncode();
+		String docContent = null;
+		try 
+		{
+			docContent = new String(curl.getContent(),encode);
+		} 
+		catch (UnsupportedEncodingException e1) 
+		{
+			
+			e1.printStackTrace();
+			logger.error("error :new String(curl.getContent(),encode) " + e1.getMessage());
+			curl.setStatus(false);
+			return;
+		}
 		
 		try
 		{
@@ -50,16 +73,17 @@ public class HTMLExtractor implements Extractor
 			Elements hrefs = doc.select("a");
 			
 			if (hrefs == null)
-				return null;
+				return ;
 			
 			// get all the url in this documents
 			List<String>  urls = new ArrayList<String>();
 			for (Element e: hrefs)
 			{
-				// get a url in an element like e<a href="www.abc.com/aa">;
+				// get a url in an element like <a href="http://www.abc.com/aa">;
 				String url = e.attr("href");				
 				
-			   if (!url.startsWith("http://"))
+				// if the url is relative url like <a href="/aa.html">
+			  /* if (!url.startsWith("http://"))
 			   {
 				   if (originalURL.endsWith("/"))
 				      url = originalURL+ url;
@@ -69,18 +93,23 @@ public class HTMLExtractor implements Extractor
 					   String u = originalURL.substring(0,index+1);
 					   url = u+url;
 				   }
-			   }
+			   }*/
 			   //System.out.println(url);
-			   urls.add(url);
+			   if (url.startsWith("http://"));
+			   		urls.add(url);
 				
 			}
 						
-			return urls ;
+			curl.setIncludeURLs(urls);
+			curl.setStatus(true);
+			
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			return null;
+			logger.error("extract "+ originalURL +" error " + e.getMessage());
+			curl.setStatus(false);
+			return;
 		}
 	}
 
@@ -100,7 +129,7 @@ public class HTMLExtractor implements Extractor
 			}
 			String content = sb.toString();
 			HTMLExtractor extractor = new HTMLExtractor();
-			extractor.extract("http://www.myexception.cn/apache",content );
+			//extractor.extract("http://www.myexception.cn/apache",content );
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

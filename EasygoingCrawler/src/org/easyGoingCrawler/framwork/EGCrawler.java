@@ -3,11 +3,6 @@ package org.easyGoingCrawler.framwork;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.easyGoingCrawler.common.FetchedFile;
-import org.easyGoingCrawler.setting.EGCrawlerSetting;
-
-
-
 /**
  *  One EGCrawler is a thread , it  contains 7 components:
  *  		<li>fetcher  </li>
@@ -31,42 +26,40 @@ import org.easyGoingCrawler.setting.EGCrawlerSetting;
  * @author Andy  weibobee@gmail.com 2012-9-13
  */
 
-public class EGCrawler  implements Runnable
+public class EGCrawler  extends Thread
 {
 	  // flag to control this thread
 	  private int flag = EGCrawler.PAUSE;
 	  
 	  // command to contrl a crawlTask
-	  private static final int RUN = 0;	  
-	  private static final int PAUSE = 1;
-	  private static final int STOP = 2;
+	  public static final int RUN = 0;	  
+	  public static final int PAUSE = 1;
+	  public static final int STOP = 2;
 	  
 	  
 	  // fecher to fetcher a uri
 	  private Fetcher  fetcher = null;
 	  
-	  // the policy to decide whether a url is accepted before we fetch phase
-	  private Policy fetchPolicy = null;
-	  
-	  // the policy to decide whether a url is accepted when we extract from current document and want to store it in database
-	  private Policy extractPolicy = null;
-	  
 	  // extractor to extract url from current document
 	  private Extractor extractor = null;
 	  
-	  // setting for this task
-	  private EGCrawlerSetting setting = null;
-	  
-	  // get or store a url that we are interested in  to url Database 
-	  private URLStore urlStore = null;
-	  
-	  // get or store a url that we are not interested in  to backup url Database
-	  private URLStore urlStoreBackup = null;
-	  
-	
-
-	// docWriter to write the document to somewhere ,may be a hard disk or Mysql
+	  // privide the url to fetcher and save the urls extracted from document.
+	  private URLScheduler scheduler = null;
+	 
+	  // docWriter to write the document to somewhere ,may be a hard disk or Mysql
 	  private DocWriter docWriter = null;
+	  
+	  // interval of two fetching task in millsecond
+	  private int interval = 1000;
+	  
+	 
+
+
+	  public EGCrawler ()
+	  {
+		  
+	  }
+	  
 	  
 	  /**
 		 *	EGCrawler will create a EGCrawler instance  according to the setting object
@@ -84,48 +77,9 @@ public class EGCrawler  implements Runnable
 		 * @author Andy  weibobee@gmail.com 2012-9-13
 		 *
 		 */
-	  public EGCrawler(EGCrawlerSetting setting)
-	  {
-			this.setting = setting;		
-			try
-			{
-				// get the name of components
-				URLStore urlstore = (URLStore)Class.forName(this.setting.getUrlstore()).newInstance();
-				Fetcher fether = (Fetcher)Class.forName(this.setting.getFetcher()).newInstance();
-				Extractor ectractor = (Extractor)Class.forName(this.setting.getExtractor()).newInstance();
-				Policy extractPolicy = (Policy)Class.forName(this.setting.getExtractPolicy()).newInstance();
-				Policy fetchPolicy = (Policy)Class.forName(this.setting.getFetchPolicy()).newInstance();
-				DocWriter docWriter = (DocWriter)Class.forName(this.setting.getDocwriter()).newInstance();
-				URLStore urlstoreBackup = (URLStore)Class.forName(this.setting.getUrlstoreBackup()).newInstance();
-				
-				// add components to a EGCrawler
-				this.setUrlStore(urlstore);
-				this.setFetcher(fether);			
-				this.setExtractor(ectractor);
-				this.setExtractPolicy(extractPolicy);			
-				this.setFetchPolicy(fetchPolicy);
-				this.setDocWriter(docWriter);
-				
-				// set back url store , this is optional
-				if(this.setting.getUrlstoreBackup() != null)
-				{
-					try
-					{
-						this.setUrlStoreBackup(urlstoreBackup);
-					}
-					catch(Exception e)
-					{
-						System.out.println("add UrlStoreBackup to crawler error");
-					}
-				}
+	  public EGCrawler(  Fetcher  fetcher , Extractor extractor , URLScheduler scheduler, DocWriter docWriter)
+	  {		
 			
-			}
-			catch (Exception e1)
-			{
-				e1.printStackTrace();				
-				// if there is some exception happened , set flag to STOP, and the thread will not do any task  
-				this.flag = STOP;
-			}	
 	  }
 	  
 	  
@@ -150,7 +104,7 @@ public class EGCrawler  implements Runnable
 				this.doOneTask();			
 												
 				// sleep a time
-				TimeUnit.MILLISECONDS.sleep(this.setting.getInterval());
+				TimeUnit.MILLISECONDS.sleep(this.interval);
 			}
 			catch(Exception e)
 			{
@@ -176,76 +130,36 @@ public class EGCrawler  implements Runnable
 	 */
 	private void  doOneTask()
 	{
-		// use urlStoreto get a url from the url database
-		String url = this.urlStore.get();
-		
-		// use fetchPolicy to check if it is accepted
-		if (!this.fetchPolicy.process(url))
-		{
-		
-			// update the status of this url and return;
-			this.urlStore.updateFailed(url);
-			return;
-		}
-		
-		//ues fetcher to fecth the docuemnt of  the url
-		FetchedFile content = this.fetcher.fetch(url);
-		
-		// if crawling failed
-		if(content == null)
-		{
-			// update the status of this url and return;
-			this.urlStore.updateFailed(url);
-			return;
-		}
-		else // if crawling succeeded
-		{
-			// update the status of this url
-			this.urlStore.updateSucceed(url);
-		}
-		
-		// ues extractor to extract  urls in this document
-		List<String> urls = this.extractor.extract(url,content);
-		
-		
-		//use urlStore to store the urls to the database
-		if(urls != null)
-		{
-			for(String u : urls)
-			{
-				// if we are interested in the url  , save it to url database.
-				if(this.extractPolicy.process(u))
-				{
-					this.urlStore.put(u);
-				}
-				// if we are not interested in the url  , save it to backup url database.
-				else
-				{
-					if(this.urlStoreBackup != null)
-						this.urlStoreBackup.put(url);
-				}
-			}
-		}
-		
-		
-		// write this document somewhere
-		this.docWriter.write(content,url);
-		
+		CrawlURI curl = this.scheduler.get();
+		this.fetcher.fetch(curl);
+		this.extractor.extract(curl);
+		this.docWriter.write(curl);
+		this.scheduler.put(curl);		
 	}
 	
 	
 	/**
 	 * make the crawler thread pasue
 	 */
-	public void pause()
+	public void pauseCrawl()
 	{
 		this.flag = PAUSE;
 	}
 	
 	/**
+	 *  get the current status of the this crawler
+	 *   
+	 * @return
+	 */
+	public int getFlag() {
+		return flag;
+	}
+
+
+	/**
 	 * stop this crawler thread
 	 */
-	public void stop()
+	public void stopCrawl()
 	{
 		this.flag = STOP;
 	}
@@ -253,7 +167,7 @@ public class EGCrawler  implements Runnable
 	/**
 	 * make the crawler thread pasue
 	 */	
-	public void start()
+	public void startCrawl()
 	{
 		this.flag = RUN;
 	}
@@ -269,25 +183,7 @@ public class EGCrawler  implements Runnable
 		this.fetcher = fetcher;
 	}
 
-	public Policy getFetchPolicy()
-	{
-		return fetchPolicy;
-	}
 
-	public void setFetchPolicy(Policy fetchPolicy)
-	{
-		this.fetchPolicy = fetchPolicy;
-	}
-
-	public Policy getExtractPolicy()
-	{
-		return extractPolicy;
-	}
-
-	public void setExtractPolicy(Policy extractPolicy)
-	{
-		this.extractPolicy = extractPolicy;
-	}
 
 	public Extractor getExtractor()
 	{
@@ -299,26 +195,7 @@ public class EGCrawler  implements Runnable
 		this.extractor = extractor;
 	}
 
-	public EGCrawlerSetting getSetting()
-	{
-		return setting;
-	}
-
-	public void setSetting(EGCrawlerSetting setting)
-	{
-		this.setting = setting;
-	}
-
-	public URLStore getUrlStore()
-	{
-		return urlStore;
-	}
-
-	public void setUrlStore(URLStore urlStore)
-	{
-		this.urlStore = urlStore;
-	}
-
+	
 	public DocWriter getDocWriter()
 	{
 		return docWriter;
@@ -329,15 +206,21 @@ public class EGCrawler  implements Runnable
 		this.docWriter = docWriter;
 	}
 	
-	public URLStore getUrlStoreBackup()
-	{
-		return urlStoreBackup;
-	}
+	  public URLScheduler getScheduler() 
+	  {
+			return scheduler;
+	  }
 
 
-	public void setUrlStoreBackup(URLStore urlStoreBackup)
-	{
-		this.urlStoreBackup = urlStoreBackup;
+	public void setScheduler(URLScheduler scheduler) {
+		this.scheduler = scheduler;
 	}
-  
+	 public int getInterval() {
+			return interval;
+		}
+
+
+		public void setInterval(int interval) {
+			this.interval = interval;
+		}
 }

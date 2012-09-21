@@ -1,46 +1,150 @@
 package org.easyGoingCrawler.crawler;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Properties;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.easyGoingCrawler.framwork.EGCrawler;
-import org.easyGoingCrawler.framwork.DocWriter;
-import org.easyGoingCrawler.framwork.Extractor;
-import org.easyGoingCrawler.framwork.Fetcher;
-import org.easyGoingCrawler.framwork.Policy;
-import org.easyGoingCrawler.framwork.URLStore;
-import org.easyGoingCrawler.setting.EGCrawlerSetting;
 
 /**
- * EGCrawlerPool is a pool of EGCrawler threads, it is the controller of all the EGCrawler instances.
- * it will take responsibility for creating  ,starting ,pausing and stop  a EGCrawler thread;
- * 
- * @author Andy  weibobee@gmail.com 2012-9-13
+ * 	EGCrawlerPool contains a set of EGCrawler and will control them  
+ *   @author Andy  weibobee@gmail.com 2012-9-21
  *
  */
-
-public class EGCrawlerPool
+public class EGCrawlerPool 
 {
-
-	// EGcrawler Setting information 
-	EGCrawlerSetting crawlerSetting = null;
 	
-	public EGCrawlerPool(String confFile)
+	private EGCrawlerFactory crawlerFactory = null;
+	
+	// the limit crawler in this EGCrawlerPool
+	private int crawlerLimit = 50;
+	
+	private List<EGCrawler> crawlers = new  ArrayList<EGCrawler>();
+	
+	private int countPaused = 0;
+	private int countStopped = 0;
+	private int countRunning = 0;
+	
+	/**
+	 * 
+	 * @param configure configure file for this crawler pool
+	 */
+	public EGCrawlerPool(String configure)
 	{
-		this.crawlerSetting = new EGCrawlerSetting(confFile);
+		crawlerFactory = new EGCrawlerFactory(configure);
 	}
+	
+	/**
+	 * add one crawler to this pool
+	 */
+	public void addOneCrawler()
+	{
+		EGCrawler crawler = this.crawlerFactory.createCrawler();
+		if(crawler != null && this.crawlers.size() < this.crawlerLimit)
+		{
+			this.crawlers.add(crawler);
+			crawler.startCrawl();
+		}
+	}
+	
 
 	/**
-	 * @param args
+	 * 
+	 * @return total crawlers in this pool
 	 */
-	public static void main(String[] args)
+	public int size()
 	{
-		// TODO Auto-generated method stub
-
+		if(this.crawlers != null)
+			return this.crawlers.size();
+		
+		return 0;
 	}
 	
+	
+	/**
+	 * 
+	 * get the  number of paused ,stopped  and running EGCrawler 
+	 */
+	public synchronized void getStatitics()
+	{
+		 countPaused = 0;
+		 countStopped = 0;
+		 countRunning= 0;
+		if(this.crawlers != null)
+		{
+			for(int i = 0; i < this.crawlers.size(); i++)
+			{
+				EGCrawler c = this.crawlers.get(i);
+				switch(c.getFlag())
+				{
+					case EGCrawler.PAUSE:
+						countPaused++;
+						break;
+					case EGCrawler.RUN:
+						countRunning++;
+						break;
+					case EGCrawler.STOP:
+						countStopped++;
+						break;
+				}
+			}
+		}
+		
+	}
+	
+	/**
+	 * 
+	 * @return total crawlers in this pool
+	 */
+	public synchronized int sizePause()
+	{
+		int count = 0; 
+		if(this.crawlers != null)
+		{
+			for(int i = 0; i < this.crawlers.size(); i++)
+			{
+				EGCrawler c = this.crawlers.get(i);
+				if(c.getFlag() == EGCrawler.PAUSE)
+				{
+					count++;
+				}
+			}
+			return count;
+		}
+		
+		return 0;
+	}
+	
+
+	public int getCrawlerLimit() {
+		return crawlerLimit;
+	}
+
+	public void setCrawlerLimit(int crawlerLimit) {
+		this.crawlerLimit = crawlerLimit;
+	}
+
+	public int getCountPaused() {
+		return countPaused;
+	}
+
+	public void setCountPaused(int countPaused) {
+		this.countPaused = countPaused;
+	}
+
+	public int getCountStopped() {
+		return countStopped;
+	}
+
+	public void setCountStopped(int countStopped) {
+		this.countStopped = countStopped;
+	}
+
+	public int getCountRunning() {
+		return countRunning;
+	}
+
+	public void setCountRunning(int countRunning) {
+		this.countRunning = countRunning;
+	}
 
 }
