@@ -29,7 +29,7 @@ public class URLStoreBackupMysql extends URLStoreMysql
 		for(int i = 0;i < l.size(); i++)
 		{
 			String url = l.get(i).getUrl();
-			uslstore1.put(url);
+			//uslstore1.put(url);
 		}
 		
 	}

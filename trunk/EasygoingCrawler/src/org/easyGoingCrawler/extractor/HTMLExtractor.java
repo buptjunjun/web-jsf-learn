@@ -7,6 +7,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -14,6 +16,7 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 import org.easyGoingCrawler.crawler.EGCrawlerFactory;
+import org.easyGoingCrawler.fetcher.HttpFetcher;
 import org.easyGoingCrawler.framwork.CrawlURI;
 import  org.easyGoingCrawler.framwork.Extractor;
 import org.jsoup.Jsoup;
@@ -43,11 +46,13 @@ public class HTMLExtractor extends Extractor
 	@Override
 	public void extract(CrawlURI curl)
 	{
-		if (curl.getContent() == null || curl.getEncode() == null)
+		if (curl.getContent() == null || curl.getEncode() == null || curl.getHttpstatus()!=200)
 		{
 			curl.setStatus(false);
+			logger.info("");
 			return;
 		}
+		
 		String originalURL = curl.getUrl();
 		String encode = curl.getEncode();
 		String docContent = null;
@@ -83,23 +88,20 @@ public class HTMLExtractor extends Extractor
 				String url = e.attr("href");				
 				
 				// if the url is relative url like <a href="/aa.html">
-			  /* if (!url.startsWith("http://"))
+			   if (url.startsWith("/"))
 			   {
-				   if (originalURL.endsWith("/"))
-				      url = originalURL+ url;
-				   else
-				   {
-					   int index = originalURL.lastIndexOf("/");
-					   String u = originalURL.substring(0,index+1);
-					   url = u+url;
-				   }
-			   }*/
-			   //System.out.println(url);
-			   if (url.startsWith("http://"));
-			   		urls.add(url);
-				
+				   url = doRelativeURL(originalURL,url);
+				   urls.add(url);
+				   
+				   System.out.println(url +"  " + e.hasText() + " " + e.html());
+			   }
+			   else if (url.startsWith("http://"))
+			   {
+				   urls.add(url);
+				   System.out.println(url + "  " + e.hasText() + " " + e.html());
+			   }
 			}
-						
+			
 			curl.setIncludeURLs(urls);
 			curl.setStatus(true);
 			
@@ -113,12 +115,48 @@ public class HTMLExtractor extends Extractor
 		}
 	}
 
+	
+	/**
+	 *  deal with the relative url;
+	 *  for example: /abc/a.html is a url from http://baidu.com/asdfa,
+	 *  so the absolute url should be http://baidu.com/abc/a.html
+	 *  
+	 * @param url
+	 * @param path
+	 * @return
+	 */
+	private String doRelativeURL(String url, String path)
+	{
+		String ret = null;
+		URL  u = null;
+		try 
+		{
+			u = new URL(url);
+		}
+		catch (MalformedURLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			logger.error("doRelativeURL error  "+ "url = "+ url+", path = " + path+"   "+ e.getMessage());
+			return null;
+		}
+		
+		String host = u.getHost();
+		String protocal = u.getProtocol();
+		if( host == null || path == null)
+			 return null;
+		
+		ret = protocal+"://"+ host + path;
+		
+		return ret;
+	}
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args)
 	{  
-		String file = "www.myexception.cn/apache/index.html";
+	/*	String file = "www.myexception.cn/apache/index.html";
 		try {
 			BufferedReader  fr = new BufferedReader(new FileReader(file));
 			StringBuffer sb = new StringBuffer();
@@ -134,7 +172,29 @@ public class HTMLExtractor extends Extractor
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}*/
+		
+		try {
+			URL u = new URL("http://www.iteye.com/blogs/category/architecture");
+			
+			System.out.println(u.getPort());
+			
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+		
+		HttpFetcher f = new HttpFetcher ();		
+		CrawlURI curl = new CrawlURI("http://www.iteye.com/blogs/tag/应用服务器?page=4");
+		f.fetch(curl);
+		
+		HTMLExtractor extractor = new HTMLExtractor ();
+		extractor.extract(curl);
+		
+		System.out.println(curl.getHttpstatus());
+		System.out.println(curl.isStatus());
+		System.out.println(curl.getIncludeURLs());
 		
 	}
 }

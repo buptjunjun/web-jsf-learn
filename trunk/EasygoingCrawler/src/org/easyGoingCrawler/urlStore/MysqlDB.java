@@ -16,7 +16,7 @@ import java.util.List;
  * @author Andy  weibobee@gmail.com   2011-9-1
  */
 
-class MysqlDB 
+public class MysqlDB 
 {
 	private Connection connect = null;
 	private Statement stmt = null;

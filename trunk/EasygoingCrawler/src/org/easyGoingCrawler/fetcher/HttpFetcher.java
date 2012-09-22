@@ -239,8 +239,13 @@ public class HttpFetcher extends Fetcher
 	       }
 	       
 	       statusCode = response.getStatusLine().getStatusCode();
+	       
+	       // return if the status is not 200
+	       if (statusCode != 200)
+	    	   return;
+	       
 	       // Get hold of the response entity
-	        entity = response.getEntity();
+	       entity = response.getEntity();
 	      
 	       // 查看所有返回头部信息
 	    /*   Header headers[] = response.getAllHeaders();
@@ -320,7 +325,11 @@ public class HttpFetcher extends Fetcher
 	public static void main(String [] args) throws IOException
 	{
 		HttpFetcher f = new HttpFetcher ();		
-		//String ret = f.fetch("http://www.myexception.cn/");
+		CrawlURI curl = new CrawlURI("http://www.iteye.com/news/26045");
+		f.fetch(curl);
+		
+		System.out.println(curl.getHttpstatus());
+		//System.out.println(curl.getIncludeURLs());
 		//f.fetch("http://www.myexception.cn/");
 		//test(ret);
 	}

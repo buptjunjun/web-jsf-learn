@@ -3,6 +3,9 @@ package org.easyGoingCrawler.framwork;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
+import org.easyGoingCrawler.crawler.EGCrawlerFactory;
+
 /**
  *  One EGCrawler is a thread , it  contains 7 components:
  *  		<li>fetcher  </li>
@@ -28,6 +31,8 @@ import java.util.concurrent.TimeUnit;
 
 public class EGCrawler  extends Thread
 {
+	  private Logger logger = Logger.getLogger(EGCrawlerFactory.class);
+	  
 	  // flag to control this thread
 	  private int flag = EGCrawler.PAUSE;
 	  
@@ -131,6 +136,11 @@ public class EGCrawler  extends Thread
 	private void  doOneTask()
 	{
 		CrawlURI curl = this.scheduler.get();
+		if(curl == null)
+		{
+			logger.info("doOneTask: get one null CrawlURL");
+			return;
+		}
 		this.fetcher.fetch(curl);
 		this.extractor.extract(curl);
 		this.docWriter.write(curl);
