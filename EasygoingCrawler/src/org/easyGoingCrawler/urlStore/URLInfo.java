@@ -20,7 +20,20 @@ public class URLInfo
 	 */
 	public int status = 0; 
 	
-	String encode   = "utf-8";
+	/**
+	 *  the directory the file is stored
+	 */
+	public String path = "";
+	
+	/**
+	 * status of http reponse;
+	 */
+	public int statusCode = -1;
+	
+	/**
+	 *  encode of one url
+	 */
+	public String encode   = "utf-8";
     
     /**
      * the time one url was collected
@@ -46,36 +59,4 @@ public class URLInfo
     	this.lastCrawlTime = lastCrawlTime;
 	}
     
-    
-    public String getUrl()
-    {
-	return url;
-     }
-	public void setUrl(String url) 
-	{
-		this.url = url;
-	}
-	public int getStatus() {
-		return status;
-	}
-	public void setStatus(int status)
-	{
-		this.status = status;
-	}
-	public String getCollectTime() 
-	{
-		return collectTime;
-	}
-	public void setCollecttime(String collectTime) 
-	{
-		this.collectTime = collectTime;
-	}
-	public String getLastCrawlTime() 
-	{
-		return lastCrawlTime;
-	}
-	public void setLastCrawlTime(String lastCrawlTime) 
-	{
-		this.lastCrawlTime = lastCrawlTime;
-	}
 }

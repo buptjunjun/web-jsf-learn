@@ -20,6 +20,8 @@ import com.mysql.jdbc.StringUtils;
 
 public class MirrorWriter extends DocWriter
 {
+	// where to put this file
+	private String baseDirectory="/"; 
 	
 	/**
 	 * @param args

@@ -31,12 +31,17 @@ public class CrawlURI
 	// max size of content in byte default is 1M 
 	private long maxContentSize = 1024*1024;
 	
+	// tag of this file
+	private String tags = "";
+	
 	// urls that this CrawlURL contains 
 	private List<String> includeURLs;
 
 	// status of last processor 
 	private boolean status  =  false;
 
+	// path of file on disk
+	String path = null;
 	
 	public CrawlURI(String url )
 	{
@@ -124,6 +129,24 @@ public class CrawlURI
 		this.includeURLs = includeURLs;
 	}
 
+
+	public String getPath() {
+		return path;
+	}
+
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
 
 
 

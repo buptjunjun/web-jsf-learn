@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.easyGoingCrawler.framwork.*;
+import org.easyGoingCrawler.util.Localizer;
 
 /**
  *  EGCrawlerFactory create a EGCrawler according to configure file
@@ -95,49 +96,11 @@ public class EGCrawlerFactory
 	 */
 	private void readfile()
 	{
-		Properties p = new Properties();
-		FileInputStream fi = null;		
-		try
-		{
-			File f = new File(this.confFile);
-			if (!f.exists() || !f.canRead() || f.isHidden())
-				return ;
-			fi = new FileInputStream(f);
-			
-			p.load(fi);
-			
 			 // all the component names that one EGCrawler needed 
-			 fetcher = p.getProperty("fetcher");
-			 docwriter = p.getProperty("docwriter");
-			 extractor = p.getProperty("extractor");
-			 urlscheduler = p.getProperty("urlscheduler");
-		}
-		catch (FileNotFoundException e1)
-		{
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			logger.error(this.confFile + " not found :" + e1.getMessage());
-		} 
-		catch (IOException e1)
-		{
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			logger.error(this.confFile + " io exception :" + e1.getMessage());
-		}
-		finally
-		{
-			try
-			{
-				if (fi != null)
-					fi.close();
-			} 
-			catch (IOException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
+			 fetcher = Localizer.getMessage("fetcher");
+			 docwriter = Localizer.getMessage("docwriter");
+			 extractor = Localizer.getMessage("extractor");
+			 urlscheduler = Localizer.getMessage("urlscheduler");
 	}
 	
 	/**
