@@ -8,8 +8,10 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.easyGoingCrawler.framwork.*;
-import org.easyGoingCrawler.setting.EGCrawlerSetting;
+
 
 
 /**
@@ -20,87 +22,26 @@ import org.easyGoingCrawler.setting.EGCrawlerSetting;
 */
 public class Main 
 {
+	static
+	{
+		PropertyConfigurator.configure("conf/log4j.properties");
+	}
+	
+	static private Logger logger = Logger.getLogger(Main.class);
 	public  static void  main(String [] args)
 	{
-
-		EGCrawlerSetting setting = new EGCrawlerSetting("conf/setting.properties");
+		logger.info("hello ");
+		EGCrawlerPool p = new EGCrawlerPool();
+		p.addNCrawler(3);
 		
-		for(int i = 0; i < 5; i++)
-		{
-			EGCrawler task = new EGCrawler(setting);
-			Thread t = new Thread(task);
-			t.setDaemon(true);
-			t.start();
-			task.start();
-			try {
-				TimeUnit.MILLISECONDS.sleep(new Random().nextInt(2000)+ 300);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 		while(true)
 		{
 			try {
-				TimeUnit.SECONDS.sleep(1);
+				Thread.currentThread().sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
-		/*try
-		{
-			System.out.println("main thread sleep 5 seconds");
-			TimeUnit.SECONDS.sleep(5);
-			task.pause();
-			task.start();
-			
-		} catch (InterruptedException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	
-		
-		try
-		{
-			System.out.println(" main thread sleep 5 seconds");
-			TimeUnit.SECONDS.sleep(5);
-			task.pause();
-			
-		} catch (InterruptedException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		try
-		{
-			System.out.println(" main thread sleep 5 seconds");
-			TimeUnit.SECONDS.sleep(5);
-			task.start();
-			
-		} catch (InterruptedException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try
-		{
-			System.out.println(" main thread sleep 5 seconds");
-			TimeUnit.SECONDS.sleep(5);
-			task.stop();
-		} catch (InterruptedException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		*/
-		
 	}
 }

@@ -1,8 +1,10 @@
 package org.easyGoingCrawler.urlStore;
 
+import java.io.File;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.easyGoingCrawler.framwork.CrawlURI;
 import org.easyGoingCrawler.hibernate.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,7 +15,7 @@ import org.hibernate.service.ServiceRegistryBuilder;
 
 /**
  * 
- * use hibernate 4 to save url info mations
+ * use hibernate4 to save url info mations
  * @author Andy  weibobee@gmail.com 2012-9-22
  *
  */
@@ -22,24 +24,28 @@ public class URLStoreH4
 	private SessionFactory  sf = null;
 	public URLStoreH4()
 	{
-		 	Configuration cfg = new Configuration();  
-		 	
-	        cfg.configure();  
+		 	Configuration cfg = new Configuration();  		 	
+	        cfg.configure(new File("conf/hibernate.cfg.xml"));
 	        ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();   
 	        sf = cfg.buildSessionFactory(sr);    
 	}
 	
-	
-	public boolean saveOrUpdate(User u )
+	/**
+	 * save or update one ser
+	 * @param u
+	 * @return
+	 */
+	public boolean saveOrUpdate(CrawlURI u )
 	{
 		Session s = null;
 		try
 		{
 		  	s = sf.openSession();  
 	        Transaction tx = s.beginTransaction();  
-	        s.saveOrUpdate(u);  
+	        s.saveOrUpdate(u);
+	        s.flush();
 	        tx.commit();  
-	        
+	        //System.out.println();
 	        return true;
 		}
 		catch(Exception e)
@@ -62,15 +68,15 @@ public class URLStoreH4
 		return false;
 	}
 	
-	public List query()
+	public List query(String queryString)
 	{
 		Session s = null;
 		try
 		{
 			 s = sf.openSession();  
-			 Query query = s.createQuery ("from User");
+			 Query query = s.createQuery(queryString);
+			 query.setMaxResults(10);
 			 List ret = query.list();
-			 s.close();
 			 return ret;
 		}
 		catch(Exception e)
@@ -103,5 +109,56 @@ public class URLStoreH4
 			this.sf.close();
 		}
 		System.out.println("reallocated");
+	}
+	
+	/**
+	 * 
+	 * @param args
+	 */
+	
+	public boolean save(CrawlURI curl)
+	{
+		Session s = null;
+		try
+		{
+		  	s = sf.openSession();  
+	        Transaction tx = s.beginTransaction();  
+	        s.save(curl);
+	        s.flush();
+	        tx.commit();  
+	        //System.out.println();
+	        return true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+			if(s != null)
+				s.close();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		return false;
+	}
+	public static void main(String [] args)
+	{
+		CrawlURI curl = new CrawlURI("www.baidu.com");
+        curl.setEncode("utf-8");  
+		
+        URLStoreH4 urlstore = new URLStoreH4();
+        
+      
+        //urlstore.saveOrUpdate(curl);
+        List l = urlstore.query("from CrawlURI ");
+        
+        System.out.println(l.size());
 	}
 }

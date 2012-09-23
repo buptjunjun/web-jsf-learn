@@ -2,10 +2,13 @@ package org.easyGoingCrawler.docWriter;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.easyGoingCrawler.framwork.DocWriter;
+import org.easyGoingCrawler.util.Localizer;
+
 import com.mysql.jdbc.StringUtils;
 
 
@@ -23,6 +26,11 @@ public class MirrorWriter extends DocWriter
 	// where to put this file
 	private String baseDirectory="/"; 
 	
+	public MirrorWriter() 
+	{
+		// TODO Auto-generated constructor stub
+		baseDirectory = Localizer.getMessage("baseDirectory");
+	}
 	/**
 	 * @param args
 	 */
@@ -60,19 +68,26 @@ public class MirrorWriter extends DocWriter
 		
 		MirrorWriter mw = new MirrorWriter();
 		//mw.write(null, "http://blog.csdn.net/fengyarongaa");
+		//String url = "C:\crawledHTML\www.iteye.com\blogs\pdfs\8779?channel_home=true";
+		/*url = mw.strip(url);
+		
+		System.out.println(url);*/
 	}
 
 
 	@Override
 	public void write(org.easyGoingCrawler.framwork.CrawlURI curl) 
 	{
+		if(!curl.isStatus())
+			return;
+		
 		String u = curl.getUrl();
 		if(StringUtils.isNullOrEmpty(u))
 			return ;
 		String directory = null;
 		String fileName = null;
 		String host = null;
-		FileOutputStream fo = null;
+		FileWriter fo = null;
 		
 		try {
 			
@@ -83,6 +98,7 @@ public class MirrorWriter extends DocWriter
 			
 			// get the file path of the url
 			String file = url.getFile();
+			file = file.trim();
 			
 			// if this is a directory already
 			if (file.endsWith("/"))
@@ -95,35 +111,46 @@ public class MirrorWriter extends DocWriter
 				String [] sss = file.split("/");
 				fileName = sss[sss.length-1];	
 				directory = file.replace(fileName,"");
+				if( !fileName.contains("."))
+					fileName = fileName +".html";
 			}
-				
+			fileName = strip(fileName);
 			directory = host + directory;
 			fileName = directory+fileName;
 			
-		/*	System.out.println("directory = " + directory);
-			System.out.println("fileName = " + fileName);*/
 			
+			//System.out.println("fileName = " + fileName);
 			
+			// strip unsupportable char in a path
 			// create directory and file for this url
-			File f = new File(directory);
+			File f = new File(baseDirectory+ directory);
 			
 			// if the dirctory does not exist
+			if (!f.isDirectory())
+			{ 
+				f.delete();
+				
+			}
 			if (!f.exists())
-				f.mkdirs();
+			{
+				f.mkdirs();			
+			}
+			File html = new File(baseDirectory+ fileName);
+
 			
-			File html = new File(fileName);
-			if (!html.exists())
-				f.createNewFile();
-			
-			fo = new FileOutputStream(html);
+			fo = new FileWriter(html);
 			
 			// write html content to this file
 			String content = new String(curl.getContent(),curl.getEncode());
-			fo.write(content.getBytes());
+			System.out.println(Thread.currentThread().getName()  + " directory = " + directory);
 			System.out.println(Thread.currentThread().getName() + " writing file :" + fileName);
+			fo.write(content);
+			
 		
 			// set the status to true when write the file successfully 
 			curl.setStatus(true);
+			curl.setPath(fileName);
+			System.out.println(Thread.currentThread().getName()+" mirror writer: "+ curl.toString());
 			return ;			
 		}
 		catch (Exception e) 
@@ -132,7 +159,7 @@ public class MirrorWriter extends DocWriter
 			e.printStackTrace();
 			// set the status to false when failed to write the file  
 			curl.setStatus(false);
-			System.out.println("file = " + directory);
+			System.out.println("directory = " + directory);
 			System.out.println("file = " + fileName);
 		}
 		finally
@@ -147,6 +174,29 @@ public class MirrorWriter extends DocWriter
 			
 		}
 		return;	
+		
+	}
+	
+	public String strip (String path)
+	{
+		char [] s = {'*','?' ,':' ,'\'', '<', '>','|'};
+		if(path == null || "".equals(path.trim()))
+			return null;
+		char [] p = path.toCharArray();
+		
+		for(int i = 0; i < s.length; i++)
+		{
+			char ss = s[i];
+			for( int j = 0; j< p.length; j++)
+			{
+				if( ss == p[j])
+				{
+					p[j] = '_';
+				}
+			}
+		}
+		
+		return new String(p);
 		
 	}
 

@@ -28,9 +28,25 @@ public class EGCrawlerPool
 	 * 
 	 * @param configure configure file for this crawler pool
 	 */
-	public EGCrawlerPool(String configure)
+	public EGCrawlerPool()
 	{
-		crawlerFactory = new EGCrawlerFactory(configure);
+		crawlerFactory = new EGCrawlerFactory();
+	}
+	
+	/**
+	 * add N crawler to the pool
+	 * if n < 0 do nothing ,
+	 * @param n
+	 */
+	public void addNCrawler(int n)
+	{
+		while(n >= 0)
+		{
+			if(this.crawlers.size() < this.crawlerLimit)
+				this.addOneCrawler();
+			else break;
+			n--;
+		}
 	}
 	
 	/**
@@ -43,6 +59,7 @@ public class EGCrawlerPool
 		{
 			this.crawlers.add(crawler);
 			crawler.startCrawl();
+			crawler.start();
 		}
 	}
 	

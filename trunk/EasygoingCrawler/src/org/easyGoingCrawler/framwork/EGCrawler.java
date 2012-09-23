@@ -103,7 +103,7 @@ public class EGCrawler  extends Thread
 					TimeUnit.SECONDS.sleep(1);
 					continue;
 				}
-				System.out.println("do one task");
+				System.out.println(Thread.currentThread().getName() + "do one task");
 				
 				// do a crawl job
 				this.doOneTask();			

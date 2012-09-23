@@ -3,6 +3,10 @@ package org.easyGoingCrawler.framwork;
 import java.util.Date;
 import java.util.List;
 
+import org.easyGoingCrawler.docWriter.MirrorWriter;
+import org.easyGoingCrawler.extractor.HTMLExtractor;
+import org.easyGoingCrawler.fetcher.HttpFetcher;
+
 /**
  * this class represent one file which has been fetched , the file can be a html or javascript file or etc.
  * @author andyWebsense
@@ -28,9 +32,6 @@ public class CrawlURI
 	// time when the url are recently crawled 
 	private Date   lastCrawlDate = null;
 	
-	// max size of content in byte default is 1M 
-	private long maxContentSize = 1024*1024;
-	
 	// tag of this file
 	private String tags = "";
 	
@@ -43,6 +44,10 @@ public class CrawlURI
 	// path of file on disk
 	String path = null;
 	
+	public CrawlURI() 
+	{
+		// TODO Auto-generated constructor stub
+	}
 	public CrawlURI(String url )
 	{
 		this.url = url;
@@ -102,16 +107,6 @@ public class CrawlURI
 		this.httpstatus = httpstatus;
 	}
 
-
-	public long getMaxContentSize() {
-		return maxContentSize;
-	}
-
-
-	public void setMaxContentSize(long maxContentSize) {
-		this.maxContentSize = maxContentSize;
-	}
-
 	public boolean isStatus() {
 		return status;
 	}
@@ -149,5 +144,30 @@ public class CrawlURI
 	}
 
 
+	public static void main(String [] args)
+	{
+	/*	Extractor e = new HTMLExtractor();
+		Fetcher f = new HttpFetcher();
+		DocWriter w = new MirrorWriter();
+	//	URLScheduler s = new MyURLScheduler();
+		
+		EGCrawler crawler = new EGCrawler();
+		crawler.setDocWriter(w);
+		crawler.setExtractor(e);
+		crawler.setFetcher(f);
+		crawler.setScheduler(s);
+		
+		crawler.startCrawl();
+		crawler.start();*/
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		String ret = this.url +", httpstatus = " +this.getHttpstatus() 
+				+ " , status = " + this.status +", encode = " + this.encode
+				+ " , path = " + this.getPath() +", lastcrawlDate = " + this.getLastCrawlDate();
+		return ret;
+	}
 
 }

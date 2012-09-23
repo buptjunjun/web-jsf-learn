@@ -36,9 +36,8 @@ public class EGCrawlerFactory
 	 * 
 	 * @param file  the configure of this factory
 	 */
-	public EGCrawlerFactory(String file) 
+	public EGCrawlerFactory() 
 	{
-		this.confFile = file;
 		// read the settings from configure file 
 		readfile();
 		
