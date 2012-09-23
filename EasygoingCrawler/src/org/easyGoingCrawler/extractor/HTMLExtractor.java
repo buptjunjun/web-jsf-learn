@@ -34,6 +34,7 @@ import org.jsoup.select.Elements;
 public class HTMLExtractor extends Extractor
 {
 	private Logger logger = Logger.getLogger(EGCrawlerFactory.class);
+	private int  MaxURLSize = 246;
 	public HTMLExtractor ()
 	{
 	}
@@ -46,7 +47,7 @@ public class HTMLExtractor extends Extractor
 	@Override
 	public void extract(CrawlURI curl)
 	{
-		if (curl.getContent() == null || curl.getEncode() == null || curl.getHttpstatus()!=200)
+		if (!curl.isStatus() || curl.getContent() == null || curl.getEncode() == null || curl.getHttpstatus()!=200)
 		{
 			curl.setStatus(false);
 			logger.info("");
@@ -91,19 +92,24 @@ public class HTMLExtractor extends Extractor
 			   if (url.startsWith("/"))
 			   {
 				   url = doRelativeURL(originalURL,url);
-				   urls.add(url);
 				   
-				   System.out.println(url +"  " + e.hasText() + " " + e.html());
+				   if(url.length() < MaxURLSize)
+					   urls.add(url);
+				   
+				   //System.out.println(url +"  " + e.hasText() + " " + e.html());
 			   }
 			   else if (url.startsWith("http://"))
 			   {
-				   urls.add(url);
-				   System.out.println(url + "  " + e.hasText() + " " + e.html());
+				   if(url.length() < MaxURLSize)
+					   urls.add(url);
+				 //  System.out.println(url + "  " + e.hasText() + " " + e.html());
 			   }
 			}
-			
+			System.out.println("extract " + urls.size() + "urls from " + originalURL);
 			curl.setIncludeURLs(urls);
 			curl.setStatus(true);
+			
+			System.out.println(Thread.currentThread().getName()+" extract curl: "+ curl.toString());
 			
 		}
 		catch(Exception e)

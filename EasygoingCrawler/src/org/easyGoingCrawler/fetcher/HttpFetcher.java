@@ -293,6 +293,8 @@ public class HttpFetcher extends Fetcher
 	         curl.setEncode(charSet);
 	         curl.setLastCrawlDate(new Date());
 	         curl.setStatus(true);
+	         System.out.println(Thread.currentThread().getName()+" http fetcher:  "+ curl.toString());
+	         
 	         return;
 	       }
 	       else //error
