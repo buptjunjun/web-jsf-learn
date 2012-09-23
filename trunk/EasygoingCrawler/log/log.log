@@ -1,0 +1,451 @@
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/12' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/11' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/09' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/08' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/07' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/06' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/05' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/04' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/03' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/02' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/01' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/12' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/11' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/10' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/09' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/08' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/07' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/06' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/05' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/04' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/03' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/02' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/01' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/12' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/11' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/10' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/09' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/08' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/07' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/05' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/04' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/03' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/02' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/01' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/12' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/11' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/10' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/09' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/08' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/07' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/05' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/04' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/03' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/02' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/01' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2006/12' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2006/11' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2006/10' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2006/09' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/5551890' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/2468123' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/3851639' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/1327619' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/4006814' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/4171240' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/5659664' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/3008291' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/3044507' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/3497751' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/5551890' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/4644820' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/6160875' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/5719401' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/3851639' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/3044507' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/4946814' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/5516842' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/3551388' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/5789148' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/3729155#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/4062974#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/8000525#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/7997858#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/7999630#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/5719401#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/7876919#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/7337174#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/6324505#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/2062569#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/rss/list' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/sq_zhuyi/article/details/7924776' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/csdnproduct/article/details/7987178' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/csdnproduct/article/details/7964475' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://mdcc.csdn.net ' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/blogdevteam/article/details/7988576  ' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/blogdevteam/article/details/7954317' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/7979610' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/7979610' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/7979610#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://my.csdn.net/chszs' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://my.csdn.net/chszs' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://my.csdn.net/my/letter/send/chszs' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/1061674' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/287731' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/1056843' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/430177' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/1238000' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/1072805' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/295833' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/281780' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/247327' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/321295' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/386292' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/514185' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/245749' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/287445' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/321294' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/481087' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/330380' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/274928' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/644871' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/327307' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/597693' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/462697' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/525946' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/386294' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/242924' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/644873' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/469158' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/542611' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/524891' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/509682' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/542494' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/274169' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/257170' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/337966' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/491112' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/342637' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/1056844' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/266443' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/249457' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/245102' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/289791' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/category/244405' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2012/09' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2012/08' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2012/06' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2012/04' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2012/03' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2012/02' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2012/01' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2011/08' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2011/04' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2011/03' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2011/02' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2011/01' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/12' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/11' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/09' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/08' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/07' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/06' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/05' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/04' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/03' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/02' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2010/01' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/12' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/11' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/10' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/09' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/08' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/07' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/06' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/05' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/04' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/03' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/02' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2009/01' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/12' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/11' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/10' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/09' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/08' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/07' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/05' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/04' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/03' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/02' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2008/01' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/12' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/11' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/10' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/09' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/08' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/07' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/05' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/04' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/03' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/02' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2007/01' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2006/12' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2006/11' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2006/10' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/month/2006/09' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/5551890' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/2468123' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/3851639' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/1327619' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/4006814' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/4171240' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/5659664' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/3008291' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/3044507' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/3497751' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/5551890' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/4644820' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/6160875' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/5719401' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/3851639' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/3044507' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/4946814' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/5516842' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/3551388' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/5789148' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/3729155#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/4062974#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/8000525#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/7997858#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/7999630#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/5719401#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/7876919#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/7337174#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/6324505#comments' for key 1
+WARN Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000
+ERROR Thread-2 org.hibernate.engine.jdbc.spi.SqlExceptionHelper - Duplicate entry 'http://blog.csdn.net/chszs/article/details/2062569#comments' for key 1
