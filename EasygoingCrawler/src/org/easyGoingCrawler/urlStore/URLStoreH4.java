@@ -131,7 +131,7 @@ public class URLStoreH4
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		finally
 		{
@@ -142,7 +142,7 @@ public class URLStoreH4
 			}
 			catch(Exception e)
 			{
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 		
