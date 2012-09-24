@@ -35,6 +35,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.params.ClientPNames;
 import org.apache.http.client.utils.URIUtils;
+import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.DefaultRedirectHandler;
@@ -193,6 +194,10 @@ public class HttpFetcher extends Fetcher
 		   
 		   // 初始化，此处构造函数就与3.1中不同
 	       httpclient = new DefaultHttpClient();
+	    // 代理的设置
+	       HttpHost proxy = new HttpHost("218.201.21.176", 80);
+	       httpclient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+
 	       httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,20000);//连接时间20s
 	       httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 30000);//数据传输时间60s
 
@@ -327,10 +332,10 @@ public class HttpFetcher extends Fetcher
 	public static void main(String [] args) throws IOException
 	{
 		HttpFetcher f = new HttpFetcher ();		
-		CrawlURI curl = new CrawlURI("http://www.iteye.com/news/26045");
+		CrawlURI curl = new CrawlURI("http://www.baidu.com");
 		f.fetch(curl);
 		
-		System.out.println(curl.getHttpstatus());
+		System.out.println(new String (curl.getContent()));
 		//System.out.println(curl.getIncludeURLs());
 		//f.fetch("http://www.myexception.cn/");
 		//test(ret);

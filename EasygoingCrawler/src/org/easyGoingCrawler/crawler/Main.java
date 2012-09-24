@@ -32,7 +32,7 @@ public class Main
 	{
 		logger.info("hello ");
 		EGCrawlerPool p = new EGCrawlerPool();
-		p.addNCrawler(3);
+		p.addNCrawler(10);
 		
 		while(true)
 		{
