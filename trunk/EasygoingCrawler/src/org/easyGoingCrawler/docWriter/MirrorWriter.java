@@ -1,5 +1,6 @@
 package org.easyGoingCrawler.docWriter;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -87,7 +88,7 @@ public class MirrorWriter extends DocWriter
 		String directory = null;
 		String fileName = null;
 		String host = null;
-		FileWriter fo = null;
+		FileOutputStream fo = null;
 		
 		try {
 			
@@ -138,14 +139,13 @@ public class MirrorWriter extends DocWriter
 			File html = new File(baseDirectory+ fileName);
 
 			
-			fo = new FileWriter(html);
+			fo = new FileOutputStream(html);
 			
 			// write html content to this file
-			String content = new String(curl.getContent(),curl.getEncode());
 			System.out.println(Thread.currentThread().getName()  + " directory = " + directory);
 			System.out.println(Thread.currentThread().getName() + " writing file :" + fileName);
-			fo.write(content);
 			
+			fo.write(curl.getContent());
 		
 			// set the status to true when write the file successfully 
 			curl.setStatus(true);

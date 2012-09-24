@@ -151,7 +151,7 @@ public class RotateHostURLScheduler extends URLScheduler
 	public static void main(String[] args) 
 	{
 		RotateHostURLScheduler ru = new RotateHostURLScheduler();
-		ru.putSeedsToDB();
+		//ru.putSeedsToDB();
 		
 		for(int i = 0; i < 20 ;i++)
 		{
