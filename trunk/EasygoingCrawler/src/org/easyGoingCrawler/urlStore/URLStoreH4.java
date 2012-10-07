@@ -100,6 +100,43 @@ public class URLStoreH4
 		 
 	}
 	
+	public boolean queryIfExist(String url)
+	{
+		if (url == null)
+			return false;
+		
+		Session s = null;
+		try
+		{
+			 String querystr = " from CrawlURI where url = '" + url+"'" ;
+			 s = sf.openSession();  
+			 Query query = s.createQuery(querystr);
+			 List l = query.list();
+			 if (l == null || l.size() == 0)
+				 return false;
+			 return true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+			if(s != null)
+				s.close();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		return false;
+		 
+	}
+	
 	@Override
 	protected void finalize() throws Throwable {
 		// TODO Auto-generated method stub
@@ -154,11 +191,11 @@ public class URLStoreH4
         curl.setEncode("utf-8");  
 		
         URLStoreH4 urlstore = new URLStoreH4();
-        
+        urlstore.queryIfExist("http://1615459.blog.51cto.com/1605459/949621");
       
         //urlstore.saveOrUpdate(curl);
-        List l = urlstore.query("from CrawlURI ");
-        
-        System.out.println(l.size());
+//        List l = urlstore.query("from CrawlURI ");
+//        
+//        System.out.println(l.size());
 	}
 }
