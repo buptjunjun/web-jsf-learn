@@ -17,6 +17,10 @@ public class CrawlURI
 	// the url  to fetch
 	private String url=null;
 	
+	// host name of the url
+	private String host = null;
+	
+
 	// content of this file 
 	private byte[] content=null;
 	
@@ -122,6 +126,14 @@ public class CrawlURI
 
 	public void setIncludeURLs(List<String> includeURLs) {
 		this.includeURLs = includeURLs;
+	}
+	
+
+	public String getHost() {
+		return host;
+	}
+	public void setHost(String host) {
+		this.host = host;
 	}
 
 

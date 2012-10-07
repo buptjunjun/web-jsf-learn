@@ -195,8 +195,8 @@ public class HttpFetcher extends Fetcher
 		   // 初始化，此处构造函数就与3.1中不同
 	       httpclient = new DefaultHttpClient();
 	    // 代理的设置
-	       HttpHost proxy = new HttpHost("218.201.21.176", 80);
-	       httpclient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+	      // HttpHost proxy = new HttpHost("218.201.21.176", 80);
+	      // httpclient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
 
 	       httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,20000);//连接时间20s
 	       httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 30000);//数据传输时间60s

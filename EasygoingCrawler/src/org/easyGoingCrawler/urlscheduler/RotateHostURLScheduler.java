@@ -3,6 +3,8 @@ package org.easyGoingCrawler.urlscheduler;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +31,7 @@ public class RotateHostURLScheduler extends URLScheduler
 	private URLStoreH4 urlstore = null;
 	private List<String> hosts = null;
 	
+	public static String UNKNOW_HOST = "unknow"; 
 	public RotateHostURLScheduler() 
 	{
 		urlstore = new URLStoreH4();
@@ -49,6 +52,17 @@ public class RotateHostURLScheduler extends URLScheduler
 			if(StringUtils.isNullOrEmpty(line))
 				continue;
 			String host = line.trim();
+			URI uri = null;
+			try
+			{
+				uri = new URI(host);
+				host = uri.getHost();
+			}
+			catch(Exception e)
+			{
+				host = this.UNKNOW_HOST;
+			}
+			
 			this.hosts.add(host);
 		}		
 	   }
@@ -71,10 +85,10 @@ public class RotateHostURLScheduler extends URLScheduler
 			
 			for(int i = 0; i < this.hosts.size(); i++)
 			{
-				String host = hosts.get(i);
-				String query = "from CrawlURI where url like '%"+host+"%'" 
-							+  "  and httpstatus = -1"
-							+  " order by lastCrawlDate  asc";	
+				String host = hosts.get(i);				
+				String query = "from CrawlURI where host = '" + host+"'" 
+							+  "  and httpstatus = -1  "
+							+  " order by lastCrawlDate  asc  limit 10";	
 				
 				List l = urlstore.query(query);
 				listCache[i] = l;
@@ -115,12 +129,24 @@ public class RotateHostURLScheduler extends URLScheduler
 		System.out.println(Thread.currentThread().getName()+" put curl: "+ curl.toString());
 		// the urls extract from content
 		List<String> urls = curl.getIncludeURLs();
-		
 		if(urls != null)
 		{
 			for(String url :urls)
 			{
-				this.urlstore.save(new CrawlURI(url));
+				CrawlURI u = new CrawlURI(url);
+				URI uri = null;
+				try
+				{
+					uri = new URI(url);
+					u.setHost(uri.getHost());
+				}
+				catch(Exception e)
+				{
+					u.setHost(UNKNOW_HOST);
+				}
+				
+				if (!this.urlstore.queryIfExist(u.getUrl()))
+					this.urlstore.save(u);
 				//System.out.println(Thread.currentThread().getName()+" put curl: "+ curl.toString());
 			}
 		}
@@ -141,7 +167,19 @@ public class RotateHostURLScheduler extends URLScheduler
 		
 		for(int i = 0; i<this.hosts.size(); i++)
 		{
-			this.urlstore.saveOrUpdate(new CrawlURI(hosts.get(i)));
+			String url = hosts.get(i);
+			CrawlURI u = new CrawlURI(url);
+			URI uri = null;
+			try
+			{
+				uri = new URI(url);
+				u.setHost(uri.getHost());
+			}
+			catch(Exception e)
+			{
+				u.setHost(UNKNOW_HOST);
+			}
+			this.urlstore.saveOrUpdate(u);
 		}
 	}
 	
@@ -151,14 +189,14 @@ public class RotateHostURLScheduler extends URLScheduler
 	public static void main(String[] args) 
 	{
 		RotateHostURLScheduler ru = new RotateHostURLScheduler();
-		//ru.putSeedsToDB();
+		ru.putSeedsToDB();
 		
-		for(int i = 0; i < 20 ;i++)
+		/*for(int i = 0; i < 20 ;i++)
 		{
 			CrawlURI curl = ru.get();
 			if(curl != null)
 			System.out.println(curl.getUrl());
-		}
+		}*/
 	}
 
 }

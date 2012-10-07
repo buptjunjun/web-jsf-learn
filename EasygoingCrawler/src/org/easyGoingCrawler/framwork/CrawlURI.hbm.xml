@@ -5,6 +5,7 @@
 <hibernate-mapping package="org.easyGoingCrawler.framwork">  
     <class name="CrawlURI" table="urlstore">  
             <id name="url"></id>  
+            <property name="host" />    
             <property name="status" />     
             <property name="httpstatus"/>  
             <property name="tags"/>    

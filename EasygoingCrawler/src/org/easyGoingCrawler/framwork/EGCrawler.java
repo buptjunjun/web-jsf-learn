@@ -134,7 +134,7 @@ public class EGCrawler  extends Thread
 	 *  
 	 */
 	private void  doOneTask()
-	{
+	{ 	
 		CrawlURI curl = this.scheduler.get();
 		if(curl == null)
 		{

@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.easyGoingCrawler.framwork.*;
+import org.easyGoingCrawler.util.Localizer;
 
 
 
@@ -30,9 +31,21 @@ public class Main
 	static private Logger logger = Logger.getLogger(Main.class);
 	public  static void  main(String [] args)
 	{
+		int poolSize = 35;
+		
+		String psize = Localizer.getMessage("POOLSIZE");
+		try
+		{
+			poolSize = Integer.parseInt(psize);
+		}
+		catch(Exception e)
+		{
+			poolSize = 35;
+		}
+		
 		logger.info("hello ");
 		EGCrawlerPool p = new EGCrawlerPool();
-		p.addNCrawler(10);
+		p.addNCrawler(35);
 		
 		while(true)
 		{
