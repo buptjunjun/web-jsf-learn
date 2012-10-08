@@ -5,6 +5,8 @@ import java.util.BitSet;
 //Counting Bloom filter由于采用了计数，因此支持remove操作。
 //基于BitSet来实现，性能上可能存在问题
 
+
+
 public class SimpleBloomFilter
 {
 	// DEFAULT_SIZE为2的25次方
