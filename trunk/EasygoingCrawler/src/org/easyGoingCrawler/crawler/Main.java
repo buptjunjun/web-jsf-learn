@@ -40,12 +40,13 @@ public class Main
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			poolSize = 35;
 		}
 		
 		logger.info("hello ");
 		EGCrawlerPool p = new EGCrawlerPool();
-		p.addNCrawler(35);
+		p.addNCrawler(poolSize);
 		
 		while(true)
 		{
