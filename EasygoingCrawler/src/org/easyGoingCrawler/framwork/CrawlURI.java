@@ -177,6 +177,7 @@ public class CrawlURI
 	public String toString() {
 		// TODO Auto-generated method stub
 		String ret = this.url +", httpstatus = " +this.getHttpstatus() 
+				+" , host = " + this.host 
 				+ " , status = " + this.status +", encode = " + this.encode
 				+ " , path = " + this.getPath() +", lastcrawlDate = " + this.getLastCrawlDate();
 		return ret;

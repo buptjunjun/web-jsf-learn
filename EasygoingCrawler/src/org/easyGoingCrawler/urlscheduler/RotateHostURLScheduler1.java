@@ -21,7 +21,7 @@ import org.easyGoingCrawler.util.Localizer;
 
 import com.mysql.jdbc.StringUtils;
 
-public class RotateHostURLScheduler extends URLScheduler 
+public class RotateHostURLScheduler1 extends URLScheduler 
 {
 	private Logger logger = Logger.getLogger(RotateHostURLScheduler.class);
 	private Queue<CrawlURI> urlQueue = new LinkedBlockingQueue<CrawlURI>(); 
@@ -32,7 +32,7 @@ public class RotateHostURLScheduler extends URLScheduler
 	private List<String> hosts = null;
 	
 	public static String UNKNOW_HOST = "unknow"; 
-	public RotateHostURLScheduler() 
+	public RotateHostURLScheduler1() 
 	{
 		urlstore = new URLStoreH4();
 		hosts = new ArrayList<String>();
@@ -52,19 +52,9 @@ public class RotateHostURLScheduler extends URLScheduler
 			if(StringUtils.isNullOrEmpty(line))
 				continue;
 			String host = line.trim();
-			URI uri = null;
-			try
-			{
-				uri = new URI(host);
-				host = uri.getHost();
-			}
-			catch(Exception e)
-			{
-				host = this.UNKNOW_HOST;
-			}
-			
 			this.hosts.add(host);
-		}		
+		}
+		
 	   }
 	   catch (Exception e) 
 	   {
@@ -127,24 +117,35 @@ public class RotateHostURLScheduler extends URLScheduler
 		curl.setLastCrawlDate(new Date());
 		this.urlstore.saveOrUpdate(curl);
 		System.out.println(Thread.currentThread().getName()+" put curl: "+ curl.toString());
+		
 		// the urls extract from content
 		List<String> urls = curl.getIncludeURLs();
+		
+		String host = curl.getHost(); 
+		
 		if(urls != null)
 		{
 			for(String url :urls)
-			{
+			{		
 				CrawlURI u = new CrawlURI(url);
-				URI uri = null;
-				try
+				if( url.contains(host))
 				{
-					uri = new URI(url);
-					u.setHost(uri.getHost());
+					u.setHost(host);
 				}
-				catch(Exception e)
+				else
 				{
-					u.setHost(UNKNOW_HOST);
+					URI uri = null;
+					
+					try
+					{
+						uri = new URI(url);
+						u.setHost(uri.getHost());
+					}
+					catch(Exception e)
+					{
+						u.setHost(UNKNOW_HOST);
+					}
 				}
-				
 				if (!this.urlstore.queryIfExist(u.getUrl()))
 					this.urlstore.save(u);
 				//System.out.println(Thread.currentThread().getName()+" put curl: "+ curl.toString());
@@ -169,16 +170,7 @@ public class RotateHostURLScheduler extends URLScheduler
 		{
 			String url = hosts.get(i);
 			CrawlURI u = new CrawlURI(url);
-			URI uri = null;
-			try
-			{
-				uri = new URI(url);
-				u.setHost(uri.getHost());
-			}
-			catch(Exception e)
-			{
-				u.setHost(UNKNOW_HOST);
-			}
+			u.setHost(url);
 			this.urlstore.saveOrUpdate(u);
 		}
 	}
