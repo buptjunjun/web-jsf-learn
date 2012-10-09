@@ -21,7 +21,7 @@ import org.easyGoingCrawler.util.Localizer;
 
 import com.mysql.jdbc.StringUtils;
 
-public class RotateHostURLScheduler1 extends URLScheduler 
+public class RotateHostURLSchedulerB extends URLScheduler 
 {
 	private Logger logger = Logger.getLogger(RotateHostURLScheduler.class);
 	private Queue<CrawlURI> urlQueue = new LinkedBlockingQueue<CrawlURI>(); 
@@ -32,7 +32,7 @@ public class RotateHostURLScheduler1 extends URLScheduler
 	private List<String> hosts = null;
 	
 	public static String UNKNOW_HOST = "unknow"; 
-	public RotateHostURLScheduler1() 
+	public RotateHostURLSchedulerB() 
 	{
 		urlstore = new URLStoreH4();
 		hosts = new ArrayList<String>();
@@ -180,7 +180,7 @@ public class RotateHostURLScheduler1 extends URLScheduler
 	 */
 	public static void main(String[] args) 
 	{
-		RotateHostURLScheduler ru = new RotateHostURLScheduler();
+		RotateHostURLSchedulerB ru = new RotateHostURLSchedulerB();
 		ru.putSeedsToDB();
 		
 		/*for(int i = 0; i < 20 ;i++)

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.easyGoingCrawler.framwork.CrawlURI;
-import org.easyGoingCrawler.hibernate.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
