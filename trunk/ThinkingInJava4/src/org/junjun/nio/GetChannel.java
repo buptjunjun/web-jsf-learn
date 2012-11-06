@@ -28,10 +28,13 @@ public class GetChannel
 			fc = new FileInputStream(fileName).getChannel();
 			ByteBuffer bf = ByteBuffer.allocate(BSIZE);
 			fc.read(bf);
+			
+			//set the limit to the current position and set the position to 0
 			bf.flip();
+			// get will increase the position pointer
 			while(bf.hasRemaining())
 			{
-				System.out.print((char)bf.getChar());
+				System.out.print((char)bf.get());
 			}
 			
 		} 
