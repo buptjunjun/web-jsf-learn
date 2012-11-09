@@ -11,16 +11,16 @@ import java.io.*;
  */
 public class ChannelCopy
 {
-	public static void main(String args[])
+	public static void copyFile1()
 	{
-
 		String filename1 = "testchannel.txt";
 		String filename2 = "testchannelCopy.txt";
 		try
 		{
 			FileChannel in = new FileInputStream(filename1).getChannel();
 			FileChannel out = new FileOutputStream(filename2).getChannel();
-			ByteBuffer buffer = ByteBuffer.allocate(1024);
+			//ByteBuffer buffer = ByteBuffer.allocate(1024);
+			ByteBuffer buffer = ByteBuffer.allocateDirect(1024);
 			
 			while( in.read(buffer) != -1)
 			{
@@ -37,6 +37,31 @@ public class ChannelCopy
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	static public void channelConnect()
+	{
+		String filename1 = "testchannel.txt";
+		String filename2 = "testchannelCopy1.txt";
+		try
+		{
+			FileChannel in = new FileInputStream(filename1).getChannel();
+			FileChannel out = new FileOutputStream(filename2).getChannel();
+		
+			in.transferTo(0, in.size(), out);
+			// orout.transferFrom(in, 0, in.size());
+						
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	public static void main(String args[])
+	{
+		channelConnect();
+		
 	}
 
 }
