@@ -11,6 +11,7 @@ import java.io.*;
 
 import java.net.*;
 import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
@@ -60,6 +61,24 @@ public static void main(String[] args)
 				{
 					ch = ssc.accept();
 					System.out.println("accept connectionf rom :"+ ch.socket());
+					ch.configureBlocking(false);
+					
+					ch.register(sel, SelectionKey.OP_READ);
+				}
+				else//if (skey.isReadable() || skey.isWritable()) 
+				{
+					 ch = (SocketChannel) skey.channel();
+					 ch.read(buffer);
+					 
+					 CharBuffer cb= cs.decode((ByteBuffer)buffer.flip());
+					 String response = cb.toString();
+					 System.out.println(response);
+					 
+					 ch.write((ByteBuffer)buffer.rewind());
+					 
+					 if( response.equalsIgnoreCase("end"))
+						 break;
+					 buffer.clear();
 				}
 			}
 		}
