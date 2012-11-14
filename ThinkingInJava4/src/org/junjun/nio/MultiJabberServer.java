@@ -21,7 +21,7 @@ import java.util.Iterator;
 
 public class MultiJabberServer {  
 
-static final int PORT = 8080;
+static public final int PORT = 8080;
 
 public static void main(String[] args)
 
@@ -63,6 +63,7 @@ public static void main(String[] args)
 					System.out.println("accept connectionf rom :"+ ch.socket());
 					ch.configureBlocking(false);
 					
+					// add observer to selector 
 					ch.register(sel, SelectionKey.OP_READ);
 				}
 				else//if (skey.isReadable() || skey.isWritable()) 
