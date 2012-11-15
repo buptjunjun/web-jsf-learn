@@ -6,6 +6,7 @@ import java.nio.channels.*;
 import java.io.*;
 import java.nio.charset.*;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 
 public class JabberClient1
@@ -18,13 +19,13 @@ public class JabberClient1
 	public static void main(String[] args)
 	{
 		// TODO Auto-generated method stub
-		System.out.println("------");
 		try
 		{
-			SocketChannel sc = SocketChannel.open(new InetSocketAddress(clPort));
+			SocketChannel sc = SocketChannel.open();
 			Selector sel = Selector.open();
-			sc.configureBlocking(false);
 			
+			sc.configureBlocking(false);
+			sc.connect( new InetSocketAddress("localhost",MultiJabberServer.PORT));
 			sc.register(sel, SelectionKey.OP_READ | SelectionKey.OP_WRITE | SelectionKey.OP_CONNECT);
 			
 			
@@ -34,31 +35,49 @@ public class JabberClient1
 			Charset cs = Charset.forName(encoding);
 			
 			ByteBuffer buf = ByteBuffer.allocate(16);
-			System.out.println("------");
+		
 			while (!done)
-			{	System.out.println("------");
+			{	
+				//System.out.println("before select");
 				sel.select();
-				System.out.println("------");
-				System.out.println("select");
+				
 				Iterator it = sel.selectedKeys().iterator();
 				while(it.hasNext())
 				{
 					SelectionKey key = (SelectionKey)it.next();
+					
+							   
 					it.remove();
+					
+					printKey(key);
 					sc  = (SocketChannel)key.channel();
 					
-					if (key.isConnectable() && ! sc.isConnected())
+					if (key.isConnectable())
 					{
-						System.out.print("conn");
-						InetAddress addr = InetAddress.getByName(null);
-						boolean success  = sc.connect( new InetSocketAddress(addr,MultiJabberServer.PORT));
-						
-						if(!success ) sc.finishConnect();
+						System.out.println("conn1");
+					
+						 if(sc.isConnectionPending())
+						 {
+							 System.out.println("pending");
+		                        sc.finishConnect();   
+		                           
+		                    }   
+						 sc.configureBlocking(false);
 						
 					}
+				/*	else if (key.isConnectable() && !sc.isConnected())
+					{
+						System.out.print("conn2");
+						boolean success = sc.connect( new InetSocketAddress("localhost",MultiJabberServer.PORT));
+						if(success == false)
+							sc.finishConnect();
+						sc.configureBlocking(false);
+					}
+						*/
 					if (key.isReadable() && written)
 					{
-						System.out.print("read");
+						//TimeUnit.SECONDS.sleep(1);
+						System.out.println("read:");
 						if (sc.read((ByteBuffer)buf.clear()) > 0)
 							written = false;
 						String response  = cs.decode((ByteBuffer)buf.flip()).toString();
@@ -68,6 +87,7 @@ public class JabberClient1
 					
 					if (key.isWritable() && !written)
 					{
+						TimeUnit.SECONDS.sleep(1);
 						System.out.print("write");
 					 InputStreamReader isr = new InputStreamReader(System.in);
 					  
@@ -92,12 +112,22 @@ public class JabberClient1
 				}
 			}
 			
-		} catch (IOException e)
+		} 
+		catch (Exception e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+	}
+	
+	public static void printKey(SelectionKey key)
+	{
+		System.out.println("skey.isAcceptable() = " + key.isAcceptable() +"\n"
+				+ "key.isConnectable() = " + key.isConnectable() +"\n"
+				+ "key.isValid() = " + key.isValid() +"\n"
+				+ " key.isReadable() = " + key.isReadable() +"\n"
+				+ "key.isWritable()="   + key.isWritable());
 	}
 
 }
