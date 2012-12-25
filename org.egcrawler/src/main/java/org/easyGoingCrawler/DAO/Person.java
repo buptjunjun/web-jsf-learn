@@ -1,6 +1,8 @@
 package org.easyGoingCrawler.DAO;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Person {
 
@@ -9,6 +11,17 @@ public class Person {
 	  private int age;
 	  private byte[] content = "niha ¿œ∆≈".getBytes();
 	  private Date date = new Date();
+	  private List<String> urls = new ArrayList<String>();
+	  
+	public List<String> getUrls()
+	{
+		return urls;
+	}
+
+	public void setUrls(List<String> urls)
+	{
+		this.urls = urls;
+	}
 
 	public Date getDate()
 
@@ -29,6 +42,8 @@ public class Person {
 	public Person(String name, int age) {
 	    this.name = name;
 	    this.age = age;
+	    urls.add("aaa");
+	    urls.add("bbbb");
 	  }
 	  
 	  public String getId() {
@@ -43,7 +58,7 @@ public class Person {
 	  
 	  @Override
 	  public String toString() {
-	    return "Person [id=" + id + ", name=" + name + ", age=" + age + "date" + date+"]";
+	    return "Person [id=" + id + ", name=" + name + ", age=" + age + "date" + date+ "urls = " + urls+"]";
 	  }
 	  
 	  public byte[] getContent()

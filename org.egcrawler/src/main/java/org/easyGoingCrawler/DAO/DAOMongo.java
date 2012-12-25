@@ -28,25 +28,17 @@ public class DAOMongo {
 
     	//MongoTemplate,  test is the db name.
         MongoOperations mongoOps = new MongoTemplate(new Mongo(""), "test");
-        for(int i = 0; i < 5; i++)        
+        for(int i = 0; i < 3; i++)        
         {
         	Person obj = new Person("Joe", 39);
-        	mongoOps.insert(obj);
-        	
-        	try
-			{
-				TimeUnit.SECONDS.sleep(2);
-			} catch (InterruptedException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+        	mongoOps.insert(obj);		
         }
         	
       
         
-        Query q = new Query();
+        Query q = new Query(where("urls").in("aaa"));
         q.sort().on("date", Order.ASCENDING);
+        q.limit(10);
         List<Person> lp = mongoOps.find(q, Person.class);
         for(Person p1: lp)
         {

@@ -79,7 +79,7 @@ public class MirrorWriter extends DocWriter
 
 
 	@Override
-	public void write(org.easyGoingCrawler.framwork.CrawlURI curl) 
+	public void write(CrawlURI curl) 
 	{
 		if(curl.getStatus() != CrawlURI.STATUS_OK)
 			return;

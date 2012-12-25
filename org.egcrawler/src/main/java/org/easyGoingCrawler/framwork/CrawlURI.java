@@ -17,10 +17,13 @@ public class CrawlURI
 	public final static int STATUS_OK = 0;
 	public final static int STATUS_FETCH_ERROR = 1;
 	public final static int STATUS_EXTRACT_ERROR = 2;
+	public final static int STATUS_WRITE_ERROR = 2;
 	
 	// the url  to fetch
 	private String url=null;
 	
+	private String host = null;
+
 	// content of this file 
 	private byte[] content=null;
 	
@@ -140,6 +143,14 @@ public class CrawlURI
 		crawler.start();*/
 	}
 	
+	public String getHost()
+	{
+		return host;
+	}
+	public void setHost(String host)
+	{
+		this.host = host;
+	}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
