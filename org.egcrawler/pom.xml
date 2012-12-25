@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
-  http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ 	 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+  	http://maven.apache.org/xsd/maven-4.0.0.xsd"
   >
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.egcrawler</groupId>
@@ -73,10 +73,10 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		</dependency>
 		
 		<!-- log -->
-		<dependency>  
+	 <dependency>  
             <groupId>log4j</groupId>  
             <artifactId>log4j</artifactId>  
-            <version>1.2.16</version>  
+            <version>1.2.13</version>  
         </dependency>  
         <dependency>  
             <groupId>org.slf4j</groupId>  
@@ -92,7 +92,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             <groupId>org.slf4j</groupId>  
             <artifactId>slf4j-nop</artifactId>  
             <version>1.6.1</version>  
-        </dependency>  
+        </dependency>   
   </dependencies>
 </project>
 
