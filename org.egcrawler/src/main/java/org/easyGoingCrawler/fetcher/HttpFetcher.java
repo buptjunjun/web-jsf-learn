@@ -70,10 +70,8 @@ public class HttpFetcher extends Fetcher
 	 */
 	@Override
 	public void fetch(CrawlURI curl) 
-	{	
-
-		this.getHTML(curl);
-		
+	{
+		this.getHTML(curl);	
 	}
 
 	

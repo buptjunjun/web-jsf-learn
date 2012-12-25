@@ -16,7 +16,7 @@ public class MongoWriter extends DocWriter
 	
 	public MongoWriter(EGDAOMongo daomongo)
 	{
-		// TODO Auto-generated constructor stub
+		this.daomongo = daomongo;
 	}
 	
 	@Override

@@ -22,17 +22,17 @@ import com.mongodb.MongoException;
 
 public class EGDAOMongo implements EGDAO
 {
+
 	private  Mongo mongoServer= null;
 	//MongoTemplate,  test is the db name.
     private MongoOperations mongoOps = null;
     
     private List<String> host = null;
     
-    public EGDAOMongo(Mongo mongoServer,MongoOperations mongoOps,List<String> host )
+    public EGDAOMongo(Mongo mongoServer,MongoOperations mongoOps )
 	{
     	this.mongoServer = mongoServer;
     	this.mongoOps = mongoOps;
-    	this.host = host;
 	}
     
     public boolean insert(Object obj)
@@ -99,4 +99,34 @@ public class EGDAOMongo implements EGDAO
 		return true;
 	}
 	
+	public Mongo getMongoServer()
+	{
+		return mongoServer;
+	}
+
+	public void setMongoServer(Mongo mongoServer)
+	{
+		this.mongoServer = mongoServer;
+	}
+
+	public MongoOperations getMongoOps()
+	{
+		return mongoOps;
+	}
+
+	public void setMongoOps(MongoOperations mongoOps)
+	{
+		this.mongoOps = mongoOps;
+	}
+
+	public List<String> getHost()
+	{
+		return host;
+	}
+
+	public void setHost(List<String> host)
+	{
+		this.host = host;
+	}
+
 }

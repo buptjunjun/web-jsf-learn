@@ -84,7 +84,10 @@ public class EGCrawler  extends Thread
 		 */
 	  public EGCrawler(  Fetcher  fetcher , Extractor extractor , URLScheduler scheduler, DocWriter docWriter)
 	  {		
-			
+			this.fetcher = fetcher;
+			this.extractor = extractor;
+			this.scheduler = scheduler;
+			this.docWriter = docWriter;
 	  }
 	  
 	  

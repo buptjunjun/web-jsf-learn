@@ -1,12 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
- xmlns:context="http://www.springframework.org/schema/context"
- xmlns:p="http://www.springframework.org/schema/p"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://www.springframework.org/schema/beans
-      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-      http://www.springframework.org/schema/context
-      http://www.springframework.org/schema/context/spring-context.xsd
-  >
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:context="http://www.springframework.org/schema/context"
+          xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+          xsi:schemaLocation=
+          "http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context-3.0.xsd
+          http://www.springframework.org/schema/data/mongo
+          http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
   
+   <!-- Default bean name is 'mongo' -->
+   <mongo:mongo host="localhost" port="27017"/>
+  
+   <!-- mongo ops -->
+   <bean id="mongoOps" class="org.springframework.data.mongodb.core.MongoTemplate.MongoTemplate" >
+   		<constructor-arg ref="mongo"></constructor-arg>
+   		<constructor-arg value="blogdb"></constructor-arg>
+   </bean>
+   
+   <!-- EG DAO -->
+   <bean id ="EGDAOMongo" class="org.easyGoingCrawler.DAO.EGDAOMongo"> 
+   		<constructor-arg ref="mongo"></constructor-arg>
+   		<constructor-arg ref="mongoOps"></constructor-arg>
+   		<property name="host">
+   			<list>
+				<value>blog.csdn.net</value>
+				<value>www.cnblogs.com</value>
+				<value>www.blogjava.net</value>
+			</list>
+   		</property>
+   </bean>
+   
+   
+  <bean id="fetcher" class="org.easyGoingCrawler.fetcher.HttpFetcher" scope="prototype" />
+  <bean id="extractor" class="org.easyGoingCrawler.extractor.HTMLExtractor" scope="prototype"/>
+  
+  <!-- doc writer -->
+  <bean id="docwriter" class=" org.easyGoingCrawler.docWriter.MongoWriter" scope="prototype">
+  		<constructor-arg ref="EGDAOMongo"></constructor-arg>
+  </bean>
+  
+  <!-- url scheduler -->
+  <bean id="urlscheduler" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler" scope="singleton" >
+  	<constructor-arg ref="EGDAOMongo"></constructor-arg>
+  </bean>
+  
+ 
+   <bean id="egcrawler" class="org.easyGoingCrawler.framwork.EGCrawler"
+  		p:fetcher-ref="fetcher" 
+  		p:extractor-ref="extractor"
+  		p:scheduler-ref="scheduler"
+  		p:docWriter-ref="docWriter" />
   
 </beans>
