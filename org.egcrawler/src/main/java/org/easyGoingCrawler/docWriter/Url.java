@@ -14,7 +14,6 @@ public class Url
 	private String host = null;
 	private String url = null;
 	private Date lastCrawled = new Date();
-	private int failedTime = 0;               // how many times the crawling has failed	
 	private int flag = 0;
 	
 	public Date getLastCrawled()
@@ -25,14 +24,7 @@ public class Url
 	{
 		this.lastCrawled = lastCrawled;
 	}
-	public int getFailedTime()
-	{
-		return failedTime;
-	}
-	public void setFailedTime(int failedTime)
-	{
-		this.failedTime = failedTime;
-	}
+	
 	public int getFlag()
 	{
 		return flag;
@@ -69,11 +61,19 @@ public class Url
 	public CrawlURI toCrawlURI()
 	{
 		CrawlURI uri = new CrawlURI();
-		
+		uri.setLastCrawlDate(this.lastCrawled);
+		uri.setCollectDate(lastCrawled);
 		uri.setUrl(url);
 		uri.setHost(host);
 		uri.setStatus(CrawlURI.STATUS_OK);
 		
 		return uri;
+	}
+	
+	@Override
+	public String toString()
+	{
+		// TODO Auto-generated method stub
+		return this.id +"   " +"  " + this.host +" "  + this.url +"  "+this.flag + "  "+this.lastCrawled;
 	}
 }

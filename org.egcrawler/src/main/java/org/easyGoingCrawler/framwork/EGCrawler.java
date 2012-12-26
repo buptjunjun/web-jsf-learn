@@ -5,6 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.easyGoingCrawler.crawler.EGCrawlerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *  One EGCrawler is a thread , it  contains 7 components:
@@ -235,5 +237,27 @@ public class EGCrawler  extends Thread
 
 		public void setInterval(int interval) {
 			this.interval = interval;
+		}
+		
+		public static void main (String [] args)
+		{
+			ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
+			EGCrawler egcrawler = appcontext.getBean("egcrawler", EGCrawler.class);
+			egcrawler.startCrawl();
+			egcrawler.start();
+			
+			egcrawler.setDaemon(true);
+			while(true)
+			{
+				try
+				{
+					TimeUnit.SECONDS.sleep(1);
+				} catch (InterruptedException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
 		}
 }

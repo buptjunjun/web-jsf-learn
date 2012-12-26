@@ -11,9 +11,7 @@ import org.easyGoingCrawler.framwork.DocWriter;
 public class MongoWriter extends DocWriter
 {
 	private EGDAOMongo daomongo = null; 
-	private Analyzer<Blog> blogAnalyzer = null; 
-	private Analyzer<Bloger> blogerAnalyzer = null;
-	
+
 	public MongoWriter(EGDAOMongo daomongo)
 	{
 		this.daomongo = daomongo;
@@ -22,21 +20,15 @@ public class MongoWriter extends DocWriter
 	@Override
 	public void write(CrawlURI curl)
 	{
-		String host = this.getHost(curl.getUrl());
+//		String host = this.getHost(curl.getUrl());
+//		
+//		if(host == null)
+//		{
+//			curl.setStatus(CrawlURI.STATUS_WRITE_ERROR);
+//			return;
+//		}
 		
-		if(host == null)
-		{
-			curl.setStatus(CrawlURI.STATUS_WRITE_ERROR);
-			return;
-		}
 		
-		Blog blog = this.blogAnalyzer.analyze(host,curl.getEncode(),curl.getContent());
-		Bloger bloger = this.blogerAnalyzer.analyze(host,curl.getEncode(),curl.getContent());
-		
-		if(blog != null)
-			this.daomongo.insert(blog);
-		if(bloger != null)
-			this.daomongo.insert(bloger);
 	}
 	
 	

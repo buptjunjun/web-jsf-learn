@@ -51,6 +51,8 @@ import org.apache.log4j.Logger;
 import org.easyGoingCrawler.extractor.HTMLExtractor;
 import org.easyGoingCrawler.framwork.CrawlURI;
 import org.easyGoingCrawler.framwork.Fetcher;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * HttpFecher is an implenentation of  Fetcher , it will use HTTP protocol to fetch a url
@@ -203,7 +205,7 @@ public class HttpFetcher extends Fetcher
 	         curl.setEncode(charSet);
 	         curl.setLastCrawlDate(new Date());
 	         curl.setStatus(CrawlURI.STATUS_OK);
-	         System.out.println(Thread.currentThread().getName()+" http fetcher:  "+ curl.toString());
+	         System.out.println(Thread.currentThread().getName()+"  http fetcher:  "+ curl.toString());
 	         
 	         return;
 	       }
@@ -236,7 +238,7 @@ public class HttpFetcher extends Fetcher
 	
 	public static void main(String [] args) throws IOException
 	{
-		HttpFetcher f = new HttpFetcher ();		
+		/*HttpFetcher f = new HttpFetcher ();		
 		CrawlURI curl = new CrawlURI("http://www.baidu.com");
 		f.fetch(curl);
 		
@@ -244,6 +246,15 @@ public class HttpFetcher extends Fetcher
 		//System.out.println(curl.getIncludeURLs());
 		//f.fetch("http://www.myexception.cn/");
 		//test(ret);
+*/	
+		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
+		Fetcher fetcher = appcontext.getBean("fetcher",Fetcher.class);
+		
+		CrawlURI curl = new CrawlURI();
+		curl.setUrl("www.baidu.com");
+		curl.setStatus(CrawlURI.STATUS_OK);
+		fetcher.fetch(curl);
+		System.out.println(new String (curl.getContent()));	
 	}
 
 	
@@ -259,7 +270,7 @@ public class HttpFetcher extends Fetcher
         } else {
                charSet = "";
         }
-        System.out.println(charSet +"1");
+        //System.out.println(charSet +"1");
 	}
 	
 	

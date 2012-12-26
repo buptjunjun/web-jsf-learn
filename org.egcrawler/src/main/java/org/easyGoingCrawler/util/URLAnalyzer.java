@@ -20,6 +20,12 @@ public class URLAnalyzer
 	
 	public int analyze(String host,String url)
 	{
+		if (host == null || url == null)
+			return DELETE;
+		
+		if (url.contains("#"))
+			return DELETE;
+		
 		String pattern4save = this.saveurls.get(host);
 		String parttern4hold = this.holdurls.get(host);
 		
@@ -31,5 +37,17 @@ public class URLAnalyzer
 		
 		return DELETE;
 		
+	}
+	
+	
+	public static void main(String [] args)
+	{
+		//String url = "http://blog.csdn.net/ro_wsy999/article/details/8393544";
+		String url = "http://blog.csdn.net/huanghui8030/article/details/8438742#comments";
+		String pattern4save = "http://blog.csdn.net/.+/article/details/\\d+";
+		String pattern4hold = "http://blog.csdn.net/.+";
+		System.out.println(Pattern.matches(pattern4save, url));
+		System.out.println(Pattern.matches(pattern4hold, url));
+			
 	}
 }

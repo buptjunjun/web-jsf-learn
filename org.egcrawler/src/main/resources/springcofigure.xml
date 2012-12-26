@@ -3,6 +3,7 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xmlns:context="http://www.springframework.org/schema/context"
           xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+          xmlns:p="http://www.springframework.org/schema/p"
           xsi:schemaLocation=
           "http://www.springframework.org/schema/context
           http://www.springframework.org/schema/context/spring-context-3.0.xsd
@@ -10,27 +11,61 @@
           http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
           http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:egcrawler.properties</value>
+				<value>classpath:pattern.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+  <bean id="testProps" class ="java.lang.String" >
+  	<constructor-arg value="${test}"></constructor-arg>
+  </bean>
   
    <!-- Default bean name is 'mongo' -->
    <mongo:mongo host="localhost" port="27017"/>
   
-   <!-- mongo ops -->
-   <bean id="mongoOps" class="org.springframework.data.mongodb.core.MongoTemplate.MongoTemplate" >
-   		<constructor-arg ref="mongo"></constructor-arg>
-   		<constructor-arg value="blogdb"></constructor-arg>
+  <!-- host list -->
+  <bean id="hosts" class="java.util.ArrayList">
+  	<constructor-arg>
+  		<list>
+			<value>${host_csdn}</value>
+		</list>
+  	</constructor-arg>
+  </bean>
+  
+  <!-- save pattern  -->
+  <bean id="pattern_save" class="java.util.HashMap">
+  	<constructor-arg>
+  		<map>
+   			<entry key="${host_csdn}" value="${save_csdn}"></entry>
+   		</map>
+  	</constructor-arg>
    </bean>
    
+   <!-- hold pattern  -->
+  <bean id="pattern_hold" class="java.util.HashMap">
+  	<constructor-arg>
+  		<map>
+   			<entry key="${host_csdn}" value="${hold_csdn}"></entry>
+   		</map>
+  	</constructor-arg>
+   </bean>
+  
    <!-- EG DAO -->
-   <bean id ="EGDAOMongo" class="org.easyGoingCrawler.DAO.EGDAOMongo"> 
+   <bean id ="EGDAOMongo" class="org.easyGoingCrawler.DAO.EGDAOMongo" p:pattern_save-ref="pattern_save"> 
    		<constructor-arg ref="mongo"></constructor-arg>
-   		<constructor-arg ref="mongoOps"></constructor-arg>
-   		<property name="host">
-   			<list>
-				<value>blog.csdn.net</value>
-				<value>www.cnblogs.com</value>
-				<value>www.blogjava.net</value>
-			</list>
-   		</property>
+   		<constructor-arg value="blogdb"></constructor-arg>
+   		<constructor-arg ref="hosts">  </constructor-arg> 
+   </bean>
+   
+   <bean id="urlAnalyzer" class="org.easyGoingCrawler.util.URLAnalyzer">
+   		<constructor-arg ref="pattern_save"> </constructor-arg>
+   		<constructor-arg ref="pattern_hold"></constructor-arg>
    </bean>
    
    
@@ -42,8 +77,14 @@
   		<constructor-arg ref="EGDAOMongo"></constructor-arg>
   </bean>
   
+  
+  
   <!-- url scheduler -->
-  <bean id="urlscheduler" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler" scope="singleton" >
+  <bean id="urlscheduler" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"
+  			 p:urAnalyzer-ref="urlAnalyzer"
+  			 p:blogAnalyzer-ref="blogAnalyzer"
+  			 p:blogerAnalyzer-ref="blogerAnalyzer"
+  			 scope="singleton" >
   	<constructor-arg ref="EGDAOMongo"></constructor-arg>
   </bean>
   
@@ -51,7 +92,32 @@
    <bean id="egcrawler" class="org.easyGoingCrawler.framwork.EGCrawler"
   		p:fetcher-ref="fetcher" 
   		p:extractor-ref="extractor"
-  		p:scheduler-ref="scheduler"
-  		p:docWriter-ref="docWriter" />
+  		p:scheduler-ref="urlscheduler"
+  		p:docWriter-ref="docwriter"
+	/>
+	
+	
+  
+  <!-- blog analyzer -->
+  <bean id="blogAnalyzer" class="org.easyGoingCrawler.analyzer.BlogAnalyzer">
+  	<constructor-arg >
+  		<map>
+  			<entry key="${host_csdn}" value-ref="CSDNBlogAnalyzer"></entry>
+  		</map>
+  	</constructor-arg>
+  </bean>
+  
+  <!-- blog analyzer -->
+   <bean id="blogerAnalyzer" class="org.easyGoingCrawler.analyzer.BlogerAnalyzer">
+  	<constructor-arg >
+  		<map>
+  			<entry key="${host_csdn}" value-ref="CSDNBlogerAnalyzer"></entry>
+  		</map>
+  	</constructor-arg>
+  </bean>
+  
+  <!-- bloger and blog analyzer for csdn -->
+  <bean id="CSDNBlogAnalyzer"  class="org.easyGoingCrawler.analyzer.CSDNBlogAnalyzer"></bean>
+  <bean id="CSDNBlogerAnalyzer"  class="org.easyGoingCrawler.analyzer.CSDNBlogerAnalyzer"></bean>
   
 </beans>

@@ -2,6 +2,7 @@ package org.easyGoingCrawler.analyzer;
 
 import java.util.Map;
 
+import org.easyGoingCrawler.docWriter.Blog;
 import org.easyGoingCrawler.docWriter.Bloger;
 
 public class BlogerAnalyzer implements Analyzer<Bloger>
@@ -19,7 +20,7 @@ public class BlogerAnalyzer implements Analyzer<Bloger>
 		Analyzer analyzer = analyzers.get(host);
 		if(analyzer == null)
 			return null;
-		return null;
+		return (Bloger) analyzer.analyze(host, encode, content);
 	}
 	
 }

@@ -18,7 +18,7 @@ public class BlogAnalyzer implements Analyzer<Blog>
 		if(analyzer == null)
 			return null;
 		// TODO Auto-generated method stub
-		return null;
+		return (Blog) analyzer.analyze(host, encode, content);
 	}
 	
 }

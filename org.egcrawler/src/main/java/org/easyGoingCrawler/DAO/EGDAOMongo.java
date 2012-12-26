@@ -2,13 +2,21 @@ package org.easyGoingCrawler.DAO;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
 import static org.springframework.data.mongodb.core.query.Criteria.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.easyGoingCrawler.docWriter.Url;
 import org.easyGoingCrawler.framwork.CrawlURI;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -22,17 +30,22 @@ import com.mongodb.MongoException;
 
 public class EGDAOMongo implements EGDAO
 {
-
 	private  Mongo mongoServer= null;
 	//MongoTemplate,  test is the db name.
-    private MongoOperations mongoOps = null;
+    private MongoOperations mongoOps = null;    
     
-    private List<String> host = null;
+	private List<String> hosts = null;
     
-    public EGDAOMongo(Mongo mongoServer,MongoOperations mongoOps )
+	@Autowired()
+	@Qualifier("pattern_save")
+    private Map<String,String> pattern_save = new HashMap<String,String>();
+    
+    public EGDAOMongo(Mongo mongoServer,String dbName, List<String> hosts )
 	{
     	this.mongoServer = mongoServer;
-    	this.mongoOps = mongoOps;
+    	this.mongoOps = new org.springframework.data.mongodb.core.MongoTemplate(this.mongoServer,dbName);
+    	this.hosts = hosts;
+
 	}
     
     public boolean insert(Object obj)
@@ -52,7 +65,7 @@ public class EGDAOMongo implements EGDAO
 	public List<CrawlURI> get()
 	{
 		List<CrawlURI> list = new ArrayList<CrawlURI>();
-		for(String h : host)
+		for(String h : hosts)
 		{
 			List tmp  = queryByhost(h,10);
 			if(tmp == null || tmp.size() == 0)
@@ -69,7 +82,15 @@ public class EGDAOMongo implements EGDAO
 	
 		try
 		{
-			Query q = new Query(Criteria.where("flag").is(Url.UNCRAWLED).and("host").is(host));
+			String pattern4save = this.pattern_save.get(host);
+			Query q ;
+			
+//			// querying a blog's probability is  70% 
+//			if( new Random().nextInt(10) < 3)
+//				q= new Query(Criteria.where("flag").is(Url.UNCRAWLED).and("host").is(host));
+//			else
+				q = new Query(Criteria.where("flag").is(Url.UNCRAWLED).and("host").is(host).and("url").regex(pattern4save));
+			
 	        q.sort().on("date", Order.ASCENDING);
 	        q.limit(10);
 	             
@@ -95,38 +116,17 @@ public class EGDAOMongo implements EGDAO
     
 	public boolean updateURL(Url uri)
 	{
-		mongoOps.upsert(new Query(where("id").is(uri.getId())), new Update().set("flag", Url.CRAWLED), Url.class);
+		if(uri == null)
+			return false;
+		
+		mongoOps.upsert(new Query(where("id").is(uri.getId())), new Update().set("flag", Url.CRAWLED).set("lastCrawled", uri.getLastCrawled()), Url.class);
 		return true;
 	}
 	
-	public Mongo getMongoServer()
+	public void setPattern_save(Map<String, String> pattern_save)
 	{
-		return mongoServer;
+		this.pattern_save = pattern_save;
 	}
 
-	public void setMongoServer(Mongo mongoServer)
-	{
-		this.mongoServer = mongoServer;
-	}
-
-	public MongoOperations getMongoOps()
-	{
-		return mongoOps;
-	}
-
-	public void setMongoOps(MongoOperations mongoOps)
-	{
-		this.mongoOps = mongoOps;
-	}
-
-	public List<String> getHost()
-	{
-		return host;
-	}
-
-	public void setHost(List<String> host)
-	{
-		this.host = host;
-	}
-
+	
 }
