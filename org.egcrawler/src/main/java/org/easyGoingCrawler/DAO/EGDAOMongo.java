@@ -11,8 +11,10 @@ import static org.springframework.data.mongodb.core.query.Criteria.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.easyGoingCrawler.docWriter.Blog;
 import org.easyGoingCrawler.docWriter.Url;
 import org.easyGoingCrawler.framwork.CrawlURI;
+import org.easyGoingCrawler.util.RandomList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -32,7 +34,7 @@ public class EGDAOMongo implements EGDAO
 {
 	private  Mongo mongoServer= null;
 	//MongoTemplate,  test is the db name.
-    private MongoOperations mongoOps = null;    
+    public MongoOperations mongoOps = null;    
     
 	private List<String> hosts = null;
     
@@ -72,6 +74,7 @@ public class EGDAOMongo implements EGDAO
 				continue;
 			list.addAll(tmp);
 		}
+		RandomList.random(list);
 		return list;
 	}
     
@@ -85,10 +88,10 @@ public class EGDAOMongo implements EGDAO
 			String pattern4save = this.pattern_save.get(host);
 			Query q ;
 			
-//			// querying a blog's probability is  70% 
-//			if( new Random().nextInt(10) < 3)
-//				q= new Query(Criteria.where("flag").is(Url.UNCRAWLED).and("host").is(host));
-//			else
+			// querying a blog's probability is  70% 
+			if( new Random().nextInt(10) < 3)
+				q= new Query(Criteria.where("flag").is(Url.UNCRAWLED).and("host").is(host));
+			else
 				q = new Query(Criteria.where("flag").is(Url.UNCRAWLED).and("host").is(host).and("url").regex(pattern4save));
 			
 	        q.sort().on("date", Order.ASCENDING);
@@ -128,5 +131,15 @@ public class EGDAOMongo implements EGDAO
 		this.pattern_save = pattern_save;
 	}
 
-	
+	static public void main(String [] args)
+	{
+		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
+		EGDAOMongo Mongo= appcontext.getBean("EGDAOMongo", EGDAOMongo.class);
+		Query q_chinaunix = new Query(where("host").is("blog.chinaunix.net")).limit(1);
+		Query q_csdn = new Query(where("host").is("blog.csdn.net")).limit(4);
+		
+		//Blog blog = Mongo.mongoOps.findOne( q_chinaunix,Blog.class);
+		List<Blog> blog = Mongo.mongoOps.find( q_csdn,Blog.class);
+		System.out.println(blog);
+	}
 }

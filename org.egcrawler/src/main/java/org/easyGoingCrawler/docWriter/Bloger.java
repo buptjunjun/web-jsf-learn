@@ -1,5 +1,6 @@
 package org.easyGoingCrawler.docWriter;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -12,6 +13,9 @@ public class Bloger
 	Set<String> articles = null;
 	int articleAmt = 0; 
 	int visit = 0;
+	Date crawledDate = new Date();
+	
+	int magicNum = -1;
 	
 	public String getId()
 	{

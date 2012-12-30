@@ -3,11 +3,14 @@ package org.easyGoingCrawler.analyzer;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.easyGoingCrawler.docWriter.Blog;
 import org.easyGoingCrawler.docWriter.Bloger;
 import org.easyGoingCrawler.framwork.CrawlURI;
 import org.easyGoingCrawler.framwork.Fetcher;
+import org.easyGoingCrawler.util.AnalyzerUtil;
 import org.easyGoingCrawler.util.Converter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,9 +19,10 @@ import org.jsoup.select.Elements;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class CSDNBlogerAnalyzer implements Analyzer<Bloger>
+public class CnblogsBlogerAnalyzer implements Analyzer<Bloger>
 {
-	public CSDNBlogerAnalyzer()
+	private Pattern pattern = Pattern.compile("\\d+");
+	public CnblogsBlogerAnalyzer()
 	{
 		
 	}
@@ -34,7 +38,7 @@ public class CSDNBlogerAnalyzer implements Analyzer<Bloger>
 				Document doc = Jsoup.parse(str);
 				
 				// name
-				Elements ename = doc.getElementsByClass("user_name");
+				Elements ename = doc.getElementById("profile_block").select("a");
 				String name = ename.get(0).text();			
 				System.out.println(name);
 				
@@ -43,8 +47,12 @@ public class CSDNBlogerAnalyzer implements Analyzer<Bloger>
 				System.out.println(url);
 			
 				// atricleAmt
-				Element eaticle = doc.getElementById("blog_statistics").select("li").first();
-				String articleAmt = eaticle.text();
+				Element earticle = doc.getElementsByClass("blogStats").first();
+				int artAmt = 0;
+				String tmp = earticle.text();
+				Matcher m = this.pattern.matcher(tmp);				
+				String suibi = m.group(0);
+				String wenzhang =m.group(1);
 				
 				// visit
 				Element evisit = doc.getElementById("blog_rank").select("li").first();
@@ -54,7 +62,7 @@ public class CSDNBlogerAnalyzer implements Analyzer<Bloger>
 				bloger.setUrl(url);
 				bloger.setId(Converter.urlEncode(url));
 				bloger.setHost(host);
-				bloger.setArticleAmt(Converter.praseIntFromStr(articleAmt));
+				bloger.setArticleAmt(artAmt);
 				bloger.setVisit(Converter.praseIntFromStr(visits));
 
 							
@@ -79,16 +87,9 @@ public class CSDNBlogerAnalyzer implements Analyzer<Bloger>
 		curl.setUrl("http://blog.csdn.net/a9529lty/article/details/7008537");
 		curl.setStatus(CrawlURI.STATUS_OK);
 		fetcher.fetch(curl);
-		try
-		{
-			System.out.println(new String (curl.getContent(),curl.getEncode()));
-		} catch (UnsupportedEncodingException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		System.out.println(new String (curl.getContent()));
 		
-		Bloger bloger = new CSDNBlogerAnalyzer().analyze(null, curl.getEncode(), curl.getContent());
+		Bloger bloger = new CnblogsBlogerAnalyzer().analyze(null, "utf-8", curl.getContent());
 		
 		
 	}

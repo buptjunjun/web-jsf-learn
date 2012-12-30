@@ -41,7 +41,7 @@ public class Converter
 			}
 			return  buf.toString();
 		} 
-		catch (NoSuchAlgorithmException e)
+		catch (Exception e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();

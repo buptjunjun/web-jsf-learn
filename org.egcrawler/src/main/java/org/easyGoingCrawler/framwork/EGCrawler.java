@@ -57,7 +57,7 @@ public class EGCrawler  extends Thread
 	  private DocWriter docWriter = null;
 	  
 	  // interval of two fetching task in millsecond
-	  private int interval = 1000;
+	  private int interval = 10000;
 	  
 	 
 
@@ -242,11 +242,14 @@ public class EGCrawler  extends Thread
 		public static void main (String [] args)
 		{
 			ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
-			EGCrawler egcrawler = appcontext.getBean("egcrawler", EGCrawler.class);
-			egcrawler.startCrawl();
-			egcrawler.start();
+			for(int i = 0; i < 5; i++)
+			{
+				EGCrawler egcrawler = appcontext.getBean("egcrawler", EGCrawler.class);
+				egcrawler.setName("egcrawler-"+i);				
+				egcrawler.start();			
+				egcrawler.startCrawl();
+			}
 			
-			egcrawler.setDaemon(true);
 			while(true)
 			{
 				try
@@ -257,7 +260,6 @@ public class EGCrawler  extends Thread
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
-			
+			}			
 		}
 }

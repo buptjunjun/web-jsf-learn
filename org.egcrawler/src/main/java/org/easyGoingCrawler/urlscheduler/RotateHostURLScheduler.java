@@ -23,9 +23,8 @@ import org.easyGoingCrawler.framwork.CrawlURI;
 import org.easyGoingCrawler.framwork.URLScheduler;
 import org.easyGoingCrawler.util.Converter;
 import org.easyGoingCrawler.util.Localizer;
+import org.easyGoingCrawler.util.RandomList;
 import org.easyGoingCrawler.util.URLAnalyzer;
-
-import com.mysql.jdbc.StringUtils;
 
 public class RotateHostURLScheduler extends URLScheduler 
 {
@@ -54,7 +53,9 @@ public class RotateHostURLScheduler extends URLScheduler
 	{
 		if(this.urlQueue.size() <= 20)
 		{
-			this.urlQueue.addAll(this.egdao.get());
+			List l = this.egdao.get();
+			this.urlQueue.addAll(l);
+			
 		}
 		
 		if(this.urlQueue != null && this.urlQueue.size() > 0)
@@ -67,8 +68,11 @@ public class RotateHostURLScheduler extends URLScheduler
 	@Override
 	public synchronized void put(CrawlURI curl) 
 	{
-		if( curl == null)
+		if( curl == null || curl.getHttpstatus()!=200)
+		{
+			System.out.println("== after fetcher and etract: "+curl);
 			return;
+		}
 		System.out.println(" in put : " +curl.toString());
 	
 		if(urAnalyzer.analyze(curl.getHost(), curl.getUrl()) == urAnalyzer.SAVE)
@@ -77,20 +81,20 @@ public class RotateHostURLScheduler extends URLScheduler
 			String host = curl.getHost();	
 			Bloger bloger = this.blogerAnalyzer.analyze(host,curl.getEncode(),curl.getContent());
 			Blog blog = this.blogAnalyzer.analyze(host,curl.getEncode(),curl.getContent());
-			
-			if(blog!=null && bloger !=null)
-			{	
-				blog.setUrl(curl.getUrl());
-				blog.setId(Converter.urlEncode(curl.getUrl()));
-				blog.setBlogerURL(bloger.getUrl());
-			}
-			
-			
-			if(blog != null)
-				this.egdao.insert(blog);
-			if(bloger != null)
-				this.egdao.insert(bloger);
+					
+			if(blog != null  && bloger != null)	
+			{
+				System.out.println("++ insert blog :"+blog);
+				System.out.println("++ inster bloger :"+bloger);
 				
+				if(curl.getUrl() != null)
+				{	
+					blog.setUrl(curl.getUrl());
+					blog.setId(Converter.urlEncode(curl.getUrl()));
+					this.egdao.insert(blog);
+			    	this.egdao.insert(bloger);
+				}
+			}				
 		}
 		
 		
@@ -113,7 +117,7 @@ public class RotateHostURLScheduler extends URLScheduler
 		{
 			if(urAnalyzer.analyze(curl.getHost(), u) == URLAnalyzer.DELETE)
 			{
-				System.out.println("delete == " +u);
+				//System.out.println("delete == " +u);
 				continue;
 			}
 			System.out.println("insert	 == " +u);
@@ -135,6 +139,20 @@ public class RotateHostURLScheduler extends URLScheduler
 		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
 		tmpurl.setFlag(Url.UNCRAWLED);
 		tmpurl.setHost("blog.csdn.net");
+		tmpurl.setLastCrawled(new Date());
+		this.egdao.insert(tmpurl);
+		
+		tmpurl.setUrl("http://www.cnblogs.com/index.html");
+		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
+		tmpurl.setFlag(Url.UNCRAWLED);
+		tmpurl.setHost("www.cnblogs.com");
+		tmpurl.setLastCrawled(new Date());
+		this.egdao.insert(tmpurl);
+		
+		tmpurl.setUrl("http://blog.chinaunix.net/");
+		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
+		tmpurl.setFlag(Url.UNCRAWLED);
+		tmpurl.setHost("blog.chinaunix.net");
 		tmpurl.setLastCrawled(new Date());
 		
 		this.egdao.insert(tmpurl);

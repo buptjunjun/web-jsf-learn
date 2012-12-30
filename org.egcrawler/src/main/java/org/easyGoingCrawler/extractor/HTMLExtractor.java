@@ -10,7 +10,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,7 +49,7 @@ public class HTMLExtractor extends Extractor
 	@Override
 	public void extract(CrawlURI curl)
 	{
-		if (curl.getStatus() !=CrawlURI.STATUS_OK || curl.getContent() == null || curl.getEncode() == null || curl.getHttpstatus()!=200)
+		if (curl.getStatus() !=CrawlURI.STATUS_OK || curl.getContent() == null || curl.getEncode() == null )
 		{
 			logger.info("");
 			return;
@@ -81,7 +83,7 @@ public class HTMLExtractor extends Extractor
 				return ;
 			
 			// get all the url in this documents
-			List<String>  urls = new ArrayList<String>();
+			Set<String>  urls = new HashSet<String>();
 			for (Element e: hrefs)
 			{
 				// get a url in an element like <a href="http://www.abc.com/aa">;
@@ -104,11 +106,11 @@ public class HTMLExtractor extends Extractor
 				 //  System.out.println(url + "  " + e.hasText() + " " + e.html());
 			   }
 			}
-			System.out.println("extract " + urls.size() + "urls from " + originalURL);
-			curl.setIncludeURLs(urls);
+			System.out.println("extract " + urls.size() + " urls from " + originalURL);
+			List l = new ArrayList<String>();
+			l.addAll(urls);
+			curl.setIncludeURLs(l);
 			curl.setStatus(CrawlURI.STATUS_OK);
-			
-			System.out.println(Thread.currentThread().getName()+" extract curl: "+ curl.toString());
 			
 		}
 		catch(Exception e)

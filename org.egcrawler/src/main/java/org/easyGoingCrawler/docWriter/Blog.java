@@ -1,5 +1,6 @@
 package org.easyGoingCrawler.docWriter;
 
+import java.util.Date;
 import java.util.List;
 
 public class Blog 
@@ -15,6 +16,11 @@ public class Blog
 	int visit = 0;				 // how many times the blog has been visited
 	List<String> tags = null; 		 // tags of pictures
 	int pictures = 0;			 // how many pictues in the blog's content
+	Date postDate = null;    
+	Date crawledDate = new Date();
+	
+	int magicNum = -1;
+
 	
 	public String getId()
 	{
@@ -96,4 +102,32 @@ public class Blog
 	{
 		this.pictures = pictures;
 	}
+	
+	
+	public Date getPostDate()
+	{
+		return postDate;
+	}
+	public void setPostDate(Date postDate)
+	{
+		this.postDate = postDate;
+	}
+	public Date getCrawledDate()
+	{
+		return crawledDate;
+	}
+	public void setCrawledDate(Date crawledDate)
+	{
+		this.crawledDate = crawledDate;
+	}
+	public int getMagicNum()
+	{
+		return magicNum;
+	}
+	public void setMagicNum(int magicNum)
+	{
+		this.magicNum = magicNum;
+	}
+	
+
 }

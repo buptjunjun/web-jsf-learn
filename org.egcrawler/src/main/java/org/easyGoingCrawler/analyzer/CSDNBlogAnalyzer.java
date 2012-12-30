@@ -1,7 +1,9 @@
 package org.easyGoingCrawler.analyzer;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.easyGoingCrawler.docWriter.Blog;
@@ -17,6 +19,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class CSDNBlogAnalyzer implements Analyzer<Blog>
 {
+	private SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	public CSDNBlogAnalyzer()
 	{
 		
@@ -31,6 +34,9 @@ public class CSDNBlogAnalyzer implements Analyzer<Blog>
 		{
 			str = new String(content,encode);		
 			Document doc = Jsoup.parse(str);
+			// name
+			Elements ename = doc.getElementsByClass("user_name");
+			String url =  ename.get(0).attr("href");
 			
 			// title
 			Elements etitle = doc.getElementsByClass("link_title");
@@ -57,7 +63,11 @@ public class CSDNBlogAnalyzer implements Analyzer<Blog>
 			Elements eimgs = econtent.select("img");
 			int imgs = eimgs.size();
 			
-
+			// post date 
+			Elements epostDate = doc.getElementsByClass("link_postdate");
+			String postDate = epostDate.text();
+			
+			blog.setBlogerURL(url);
 			blog.setHost(host);
 			blog.setContent(content);
 			blog.setEncode(encode);
@@ -66,9 +76,12 @@ public class CSDNBlogAnalyzer implements Analyzer<Blog>
 			blog.setVisit(Converter.praseIntFromStr(visit));
 			blog.setTags(cats);
 			
+			Date post = formater.parse(postDate);
+			blog.setPostDate(post);
+			blog.setCrawledDate(new Date());
 			
 		} 
-		catch (UnsupportedEncodingException e)
+		catch (Exception e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -88,12 +101,19 @@ public class CSDNBlogAnalyzer implements Analyzer<Blog>
 		curl.setUrl("http://blog.csdn.net/a9529lty/article/details/7008537");
 		curl.setStatus(CrawlURI.STATUS_OK);
 		fetcher.fetch(curl);
-		System.out.println(new String (curl.getContent()));
+		try
+		{
+			System.out.println(new String (curl.getContent(),curl.getEncode()));
+		} catch (UnsupportedEncodingException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		Blog blog = new CSDNBlogAnalyzer().analyze(null, "utf-8", curl.getContent());
+	//	Blog blog = new CSDNBlogAnalyzer().analyze(null, "utf-8", curl.getContent());
 		
 		
-		
+		 	
 	}
 	
 }

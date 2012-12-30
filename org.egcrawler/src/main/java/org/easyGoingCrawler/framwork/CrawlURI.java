@@ -1,5 +1,6 @@
 package org.easyGoingCrawler.framwork;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import org.easyGoingCrawler.fetcher.HttpFetcher;
  * @author andyWebsense
  *
  */
-public class CrawlURI
+public class CrawlURI implements Serializable
 {	
 	public final static int STATUS_OK = 0;
 	public final static int STATUS_FETCH_ERROR = 1;
@@ -28,7 +29,7 @@ public class CrawlURI
 	private byte[] content=null;
 	
 	// encode of this file  ,default is utf-8
-	private String encode = "utf-8";
+	private String encode = "UTF-8";
 	
 	// http status returned from server
 	private int httpstatus= -1;
