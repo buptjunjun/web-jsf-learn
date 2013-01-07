@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:context="http://www.springframework.org/schema/context"
+          xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+          xmlns:p="http://www.springframework.org/schema/p"
+          xsi:schemaLocation=
+          "http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context-3.0.xsd
+          http://www.springframework.org/schema/data/mongo
+          http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:egcrawler.properties</value>
+				<value>classpath:pattern.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+  <bean id="testProps" class ="java.lang.String" >
+  	<constructor-arg value="${test}"></constructor-arg>
+  </bean>
+  
+<!-- Default bean name is 'mongo' -->
+   <mongo:mongo host="localhost" port="27017"/> 
+  
+  <!-- host list -->
+  <bean id="hosts" class="java.util.ArrayList">
+  	<constructor-arg>
+  		<list>
+ 			<value>${host_csdn}</value> 		   
+			<value>${host_chinaunix}</value>
+			 <!-- <value>${host_cnblogs}</value> --> 
+			  <value>${host_51cto}</value>
+		</list>
+  	</constructor-arg>
+  </bean>
+  
+  <!-- save pattern  -->
+  <bean id="pattern_save" class="java.util.HashMap">
+  	<constructor-arg>
+  		<map>
+   			<entry key="${host_csdn}" value="${save_csdn}"></entry>
+   			<entry key="${host_cnblogs}" value="${save_cnblogs}"></entry>
+   			<entry key="${host_chinaunix}" value="${save_chinaunix}"></entry>
+   			<entry key="${host_51cto}" value="${save_51cto}"></entry>
+   			<entry key="${host_oschina}" value="${save_oschina}"></entry>
+   		</map>
+  	</constructor-arg>
+   </bean>
+   
+   <!-- hold pattern  -->
+  <bean id="pattern_hold" class="java.util.HashMap">
+  	<constructor-arg>
+  		<map>
+   			<entry key="${host_csdn}" value="${hold_csdn}"></entry>
+   			<entry key="${host_cnblogs}" value="${hold_cnblogs}"></entry>
+   			<entry key="${host_chinaunix}" value="${hold_chinaunix}"></entry>
+   			<entry key="${host_51cto}" value="${hold_51cto}"></entry>
+   			<entry key="${host_oschina}" value="${hold_oschina}"></entry>
+   		</map>
+  	</constructor-arg>
+   </bean>
+  
+   <!-- EG DAO -->
+   <bean id ="EGDAOMongo" class="org.easyGoingCrawler.DAO.EGDAOMongo" p:pattern_save-ref="pattern_save"> 
+   		<constructor-arg ref="mongo"></constructor-arg>
+   		<constructor-arg value="blogdb"></constructor-arg>
+   		<constructor-arg ref="hosts">  </constructor-arg> 
+   </bean>
+   
+   <!-- url analyzer to indecate wether to save to the database -->
+   <bean id="urlAnalyzer" class="org.easyGoingCrawler.util.URLAnalyzer">
+   		<constructor-arg ref="pattern_save"> </constructor-arg>
+   		<constructor-arg ref="pattern_hold"></constructor-arg>
+   </bean>
+  
+  <!-- fetcher --> 
+  <bean id="fetcherHtmlUnitXML" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnitXML" scope="prototype" /> 
+  <bean id="fetcherHtmlUnit" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnit" scope="prototype" /> 
+  <bean id="fetcherHtmlUnitJs" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnit" scope="prototype" >
+  	<constructor-arg value="#{true}"></constructor-arg>
+  </bean>
+  <bean id="fetcher" class="org.easyGoingCrawler.fetcher.HttpFetcher" scope="prototype" />
+  <bean id="fetcherProxy" class="org.easyGoingCrawler.fetcher.HttpFetcherProxy" scope="prototype" />
+    
+   <!-- extractor -->
+  <bean id="extractor" class="org.easyGoingCrawler.extractor.HTMLExtractor" scope="prototype"/>
+  
+  <!-- monggo writer -->
+  <bean id="monggowriter" class=" org.easyGoingCrawler.docWriter.MongoWriter" scope="prototype">
+  		<constructor-arg ref="EGDAOMongo"></constructor-arg>
+  		<constructor-arg ref="urlAnalyzer"></constructor-arg>
+  		<constructor-arg ref="blogerAnalyzer"></constructor-arg>
+  		<constructor-arg ref="blogAnalyzer"></constructor-arg>
+  </bean>
+ 		
+   <!-- mirror writer -->
+  <bean id="mirrorwriter" class=" org.easyGoingCrawler.docWriter.MirrorWriter"
+  		p:urAnalyzer-ref ="urlAnalyzer"
+ 		scope="prototype" />
+ 
+ <!-- writer chain -->
+  <bean id="docwriter" class=" org.easyGoingCrawler.docWriter.DocWriterChain" scope="prototype" >
+  	<constructor-arg>
+  		<list>
+  			<ref bean = "monggowriter"/>	
+  			<ref bean = "mirrorwriter"/>	
+  		</list>
+  	</constructor-arg>
+ </bean>
+ 		
+ 		
+  <!-- blog analyzer -->
+  <bean id="blogAnalyzer" class="org.easyGoingCrawler.analyzer.BlogAnalyzer">
+  	<constructor-arg >
+  		<map>
+  			<entry key="${host_csdn}" value-ref="CSDNBlogAnalyzer"></entry>
+  			<entry key="${host_cnblogs}" value-ref="CnblogsBlogAnalyzer"></entry>
+  			<entry key="${host_chinaunix}" value-ref="ChinaUnixBlogAnalyzer"></entry>
+  			<entry key="${host_oschina}" value-ref="OschinaBlogAnalyzer"></entry>
+  			<entry key="${host_51cto}" value-ref="A51ctoBlogAnalyzer"></entry>
+  		</map>
+  	</constructor-arg>
+  </bean>
+  
+  <!-- bloger analyzer -->
+   <bean id="blogerAnalyzer" class="org.easyGoingCrawler.analyzer.BlogerAnalyzer">
+  	<constructor-arg >
+  		<map>
+  			<entry key="${host_csdn}" value-ref="CSDNBlogerAnalyzer"></entry>
+  			<entry key="${host_cnblogs}" value-ref="CnblogsBlogerAnalyzer"></entry>
+  			<entry key="${host_chinaunix}" value-ref="ChinaUnixBlogerAnalyzer"></entry>
+  			<entry key="${host_oschina}" value-ref="OschinaBlogerAnalyzer"></entry>
+  			<entry key="${host_51cto}" value-ref="A51ctoBlogerAnalyzer"></entry>
+  		</map>
+  	</constructor-arg>
+  </bean>
+  
+  <!-- bloger and blog analyzer for csdn -->
+  <bean id="CSDNBlogAnalyzer"  class="org.easyGoingCrawler.analyzer.CSDNBlogAnalyzer"></bean>
+  <bean id="CSDNBlogerAnalyzer"  class="org.easyGoingCrawler.analyzer.CSDNBlogerAnalyzer"></bean>
+  <bean id="CnblogsBlogAnalyzer"  class="org.easyGoingCrawler.analyzer.CnblogsBlogAnalyzer"></bean>
+  <bean id="CnblogsBlogerAnalyzer"  class="org.easyGoingCrawler.analyzer.CnblogsBlogerAnalyzer"></bean>
+  <bean id="ChinaUnixBlogAnalyzer"  class="org.easyGoingCrawler.analyzer.ChinaUnixBlogAnalyzer"></bean>
+  <bean id="ChinaUnixBlogerAnalyzer"  class="org.easyGoingCrawler.analyzer.ChinaUnixBlogerAnalyzer"></bean>
+  <bean id="OschinaBlogAnalyzer"  class="org.easyGoingCrawler.analyzer.OschinaBlogAnalyzer"></bean>
+  <bean id="OschinaBlogerAnalyzer"  class="org.easyGoingCrawler.analyzer.OschinaBlogerAnalyzer"></bean> 
+  <bean id="A51ctoBlogAnalyzer"  class="org.easyGoingCrawler.analyzer.A51ctoBlogAnalyzer"></bean>
+  <bean id="A51ctoBlogerAnalyzer"  class="org.easyGoingCrawler.analyzer.A51ctoBlogerAnalyzer"></bean>
+  
+  
+  
+  <!-- csdn  -->
+  <bean id="csdnscheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
+ 		<constructor-arg ref="EGDAOMongo"></constructor-arg>
+ 		<constructor-arg value="${host_csdn}"></constructor-arg>
+ 		<constructor-arg ref="urlAnalyzer"></constructor-arg>
+ </bean>
+  <bean id="CSDNcrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
+		<constructor-arg ref = "fetcherHtmlUnit"></constructor-arg>
+		<constructor-arg ref = "extractor"></constructor-arg>
+		<constructor-arg ref = "csdnscheduleer"></constructor-arg>
+		<constructor-arg ref ="docwriter"></constructor-arg>
+		<constructor-arg value="${host_csdn}"></constructor-arg>
+  </bean>
+  <!-- csdn end -->
+  
+  <!-- chinaunix  -->
+  <bean id="ChinaUnixscheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
+ 		<constructor-arg ref="EGDAOMongo"></constructor-arg>
+ 		<constructor-arg value="${host_chinaunix}"></constructor-arg>
+ 		<constructor-arg ref="urlAnalyzer"></constructor-arg>
+ </bean>
+  <bean id="ChinaUnixcrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
+		<constructor-arg ref = "fetcherHtmlUnit"></constructor-arg>
+		<constructor-arg ref = "extractor"></constructor-arg>
+		<constructor-arg ref = "ChinaUnixscheduleer"></constructor-arg>
+		<constructor-arg ref ="docwriter"></constructor-arg>
+		<constructor-arg value="${host_chinaunix}"></constructor-arg>
+  </bean>
+  <!-- chinaunix end -->
+  
+    
+  <!-- oschina  -->
+  <bean id="OsChinaScheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
+ 		<constructor-arg ref="EGDAOMongo"></constructor-arg>
+ 		<constructor-arg value="${host_oschina}"></constructor-arg>
+ 		<constructor-arg ref="urlAnalyzer"></constructor-arg>
+ </bean>
+  <bean id="OsChinacrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
+		<constructor-arg ref = "fetcherHtmlUnit"></constructor-arg>
+		<constructor-arg ref = "extractor"></constructor-arg>
+		<constructor-arg ref = "OsChinaScheduleer"></constructor-arg>
+		<constructor-arg ref ="docwriter"></constructor-arg>
+		<constructor-arg value="${host_oschina}"></constructor-arg>
+  </bean>
+  <!-- oschina end -->
+  
+  <!-- 51cto  -->
+  <bean id="A51ctoScheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
+ 		<constructor-arg ref="EGDAOMongo"></constructor-arg>
+ 		<constructor-arg value="${host_51cto}"></constructor-arg>
+ 		<constructor-arg ref="urlAnalyzer"></constructor-arg>
+ </bean>
+  <bean id="A51ctocrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
+		<constructor-arg ref = "fetcherHtmlUnitJs"></constructor-arg>
+		<constructor-arg ref = "extractor"></constructor-arg>
+		<constructor-arg ref = "A51ctoScheduleer"></constructor-arg>
+		<constructor-arg ref ="docwriter"></constructor-arg>
+		<constructor-arg value="${host_51cto}"></constructor-arg>
+  </bean>
+  <!-- 51cto end -->
+  
+    <!-- cnblog  -->
+  <bean id="CnblogsScheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
+ 		<constructor-arg ref="EGDAOMongo"></constructor-arg>
+ 		<constructor-arg value="${host_cnblogs}"></constructor-arg>
+ 		<constructor-arg ref="urlAnalyzer"></constructor-arg>
+ </bean>
+  <bean id="Cnblogscrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
+		<constructor-arg ref = "fetcherHtmlUnitJs"></constructor-arg>
+		<constructor-arg ref = "extractor"></constructor-arg>
+		<constructor-arg ref = "CnblogsScheduleer"></constructor-arg>
+		<constructor-arg ref ="docwriter"></constructor-arg>
+		<constructor-arg value="${host_cnblogs}"></constructor-arg>
+  </bean>
+  <!-- cnblog end -->
+</beans>
