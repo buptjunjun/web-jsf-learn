@@ -11,71 +11,82 @@ public class Submask {
 	 * @param mask
 	 * @return
 	 */
-	public static  boolean isValidSubmask(String mask)
+	public static  int isValidSubmask(String mask)
 	{
 		// check if it is empty
 		if(mask == null || "".equals(mask.trim()))
-			return false;
+			return -1;
 		
-		String maskPattern1 = "([0-2]?\\d\\d\\.){3}\\d+";
+		String maskPattern1 = "\\d{0,3}\\.\\d{0,3}\\.\\d{0,3}\\.\\d{0,3}";
 		String maskPattern2 = "/[1-9]\\d*";
-		String maskPattern3 = "1*0*";
-		String maskPattern4 = "[1-9]\\d*";
+		String maskPattern3 = "(1)*(0)*";
+		String maskPattern4 = "[1-9](\\d)*|[0-9]";
 		
 		if(Pattern.matches(maskPattern1, mask))
 		{
-			System.out.println("mask 1");
+			// split the string like "255.255.255.0"
 			String [] nums = mask.split("\\.");
+			
+			// if length of nums is not equals 4 , the format of this submask is wrong
+			if (nums == null || nums.length != 4)
+				return -1;
+			
+			String binaryStr = "";
+			
 			for(String num: nums )
 			{
-				System.out.print(num+"  ");
+				// if submask was "255.255.255.01", the  "01" is not right format
+				if(num != null && num.length() >1 && num.startsWith("0"))
+						return -1;
 				try
 				{
+					// if submask was "255.255.255.01", the  "01" is not right format
 					if(!Pattern.matches(maskPattern4, num))
-						return false;
+						return -1;
 						
 					int number = Integer.parseInt(num);
 					// if is between 0 and 255
 					if(number > 255 || number < 0)
-						return false;
+						return -1;
 					
 					// if match 11111000 parttern
-					String binaryStr = Integer.toBinaryString(number);
-					System.out.println(binaryStr);
-					if (!Pattern.matches(maskPattern3, binaryStr))
-						return false;
-					
+					binaryStr += Integer.toBinaryString(number);	
 				}
 				catch(Exception e)
 				{
 					e.printStackTrace();
-					return false;
-				}
-				
+					return -1;
+				}	
 			}
-			return true;
+			
+			if (Pattern.matches(maskPattern3, binaryStr))
+			{
+				binaryStr = binaryStr.replace("0", "");
+				int bit1count = binaryStr.length();
+				if (bit1count <=0 || bit1count > 32)
+					return -1;
+				return bit1count;
+			}
 		}
 		else if(Pattern.matches(maskPattern2, mask))
 		{
-			System.out.println("mask 2");
 			try
 			{	mask = mask.split("/")[1];
-				System.out.println("mask = " + mask);
 				int number = Integer.parseInt(mask);			
 				// if is between 0 and 255
 				if(number > 32 || number < 0)
-					return false;
-				return true;
+					return -1;
+				return number;
 			}
 			catch(Exception e)
 			{
 				e.printStackTrace();
-				return false;
+				return -1;
 			}
 		}
 
 		System.out.println("over");
-		return false;
+		return -1;
 	}
 	/**
 	 * @param args
@@ -85,15 +96,18 @@ public class Submask {
 	
 		String maskPattern1 = "([0-2]?\\d\\d\\.){3}\\d+";
 		String maskPattern2 = "/\\d+";
-		String maskPattern3 = "1*0*";
+		String maskPattern3 = "(1)*(0)*";
+		System.out.println(Pattern.matches(maskPattern3, "000"));
 		
 		String maskStr1 = "255.255.255.0";
 		String maskStr2 = "/26";
 		
-		System.out.println(isValidSubmask("255.255.255.002"));
-		System.out.println(isValidSubmask("255.255.255.0"));
-		System.out.println(isValidSubmask("/31"));
-		System.out.println(isValidSubmask("33"));
+		System.out.println("----------------");
+		System.out.println("\n--" + isValidSubmask("255.255.192.0"));
+		System.out.println("\n--" + isValidSubmask("255.255.255.0"));
+		System.out.println("\n--" + isValidSubmask("/31"));
+		System.out.println("\n--" + isValidSubmask("31"));
+		System.out.println("\n--" + isValidSubmask("33"));
 		
 		
 		
@@ -101,6 +115,9 @@ public class Submask {
 		System.out.println(isValidIP("10.231.56.72"));
 		System.out.println(isValidIP("10.231.56.2"));
 		System.out.println(isvalidVLAN("022"));
+		
+		int number = Integer.parseInt("003");
+		System.out.println(number);
 
 	}
 	
@@ -157,4 +174,6 @@ public class Submask {
 			return -1;
 		}
 	}
+	
+	
 }
