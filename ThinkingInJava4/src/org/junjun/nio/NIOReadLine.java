@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -84,6 +85,7 @@ public class NIOReadLine
 		long upper = 0;
 		long lower = Long.MAX_VALUE;
 		List<Long> list = new LinkedList<Long>();
+		SimpleDateFormat  formater = new SimpleDateFormat ("MM-dd");
 		try
 		{
 			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(url)));
@@ -103,16 +105,32 @@ public class NIOReadLine
 				
 			}
 			
-			System.out.println("uppder = " + new Date(upper).toLocaleString() +"  lower = " + new Date(lower).toLocaleString());
 			
 			Calendar d = Calendar.getInstance();
+			Date pre = new Date(d.getTimeInMillis());	
+			Date cur = new Date(d.getTimeInMillis());
 			
-			Date current = new Date(d.getTimeInMillis());
-			
-			
-			
-			d.add(Calendar.DAY_OF_YEAR, -30);
-			System.out.println( );
+			boolean flag = true;
+			for(int i = 0; i < 5 && flag; i++)
+			{						
+				d.add(Calendar.DAY_OF_YEAR, -7);
+				pre = cur;
+				cur = new Date(d.getTimeInMillis());
+				
+				if( d.getTimeInMillis() < lower)
+				{
+					cur = new Date(lower);
+					flag = false;
+				}
+				
+				String timespan = "";
+				if(i == 0)
+					timespan = formater.format(cur)+" - "+ "present";
+				else
+					timespan = formater.format(cur)+" - "+ formater.format(pre);
+				
+				System.out.println(timespan);
+			}
 			
 		} catch (Exception e)
 		{
@@ -120,4 +138,6 @@ public class NIOReadLine
 			e.printStackTrace();
 		}
 	}
+	
+	
 }
