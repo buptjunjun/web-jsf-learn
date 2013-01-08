@@ -2,9 +2,11 @@ package org.cb.lucene;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.lucene.document.Document;
 import org.cb.data.Blog;
+import org.cb.data.DAOMongo;
 import org.cb.util.converter;
 
 public class BlogIndexer extends BaseIndexer
@@ -62,4 +64,22 @@ public class BlogIndexer extends BaseIndexer
 		}
 	}
 
+	static public void main(String [] args)
+	{
+		DAOMongo mongo = new DAOMongo("blogdb");
+		BlogIndexer bi = new BlogIndexer("E:/Lucene");
+		List<Blog> lblog = mongo.searchBlog("blog.csdn.net", -1, 100);
+		while(lblog!=null && lblog.size()!=0)
+		{
+			for(Blog b : lblog)
+			{
+				bi.indexBlogs(b);
+				b.setMagicNum(DAOMongo.INDEXED);
+				mongo.updateBlog(b);
+			}
+			System.out.println("indexed " + lblog.get(0)+"  and .....");
+			lblog = mongo.searchBlog("blog.csdn.net", -1, 2);
+		}
+			
+	}
 }
