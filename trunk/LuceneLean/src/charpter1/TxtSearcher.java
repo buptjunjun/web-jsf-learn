@@ -30,7 +30,7 @@ public class TxtSearcher
 	}
 	
 	/**
-	 * æ ¹æ® æœç´¢å­—ç¬¦ä¸², è¿›è¡Œæœç´¢
+	 * ¸ù¾İ ËÑË÷×Ö·û´®, ½øĞĞËÑË÷
 	 * 
 	 * @param indexDir
 	 * @param q
@@ -44,12 +44,11 @@ public class TxtSearcher
 		
 		IndexSearcher is = new IndexSearcher(dir);
 		
-		//contentsæ˜¯è¦è¿›è¡Œsearchçš„fieldåå­—,åœ¨indexæ—¶å€™å»ºç«‹çš„ ä½¿ç”¨QueryParserå¯ä»¥å¯¹queryçš„æ–‡æœ¬è¿›è¡Œåˆ†è¯
+		//contentsÊÇÒª½øĞĞsearchµÄfieldÃû×Ö,ÔÚindexÊ±ºò½¨Á¢µÄ Ê¹ÓÃQueryParser¿ÉÒÔ¶ÔqueryµÄÎÄ±¾½øĞĞ·Ö´Ê
 		QueryParser parser = new QueryParser(Version.LUCENE_36,"contents",new StandardAnalyzer(Version.LUCENE_36));
 		Query query = parser.parse(q);
-
-		//ä¸å¯¹Termçš„valueè¿›è¡Œåˆ†è¯ã€‚
-		//Query query = new TermQuery(new Term("fullpath","D:\\work\\myself\\java books\\lucene\\charpter1\\testTxtFile\\name2 - å‰¯æœ¬ (10).txt"));
+		//²»¶ÔTermµÄvalue½øĞĞ·Ö´Ê¡£
+		//Query query = new TermQuery(new Term("fullpath","D:\\work\\myself\\java books\\lucene\\charpter1\\testTxtFile\\name2 - ¸±±¾ (10).txt"));
 		
 		
 		long start = System.currentTimeMillis();
@@ -66,11 +65,9 @@ public class TxtSearcher
 		
 		for(ScoreDoc doc : hits.scoreDocs)
 		{
-			// å–å¾—å‘½ä¸­çš„æ–‡æ¡£
+			// È¡µÃÃüÖĞµÄÎÄµµ
 			Document d = is.doc(doc.doc);
 			System.out.println(d.get("fullpath"));
 		}
 	}
 }
-
-
