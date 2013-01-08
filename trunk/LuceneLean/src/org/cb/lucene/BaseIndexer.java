@@ -102,10 +102,29 @@ public class BaseIndexer
 	public static  void main(String [] args)
 	{
 		BaseIndexer blogindexer = new BaseIndexer("./index");
-		
+//		blogindexer.clearIndex();
 		List<Document> docs = getDocs();
 		blogindexer.Index(docs);
 		blogindexer.commit();
+	}
+	
+	 public void clearIndex()
+	{
+		 synchronized(this.writer)
+			{
+				if(this.writer!=null)
+				{
+					try
+					{
+						this.writer.deleteAll();
+						this.writer.commit();
+					} catch (IOException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
 	}
 	
 	static public List<Document> getDocs()

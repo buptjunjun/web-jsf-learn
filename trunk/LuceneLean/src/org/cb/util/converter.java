@@ -1,6 +1,7 @@
 package org.cb.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,57 @@ public class converter
 {
 	static public Blog doc2blog(Document doc)
 	{
-		return new Blog();
+		Blog blog = new Blog();
+		java.lang.reflect.Field[] fields = blog.getClass().getDeclaredFields();
+		for(java.lang.reflect.Field f: fields)
+		{
+			ObjectToField otf = f.getAnnotation(ObjectToField.class);
+			
+			if(otf == null)
+				continue;
+			f.setAccessible(true);
+			String docfieldname = otf.fieldName();
+			String objfieldname = f.getName();
+			String type = otf.type();
+			try
+			{
+				Object docfieldValue =doc.get(docfieldname) ;
+				if(docfieldValue == null) continue;
+				
+				if ("Date".equals(type))
+				{
+					
+					f.set(blog, new Date(Long.parseLong((String)docfieldValue)));
+				}
+				else if ("String".equals(type))
+				{
+					
+					f.set(blog, (String)docfieldValue);
+				}
+				else if ("Integer".equals(type))
+				{
+					
+					f.setInt(blog, Integer.parseInt((String)docfieldValue));
+				}
+				else if ("List".equals(type))
+				{
+					String tmpValue = (String)docfieldValue;
+					tmpValue = tmpValue.replaceAll("\\[|\\]", "");
+					String [] strs = tmpValue.split("\\s+");
+					if(strs != null)
+					{
+						f.set(blog, Arrays.asList(strs));
+					}
+				}
+				
+			} catch (Exception e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+			} 
+		}
+		return blog;
 	}
 	
 	/*
