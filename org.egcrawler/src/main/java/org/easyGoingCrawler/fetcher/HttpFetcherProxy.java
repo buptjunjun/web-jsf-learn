@@ -195,7 +195,7 @@ public class HttpFetcherProxy extends Fetcher
 	         // 至此，我们可以将原byte数组按照正常编码专成字符串输出（如果找到了编码的话）
 	         
 	         
-	         curl.setContent(bytes);
+	       //  curl.setContent(bytes);
 	         curl.setHttpstatus(statusCode);
 	         curl.setEncode(charSet);
 	         curl.setLastCrawlDate(new Date());

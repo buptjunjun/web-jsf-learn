@@ -12,6 +12,9 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.easyGoingCrawler.framwork.*;
 import org.easyGoingCrawler.util.Localizer;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 
 
@@ -29,32 +32,60 @@ public class Main
 	}
 	
 	static private Logger logger = Logger.getLogger(Main.class);
+	private ApplicationContext appcontext = null;
+	public Main()
+	{
+		appcontext = new FileSystemXmlApplicationContext("conf/springcofigure.xml");
+	}
+	
 	public  static void  main(String [] args)
 	{
-		int poolSize = 35;
+		Main main = new Main();
+		/*String [] crawler = {"CSDNcrawler","ChinaUnixcrawler","OsChinacrawler","A51ctocrawler","Cnblogscrawler"};
+		String [] threads = {"csdn_threads","chinaunix_threads","oschina_threads","a51cto_threads","cnblogs_threads"};*/
+//		String [] crawler = {"A51ctocrawler"};
+//		String [] threads = {"a51cto_threads"};
+		String [] crawler = {"CSDNcrawler","ChinaUnixcrawler","OsChinacrawler"};
+		String [] threads = {"csdn_threads","chinaunix_threads","oschina_threads"};
+		for(int i = 0; i < crawler.length; i++)
+			main.createAndStartCrawler(crawler[i],threads[i]);
 		
-		String psize = Localizer.getMessage("POOLSIZE");
+		while(true)
+		{
+			
+			try
+			{
+				TimeUnit.SECONDS.sleep(100);
+				System.out.println("sleep 1 second");
+			} catch (InterruptedException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}			
+	}
+	
+	public void  createAndStartCrawler(String crawlerName,String threads)
+	{
+		int poolSize = 3;
+		
+		String psize = Localizer.getMessage("threads");
 		try
 		{
 			poolSize = Integer.parseInt(psize);
 		}
 		catch(Exception e)
 		{
-			poolSize = 35;
+			poolSize = 3;
 		}
 		
-		logger.info("hello ");
-		EGCrawlerPool p = new EGCrawlerPool();
-		p.addNCrawler(35);
 		
-		while(true)
+		for(int i = 0; i < poolSize; i++)
 		{
-			try {
-				Thread.currentThread().sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			EGCrawler egcrawler = appcontext.getBean(crawlerName, EGCrawler.class);
+			egcrawler.setName("="+crawlerName+" "+i+":" );				
+			egcrawler.start();			
+			egcrawler.startCrawl();
 		}
 	}
 }

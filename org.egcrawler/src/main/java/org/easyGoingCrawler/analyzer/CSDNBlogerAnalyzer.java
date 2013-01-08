@@ -23,15 +23,14 @@ public class CSDNBlogerAnalyzer implements Analyzer<Bloger>
 		
 	}
 	
-	public Bloger analyze(String host,String encode,byte[] content)
+	public Bloger analyze(String host,String encode,String content)
 	{
 		// TODO Auto-generated method stub
 			Bloger bloger = new Bloger();
 			String str;
 			try
 			{
-				str = new String(content,encode);		
-				Document doc = Jsoup.parse(str);
+				Document doc = Jsoup.parse(content);
 				
 				// name
 				Elements ename = doc.getElementsByClass("user_name");
@@ -69,6 +68,11 @@ public class CSDNBlogerAnalyzer implements Analyzer<Bloger>
 			return bloger;
 	}
 	
+	public Bloger analyze(CrawlURI curl)
+	{
+		// TODO Auto-generated method stub
+		return analyze(curl.getHost(),curl.getEncode(),curl.getContent());
+	}
 	static public void main(String [] args)
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
@@ -79,14 +83,7 @@ public class CSDNBlogerAnalyzer implements Analyzer<Bloger>
 		curl.setUrl("http://blog.csdn.net/a9529lty/article/details/7008537");
 		curl.setStatus(CrawlURI.STATUS_OK);
 		fetcher.fetch(curl);
-		try
-		{
-			System.out.println(new String (curl.getContent(),curl.getEncode()));
-		} catch (UnsupportedEncodingException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		System.out.println(curl.getContent());
 		
 		Bloger bloger = new CSDNBlogerAnalyzer().analyze(null, curl.getEncode(), curl.getContent());
 		

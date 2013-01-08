@@ -73,4 +73,12 @@ public class Bloger
 	{
 		this.visit = visit;
 	}
+	
+	@Override
+	public String toString()
+	{
+		// TODO Auto-generated method stub
+		return "id = " + this.id + " name = "+this.name + "   host = " +this.host +" url = " + this.url
+				+ " articleAmt = " + this.articleAmt +" visits= " +this.visit +"  crawledDate" +this.crawledDate;
+	}
 }

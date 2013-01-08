@@ -26,7 +26,7 @@ public class CrawlURI implements Serializable
 	private String host = null;
 
 	// content of this file 
-	private byte[] content=null;
+	private String content=null;
 	
 	// encode of this file  ,default is utf-8
 	private String encode = "UTF-8";
@@ -64,11 +64,11 @@ public class CrawlURI implements Serializable
 	}
 	
 	
-	public byte[] getContent()
+	public String getContent()
 	{
 		return content;
 	}
-	public void setContent(byte[] content)
+	public void setContent(String content)
 	{
 		this.content = content;
 	}
@@ -126,7 +126,17 @@ public class CrawlURI implements Serializable
 	public void setIncludeURLs(List<String> includeURLs) {
 		this.includeURLs = includeURLs;
 	}
-
+	
+	private Object reserve = null; 
+	
+	public Object getReserve()
+	{
+		return reserve;
+	}
+	public void setReserve(Object reserve)
+	{
+		this.reserve = reserve;
+	}
 	public static void main(String [] args)
 	{
 	/*	Extractor e = new HTMLExtractor();

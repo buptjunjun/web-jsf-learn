@@ -32,6 +32,7 @@ import org.apache.http.client.CircularRedirectException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.params.ClientPNames;
 import org.apache.http.client.utils.URIUtils;
@@ -41,6 +42,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.DefaultRedirectHandler;
 import org.apache.http.impl.client.RedirectLocations;
 import org.apache.http.params.CoreConnectionPNames;
+import org.apache.http.params.CoreProtocolPNames;
+import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.ExecutionContext;
@@ -52,8 +55,13 @@ import org.easyGoingCrawler.extractor.HTMLExtractor;
 import org.easyGoingCrawler.framwork.CrawlURI;
 import org.easyGoingCrawler.framwork.Fetcher;
 import org.easyGoingCrawler.util.FetcherUtil;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.gargoylesoftware.htmlunit.Page;
+import com.gargoylesoftware.htmlunit.util.WebClientUtils;
 
 /**
  * HttpFecher is an implenentation of  Fetcher , it will use HTTP protocol to fetch a url
@@ -109,7 +117,7 @@ public class HttpFetcher extends Fetcher
 
 	       httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,20000);//连接时间20s
 	       httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 30000);//数据传输时间60s
-
+	       httpclient.getParams().setParameter(CoreProtocolPNames.HTTP_CONTENT_CHARSET, "UTF-8");
 
 	      // HttpHost targetHost = new HttpHost("blog.sina.com.cn");
 	       //HttpGet httpget = new HttpGet("http://www.apache.org/"); 
@@ -121,6 +129,7 @@ public class HttpFetcher extends Fetcher
 	       // 用逗号分隔显示可以同时接受多种编码
 	       httpget.setHeader("Accept-Language", "zh-cn,zh;q=0.5");
 	       httpget.setHeader("Accept-Charset", "utf-8;q=0.7,*;q=0.7");
+	       
 	       // 验证头部信息设置生效
 	      // System.out.println("Accept-Charset:" + httpget.getFirstHeader("Accept-Charset").getValue());
 	
@@ -195,7 +204,7 @@ public class HttpFetcher extends Fetcher
 	         // 至此，我们可以将原byte数组按照正常编码专成字符串输出（如果找到了编码的话）
 	         
 	         
-	         curl.setContent(bytes);
+	        // curl.setContent(bytes);
 	         curl.setHttpstatus(statusCode);
 	         curl.setEncode(charSet);
 	         curl.setLastCrawlDate(new Date());
@@ -246,10 +255,11 @@ public class HttpFetcher extends Fetcher
 		Fetcher fetcher = appcontext.getBean("fetcher",Fetcher.class);
 		
 		CrawlURI curl = new CrawlURI();
-		curl.setUrl("www.baidu.com");
+		curl.setUrl("http://alanwu.blog.51cto.com/3652632/1106506");
 		curl.setStatus(CrawlURI.STATUS_OK);
 		fetcher.fetch(curl);
-		System.out.println(new String (curl.getContent()));	
+		//Document doc = Jsoup.parse(new String (curl.getContent(),"UTF-8"));
+	//	System.out.println(doc.text());	
 	}
 
 	

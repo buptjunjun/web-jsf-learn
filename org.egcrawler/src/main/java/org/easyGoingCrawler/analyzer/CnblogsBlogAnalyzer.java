@@ -1,8 +1,10 @@
 package org.easyGoingCrawler.analyzer;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -25,9 +27,13 @@ import org.jsoup.select.Elements;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+
 public class CnblogsBlogAnalyzer implements Analyzer<Blog>
 {
-	private Pattern pattern = Pattern.compile("\\(\\d+\\)");
+	private Pattern pattern = Pattern.compile("\\d+");
+	private Pattern postDatePattern = Pattern.compile("\\d\\d\\d\\d-\\d+-\\d+\\s*\\d+:\\d+");
 	private SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	
 	public CnblogsBlogAnalyzer()
@@ -35,22 +41,20 @@ public class CnblogsBlogAnalyzer implements Analyzer<Blog>
 		
 	}
 	
-	public Blog analyze(String host,String encode,byte[] content)
+	public Blog analyze(String host,String encode,String content)
 	{
 		// TODO Auto-generated method stub
 		Blog blog = new Blog();
 		String str;
 		try
 		{
-			str = new String(content,encode);	
 			//System.out.println(str);
-			Document doc = Jsoup.parse(str);
-			// name
-			Elements ename = doc.getElementsByClass("postDesc").select("a");
-			String name = ename.get(0).attr("href");	
+			Document doc = Jsoup.parse(content);
+			String docText = doc.text();
+			// name	
 						
 			// title
-			Element etitle = doc.getElementById("cb_post_title_url");
+			Element etitle = doc.getElementsByTag("title").first();
 			String title = etitle.text();			
 			
 			
@@ -63,45 +67,56 @@ public class CnblogsBlogAnalyzer implements Analyzer<Blog>
 				if(ecats != null)
 					for(Element e:ecats) cats.add(e.text());
 			}
+			ecat = doc.getElementById("EntryTag");
+			if(ecat != null)
+			{
+				Elements ecats = ecat.select("a");
+				if(ecats != null)
+					for(Element e:ecats) cats.add(e.text());
+			}
 
 			
-			// time
-			Element edate = doc.getElementById("post-date");
-			String datestr	 = edate.text();
+			//post time
+			Matcher mpost = this.postDatePattern.matcher(docText);
+			boolean mpostDate = mpost.find();
+			String postDateStr = mpost.group();
+			int postdatePosition = mpost.end();
 			
-			//comment
-			Element ecomment = doc.getElementById("post-comment-count");
-			String comment	 = ecomment.text();
+			//visits and comments 
+			String vandc = docText.substring(postdatePosition,postdatePosition+80); 
+			vandc = vandc.replaceFirst("([a-zA-z_-]+\\d+)|[\u4e00-\u9fa5]+\\d+", " ");
 			
-			//visit
-			Element epostDesc = doc.getElementsByClass("postDesc").first();
-			String tmp	 = epostDesc.text();
-			Matcher m = pattern.matcher(tmp);
-			int visits = 0; 
+			//visit		
+			Matcher m = pattern.matcher(vandc);
+			int visits = -1; 
+			int comments = -1;
 			if(m.find())
 			{
 				 String tmp1 = m.group(0);
 				 visits = Converter.praseIntFromStr(tmp1);
 			}
-			
-
-			
-			// content
+			if(m.find())
+			{
+				 String tmp1 = m.group(0);
+				 comments = Converter.praseIntFromStr(tmp1);
+			}
+			;
+			// content 
 			Element econtent = doc.getElementById("cnblogs_post_body");
 			// amount of pictures
 			Elements eimgs = econtent.select("img");
 			int imgs = eimgs.size();
 			
-			blog.setBlogerURL(name);
+			//blog.setBlogerURL(name);
 			blog.setHost(host);
 			blog.setContent(content);
 			blog.setEncode(encode);
 			blog.setPictures(imgs);
-			blog.setComment(Converter.praseIntFromStr(comment));
+			blog.setComment(comments);
 			blog.setVisit(visits);
 			blog.setTags(cats);
 			
-			Date postdate = formater.parse(datestr);
+			Date postdate = formater.parse(postDateStr);
 			blog.setPostDate(postdate);
 			blog.setCrawledDate(new Date());
 		} 
@@ -115,29 +130,97 @@ public class CnblogsBlogAnalyzer implements Analyzer<Blog>
 		return blog;
 	}
 	
+	
+	public Blog analyze(CrawlURI curl)
+	{
+		Blog blog = null;
+		try
+		{
+			HtmlPage p = (HtmlPage) curl.getReserve();
+			String xml = p.asXml();
+			blog = analyze(curl.getHost(),curl.getEncode(),xml);
+			if(blog == null)
+				return null;
+			
+			HtmlElement e = p.getElementById("cnblogs_post_body");
+			if ( e==null)
+			{
+				return null;
+			}
+			String blogerUrl = this.getBlogerUrl(curl.getUrl());
+			blog.setBlogerURL(blogerUrl);
+			blog.setContent(e.asText());
+			blog.setUrl(curl.getUrl());
+			blog.setId(Converter.urlEncode(curl.getUrl()));
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.toString());
+			return null;
+		}
+		return blog;
+	}
+	
+	public String getBlogerUrl(String url)
+	{
+		if(url == null) return null;
+	    String[] split = url.split("archive");
+	    if (split.length  > 1)
+	    	return split[0];
+	    return null;
+	}
 	static public void main(String [] args)
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
-		Fetcher fetcher = appcontext.getBean("fetcherHtmlUnit",Fetcher.class);
+		Fetcher fetcher = appcontext.getBean("fetcherHtmlUnitJs",Fetcher.class);
 		
 		CrawlURI curl = new CrawlURI();
-		curl.setUrl("http://www.cnblogs.com/xinz/archive/2012/11/23/2785098.html");
+		//curl.setUrl("http://www.cnblogs.com/binb/archive/2013/01/03/xiangxiong_tencent.html");
+		curl.setUrl("http://www.cnblogs.com/mr0513/archive/2012/12/14/2818742.html");
 		curl.setStatus(CrawlURI.STATUS_OK);
+		curl.setHost("www.cnblogs.com");
 		fetcher.fetch(curl);
-
+		String content = null;
+		
+		content = curl.getContent();
+		//System.out.println(content);
 		try
 		{
-			System.out.println(new String (curl.getContent(),curl.getEncode()));
-		} catch (UnsupportedEncodingException e)
+			FileWriter fout = new FileWriter(new File("51cto.html"));
+			fout.write(content);
+		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-//		Blog blog = new CnblogsBlogAnalyzer().analyze(null, curl.getEncode(), curl.getContent());
-//		System.out.println(blog+"");
+		}  
 		
 		
+//		Document doc = Jsoup.parse(content);
+//		String text = doc.text();
+//		System.out.println(text);
+//		String p = "(随笔.{1,10}文章.{1,10}评论.{1,10})|(Posts.{1,10}Articles.{1,10}Comments.{1,10})";
+//		String ap = "\\d\\d\\d\\d-\\d+-\\d+.*编辑";
+//		Pattern pattern = Pattern.compile(p);
+//		Matcher m = pattern.matcher(text);
+//		boolean f = m.find();
+//		String g = m.group();	
+//		System.out.println("find = " + f +"   "+g);
+//		
+//		Pattern pattern1 = Pattern.compile(ap);
+//		m = pattern1.matcher(text);
+//		f = m.find();
+//		g = m.group();
+//		System.out.println("find = " +f+"  "+g);
+		
+		Blog blog = new CnblogsBlogAnalyzer().analyze(curl);
+		System.out.println(blog+"");
+		
+//		String url = "http://www.cnblogs.com/v2m_/archive/2013/01/06/2846984.html";
+//		String blogerUrl = new CnblogsBlogAnalyzer().getBlogerUrl(url);
+//		System.out.println(blogerUrl);
 	}
+
+
+
 	
 }

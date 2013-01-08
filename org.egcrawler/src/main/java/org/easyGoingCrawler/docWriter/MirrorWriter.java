@@ -2,15 +2,20 @@ package org.easyGoingCrawler.docWriter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 
+import org.apache.log4j.Logger;
 import org.easyGoingCrawler.framwork.CrawlURI;
 import org.easyGoingCrawler.framwork.DocWriter;
 import org.easyGoingCrawler.util.Localizer;
+import org.easyGoingCrawler.util.URLAnalyzer;
 
 import com.mysql.jdbc.StringUtils;
 
@@ -26,8 +31,12 @@ import com.mysql.jdbc.StringUtils;
 
 public class MirrorWriter extends DocWriter
 {
+	Logger loger =  Logger.getLogger(MirrorWriter.class);
+	
 	// where to put this file
 	private String baseDirectory="/"; 
+	private URLAnalyzer urAnalyzer = null;
+	
 	
 	public MirrorWriter() 
 	{
@@ -81,16 +90,33 @@ public class MirrorWriter extends DocWriter
 	@Override
 	public void write(CrawlURI curl) 
 	{
-		if(curl.getStatus() != CrawlURI.STATUS_OK)
+		if(curl.getHttpstatus() != 200 || curl.getStatus() != CrawlURI.STATUS_OK)
 			return;
 		
+		if(urAnalyzer.analyze(curl.getHost(), curl.getUrl()) == urAnalyzer.SAVE)
+		{
+			String path = getPath(curl);
+			if (path == null)
+				return;
+			String content = curl.getContent();
+			saveHtmlNIO(path,content,curl.getEncode());
+			loger.info(Thread.currentThread().getName()+"-"+"++MirrorWriter:\n"+curl+"\n ++path = " + path);
+		}
+
+	}
+
+	
+	public String getPath (CrawlURI curl) 
+	{
+		if(curl.getStatus() != CrawlURI.STATUS_OK)
+			return null;
 		String u = curl.getUrl();
 		if(StringUtils.isNullOrEmpty(u))
-			return ;
-		String directory = null;
+			return null;
+		String directory = "";
 		String fileName = null;
 		String host = null;
-		FileOutputStream fo = null;
+		FileWriter fo = null;
 		
 		try {
 			
@@ -119,14 +145,11 @@ public class MirrorWriter extends DocWriter
 			}
 			fileName = strip(fileName);
 			directory = host + directory;
-			fileName = directory+fileName;
 			
+			fileName = baseDirectory+curl.getHost()+"/"+directory+fileName;	
+			directory = baseDirectory+curl.getHost()+"/"+directory;
 			
-			//System.out.println("fileName = " + fileName);
-			
-			// strip unsupportable char in a path
-			// create directory and file for this url
-			File f = new File(baseDirectory+ directory);
+			File f = new File(directory);
 			
 			// if the dirctory does not exist
 			if (!f.isDirectory())
@@ -138,45 +161,54 @@ public class MirrorWriter extends DocWriter
 			{
 				f.mkdirs();			
 			}
-			File html = new File(baseDirectory+ fileName);
-
 			
-			fo = new FileOutputStream(html);
-			
-			// write html content to this file
-			System.out.println(Thread.currentThread().getName()  + " directory = " + directory);
-			System.out.println(Thread.currentThread().getName() + " writing file :" + fileName);
-			
-			fo.write(curl.getContent());
-		
-			// set the status to true when write the file successfully 
-			curl.setStatus(true);
-			curl.setPath(fileName);
-			System.out.println(Thread.currentThread().getName()+" mirror writer: "+ curl.toString());
-			return ;			
+			return fileName;
 		}
 		catch (Exception e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			// set the status to false when failed to write the file  
-			curl.setStatus(false);
-			System.out.println("directory = " + directory);
-			System.out.println("file = " + fileName);
+			loger.error(Thread.currentThread().getName()+"-"+"++MirrorWriter:\n"+curl+"\n ++error = " +e.getMessage());
 		}
-		finally
-		{
-			if (fo != null)
-				try {
-					fo.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		return null;		
+	}
+	
+	public void saveHtmlNIO(String filepath,String str, String encode)
+	{
+		File file = new File(filepath);
+		saveHtmlNIO(file,str,encode);
+	}
+	
+	public void saveHtmlNIO(File file,String str, String encode)
+	{
+		try
+		{   int BSIZE = 2048;
+			byte[] bytes = str.getBytes(encode);
+			ByteBuffer bf = ByteBuffer.allocate(BSIZE);
+			FileOutputStream fo = new FileOutputStream(file);
+			FileChannel channel = fo.getChannel();
+			int length = bytes.length;
+			for(int i = 0; i < length; i+=BSIZE)
+			{
+				bf.clear();
+				int remain = length - i;
+				if(remain <= BSIZE )
+					bf.put(bytes, i, remain);
+				else
+					bf.put(bytes, i, BSIZE);
+				bf.flip();
+				channel.write(bf);
+
+			}
+			channel.close();
+			;
 			
-		}
-		return;	
-		
+		} catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			loger.error("++MirrorWriter:\n"+file.getPath()+"\n ++error = " +e.getMessage());
+		}		
 	}
 	
 	public String strip (String path)
@@ -201,5 +233,20 @@ public class MirrorWriter extends DocWriter
 		return new String(p);
 		
 	}
-
+	public String getBaseDirectory()
+	{
+		return baseDirectory;
+	}
+	public void setBaseDirectory(String baseDirectory)
+	{
+		this.baseDirectory = baseDirectory;
+	}
+	public URLAnalyzer getUrAnalyzer()
+	{
+		return urAnalyzer;
+	}
+	public void setUrAnalyzer(URLAnalyzer urAnalyzer)
+	{
+		this.urAnalyzer = urAnalyzer;
+	}
 }

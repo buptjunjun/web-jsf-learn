@@ -14,6 +14,7 @@ public class Converter
 	public static Url CrawlURI2Url (CrawlURI uri)
 	{
 		if( uri == null ) return null;
+		
 		Url url = new Url();
 		url.setHost(uri.getHost());
 		url.setUrl(uri.getUrl());

@@ -9,6 +9,7 @@ public interface EGDAO
 	public boolean insert (Object uri);
 	
 	List<CrawlURI> get();
+	List<CrawlURI> get(String key);
 	
 	public boolean updateURL (Url url);
 }

@@ -9,7 +9,8 @@ public class Blog
 	String id = null;
 	String host = null;
 	String url = null;           // url
-	byte[] content = null;       // content of the bolg 
+	String content = null;       // content of the bolg
+	String html = null;
 	String encode = "utf8";      // encode of the bolg content
 	String blogerURL = "";       // the author's url
 	int comment = 0;			 // how many comments the blog has been earnt
@@ -46,11 +47,11 @@ public class Blog
 	{
 		this.url = url;
 	}
-	public byte[] getContent()
+	public String getContent()
 	{
 		return content;
 	}
-	public void setContent(byte[] content)
+	public void setContent(String content)
 	{
 		this.content = content;
 	}
@@ -128,6 +129,21 @@ public class Blog
 	{
 		this.magicNum = magicNum;
 	}
-	
+	public String getHtml()
+	{
+		return html;
+	}
+	public void setHtml(String html)
+	{
+		this.html = html;
+	}
+	@Override
+	public String toString()
+	{
+		// TODO Auto-generated method stub
+		return "id = "+this.id +" host = " +this.host +" blogerUrl = "+ this.blogerURL +" url =" + this.url +" encode = " +this.encode 
+			   + " tags = "+ this.tags +" pictures=" +this.pictures+" visits = " +this.visit +"  comments = " 
+			   +this.comment+" postDate = "+this.postDate +" crawledDate = "+ this.crawledDate +"\n content Size = "+(this.getContent() == null ? 0:this.getContent().length());  
+	}
 
 }

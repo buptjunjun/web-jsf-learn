@@ -27,17 +27,15 @@ public class ChinaUnixBlogerAnalyzer implements Analyzer<Bloger>
 	{
 		
 	}
-	
-	public Bloger analyze(String host,String encode,byte[] content)
+
+	public Bloger analyze(String host,String encode,String content)
 	{
 		// TODO Auto-generated method stub
 			Bloger bloger = new Bloger();
 			String str;
 			try
-			{
-				encode = "gb2312";
-				str = new String(content,encode);		
-				Document doc = Jsoup.parse(str);
+			{		
+				Document doc = Jsoup.parse(content);
 				
 				// url
 				Element eprofile = doc.getElementById("profile");
@@ -75,20 +73,27 @@ public class ChinaUnixBlogerAnalyzer implements Analyzer<Bloger>
 			return bloger;
 	}
 	
+	public Bloger analyze(CrawlURI curl)
+	{
+		// TODO Auto-generated method stub
+		return analyze(curl.getHost(),curl.getEncode(),curl.getContent());
+	}
+	
 	static public void main(String [] args)
 	{
-//		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
-//		Fetcher fetcher = appcontext.getBean("fetcher",Fetcher.class);
-//		
+		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
+		Fetcher fetcher = appcontext.getBean("fetcherHtmlUnit",Fetcher.class);
+		
 		CrawlURI curl = new CrawlURI();
-//		//curl.setUrl("http://blog.csdn.net/m13666368773/article/details/8432839");
-//		curl.setUrl("http://blog.csdn.net/a9529lty/article/details/7008537");
-//		curl.setStatus(CrawlURI.STATUS_OK);
-//		fetcher.fetch(curl);
-//		System.out.println(new String (curl.getContent()));
-		curl = (CrawlURI)AnalyzerUtil.readObj("chinaunix.dat");
+		//curl.setUrl("http://blog.csdn.net/m13666368773/article/details/8432839");
+		curl.setUrl("http://blog.chinaunix.net/uid-26893610-id-3454035.html");
+		curl.setStatus(CrawlURI.STATUS_OK);
+		fetcher.fetch(curl);
+		//System.out.println(new String (curl.getContent()));
+		//curl = (CrawlURI)AnalyzerUtil.readObj("chinaunix.dat");
 		Bloger bloger = new ChinaUnixBlogerAnalyzer().analyze(null, "utf-8", curl.getContent());
 		
 		
 	}
+
 }

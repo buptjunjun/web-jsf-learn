@@ -8,5 +8,6 @@ package org.easyGoingCrawler.framwork;
 public abstract class  URLScheduler 
 {
 	public synchronized CrawlURI get(){return null;};
+	public synchronized CrawlURI get(String key){return null;};
 	public synchronized void put(CrawlURI url){};
 }

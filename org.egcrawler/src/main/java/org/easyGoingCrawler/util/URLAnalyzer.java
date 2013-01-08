@@ -43,10 +43,13 @@ public class URLAnalyzer
 	public static void main(String [] args)
 	{
 		//String url = "http://blog.csdn.net/ro_wsy999/article/details/8393544";
-		String url = "http://blog.chinaunix.net/uid/26896647.html";
-		//String url = "http://blog.chinaunix.net/uid-2689664a7-id-3454480.html";
-		String pattern4save = "http://blog.chinaunix.net/uid-\\d+-id-\\d+\\.html";
-		String pattern4hold = "http://blog.chinaunix.net/uid/\\d+\\.html";
+		//String url = "http://my.oschina.net/u/616092/blog/99399";
+		//String url = "http://my.oschina.net/kzhou/blog/99360";
+		//String url = "http://my.oschina.net/u/126717";
+		//String url = "http://my.oschina.net/dourgulf";
+		String url = "http://network.51cto.com/";
+		String pattern4save = "http://[a-zA-Z0-9-_]+\\.blog.51cto.com/\\d+/\\d+";
+		String pattern4hold = "http://[a-zA-Z0-9-_]*\\.?blog.51cto.com.*";
 		System.out.println(Pattern.matches(pattern4save, url));
 		System.out.println(Pattern.matches(pattern4hold, url));
 			

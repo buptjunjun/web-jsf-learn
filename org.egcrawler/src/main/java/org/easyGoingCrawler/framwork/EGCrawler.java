@@ -1,10 +1,12 @@
 package org.easyGoingCrawler.framwork;
 
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.easyGoingCrawler.crawler.EGCrawlerFactory;
+import org.easyGoingCrawler.util.Localizer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -42,9 +44,10 @@ public class EGCrawler  extends Thread
 	  public static final int RUN = 0;	  
 	  public static final int PAUSE = 1;
 	  public static final int STOP = 2;
+	  private String host = null; 
 	  
-	  
-	  // fecher to fetcher a uri
+
+	// fecher to fetcher a uri
 	  private Fetcher  fetcher = null;
 	  
 	  // extractor to extract url from current document
@@ -57,7 +60,7 @@ public class EGCrawler  extends Thread
 	  private DocWriter docWriter = null;
 	  
 	  // interval of two fetching task in millsecond
-	  private int interval = 10000;
+	  private int interval = 6;
 	  
 	 
 
@@ -84,8 +87,9 @@ public class EGCrawler  extends Thread
 		 * @author Andy  weibobee@gmail.com 2012-9-13
 		 *
 		 */
-	  public EGCrawler(  Fetcher  fetcher , Extractor extractor , URLScheduler scheduler, DocWriter docWriter)
+	  public EGCrawler(  Fetcher  fetcher , Extractor extractor , URLScheduler scheduler, DocWriter docWriter,String host)
 	  {		
+		  	this.host = host;
 			this.fetcher = fetcher;
 			this.extractor = extractor;
 			this.scheduler = scheduler;
@@ -96,6 +100,7 @@ public class EGCrawler  extends Thread
 	@Override
 	public void run() 
 	{
+		this.interval = Integer.parseInt(Localizer.getMessage("interval"));
 		// if the EGCrawler is not stop ,do the job of a task
 		while(flag != EGCrawler.STOP )
 		{
@@ -107,14 +112,15 @@ public class EGCrawler  extends Thread
 					System.out.println("pause");
 					TimeUnit.SECONDS.sleep(1);
 					continue;
-				}
-				System.out.println(Thread.currentThread().getName() + "do one task");
-				
+				}				
 				// do a crawl job
 				this.doOneTask();			
 												
+				int random  = Math.abs(new Random().nextInt(this.interval));
+				System.out.println(Thread.currentThread().getName() + "will do one task , and now sleep "+ (this.interval+random) +"seconds");
 				// sleep a time
-				TimeUnit.MILLISECONDS.sleep(this.interval);
+				TimeUnit.SECONDS.sleep(this.interval+random);
+				
 			}
 			catch(Exception e)
 			{
@@ -242,7 +248,7 @@ public class EGCrawler  extends Thread
 		public static void main (String [] args)
 		{
 			ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
-			for(int i = 0; i < 5; i++)
+			for(int i = 0; i < 6; i++)
 			{
 				EGCrawler egcrawler = appcontext.getBean("egcrawler", EGCrawler.class);
 				egcrawler.setName("egcrawler-"+i);				
@@ -262,4 +268,16 @@ public class EGCrawler  extends Thread
 				}
 			}			
 		}
+		
+		  public String getHost()
+			{
+				return host;
+			}
+
+
+			public void setHost(String host)
+			{
+				this.host = host;
+			}
+
 }
