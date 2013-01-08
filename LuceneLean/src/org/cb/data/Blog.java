@@ -37,7 +37,7 @@ public class Blog
 	@ObjectToField(analyzed = true, fieldName = "tags", store = true, type = "List")
 	private List<String> tags = null; 		 // tags of pictures
 	
-	@ObjectToField(analyzed = false, fieldName = "id", store = true, type = "Integer")
+	@ObjectToField(analyzed = false, fieldName = "pictures", store = true, type = "Integer")
 	private int pictures = 0;			 // how many pictues in the blog's content
 	
 	@ObjectToField(analyzed = false, fieldName = "postDate", store = true, type = "Date")
