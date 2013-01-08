@@ -70,14 +70,41 @@ public class BaseIndexer
 	{
 		if(docs == null)  return;
 		
-		try
+		synchronized(writer)
 		{
-			for(Document doc:docs)
-              this.writer.addDocument(doc);            
-        }
-		catch(Exception e)
+			try
+			{
+				for(Document doc:docs)
+	              this.writer.addDocument(doc);            
+	        }
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+    }
+	
+	
+	/**
+	 * add a list of field
+	 * @param fields
+	 */
+	public void Index (Document doc)
+	{
+		if(doc == null)  return;
+		
+
+		synchronized(writer)
 		{
-			e.printStackTrace();
+			try
+			{			
+	           this.writer.addDocument(doc);            
+	        }
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 		
     }
