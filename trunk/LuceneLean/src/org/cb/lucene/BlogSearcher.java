@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.apache.lucene.document.Document;
+import org.apache.lucene.search.similarities.DefaultSimilarity;
+import org.apache.lucene.search.similarities.Similarity;
 import org.cb.common.Task;
 import org.cb.data.Blog;
 import org.cb.util.converter;
@@ -14,13 +16,14 @@ public class BlogSearcher extends Task
 
 	static private Logger logger = Logger.getLogger(BlogSearcher.class.getName());
 	private Searcher searcher = null;
-	private String searchableField = "contentField";
+	private String searchableField = "host";
 	private String queryStr = null;
 	
 
 	public BlogSearcher( BaseSearcher searcher)
 	{
 		this.searcher = searcher;
+		Similarity s = new DefaultSimilarity();
 	}
 	
 	/**
@@ -35,16 +38,18 @@ public class BlogSearcher extends Task
 	
 		for(Document doc: ldoc)
 		{
-			Blog blog = converter.doc2blog(doc);
-			if(blog == null)
-			{
-				logger.info("BlogSearcher:converter.doc2blog(doc) error "+ doc);
-				System.out.println("BlogSearcher:converter.doc2blog(doc) error "+ doc);
-			}
-			else
-			{
-				ret.add(blog);
-			}
+			System.out.println(doc.get(searchableField));
+			System.out.println(doc.toString());
+//			Blog blog = converter.doc2blog(doc);
+//			if(blog == null)
+//			{
+//				logger.info("BlogSearcher:converter.doc2blog(doc) error "+ doc);
+//				System.out.println("BlogSearcher:converter.doc2blog(doc) error "+ doc);
+//			}
+//			else
+//			{
+//				ret.add(blog);
+//			}
 		}
 		
 		return ret;
@@ -58,15 +63,6 @@ public class BlogSearcher extends Task
 		List<Blog> ret = this.searchBlog(queryStr);
 	}
 	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args)
-	{
-		// TODO Auto-generated method stub
-
-	}
-	
 	public String getQueryStr()
 	{
 		return queryStr;
@@ -76,5 +72,18 @@ public class BlogSearcher extends Task
 	{
 		this.queryStr = queryStr;
 	}
+	
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args)
+	{
+		BaseSearcher bsearch = new BaseSearcher("./index");
+		BlogSearcher blogsearch = new BlogSearcher(bsearch);
+		blogsearch.searchBlog("baidu.com");
+
+	}
+	
+
 
 }

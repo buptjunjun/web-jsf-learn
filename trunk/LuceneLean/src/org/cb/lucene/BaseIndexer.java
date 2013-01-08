@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.lucene.analysis.Analyzer;
@@ -22,6 +24,8 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
+import org.cb.data.Blog;
+import org.cb.util.converter;
 import org.wltea.analyzer.lucene.*;
 
 
@@ -47,7 +51,7 @@ public class BaseIndexer
 			iwc.setRAMBufferSizeMB(1024.0);
 			iwc.setMaxBufferedDocs(1000);
 			iwc.setOpenMode(OpenMode.CREATE);
-			writer = new IndexWriter(dir, iwc);
+			writer = new IndexWriter(dir, iwc);			
 			
 		} catch (IOException e)
 		{
@@ -62,18 +66,15 @@ public class BaseIndexer
 	 * add a list of field
 	 * @param fields
 	 */
-	public void Index (List<Field> fields)
+	public void Index (List<Document> docs)
 	{
-		if(fields == null)  return;
+		if(docs == null)  return;
 		
-		try{
-              // make a new, empty document
-              Document doc = new Document();
-              for(Field f: fields)
-            	  doc.add(f);
-              this.writer.addDocument(doc);
-              
-            }
+		try
+		{
+			for(Document doc:docs)
+              this.writer.addDocument(doc);            
+        }
 		catch(Exception e)
 		{
 			e.printStackTrace();
@@ -100,9 +101,43 @@ public class BaseIndexer
 	}
 	public static  void main(String [] args)
 	{
-		BaseIndexer blogindexer = new BaseIndexer(".");
-		blogindexer.IndexBlog("IKanalyzer 词典 下载 ，2012欧洲杯ipad2 http://www.baidu.com/");
+		BaseIndexer blogindexer = new BaseIndexer("./index");
 		
+		List<Document> docs = getDocs();
+		blogindexer.Index(docs);
+		blogindexer.commit();
+	}
+	
+	static public List<Document> getDocs()
+	{
+
+		Blog b = new Blog();
+		b.setUrl("badu.com");
+		b.setBlogerURL("baidu.com");
+		b.setContent("hello你好吗");
+		b.setPostDate(new Date());
+		b.setComment(100);
+		b.setVisit(10);
+		b.setCrawledDate(new Date());
+		b.setId("aabcdef");
+		b.setHost("baidu.com");
+		b.setPictures(4);
+		String [] contents = {"第一次来到贵吧，看了很多吧友做的饭菜，都很棒。也祝福大家新的一年身体健康，多多发财，家里和睦，子女幸福快乐。",
+							  "线程池管理器（ThreadPoolManager）:用于创建并java管理线程池工作线程（WorkThread）: 线程池中线程",
+							   "Solr4.0的tomcat部署及Solrj的简单使用 | IT人生录"							
+								};
+		List<Document> ldoc = new ArrayList<Document>();
+		for(int i = 0; i < contents.length;i++)
+		{
+			System.out.println("create a doc from :" + b.toString());
+			b.setId("id"+i);
+			b.setContent(contents[i]);
+			b.setTags(Arrays.asList("java  c++ 程序"));
+			Document doc = converter.Object2Doc(b);
+			ldoc.add(doc);
+		}
+		
+		return ldoc;
 	}
 
 }

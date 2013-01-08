@@ -3,23 +3,50 @@ package org.cb.data;
 import java.util.Date;
 import java.util.List;
 
+import org.cb.common.ObjectToField;
+
 public class Blog 
 {
 
-	String id = null;
-	String host = null;
-	String url = null;           // url
-	byte[] content = null;       // content of the bolg 
-	String encode = "utf8";      // encode of the bolg content
-	String blogerURL = "";       // the author's url
-	int comment = 0;			 // how many comments the blog has been earnt
-	int visit = 0;				 // how many times the blog has been visited
-	List<String> tags = null; 		 // tags of pictures
-	int pictures = 0;			 // how many pictues in the blog's content
-	Date postDate = null;    
-	Date crawledDate = new Date();
+	@ObjectToField(analyzed = false, fieldName = "id", store = true, type = "String")
+	private String id = null;
 	
-	int magicNum = -1;
+	@ObjectToField(analyzed = false, fieldName = "host", store = true, type = "String")
+	private String host = null;
+	
+	@ObjectToField(analyzed = false, fieldName = "url", store = true, type = "String")
+	private String url = null;           // url
+	
+	@ObjectToField(analyzed = true, fieldName = "content", store = true, type = "String")
+	private String content = null;       // content of the bolg
+	
+	private  String html = null;
+	
+	@ObjectToField(analyzed = false, fieldName = "encode", store = true, type = "String")
+	private String encode = "utf8";      // encode of the bolg content
+	
+	@ObjectToField(analyzed = false, fieldName = "blogerURL", store = true, type = "String")
+	private String blogerURL = "";       // the author's url
+	
+	@ObjectToField(analyzed = false, fieldName = "comment", store = true, type = "Integer")
+	private int comment = 0;			 // how many comments the blog has been earnt
+	
+	@ObjectToField(analyzed = false, fieldName = "visit", store = true, type = "Integer")
+	private int visit = 0;				 // how many times the blog has been visited
+	
+	@ObjectToField(analyzed = true, fieldName = "tags", store = true, type = "List")
+	private List<String> tags = null; 		 // tags of pictures
+	
+	@ObjectToField(analyzed = false, fieldName = "id", store = true, type = "Integer")
+	private int pictures = 0;			 // how many pictues in the blog's content
+	
+	@ObjectToField(analyzed = false, fieldName = "postDate", store = true, type = "Date")
+	private Date postDate = null;    
+	
+	@ObjectToField(analyzed = false, fieldName = "crawledDate", store = true, type = "Date")
+	private Date crawledDate = new Date();
+	
+	private int magicNum = -1;
 
 	
 	public String getId()
@@ -46,11 +73,11 @@ public class Blog
 	{
 		this.url = url;
 	}
-	public byte[] getContent()
+	public String getContent()
 	{
 		return content;
 	}
-	public void setContent(byte[] content)
+	public void setContent(String content)
 	{
 		this.content = content;
 	}
@@ -128,6 +155,21 @@ public class Blog
 	{
 		this.magicNum = magicNum;
 	}
-	
+	public String getHtml()
+	{
+		return html;
+	}
+	public void setHtml(String html)
+	{
+		this.html = html;
+	}
+	@Override
+	public String toString()
+	{
+		// TODO Auto-generated method stub
+		return "id = "+this.id +" host = " +this.host +" blogerUrl = "+ this.blogerURL +" url =" + this.url +" encode = " +this.encode 
+			   + " tags = "+ this.tags +" pictures=" +this.pictures+" visits = " +this.visit +"  comments = " 
+			   +this.comment+" postDate = "+this.postDate +" crawledDate = "+ this.crawledDate +"\n content Size = "+(this.getContent() == null ? 0:this.getContent().length());  
+	}
 
 }
