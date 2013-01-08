@@ -137,15 +137,13 @@ public class converter
 				
 			
 			} 
-			catch (IllegalArgumentException e)
+			catch (Exception e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (IllegalAccessException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				return null;
+			} 
+			
 			if(field != null)
 				doc.add(field);
 		}
