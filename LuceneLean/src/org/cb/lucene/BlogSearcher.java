@@ -40,16 +40,16 @@ public class BlogSearcher extends Task
 		{
 			System.out.println(doc.get(searchableField));
 			System.out.println(doc.toString());
-//			Blog blog = converter.doc2blog(doc);
-//			if(blog == null)
-//			{
-//				logger.info("BlogSearcher:converter.doc2blog(doc) error "+ doc);
-//				System.out.println("BlogSearcher:converter.doc2blog(doc) error "+ doc);
-//			}
-//			else
-//			{
-//				ret.add(blog);
-//			}
+			Blog blog = converter.doc2blog(doc);
+			if(blog == null)
+			{
+				logger.info("BlogSearcher:converter.doc2blog(doc) error "+ doc);
+				System.out.println("BlogSearcher:converter.doc2blog(doc) error "+ doc);
+			}
+			else
+			{
+				ret.add(blog);
+			}
 		}
 		
 		return ret;
@@ -80,7 +80,11 @@ public class BlogSearcher extends Task
 	{
 		BaseSearcher bsearch = new BaseSearcher("./index");
 		BlogSearcher blogsearch = new BlogSearcher(bsearch);
-		blogsearch.searchBlog("baidu.com");
+		List<Blog> lb = blogsearch.searchBlog("baidu.com");
+		for(Blog blog:lb)
+		{
+			System.out.println(blog);
+		}
 
 	}
 	
