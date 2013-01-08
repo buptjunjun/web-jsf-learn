@@ -26,7 +26,6 @@ public class BaseSearcher extends Searcher
     private IndexSearcher searcher = null;
     private Analyzer analyzer = null;
     private String indexPath;
-    private String fieldname =  "blogcontent";
     
     // only one index reader 
     static private IndexReaderGenerator ReaderGenerator = null;
@@ -57,7 +56,7 @@ public class BaseSearcher extends Searcher
 		
 		try
 		{
-			QueryParser qp = new QueryParser(Version.LUCENE_40,fieldname,this.analyzer);
+			QueryParser qp = new QueryParser(Version.LUCENE_40,fieldName,this.analyzer);
 			Query q = qp.parse(queryStr);
 			TopDocs results = null;
 
@@ -86,7 +85,7 @@ public class BaseSearcher extends Searcher
 	 */
 	public static void main(String[] args)
 	{
-		BaseSearcher bsearcher = new BaseSearcher(".");
+		BaseSearcher bsearcher = new BaseSearcher("./index");
 		bsearcher.SearchField("Å·ÖÞ","blogcontent");
 
 	}
