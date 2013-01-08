@@ -68,7 +68,7 @@ public class BaseSearcher extends Searcher
 			{
 				Document doc = this.searcher.doc(sd.doc);
 				ret.add(doc);
-				System.out.println(doc.get(fieldName));
+				//System.out.println(doc.get(fieldName));
 			}
 			return ret;
 		} 

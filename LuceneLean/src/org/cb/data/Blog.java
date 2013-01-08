@@ -168,8 +168,8 @@ public class Blog
 	{
 		// TODO Auto-generated method stub
 		return "id = "+this.id +" host = " +this.host +" blogerUrl = "+ this.blogerURL +" url =" + this.url +" encode = " +this.encode 
-			   + " tags = "+ this.tags +" pictures=" +this.pictures+" visits = " +this.visit +"  comments = " 
-			   +this.comment+" postDate = "+this.postDate +" crawledDate = "+ this.crawledDate +"\n content Size = "+(this.getContent() == null ? 0:this.getContent().length());  
+			   + " tags = "+ this.tags +" pictures=" +this.pictures+" visits = " +this.visit +"  comments = "+ comment + " magicNum = " +this.magicNum
+			   +" postDate = "+this.postDate +" crawledDate = "+ this.crawledDate +"\n content Size = "+(this.getContent() == null ? 0:this.getContent().length());  
 	}
 
 }

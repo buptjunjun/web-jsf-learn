@@ -16,7 +16,7 @@ public class BlogSearcher extends Task
 
 	static private Logger logger = Logger.getLogger(BlogSearcher.class.getName());
 	private Searcher searcher = null;
-	private String searchableField = "host";
+	private String searchableField = "content";
 	private String queryStr = null;
 	
 
@@ -38,8 +38,8 @@ public class BlogSearcher extends Task
 	
 		for(Document doc: ldoc)
 		{
-			System.out.println(doc.get(searchableField));
-			System.out.println(doc.toString());
+//			System.out.println(doc.get(searchableField));
+//			System.out.println(doc.toString());
 			Blog blog = converter.doc2blog(doc);
 			if(blog == null)
 			{
@@ -78,12 +78,12 @@ public class BlogSearcher extends Task
 	 */
 	public static void main(String[] args)
 	{
-		BaseSearcher bsearch = new BaseSearcher("./index");
+		BaseSearcher bsearch = new BaseSearcher("E:/Lucene");
 		BlogSearcher blogsearch = new BlogSearcher(bsearch);
-		List<Blog> lb = blogsearch.searchBlog("baidu.com");
+		List<Blog> lb = blogsearch.searchBlog("java jsf¿ª·¢");
 		for(Blog blog:lb)
 		{
-			System.out.println(blog);
+			System.out.println(blog.getContent()+"\n-----------------++++---------------------------------\n");
 		}
 
 	}
