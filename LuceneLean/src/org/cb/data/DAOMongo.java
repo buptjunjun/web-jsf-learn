@@ -75,6 +75,14 @@ public class DAOMongo {
          
 	}
 	
+	public Bloger getBloger(String id)
+	{
+		if(id == null) return null;
+        Bloger bloger = this.mongoOps.findById(id, Bloger.class);
+        return bloger;
+         
+	}
+	
 	public Blog searchBlog(String id)
 	{
     	 HashMap m = new HashMap();

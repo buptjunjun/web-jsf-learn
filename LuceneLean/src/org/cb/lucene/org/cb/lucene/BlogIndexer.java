@@ -17,7 +17,9 @@ import org.cb.util.converter;
 
 public class BlogIndexer extends BaseIndexer
 {
-	private    int commitLimit = 0;
+	private    int commitLimit = 0;	
+	private  DAOMongo mongo = null;
+	
 	public BlogIndexer(String indexPath)
 	{
 		super(indexPath);
@@ -59,7 +61,7 @@ public class BlogIndexer extends BaseIndexer
 	{
 		if(blog == null) return ;
 		
-		Document doc = converter.Object2Doc(blog);	
+		Document doc = Blog2Doc(blog);	
 		this.Index(doc);
 		synchronized(this)
 		{
@@ -70,19 +72,28 @@ public class BlogIndexer extends BaseIndexer
 		}
 	}
 
-	
+	/**
+	 *  blog to doc with boost value 
+	 * @param blog
+	 * @return
+	 */
 	public Document Blog2Doc(Blog blog)
 	{
-		Float blogBoost = this.getBoostFromBlog(blog);
-		Float blogerBoost = 1.0f;
+		Float blogBoost = this.getBoostFromBlog(blog);		
+		System.out.println( "==bost :" + blog.getUrl()+" boost is " + blogBoost );
 		
+		Float blogerBoost = 1.0f;	
 		Bloger bloger = this.getBloger(blog.getBlogerURL());
 		if(bloger != null)
-		  blogerBoost = this.getBoostFromBloger(bloger);
+		{
+			blogerBoost = this.getBoostFromBloger(bloger);
+			System.out.println( "==bost :" +bloger.getUrl()+" boost is " + blogerBoost );		
+		}
 		
 		Map<String , Float> mboost = new HashMap<String,Float>();
 		
 		Document doc = converter.Object2Doc(blog, mboost);
+		return doc;
 	}
 	
 	/**
@@ -92,11 +103,11 @@ public class BlogIndexer extends BaseIndexer
 	 */
 	public Bloger getBloger(String blogerUrl)
 	{
-		
-		return new Bloger();
+		Bloger bloger = mongo.getBloger(converter.urlEncode(blogerUrl));
+		return bloger;
 	}
 	
-	public 
+
 	/**
 	 * according to the comments , visits and timespan between posttime and crawled time ,caculate the boost value. 
 	 * @param blog
@@ -114,7 +125,7 @@ public class BlogIndexer extends BaseIndexer
 	 * @param blog
 	 * @return
 	 */
-	public float getBoostFromBloger(Bloger blog)
+	public float getBoostFromBloger(Bloger bloger)
 	{
 		
 		return 1.0f;
@@ -139,4 +150,26 @@ public class BlogIndexer extends BaseIndexer
 		}
 			
 	}
+	
+	public int getCommitLimit()
+	{
+		return commitLimit;
+	}
+
+	public void setCommitLimit(int commitLimit)
+	{
+		this.commitLimit = commitLimit;
+	}
+
+	public DAOMongo getMongo()
+	{
+		return mongo;
+	}
+
+	public void setMongo(DAOMongo mongo)
+	{
+		this.mongo = mongo;
+	}
+
+
 }
