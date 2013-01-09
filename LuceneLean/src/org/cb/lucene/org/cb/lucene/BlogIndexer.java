@@ -108,29 +108,6 @@ public class BlogIndexer extends BaseIndexer
 	}
 	
 
-	/**
-	 * according to the comments , visits and timespan between posttime and crawled time ,caculate the boost value. 
-	 * @param blog
-	 * @return
-	 */
-	public float getBoostFromBlog(Blog blog)
-	{
-		
-		return 1.0f;
-	}
-	
-	
-	/**
-	 * according to the bloger's informations ,caculate the boost value. 
-	 * @param blog
-	 * @return
-	 */
-	public float getBoostFromBloger(Bloger bloger)
-	{
-		
-		return 1.0f;
-	}
-	
 	
 	static public void main(String [] args)
 	{
