@@ -85,7 +85,7 @@ public class BlogSearcher extends Task
 		{
 			System.out.println(blog.getContent()+"\n-----------------++++---------------------------------\n");
 		}
-
+		
 	}
 	
 
