@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexableField;
+import org.cb.boost.BoostGeter;
 import org.cb.data.Blog;
 import org.cb.data.Bloger;
 import org.cb.data.DAOMongo;
@@ -19,7 +20,7 @@ public class BlogIndexer extends BaseIndexer
 {
 	private    int commitLimit = 0;	
 	private  DAOMongo mongo = null;
-	
+	private BoostGeter boostGeter = null; 
 	public BlogIndexer(String indexPath)
 	{
 		super(indexPath);
@@ -79,14 +80,14 @@ public class BlogIndexer extends BaseIndexer
 	 */
 	public Document Blog2Doc(Blog blog)
 	{
-		Float blogBoost = this.getBoostFromBlog(blog);		
+		Float blogBoost = this.boostGeter.getBoostFromBlog(blog);		
 		System.out.println( "==bost :" + blog.getUrl()+" boost is " + blogBoost );
 		
 		Float blogerBoost = 1.0f;	
 		Bloger bloger = this.getBloger(blog.getBlogerURL());
 		if(bloger != null)
 		{
-			blogerBoost = this.getBoostFromBloger(bloger);
+			blogerBoost = this.boostGeter.getBoostFromBloger(bloger);
 			System.out.println( "==bost :" +bloger.getUrl()+" boost is " + blogerBoost );		
 		}
 		
