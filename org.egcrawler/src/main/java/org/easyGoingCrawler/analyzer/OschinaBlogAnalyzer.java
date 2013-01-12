@@ -51,7 +51,7 @@ public class OschinaBlogAnalyzer implements Analyzer<Blog>
 			// title
 			Elements etitle = blogentity.getElementsByTag("h1");
 			String title = etitle.get(0).text();		
-			
+			blog.setTitle(title);
 			
 			// tags
 			Element ecats = doc.getElementsByClass("NavPath").get(0).select("a").get(2);

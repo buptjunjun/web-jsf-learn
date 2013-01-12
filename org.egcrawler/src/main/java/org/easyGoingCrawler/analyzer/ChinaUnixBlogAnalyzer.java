@@ -53,6 +53,7 @@ public class ChinaUnixBlogAnalyzer implements Analyzer<Blog>
 			Elements etitles = ecenter.getElementsByClass("tit6");
 			Element etitle = etitles.select("a").first();
 			String title = etitle.text();
+			blog.setTitle(title);
 			
 			// post date 
 			String postDate = etitles.text();
@@ -155,7 +156,7 @@ public class ChinaUnixBlogAnalyzer implements Analyzer<Blog>
 	static public void main(String [] args)
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
-		Fetcher fetcher = appcontext.getBean("fetcher",Fetcher.class);
+		Fetcher fetcher = appcontext.getBean("fetcherHtmlUnit",Fetcher.class);
 		
 		CrawlURI curl = new CrawlURI();
 	//	curl.setUrl("http://blog.csdn.net/m13666368773/article/details/8432839");
@@ -180,7 +181,7 @@ public class ChinaUnixBlogAnalyzer implements Analyzer<Blog>
 		//AnalyzerUtil.persistObj(curl, "chinaunix.dat");
 //		curl = (CrawlURI)AnalyzerUtil.readObj("chinaunix.dat");
 //		
-		Blog blog = new ChinaUnixBlogAnalyzer().analyze(null, "utf-8", curl.getContent());
+		Blog blog = new ChinaUnixBlogAnalyzer().analyze(curl);
 		System.out.println(blog);
 //		Pattern pattern = Pattern.compile("\\d\\d\\d\\d-\\d+-\\d+ \\d+:\\d+");
 //		String test= "windows2003 定时重启服务器 (2012-12-26 08:51)";

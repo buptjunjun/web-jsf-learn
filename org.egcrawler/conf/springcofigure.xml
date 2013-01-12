@@ -104,13 +104,20 @@
   <bean id="mirrorwriter" class=" org.easyGoingCrawler.docWriter.MirrorWriter"
   		p:urAnalyzer-ref ="urlAnalyzer"
  		scope="prototype" />
+ 		
+   <!-- Mongo Html writer -->
+  <bean id="MongoHtmlWriter" class=" org.easyGoingCrawler.docWriter.MongoHtmlWriter"
+ 		p:urAnalyzer-ref ="urlAnalyzer"
+ 		scope="prototype" >
+ 		<constructor-arg ref="EGDAOMongo"></constructor-arg>
+ 	</bean>
  
  <!-- writer chain -->
   <bean id="docwriter" class=" org.easyGoingCrawler.docWriter.DocWriterChain" scope="prototype" >
   	<constructor-arg>
   		<list>
   			<ref bean = "monggowriter"/>	
-  			<ref bean = "mirrorwriter"/>	
+  			<ref bean = "MongoHtmlWriter"/>	
   		</list>
   	</constructor-arg>
  </bean>

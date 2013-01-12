@@ -5,6 +5,8 @@ import java.util.List;
 import org.easyGoingCrawler.framwork.CrawlURI;
 import org.easyGoingCrawler.framwork.DocWriter;
 
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+
 public class DocWriterChain extends DocWriter
 {
 
@@ -23,6 +25,17 @@ public class DocWriterChain extends DocWriter
 		{
 			for(DocWriter writer : this.writerList)
 				writer.write(curl);
+		}
+		
+		// clean HtmlPagePage;
+		try
+		{
+			((HtmlPage)curl.getReserve()).cleanUp();
+			curl.setReserve(null);
+		}
+		catch(Exception e)
+		{
+			
 		}
 	}
 	

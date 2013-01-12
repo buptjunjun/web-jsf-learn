@@ -43,7 +43,7 @@ public class CSDNBlogAnalyzer implements Analyzer<Blog>
 			// title
 			Elements etitle = doc.getElementsByClass("link_title");
 			String title = etitle.get(0).text();			
-			
+			blog.setTitle(title);
 			
 			// tags
 			List<String> cats = new ArrayList<String>(0);

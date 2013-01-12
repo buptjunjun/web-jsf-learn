@@ -59,16 +59,7 @@ public class MongoWriter extends DocWriter
 				curl.setStatus(CrawlURI.STATUS_WRITE_ERROR);
 			}
 			
-			// clean HtmlPagePage;
-			try
-			{
-				((HtmlPage)curl.getReserve()).cleanUp();
-				curl.setReserve(null);
-			}
-			catch(Exception e)
-			{
-				
-			}
+			
 		}
 		
 	}

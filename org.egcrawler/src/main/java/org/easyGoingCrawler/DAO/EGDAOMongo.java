@@ -13,6 +13,7 @@ import static org.springframework.data.mongodb.core.query.Criteria.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.easyGoingCrawler.docWriter.Blog;
+import org.easyGoingCrawler.docWriter.Html;
 import org.easyGoingCrawler.docWriter.Url;
 import org.easyGoingCrawler.framwork.CrawlURI;
 import org.easyGoingCrawler.util.RandomList;
@@ -169,5 +170,18 @@ public class EGDAOMongo implements EGDAO
 
 	}
 	
+	/**
+	 * 去的最近的html
+	 * @return
+	 */
+	public List<Html> getLatestHtml(String host,int limit)
+	{
+		List<Html> html = new ArrayList<Html>();
+		Query q = new Query(where("host").is(host));
+		q.limit(limit);
+		q.sort().on("crawledDate", Order.DESCENDING);
+		html = this.mongoOps.find(q, Html.class);
+		return html;
+	}
 
 }

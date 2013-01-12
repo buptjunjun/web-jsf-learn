@@ -8,6 +8,7 @@ public class Blog
 
 	String id = null;
 	String host = null;
+	String title = null;
 	String url = null;           // url
 	String content = null;       // content of the bolg
 	String html = null;
@@ -22,6 +23,14 @@ public class Blog
 	
 	int magicNum = -1;
 
+	public String getTitle()
+	{
+		return title;
+	}
+	public void setTitle(String title)
+	{
+		this.title = title;
+	}
 	
 	public String getId()
 	{
@@ -142,7 +151,7 @@ public class Blog
 	{
 		// TODO Auto-generated method stub
 		return "id = "+this.id +" host = " +this.host +" blogerUrl = "+ this.blogerURL +" url =" + this.url +" encode = " +this.encode 
-			   + " tags = "+ this.tags +" pictures=" +this.pictures+" visits = " +this.visit +"  comments = " 
+			   + "  title = " +this.title+" tags = "+ this.tags +" pictures=" +this.pictures+" visits = " +this.visit +"  comments = " 
 			   +this.comment+" postDate = "+this.postDate +" crawledDate = "+ this.crawledDate +"\n content Size = "+(this.getContent() == null ? 0:this.getContent().length());  
 	}
 
