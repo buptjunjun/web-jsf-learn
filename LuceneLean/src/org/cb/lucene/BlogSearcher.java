@@ -1,6 +1,7 @@
 package org.cb.lucene;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -18,6 +19,7 @@ public class BlogSearcher extends Task
 	static private Logger logger = Logger.getLogger(BlogSearcher.class.getName());
 	private Searcher searcher = null;
 	private String searchableField = "content";
+	private List<String> searchableFields = new ArrayList<String>();
 	private String queryStr = null;
 	
 
@@ -25,6 +27,8 @@ public class BlogSearcher extends Task
 	{
 		this.searcher = searcher;
 		Similarity s = new DefaultSimilarity();
+		String [] fields = {"title","content"};
+		searchableFields.addAll(Arrays.asList(fields));
 	}
 	
 	/**
@@ -34,7 +38,7 @@ public class BlogSearcher extends Task
 	 */
 	private List<Blog> searchBlog(String queryStr)
 	{
-		List<Document> ldoc = this.searcher.SearchField(queryStr, searchableField);
+		List<Document> ldoc = this.searcher.SearchField(queryStr, this.searchableFields);
 		List ret = new ArrayList<Blog>();
 	
 		for(Document doc: ldoc)
@@ -73,7 +77,15 @@ public class BlogSearcher extends Task
 	{
 		this.queryStr = queryStr;
 	}
-	
+	public List<String> getSearchableFields()
+	{
+		return searchableFields;
+	}
+
+	public void setSearchableFields(List<String> searchableFields)
+	{
+		this.searchableFields = searchableFields;
+	}
 	/**
 	 * @param args
 	 */
@@ -81,14 +93,10 @@ public class BlogSearcher extends Task
 	{
 		BaseSearcher bsearch = new BaseSearcher("E:/Lucene");
 		BlogSearcher blogsearch = new BlogSearcher(bsearch);
-		List<Blog> lb = blogsearch.searchBlog("java jsf开发");
+		List<Blog> lb = blogsearch.searchBlog("eclipse CDT 环境搭建");
 		for(Blog blog:lb)
 		{
-			System.out.println(blog.getContent()+"\n-----------------++++---------------------------------\n");
-		}
-		
+			System.out.println("blog:"+blog+"\ntitle:"+blog.getTitle()+"\n tags:"+blog.getTags()+"\n" +blog.getTags()+"content:\n"+"\n-----------------++++---------------------------------\n");
+		}	
 	}
-	
-
-
 }

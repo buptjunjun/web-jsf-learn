@@ -17,6 +17,9 @@ public class Blog
 	@ObjectToField(analyzed = false, fieldName = "url", store = true, type = "String")
 	private String url = null;           // url
 	
+	@ObjectToField(analyzed = true, fieldName = "title", store = true, type = "String")
+	String title = null;
+	
 	@ObjectToField(analyzed = true, fieldName = "content", store = true, type = "String")
 	private String content = null;       // content of the bolg
 	
@@ -163,12 +166,22 @@ public class Blog
 	{
 		this.html = html;
 	}
+	
+
+	public String getTitle()
+	{
+		return title;
+	}
+	public void setTitle(String title)
+	{
+		this.title = title;
+	}
 	@Override
 	public String toString()
 	{
 		// TODO Auto-generated method stub
 		return "id = "+this.id +" host = " +this.host +" blogerUrl = "+ this.blogerURL +" url =" + this.url +" encode = " +this.encode 
-			   + " tags = "+ this.tags +" pictures=" +this.pictures+" visits = " +this.visit +"  comments = "+ comment + " magicNum = " +this.magicNum
+			   + "title = "+title+" tags = "+ this.tags +" pictures=" +this.pictures+" visits = " +this.visit +"  comments = "+ comment + " magicNum = " +this.magicNum
 			   +" postDate = "+this.postDate +" crawledDate = "+ this.crawledDate +"\n content Size = "+(this.getContent() == null ? 0:this.getContent().length());  
 	}
 
