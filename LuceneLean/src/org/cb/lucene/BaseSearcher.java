@@ -78,7 +78,7 @@ public class BaseSearcher extends Searcher
 			Query q = qp.parse(queryStr);
 			TopDocs results = null;
 
-			results = searcher.search(q, 10);
+			results = searcher.search(q, 2);
 		
 			ScoreDoc[] hits = results.scoreDocs;
 			List<Document> ret = new ArrayList<Document>();
@@ -138,8 +138,8 @@ public class BaseSearcher extends Searcher
 		            {
 		            	System.out.println(term+" с╒нд");
 		            	termBoost.put(term, 1f);
-		            	 tq1.setBoost(1.5f);
-		            	 tq2.setBoost(1.5f);
+		            	 tq1.setBoost(1.1f);
+		            	 tq2.setBoost(1.1f);
 		            }		  
 		            q.add(tq1, Occur.SHOULD);
 		            q.add(tq2, Occur.SHOULD);
