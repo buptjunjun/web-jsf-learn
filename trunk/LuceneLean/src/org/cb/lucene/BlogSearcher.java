@@ -31,6 +31,16 @@ public class BlogSearcher extends Task
 		searchableFields.addAll(Arrays.asList(fields));
 	}
 	
+	public BlogSearcher( String indexPath)
+	{
+		this.searcher = new BaseSearcher(indexPath);
+		Similarity s = new DefaultSimilarity();
+		String [] fields = {"title","content"};
+		searchableFields.addAll(Arrays.asList(fields));
+	}
+	
+	
+	
 	/**
 	 * search blog form lucene.
 	 * @param queryStr
@@ -66,6 +76,13 @@ public class BlogSearcher extends Task
 	{
 		// TODO Auto-generated method stub
 		List<Blog> ret = this.searchBlog(queryStr);
+		if(ret != null)
+		for(Blog blog:ret)
+		{
+			System.out.println(Thread.currentThread().getName()+"   blog:"+blog+"\ntitle:"+blog.getTitle()+"\n tags:"+blog.getTags()+"\n" +blog.getTags()+"content:\n"+"\n-----------------++++---------------------------------\n");
+		}
+		else
+			System.out.println(Thread.currentThread().getName()+"  ret = null");
 	}
 	
 	public String getQueryStr()
@@ -93,7 +110,7 @@ public class BlogSearcher extends Task
 	{
 		BaseSearcher bsearch = new BaseSearcher("E:/Lucene");
 		BlogSearcher blogsearch = new BlogSearcher(bsearch);
-		List<Blog> lb = blogsearch.searchBlog("eclipse CDT 环境搭建");
+		List<Blog> lb = blogsearch.searchBlog("正则 汉字");
 		for(Blog blog:lb)
 		{
 			System.out.println("blog:"+blog+"\ntitle:"+blog.getTitle()+"\n tags:"+blog.getTags()+"\n" +blog.getTags()+"content:\n"+"\n-----------------++++---------------------------------\n");

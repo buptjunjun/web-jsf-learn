@@ -1,23 +1,32 @@
 package org.cb.common;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
+import org.cb.lucene.BlogSearcher;
 
 public class ThreadPoolManager
 {
 	List<Task> taskQueue = Collections.synchronizedList( new LinkedList<Task>()); //任务队列
     private List<WorkerThread> workerQueue ;    //工作线程（真正执行任务的线程）
-    private static int worker_num = 10;    //工作线程数量（默认工作线程数量是5）
+    private static int worker_num = 30;    //工作线程数量（默认工作线程数量是5）
     private static int worker_count = 0;
 
 	static public void  main(String [] args)
 	{
+		List<String> listQuery = Arrays.asList("java c++ python 拟合 数据结构  机器学习 spring".split(" "));
 		ThreadPoolManager pool = new ThreadPoolManager(2);
-		for(int i = 0;i < 10; i++)
+		for(int i = 0;i < listQuery.size(); i++)
 		{
-			Task t = new SleepTask("sleep task-"+i);
+			BlogSearcher t = new BlogSearcher("E:/Lucene");
+			t.setQueryStr(listQuery.get(i));
+			//Task t = new SleepTask("sleep task-"+i);
+			t.setTaskName(listQuery.get(i));
 			pool.addTask(t);
 		}
 		
@@ -150,10 +159,12 @@ public class ThreadPoolManager
 				if(task!=null)
 				{
 					System.out.println(task.getTaskName()+" begin to run");
+					long begin = System.currentTimeMillis();
 					this.isWaiting = false;
 					task.doTask();
 					this.isWaiting = true;
-					System.out.println(task.getTaskName()+" reach to end");
+					long end = System.currentTimeMillis();
+					System.out.println(task.getTaskName()+" reach to end used "+(end-begin)+" millionSeconds");
 				}
 				
 				
