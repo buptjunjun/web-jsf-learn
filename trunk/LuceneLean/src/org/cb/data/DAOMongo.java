@@ -26,7 +26,7 @@ import com.mongodb.WriteConcern;
  * 
  */
 public class DAOMongo {
-	public  final static int INDEXED = 77;
+	public  final static int INDEXED = 1117;
 	public  final static int NOTINDEXED = -1;
 	private static final Logger log = Logger.getLogger(DAOMongo.class);
 	MongoOperations mongoOps = null;
@@ -68,8 +68,10 @@ public class DAOMongo {
 	public List<Blog> searchBlog(String host,int magicNum ,int limit)
 	{
     	 HashMap m = new HashMap();
-    	 m.put("host", host);
+    	 if(host!=null)
+    		 m.put("host", host);
     	 m.put("magicNum", magicNum);
+    	 
          List<Blog> lp = searchBlog(m,limit, Blog.class);
          return lp;
          
@@ -78,8 +80,10 @@ public class DAOMongo {
 	public Bloger getBloger(String id)
 	{
 		if(id == null) return null;
-        Bloger bloger = this.mongoOps.findById(id, Bloger.class);
-        return bloger;
+       
+		Bloger bloger = this.mongoOps.findById(id, Bloger.class);
+        
+		return bloger;
          
 	}
 	

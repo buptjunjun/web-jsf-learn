@@ -3,9 +3,9 @@ package org.cb.boost;
 import org.cb.data.Blog;
 import org.cb.data.Bloger;
 
-public class CsdnBoostGeter implements BoostGeter
+public class SimpleBoostGeter implements BoostGeter
 {
-	public CsdnBoostGeter()
+	public SimpleBoostGeter()
 	{
 		// TODO Auto-generated constructor stub
 	}
@@ -27,8 +27,8 @@ public class CsdnBoostGeter implements BoostGeter
 		
 		if(pictures>0)   // boost from ammount of pictures
 		{
-			if (pictures > 20) 
-				pictures = 20;
+			if (pictures > 50) 
+				pictures = 50;
 			boostPictures = 0.001f*pictures;
 			
 		}
@@ -45,7 +45,7 @@ public class CsdnBoostGeter implements BoostGeter
 		{
 			if (visits > 5000) 
 				visits = 5000;
-			boostVisits = 0.00001f*comments;
+			boostVisits = 0.00001f*visits;
 			
 		}
 		
@@ -69,7 +69,7 @@ public class CsdnBoostGeter implements BoostGeter
 		{
 			if (articleAmt > 500) 
 				articleAmt = 500;
-			boostArticles = 0.0002f*articleAmt;
+			boostArticles = 0.0001f*articleAmt;
 			
 		}
 		

@@ -11,6 +11,7 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexableField;
 import org.cb.boost.BoostGeter;
+import org.cb.boost.SimpleBoostGeter;
 import org.cb.data.Blog;
 import org.cb.data.Bloger;
 import org.cb.data.DAOMongo;
@@ -20,7 +21,7 @@ public class BlogIndexer extends BaseIndexer
 {
 	private    int commitLimit = 0;	
 	private  DAOMongo mongo = null;
-	private BoostGeter boostGeter = null; 
+	private BoostGeter boostGeter = new SimpleBoostGeter(); 
 	public BlogIndexer(String indexPath)
 	{
 		super(indexPath);
@@ -82,8 +83,8 @@ public class BlogIndexer extends BaseIndexer
 	{
 		Float blogBoost = this.boostGeter.getBoostFromBlog(blog);		
 		System.out.println( "==bost :" + blog.getUrl()+" boost is " + blogBoost );
-		
-		Float blogerBoost = 1.0f;	
+		;
+		Float blogerBoost = 0.0f;	
 		Bloger bloger = this.getBloger(blog.getBlogerURL());
 		if(bloger != null)
 		{
@@ -91,8 +92,13 @@ public class BlogIndexer extends BaseIndexer
 			System.out.println( "==bost :" +bloger.getUrl()+" boost is " + blogerBoost );		
 		}
 		
+		float boost =  blogBoost+blogerBoost;
 		Map<String , Float> mboost = new HashMap<String,Float>();
 		
+//		mboost.put("title", 1.2f+boost);
+//		mboost.put("tags", 0.9f+boost);
+//		mboost.put("content", 1.0f+boost);
+//		
 		Document doc = converter.Object2Doc(blog, mboost);
 		return doc;
 	}
@@ -114,8 +120,11 @@ public class BlogIndexer extends BaseIndexer
 	{
 		DAOMongo mongo = new DAOMongo("blogdb");
 		BlogIndexer bi = new BlogIndexer("E:/Lucene");
-		List<Blog> lblog = mongo.searchBlog("blog.csdn.net", -1, 100);
-		while(lblog!=null && lblog.size()!=0)
+		bi.setMongo(mongo);
+		List<Blog> lblog = mongo.searchBlog(null, -1, 100);
+		int size = 1;
+		long begin = System.currentTimeMillis();
+		while(lblog!=null && lblog.size()!=0 )
 		{
 			for(Blog b : lblog)
 			{
@@ -124,8 +133,12 @@ public class BlogIndexer extends BaseIndexer
 				mongo.updateBlog(b);
 			}
 			System.out.println("indexed " + lblog.get(0)+"  and .....");
-			lblog = mongo.searchBlog("blog.csdn.net", -1, 2);
+			size+=lblog.size();
+			lblog = mongo.searchBlog(null, -1, 100);
 		}
+		long end = System.currentTimeMillis();
+		
+		System.out.println("size:" + size+"   "+(end-begin)/1000);
 			
 	}
 	

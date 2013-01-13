@@ -35,6 +35,18 @@ public abstract class Searcher
 	}
 	
 	/**
+	 * query a filed with queryStr
+	 * @param queryStr
+	 * @param fieldName
+	 * @return
+	 */
+	public List<Document> SearchField(String queryStr ,List<String> fieldName)
+	{
+		return null;
+	}
+	
+	
+	/**
 	 * @param args
 	 */
 	public static void main(String[] args)
