@@ -44,35 +44,34 @@ public class ChinaUnixBlogAnalyzer implements Analyzer<Blog>
 		{	
 			Document doc = Jsoup.parse(content);
 			// name
-			Element eprofile = doc.getElementById("profile");
+			Element eprofile = doc.getElementsByClass("Blog_left1_1").first();
 			Elements eas = eprofile.select("a[href]");
 			String url = "http://blog.chinaunix.net"+ eas.get(1).attr("href");
 			
 			// title
-			Element ecenter = doc.getElementById("blog_center");
-			Elements etitles = ecenter.getElementsByClass("tit6");
-			Element etitle = etitles.select("a").first();
+			Element ecenter = doc.getElementsByClass("Blog_tit4").first();
+			Element etitle = ecenter.select("a").first();
 			String title = etitle.text();
 			blog.setTitle(title);
 			
 			// post date 
-			String postDate = etitles.text();
+			String postDate = ecenter.text();
 			Matcher m = pattern.matcher(postDate);
 			Boolean b = m.find();
 			postDate = m.group(0);
 			Date post = formater.parse(postDate);
 			blog.setPostDate(post);
 			blog.setCrawledDate(new Date());
-			
+			;
 			// tags
 			List<String> cats = new ArrayList<String>(0);
-			Elements tmp = ecenter.getElementsByClass("tit7");
+			Elements tmp = doc.getElementsByClass("Blog_con3");
 			if(tmp!=null && tmp.size() > 0)
 			{	
-				Elements ecats = tmp.select("a");	
+				Elements ecats = tmp.select("span");	
 				if(ecats!=null && ecats.size()>0)
 				{
-					for(int i = 1 ; i < ecats.size(); i++)
+					for(int i = 0 ; i < ecats.size(); i++)
 					{
 						Element e = ecats.get(i);
 						cats.add(e.text());
@@ -81,14 +80,14 @@ public class ChinaUnixBlogAnalyzer implements Analyzer<Blog>
 			}
 			
 			// visits			
-			Elements evisit = doc.getElementsByClass("read");
+			Elements evisit = doc.getElementsByClass("Blog_con2_1");
 			String visit = evisit.get(0).text();	
 			Matcher m1 =patternRead.matcher(visit);
 			m1.find();
 
 			String visitstr = m1.group(0);
 			int visits = Converter.praseIntFromStr(visitstr);
-
+;
 			// comments
 			int comments =0;
 			if( m1.find())
@@ -98,7 +97,7 @@ public class ChinaUnixBlogAnalyzer implements Analyzer<Blog>
 			}
 	
 			// content
-			Element econtent = doc.getElementById("detail");
+			Element econtent = doc.getElementsByClass("Blog_wz1").first();
 			// amount of pictures
 			Elements eimgs = econtent.select("img");
 			int imgs = eimgs == null ?0 :eimgs.size();
@@ -112,9 +111,7 @@ public class ChinaUnixBlogAnalyzer implements Analyzer<Blog>
 			blog.setPictures(imgs);
 			blog.setComment(comments);
 			blog.setVisit(visits);
-			blog.setTags(cats);
-			
-
+			blog.setTags(cats);		
 			
 		} 
 		catch (Exception e)
@@ -137,7 +134,7 @@ public class ChinaUnixBlogAnalyzer implements Analyzer<Blog>
 				return null;
 			
 			HtmlPage p = (HtmlPage) curl.getReserve();
-			HtmlElement e = p.getElementById("detail");
+			HtmlElement e = p.getBody().getElementsByAttribute("div", "class", "Blog_wz1").get(0);
 			if ( e==null)
 			{
 				return null;
@@ -153,6 +150,8 @@ public class ChinaUnixBlogAnalyzer implements Analyzer<Blog>
 		}
 		return blog;
 	}
+	
+	
 	static public void main(String [] args)
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");

@@ -36,9 +36,8 @@ public class ChinaUnixBlogerAnalyzer implements Analyzer<Bloger>
 			try
 			{		
 				Document doc = Jsoup.parse(content);
-				
-				// url
-				Element eprofile = doc.getElementById("profile");
+				// name
+				Element eprofile = doc.getElementsByClass("Blog_left1_1").first();
 				Elements eas = eprofile.select("a[href]");
 				String url = "http://blog.chinaunix.net"+ eas.get(1).attr("href");
 				
@@ -46,7 +45,7 @@ public class ChinaUnixBlogerAnalyzer implements Analyzer<Bloger>
 				String name = eas.get(1).text();
 			
 				// atricleAmt
-				Element estatics = eprofile.getElementsByClass("list1").first();
+				Element estatics = doc.getElementsByClass("Blog_ul1").first();
 				String estaticstr = estatics.text();
 				
 				// visit and comments
@@ -88,11 +87,12 @@ public class ChinaUnixBlogerAnalyzer implements Analyzer<Bloger>
 		//curl.setUrl("http://blog.csdn.net/m13666368773/article/details/8432839");
 		curl.setUrl("http://blog.chinaunix.net/uid-26893610-id-3454035.html");
 		curl.setStatus(CrawlURI.STATUS_OK);
+		curl.setHost("blog.chinaunix.net");
 		fetcher.fetch(curl);
 		//System.out.println(new String (curl.getContent()));
 		//curl = (CrawlURI)AnalyzerUtil.readObj("chinaunix.dat");
-		Bloger bloger = new ChinaUnixBlogerAnalyzer().analyze(null, "utf-8", curl.getContent());
-		
+		Bloger bloger = new ChinaUnixBlogerAnalyzer().analyze(curl);
+		System.out.println(bloger);
 		
 	}
 
