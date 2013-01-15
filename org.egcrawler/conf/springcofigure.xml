@@ -81,6 +81,8 @@
    </bean>
   
   <!-- fetcher --> 
+  
+  <bean id="fetcherByWebDriver" class="org.easyGoingCrawler.fetcher.HttpFetcherByWebDriver" scope="prototype" /> 
   <bean id="fetcherHtmlUnitXML" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnitXML" scope="prototype" /> 
   <bean id="fetcherHtmlUnit" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnit" scope="prototype" /> 
   <bean id="fetcherHtmlUnitJs" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnit" scope="prototype" >

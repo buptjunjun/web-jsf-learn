@@ -80,7 +80,7 @@ public class A51ctoBlogerAnalyzer implements Analyzer<Bloger>
 	static public void main(String [] args)
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
-		Fetcher fetcher = appcontext.getBean("fetcherHtmlUnit",Fetcher.class);
+		Fetcher fetcher = appcontext.getBean("fetcherByWebDriver",Fetcher.class);
 		
 		CrawlURI curl = new CrawlURI();
 	//	curl.setUrl("http://blog.csdn.net/m13666368773/article/details/8432839");

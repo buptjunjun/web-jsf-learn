@@ -19,6 +19,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.openqa.selenium.By.ByClassName;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -97,6 +100,7 @@ public class A51ctoBlogAnalyzer implements Analyzer<Blog>
 			blog.setComment(comments);
 			blog.setVisit(visits);
 			blog.setTags(tags);
+			blog.setTitle(title);
 			
 			blog.setPostDate(postTime);
 			blog.setCrawledDate(new Date());
@@ -121,14 +125,17 @@ public class A51ctoBlogAnalyzer implements Analyzer<Blog>
 			if(blog == null)
 				return null;
 			
-			HtmlPage p = (HtmlPage) curl.getReserve();
-			HtmlElement ebody = p.getBody();
-			List<HtmlElement> e = ebody.getElementsByAttribute("div", "class", "showContent");
+//			HtmlPage p = (HtmlPage) curl.getReserve();
+//			HtmlElement ebody = p.getBody();
+//			List<HtmlElement> e = ebody.getElementsByAttribute("div", "class", "showContent");
+//			
+			WebDriver p = (WebDriver) curl.getReserve();
+			List<WebElement> e = p.findElements(ByClassName.className("showContent"));
 			if ( e==null)
 			{
 				return null;
 			}
-			blog.setContent(e.get(0).asText());
+			blog.setContent(e.get(0).getText());
 			blog.setUrl(curl.getUrl());
 			blog.setId(Converter.urlEncode(curl.getUrl()));
 			;
@@ -146,7 +153,7 @@ public class A51ctoBlogAnalyzer implements Analyzer<Blog>
 	static public void main(String [] args)
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
-		Fetcher fetcher = appcontext.getBean("fetcherHtmlUnit",Fetcher.class);
+		Fetcher fetcher = appcontext.getBean("fetcherByWebDriver",Fetcher.class);
 		
 		CrawlURI curl = new CrawlURI();
 	//	curl.setUrl("http://blog.csdn.net/m13666368773/article/details/8432839");
