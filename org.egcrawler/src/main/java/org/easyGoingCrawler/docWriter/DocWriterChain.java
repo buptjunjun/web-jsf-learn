@@ -30,7 +30,11 @@ public class DocWriterChain extends DocWriter
 		// clean HtmlPagePage;
 		try
 		{
-			((HtmlPage)curl.getReserve()).cleanUp();
+			Object obj = curl.getReserve();
+			if(HtmlPage.class.isInstance(obj))
+			{
+				((HtmlPage)obj).cleanUp();
+			}
 			curl.setReserve(null);
 		}
 		catch(Exception e)
