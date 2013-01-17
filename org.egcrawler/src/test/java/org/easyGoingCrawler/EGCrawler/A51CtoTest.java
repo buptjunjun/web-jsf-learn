@@ -22,7 +22,7 @@ import org.springframework.data.mongodb.core.query.Query;
 public class A51CtoTest
 {
 	// test Crawler
-	@Test 
+	//@Test 
 	public void TestCrawler()
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
@@ -47,7 +47,7 @@ public class A51CtoTest
 	}
 	
 	// test blog
-	//@Test 
+	@Test 
 	public void TestBlog()
 	{
 
