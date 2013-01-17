@@ -42,7 +42,7 @@ public class MongowriterTest
 
 		EGDAOMongo mongo = appcontext.getBean("EGDAOMongo",EGDAOMongo.class);
 	
-		List<Html> l = mongo.getLatestHtml("blog.51cto.com", 30);
+		List<Html> l = mongo.getLatestHtml("www.cnblogs.com", 10);
 		MirrorWriter mirrorwriter = appcontext.getBean("mirrorwriter",MirrorWriter.class);
 		for(Html h:l)
 		{
