@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
 import java.util.Date;
+import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
@@ -42,17 +43,19 @@ public class HttpFetcherByWebDriver extends Fetcher
 	private int driverTimeout = 20;
 	private int conTimeout = 20;
 	WebDriver driver = null;
-
+	FirefoxProfile firefoxProfile =null;
+	private long fetchcount = 1;
+	
 	public HttpFetcherByWebDriver()
 	{
 		
 		String path ="";
-		System.setProperty("webdriver.firefox.bin","D:/Program Files/Mozilla Firefox/firefox.exe");
+		System.setProperty("webdriver.firefox.bin","E:\\Program Files\\Mozilla Firefox\\firefox.exe");
 		//System.setProperty("webdriver.ie.driver","C:/Program Files (x86)/Internet Explorer/iexplore.exe");
 	
 		// 上边是设置firefox可执行文件的路径			
 		// 关图片
-		FirefoxProfile firefoxProfile = new FirefoxProfile();
+		firefoxProfile = new FirefoxProfile();
 		firefoxProfile.setPreference("permissions.default.image", 2);
 		
 		// 关掉flash
@@ -101,7 +104,38 @@ public class HttpFetcherByWebDriver extends Fetcher
 			page.cleanUp();
 			page = null;
 			
-			driver.get(curl.getUrl());
+			fetchcount++;
+			System.out.println("++++++++++++"+fetchcount+"+++++++++++++++++++");
+			if(fetchcount % 100 ==0)
+			{
+				driver.close();
+				driver = null;
+				driver = new FirefoxDriver(firefoxProfile);
+			}
+			
+			try
+			{
+				FetchTimerTask task = new FetchTimerTask(driver,curl.getUrl());
+				task.start();
+				int count = 0;
+				while(!task.isOver() && count < 60)
+				{
+					TimeUnit.SECONDS.sleep(1);
+					count++;					
+				}
+				if(!task.isOver())
+				{
+					driver.close();
+					driver = null;
+					driver = new FirefoxDriver(firefoxProfile);
+					curl.setHttpstatus(-1);
+				}
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			
 			String res = driver.getPageSource();
 			curl.setContent(res);
 			System.out.println(Thread.currentThread().getName()+"-"+ "##HttpFetcherByWebDriver: curl="+curl);
@@ -148,5 +182,39 @@ public class HttpFetcherByWebDriver extends Fetcher
 		// System.out.println(doc.text());
 		// System.out.println(xml);
 		// System.out.println(curl);
+	}
+	
+	private class FetchTimerTask extends Thread
+	{
+		private WebDriver driver = null; 
+		private String url;
+		private boolean over = false;
+		
+
+		public FetchTimerTask( WebDriver driver,String url)
+		{
+			// TODO Auto-generated constructor stub
+			this.driver = driver;
+			this.url = url;
+		}
+
+		@Override
+		public void run()
+		{
+			over = false;
+			driver.get(url);
+			over = true;
+		}
+		
+		public boolean isOver()
+		{
+			return over;
+		}
+
+		public void setOver(boolean over)
+		{
+			this.over = over;
+		}
+		
 	}
 }
