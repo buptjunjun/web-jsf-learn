@@ -104,7 +104,7 @@ public class HttpFetcherByWebDriver extends Fetcher
 			driver.get(curl.getUrl());
 			String res = driver.getPageSource();
 			curl.setContent(res);
-			System.out.println(Thread.currentThread().getName()+"-"+ "##HttpFetcherByHtmlUnit: curl="+curl);
+			System.out.println(Thread.currentThread().getName()+"-"+ "##HttpFetcherByWebDriver: curl="+curl);
 			curl.setReserve(driver);
 
 		} catch (Exception e)

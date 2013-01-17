@@ -74,7 +74,7 @@ public class Localizer
     public static void main(String [] args)
     {
     	String interval = Localizer.getMessage("interval");
-    	String urlstore = Localizer.getMessage("urlstoreBackup");
+    	String urlstore = Localizer.getMessage("cnblogs_threads");
     	String aa = Localizer.getMessage("aa");
     	System.out.println(interval+", "+aa+ " ,"+urlstore);
     }
