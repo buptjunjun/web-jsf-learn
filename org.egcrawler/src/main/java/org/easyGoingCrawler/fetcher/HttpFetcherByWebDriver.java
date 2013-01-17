@@ -47,7 +47,7 @@ public class HttpFetcherByWebDriver extends Fetcher
 	{
 		
 		String path ="";
-		System.setProperty("webdriver.firefox.bin","E:/Program Files/Mozilla Firefox/firefox.exe");
+		System.setProperty("webdriver.firefox.bin","D:/Program Files/Mozilla Firefox/firefox.exe");
 		//System.setProperty("webdriver.ie.driver","C:/Program Files (x86)/Internet Explorer/iexplore.exe");
 	
 		// 上边是设置firefox可执行文件的路径			

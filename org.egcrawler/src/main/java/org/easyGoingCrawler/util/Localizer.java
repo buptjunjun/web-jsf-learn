@@ -19,7 +19,7 @@ public class Localizer
 	static private Logger logger = Logger.getLogger(HttpFetcher.class);
 	private static Properties p = new Properties();
 	
-	static String confFile = "conf/setting.properties";
+	static String confFile = "src/main/resources/setting.properties";
 	static 
 	{
 		load();

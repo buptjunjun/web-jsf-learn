@@ -81,6 +81,8 @@
    </bean>
   
   <!-- fetcher --> 
+  
+  <bean id="fetcherByWebDriver" class="org.easyGoingCrawler.fetcher.HttpFetcherByWebDriver" scope="prototype" /> 
   <bean id="fetcherHtmlUnitXML" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnitXML" scope="prototype" /> 
   <bean id="fetcherHtmlUnit" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnit" scope="prototype" /> 
   <bean id="fetcherHtmlUnitJs" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnit" scope="prototype" >
@@ -104,13 +106,20 @@
   <bean id="mirrorwriter" class=" org.easyGoingCrawler.docWriter.MirrorWriter"
   		p:urAnalyzer-ref ="urlAnalyzer"
  		scope="prototype" />
+ 		
+   <!-- Mongo Html writer -->
+  <bean id="MongoHtmlWriter" class=" org.easyGoingCrawler.docWriter.MongoHtmlWriter"
+ 		p:urAnalyzer-ref ="urlAnalyzer"
+ 		scope="prototype" >
+ 		<constructor-arg ref="EGDAOMongo"></constructor-arg>
+ 	</bean>
  
  <!-- writer chain -->
   <bean id="docwriter" class=" org.easyGoingCrawler.docWriter.DocWriterChain" scope="prototype" >
   	<constructor-arg>
   		<list>
   			<ref bean = "monggowriter"/>	
-  			<ref bean = "mirrorwriter"/>	
+  			<ref bean = "MongoHtmlWriter"/>	
   		</list>
   	</constructor-arg>
  </bean>
@@ -209,7 +218,7 @@
  		<constructor-arg ref="urlAnalyzer"></constructor-arg>
  </bean>
   <bean id="A51ctocrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
-		<constructor-arg ref = "fetcherHtmlUnitJs"></constructor-arg>
+		<constructor-arg ref = "fetcherByWebDriver"></constructor-arg>
 		<constructor-arg ref = "extractor"></constructor-arg>
 		<constructor-arg ref = "A51ctoScheduleer"></constructor-arg>
 		<constructor-arg ref ="docwriter"></constructor-arg>
