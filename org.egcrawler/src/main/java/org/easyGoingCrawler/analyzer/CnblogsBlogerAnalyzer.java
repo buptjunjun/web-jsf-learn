@@ -41,7 +41,7 @@ public class CnblogsBlogerAnalyzer implements Analyzer<Bloger>
 				m.find();
 				int postsPosition = m.end();
 				
-				String postsStr = docText.substring(postsPosition,postsPosition+60);
+				String postsStr = docText.substring(postsPosition,postsPosition+80);
 				
 				String postsStr1 = docText.substring(postsPosition,postsPosition+30);
 				
@@ -118,7 +118,7 @@ public class CnblogsBlogerAnalyzer implements Analyzer<Bloger>
 		
 		CrawlURI curl = new CrawlURI();
 		//curl.setUrl("http://www.cnblogs.com/binb/archive/2013/01/03/xiangxiong_tencent.html");
-		curl.setUrl("http://www.cnblogs.com/thly1990/archive/2012/09/27/BMapTileCutter.html");
+		curl.setUrl("http://www.cnblogs.com/lzcarl/archive/2006/08/24/485604.html");
 		curl.setStatus(CrawlURI.STATUS_OK);
 		curl.setHost("www.cnblogs.com");
 		fetcher.fetch(curl);
