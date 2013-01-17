@@ -43,10 +43,10 @@ public class Main
 		Main main = new Main();
 		/*String [] crawler = {"CSDNcrawler","ChinaUnixcrawler","OsChinacrawler","A51ctocrawler","Cnblogscrawler"};
 		String [] threads = {"csdn_threads","chinaunix_threads","oschina_threads","a51cto_threads","cnblogs_threads"};*/
-//		String [] crawler = {"A51ctocrawler"};
-//		String [] threads = {"a51cto_threads"};
-		String [] crawler = {"CSDNcrawler","ChinaUnixcrawler","OsChinacrawler","A51ctocrawler"};
-		String [] threads = {"csdn_threads","chinaunix_threads","oschina_threads","a51cto_threads"};
+		String [] crawler = {"Cnblogscrawler"};
+		String [] threads = {"cnblogs_threads"};
+		/*String [] crawler = {"CSDNcrawler","ChinaUnixcrawler","OsChinacrawler","A51ctocrawler"};
+		String [] threads = {"csdn_threads","chinaunix_threads","oschina_threads","a51cto_threads"};*/
 		for(int i = 0; i < crawler.length; i++)
 			main.createAndStartCrawler(crawler[i],threads[i]);
 		

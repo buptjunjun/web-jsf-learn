@@ -114,7 +114,7 @@ public class CnblogsBlogerAnalyzer implements Analyzer<Bloger>
 	static public void main(String [] args)
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
-		Fetcher fetcher = appcontext.getBean("fetcherHtmlUnitJs",Fetcher.class);
+		Fetcher fetcher = appcontext.getBean("fetcherByWebDriver",Fetcher.class);
 		
 		CrawlURI curl = new CrawlURI();
 		//curl.setUrl("http://www.cnblogs.com/binb/archive/2013/01/03/xiangxiong_tencent.html");

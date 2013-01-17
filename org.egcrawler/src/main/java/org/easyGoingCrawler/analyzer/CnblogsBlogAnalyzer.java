@@ -24,6 +24,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.By.ByClassName;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -136,22 +140,25 @@ public class CnblogsBlogAnalyzer implements Analyzer<Blog>
 		Blog blog = null;
 		try
 		{
-			HtmlPage p = (HtmlPage) curl.getReserve();
-			String xml = p.asXml();
-			blog = analyze(curl.getHost(),curl.getEncode(),xml);
+			blog = analyze(curl.getHost(),curl.getEncode(),curl.getContent());
 			if(blog == null)
 				return null;
 			
-			HtmlElement e = p.getElementById("cnblogs_post_body");
+//			HtmlPage p = (HtmlPage) curl.getReserve();
+//			HtmlElement ebody = p.getBody();
+//			List<HtmlElement> e = ebody.getElementsByAttribute("div", "class", "showContent");
+//			
+			WebDriver p = (WebDriver) curl.getReserve();
+			WebElement e = p.findElement(By.id("cnblogs_post_body"));
 			if ( e==null)
 			{
 				return null;
 			}
-			String blogerUrl = this.getBlogerUrl(curl.getUrl());
-			blog.setBlogerURL(blogerUrl);
-			blog.setContent(e.asText());
+			blog.setContent(e.getText());
 			blog.setUrl(curl.getUrl());
 			blog.setId(Converter.urlEncode(curl.getUrl()));
+			;
+		
 		}
 		catch(Exception e)
 		{
@@ -172,7 +179,7 @@ public class CnblogsBlogAnalyzer implements Analyzer<Blog>
 	static public void main(String [] args)
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
-		Fetcher fetcher = appcontext.getBean("fetcherHtmlUnitJs",Fetcher.class);
+		Fetcher fetcher = appcontext.getBean("fetcherByWebDriver",Fetcher.class);
 		
 		CrawlURI curl = new CrawlURI();
 		//curl.setUrl("http://www.cnblogs.com/binb/archive/2013/01/03/xiangxiong_tencent.html");
