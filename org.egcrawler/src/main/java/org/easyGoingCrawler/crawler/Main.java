@@ -28,14 +28,14 @@ public class Main
 {
 	static
 	{
-		PropertyConfigurator.configure("conf/log4j.properties");
+		PropertyConfigurator.configure("src/main/resources/log4j.properties");
 	}
 	
 	static private Logger logger = Logger.getLogger(Main.class);
 	private ApplicationContext appcontext = null;
 	public Main()
 	{
-		appcontext = new FileSystemXmlApplicationContext("conf/springcofigure.xml");
+		appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
 	}
 	
 	public  static void  main(String [] args)
