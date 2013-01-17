@@ -218,7 +218,7 @@
  		<constructor-arg ref="urlAnalyzer"></constructor-arg>
  </bean>
   <bean id="A51ctocrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
-		<constructor-arg ref = "fetcherHtmlUnitJs"></constructor-arg>
+		<constructor-arg ref = "fetcherByWebDriver"></constructor-arg>
 		<constructor-arg ref = "extractor"></constructor-arg>
 		<constructor-arg ref = "A51ctoScheduleer"></constructor-arg>
 		<constructor-arg ref ="docwriter"></constructor-arg>
