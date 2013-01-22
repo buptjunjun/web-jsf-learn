@@ -19,15 +19,8 @@ public abstract class Sort
 	 */
 	public void print(int [] s)
 	{
-		if(s == null)
-		{
-			System.out.println("s == null");
-			return;
-		}
-		
+		if(s == null) { System.out.println("s == null"); return; }
 		for(int i:s)
-		{
 			System.out.print(i +" ");
-		}
 	}
 }
