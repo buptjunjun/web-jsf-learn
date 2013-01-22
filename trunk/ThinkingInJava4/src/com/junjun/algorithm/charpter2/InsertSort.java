@@ -19,8 +19,7 @@ public class InsertSort extends Sort
 	@Override
 	 public int[] sort(int[] s,int incOrDec)
 	 {
-		if(s == null || s.length <=1) return s;
-		
+		if(s == null || s.length <=1) return s;	
 		for(int i = 1;i <s.length; i++)
 		{
 			int key = s[i];
@@ -28,23 +27,14 @@ public class InsertSort extends Sort
 			//下面将key插入到已经排好的数列中去
 			if(incOrDec == Sort.INCREMENT) //升序
 			{	
-				while(j>=0 && key<s[j])
-				{
-					s[j+1] = s[j];
-					j--;
-				}
+				while(j>=0 && key<s[j]){ s[j+1] = s[j]; j--;}
 			}
 			else if(incOrDec == Sort.DECREMENT) //降序
 			{
-				while(j>=0 && key>s[j])		
-				{
-					s[j+1] = s[j];
-					j--;
-				}
+				while(j>=0 && key>s[j]){ s[j+1] = s[j]; j--;}
 			}
 			s[j+1] = key;
-		}
-		
+		}		
 		return s;
 	}
 	/**
