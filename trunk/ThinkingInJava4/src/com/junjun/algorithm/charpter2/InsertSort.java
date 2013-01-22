@@ -11,8 +11,10 @@ import com.junjun.algorithm.Sort;
 public class InsertSort extends Sort
 {	
 	/**
-	 *  插入排序
-	 *  @param incOrDec 控制升序好事降序
+	 * 插入排序
+	 * @param s 带排数列
+	 * @param incOrDec 控制升序还是降序
+	 * @return
 	 */
 	@Override
 	 public int[] sort(int[] s,int incOrDec)
@@ -23,6 +25,7 @@ public class InsertSort extends Sort
 		{
 			int key = s[i];
 			int j = i-1;
+			//下面将key插入到已经排好的数列中去
 			if(incOrDec == Sort.INCREMENT) //升序
 			{	
 				while(j>=0 && key<s[j])
