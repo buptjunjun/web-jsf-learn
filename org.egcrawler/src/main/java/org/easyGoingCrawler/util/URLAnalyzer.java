@@ -47,9 +47,10 @@ public class URLAnalyzer
 		//String url = "http://my.oschina.net/kzhou/blog/99360";
 		//String url = "http://my.oschina.net/u/126717";
 		//String url = "http://my.oschina.net/dourgulf";
-		String url = "http://network.51cto.com/";
+		String url = "http://www.oschina.net/search?scope=bbs&q=ÐÂÀËoauth2.0";
+
 		String pattern4save = "http://[a-zA-Z0-9-_]+\\.blog.51cto.com/\\d+/\\d+";
-		String pattern4hold = "http://[a-zA-Z0-9-_]*\\.?blog.51cto.com.*";
+		String pattern4hold = "(http://my.oschina.net/u/\\d+)|(http://my.oschina.net/[a-zA-Z0-9_-]+)|(http://www.oschina.net/blog.*)|((http://)?www.oschina.net/search\\?scope=blog.*)";
 		System.out.println(Pattern.matches(pattern4save, url));
 		System.out.println(Pattern.matches(pattern4hold, url));
 			

@@ -67,17 +67,19 @@ public class HTMLExtractor extends Extractor
 			Document doc = Jsoup.parse(docContent);
 	
 			// find the elments whose type is "<a>" and  value of  "href"  begins with "http";  
-			Elements hrefs = doc.select("a");
+			Elements hrefs = doc.select("a[href]");
 			
 			if (hrefs == null)
 				return ;
-			
+			System.out.println("hrefs = "+hrefs.size());
 			// get all the url in this documents
 			Set<String>  urls = new HashSet<String>();
 			for (Element e: hrefs)
 			{
 				// get a url in an element like <a href="http://www.abc.com/aa">;
 				String url = e.attr("href");				
+				if(url == null)
+					continue;
 				
 				// if the url is relative url like <a href="/aa.html">
 			   if (url.startsWith("/"))
@@ -94,6 +96,12 @@ public class HTMLExtractor extends Extractor
 				   if(url.length() < MaxURLSize)
 					   urls.add(url);
 				 //  System.out.println(url + "  " + e.hasText() + " " + e.html());
+			   }
+			   else if (url.startsWith("?"))
+			   {
+				   url = doRelativeURL1(originalURL,url);
+				   if( url!=null && url.length() < MaxURLSize)
+				   	urls.add(url);
 			   }
 			}
 			System.out.println("extract " + urls.size() + " urls from " + originalURL);
@@ -158,75 +166,49 @@ public class HTMLExtractor extends Extractor
 		
 		return ret;
 	}
+	
+	/**
+	 *  deal with the relative url;
+	 *  for example:?code=aaa is a url from http://baidu.com/search?adsfcef,
+	 *  so the absolute url should be http://baidu.com/search?code=aaa
+	 *  
+	 * @param url
+	 * @param path
+	 * @return
+	 */
+	private String doRelativeURL1(String url, String path)
+	{
+		String ret = null;
+		URL  u = null;
+		try 
+		{
+			u = new URL(url);
+		}
+		catch (MalformedURLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			logger.error(Thread.currentThread().getName()+"-"+ "$$HTMLExtractor: "+ "url = "+ url+", path = " + path+"   "+ e.getMessage());
+			return null;
+		}
+		if(!url.contains("?"))
+			return null;
+		
+		String newurl = url.replaceAll("\\?.*", "");
+		newurl+=path;
+		
+		return newurl;
+	}
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args)
 	{  
-	/*	String file = "www.myexception.cn/apache/index.html";
-		try {
-			BufferedReader  fr = new BufferedReader(new FileReader(file));
-			StringBuffer sb = new StringBuffer();
-			String line = null;
-			while((line = fr.readLine()) != null)
-			{
-				sb.append(line);
-			}
-			String content = sb.toString();
-			HTMLExtractor extractor = new HTMLExtractor();
-			//extractor.extract("http://www.myexception.cn/apache",content );
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		HTMLExtractor e = new HTMLExtractor();
 		
-//		try {
-//			URL u = new URL("http://www.iteye.com/blogs/category/architecture");
-//			
-//			System.out.println(u.getPort());
-//			
-//		} catch (MalformedURLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		
-//		HttpFetcherByHtmlUnit f = new HttpFetcherByHtmlUnit ();		
-//		CrawlURI curl = new CrawlURI("http://woshixy.blog.51cto.com/5637578/1107054");
-//		f.fetch(curl);
-//		
-//		HTMLExtractor extractor = new HTMLExtractor ();
-//		extractor.extract(curl);
-//		try
-//		{
-//			System.out.println(new String(curl.getContent(),"GBK"));
-//		} catch (UnsupportedEncodingException e)
-//		{
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		System.out.println(curl.getHttpstatus());
-//		System.out.println(curl.getStatus());
-//		System.out.println(curl.getIncludeURLs());
-//		
-		
-		
-		String [] urls = "a.b/,c.c.d,a.a.bb/".split(",");
-		List l = new ArrayList<String>();
-		
-		for(String url:urls)
-		{
-			String tmp = url.trim();
-			if(tmp.endsWith("/"))
-			{
-				int len = tmp.lastIndexOf("/");
-				tmp = tmp.substring(0,len);
-			}
-			l.add(tmp);
-		}
-		
-		System.out.println(l);
+		String base = "http://www.oschina.net/search?scope=blog&q=%E8%AE%A1%E7%AE%97";
+		String str = "?scope=blog&user=0&lang=0&sort=default&q=%E8%AE%A1%E7%AE%97&p=1";
+		System.out.println(e.doRelativeURL1(base, str));
 	}
 }

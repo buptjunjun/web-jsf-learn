@@ -66,6 +66,15 @@ public class HttpFetcherByWebDriver extends Fetcher
 	    //firefoxProfile.setPreference("webdriver.load.strategy", "unstable");
 
 		//driver = new InternetExplorerDriver();
+		File file1 = new File("C:/Users/junjun/AppData/Roaming/Mozilla/Firefox/Profiles/p8y3jpgb.default/extensions/requestpolicy@requestpolicy.com.xpi");
+		try
+		{
+			firefoxProfile.addExtension(file1);
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		driver = new FirefoxDriver(firefoxProfile);
 		
 		// TODO Auto-generated constructor stub
@@ -106,12 +115,7 @@ public class HttpFetcherByWebDriver extends Fetcher
 			
 			fetchcount++;
 			System.out.println("++++++++++++"+fetchcount+"+++++++++++++++++++");
-			if(fetchcount % 100 ==0)
-			{
-				driver.close();
-				driver = null;
-				driver = new FirefoxDriver(firefoxProfile);
-			}
+			
 			
 			try
 			{
@@ -125,10 +129,10 @@ public class HttpFetcherByWebDriver extends Fetcher
 				}
 				if(!task.isOver())
 				{
-					driver.close();
-					driver = null;
-					driver = new FirefoxDriver(firefoxProfile);
+					
+					driver.navigate().to("http://www.baidu.com");
 					curl.setHttpstatus(-1);
+					task.interrupt();
 				}
 			}
 			catch(Exception e)
