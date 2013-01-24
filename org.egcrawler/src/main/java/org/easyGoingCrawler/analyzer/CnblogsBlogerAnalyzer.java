@@ -86,7 +86,7 @@ public class CnblogsBlogerAnalyzer implements Analyzer<Bloger>
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return null;
+				return bloger;
 			}
 			
 			return bloger;

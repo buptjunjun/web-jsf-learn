@@ -33,8 +33,8 @@ public class HttpFetcherByHtmlUnit extends Fetcher
 	private WebClient webClient = null;
 	private String defaultEncode = "UTF-8";
 	private boolean enableJs = true;
-	private int jsTimeout = 50;
-	private int conTimeout = 20;
+	private int jsTimeout = 3;
+	private int conTimeout = 2;
 	public HttpFetcherByHtmlUnit()
 	{
 		// TODO Auto-generated constructor stub
@@ -44,7 +44,7 @@ public class HttpFetcherByHtmlUnit extends Fetcher
 	public HttpFetcherByHtmlUnit(boolean enableJs)
 	{
 		// TODO Auto-generated constructor stub
-		this(enableJs ,50,20);
+		this(enableJs ,5,2);
 	}
    
 	public HttpFetcherByHtmlUnit(boolean enableJs, int jsTimeout, int conTimeout)
@@ -64,7 +64,7 @@ public class HttpFetcherByHtmlUnit extends Fetcher
 		webClient.setThrowExceptionOnFailingStatusCode(false);
 		webClient.setJavaScriptEnabled(enableJs);
 		webClient.setThrowExceptionOnScriptError(false);
-		webClient.setCssEnabled(false);
+		webClient.setCssEnabled(true);
 		if(this.enableJs)
 		{
 			webClient.setAjaxController(new NicelyResynchronizingAjaxController());		
@@ -132,11 +132,11 @@ public class HttpFetcherByHtmlUnit extends Fetcher
 		curl.setStatus(CrawlURI.STATUS_OK);
 		fetcher.fetch(curl);
 	
-		FileWriter fout = new FileWriter(new File("51cto.html"));  
+//		FileWriter fout = new FileWriter(new File("51cto.html"));  
 		String xml = curl.getContent();
-		fout.write(xml);
-		//Document doc = Jsoup.parse(xml);
-		//System.out.println(doc.text());
+//		fout.write(xml);
+		Document doc = Jsoup.parse(xml);
+		System.out.println(doc.text());
 //		System.out.println(xml);	
 //		System.out.println(curl);
 	}

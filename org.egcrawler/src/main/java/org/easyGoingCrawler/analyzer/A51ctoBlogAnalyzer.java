@@ -68,7 +68,7 @@ public class A51ctoBlogAnalyzer implements Analyzer<Blog>
 					}
 				}
 			}
-			
+/*			
 			Elements estatic = doc.getElementsByClass("showType");
 			String staticText = estatic.text();
 			
@@ -80,7 +80,9 @@ public class A51ctoBlogAnalyzer implements Analyzer<Blog>
 			String visitsComment = m1.group();
 			
 			int visits = Converter.praseIntFromStr(visitsText);
-			int comments = Converter.praseIntFromStr(visitsComment);
+			int comments = Converter.praseIntFromStr(visitsComment);*/
+			int visits = -1;
+			int comments = -1;
 			
 			//post time;
 			Element eArtTime = doc.getElementsByClass("artTime").first();
@@ -125,17 +127,18 @@ public class A51ctoBlogAnalyzer implements Analyzer<Blog>
 			if(blog == null)
 				return null;
 			
-//			HtmlPage p = (HtmlPage) curl.getReserve();
-//			HtmlElement ebody = p.getBody();
-//			List<HtmlElement> e = ebody.getElementsByAttribute("div", "class", "showContent");
-//			
-			WebDriver p = (WebDriver) curl.getReserve();
+			HtmlPage p = (HtmlPage) curl.getReserve();
+			HtmlElement ebody = p.getBody();
+			List<HtmlElement> e = ebody.getElementsByAttribute("div", "class", "showContent");
+			
+		/*	WebDriver p = (WebDriver) curl.getReserve();
 			List<WebElement> e = p.findElements(ByClassName.className("showContent"));
 			if ( e==null)
 			{
 				return null;
 			}
-			blog.setContent(e.get(0).getText());
+			blog.setContent(e.get(0).getText());*/
+			blog.setContent(e.get(0).asText());
 			blog.setUrl(curl.getUrl());
 			blog.setId(Converter.urlEncode(curl.getUrl()));
 			;
@@ -153,7 +156,7 @@ public class A51ctoBlogAnalyzer implements Analyzer<Blog>
 	static public void main(String [] args)
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
-		Fetcher fetcher = appcontext.getBean("fetcherByWebDriver",Fetcher.class);
+		Fetcher fetcher = appcontext.getBean("fetcherHtmlUnitJs",Fetcher.class);
 		
 		CrawlURI curl = new CrawlURI();
 	//	curl.setUrl("http://blog.csdn.net/m13666368773/article/details/8432839");
@@ -163,7 +166,7 @@ public class A51ctoBlogAnalyzer implements Analyzer<Blog>
 		fetcher.fetch(curl);
 		curl.setHost("blog.51cto.com");
 
-		
+		System.out.println(curl.getContent());
 //		AnalyzerUtil.persistObj(curl, "oschina.dat");
 //		curl = (CrawlURI)AnalyzerUtil.readObj("oschina.dat");
 		

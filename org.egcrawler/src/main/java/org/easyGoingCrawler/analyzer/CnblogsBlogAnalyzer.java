@@ -144,17 +144,17 @@ public class CnblogsBlogAnalyzer implements Analyzer<Blog>
 			if(blog == null)
 				return null;
 			
-//			HtmlPage p = (HtmlPage) curl.getReserve();
-//			HtmlElement ebody = p.getBody();
-//			List<HtmlElement> e = ebody.getElementsByAttribute("div", "class", "showContent");
-//			
-			WebDriver p = (WebDriver) curl.getReserve();
-			WebElement e = p.findElement(By.id("cnblogs_post_body"));
-			if ( e==null)
-			{
-				return null;
-			}
-			blog.setContent(e.getText());
+			HtmlPage p = (HtmlPage) curl.getReserve();
+			HtmlElement ebody = p.getBody();
+			HtmlElement e = ebody.getElementById("cnblogs_post_body");
+			blog.setContent(e.asText());
+//			WebDriver p = (WebDriver) curl.getReserve();
+//			WebElement e = p.findElement(By.id("cnblogs_post_body"));
+//			if ( e==null)
+//			{
+//				return null;
+//			}
+//			blog.setContent(e.getText());
 			blog.setUrl(curl.getUrl());
 			blog.setId(Converter.urlEncode(curl.getUrl()));
 			;
@@ -179,7 +179,7 @@ public class CnblogsBlogAnalyzer implements Analyzer<Blog>
 	static public void main(String [] args)
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
-		Fetcher fetcher = appcontext.getBean("fetcherByWebDriver",Fetcher.class);
+		Fetcher fetcher = appcontext.getBean("fetcherHtmlUnitJs",Fetcher.class);
 		
 		CrawlURI curl = new CrawlURI();
 		//curl.setUrl("http://www.cnblogs.com/binb/archive/2013/01/03/xiangxiong_tencent.html");
@@ -191,15 +191,15 @@ public class CnblogsBlogAnalyzer implements Analyzer<Blog>
 		
 		content = curl.getContent();
 		//System.out.println(content);
-		try
-		{
-			FileWriter fout = new FileWriter(new File("51cto.html"));
-			fout.write(content);
-		} catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}  
+//		try
+//		{
+//			FileWriter fout = new FileWriter(new File("51cto.html"));
+//			fout.write(content);
+//		} catch (IOException e)
+//		{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}  
 		
 		
 //		Document doc = Jsoup.parse(content);
