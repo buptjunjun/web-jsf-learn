@@ -137,7 +137,7 @@ public class EGDAOMongo implements EGDAO
 	public List<CrawlURI> get(String key)
 	{
 		// TODO Auto-generated method stub
-		return this.queryByhost(key, 40);
+		return this.queryByhost(key, 100);
 	}
 	
 	static public void main(String [] args)
