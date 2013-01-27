@@ -81,13 +81,13 @@ public class MirrorwriterTest
 	public void testOSChina()
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
-		Fetcher fetcher = appcontext.getBean("fetcherHtmlUnit",Fetcher.class);
-		MirrorWriter docwriter = appcontext.getBean("docwriter",MirrorWriter.class);
+		Fetcher fetcher = appcontext.getBean("fetcherHtmlUnitJs",Fetcher.class);
+		MirrorWriter docwriter = appcontext.getBean("mirrorwriter",MirrorWriter.class);
 		
 		CrawlURI curl = new CrawlURI();
-		curl.setUrl("http://www.cnblogs.com/baihmpgy/archive/2013/01/06/2847449.html");
+		curl.setUrl("http://www.cnblogs.com/jiagoushi/archive/2013/01/23/2872824.html");
 		curl.setStatus(CrawlURI.STATUS_OK);
-		curl.setHost("my.oschina.net");
+		curl.setHost("www.cnblogs.com");
 		fetcher.fetch(curl);
 		System.out.println(curl.getContent());
 		String path = docwriter.getPath(curl);

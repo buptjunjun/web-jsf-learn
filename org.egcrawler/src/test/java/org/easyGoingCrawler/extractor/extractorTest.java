@@ -13,10 +13,10 @@ public class extractorTest
 	public void HttpextractorTest()
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
-		Fetcher fetcher = appcontext.getBean("fetcher",Fetcher.class);
+		Fetcher fetcher = appcontext.getBean("fetcherHtmlUnit",Fetcher.class);
 		
 		CrawlURI curl = new CrawlURI();
-		curl.setUrl("http://www.baidu.com");
+		curl.setUrl("http://www.cnblogs.com/lhb25/");
 		curl.setStatus(CrawlURI.STATUS_OK);
 		fetcher.fetch(curl);
 		System.out.println(new String (curl.getContent()));
@@ -25,7 +25,10 @@ public class extractorTest
 		Extractor extractor = appcontext.getBean("extractor", Extractor.class);
 		extractor.extract(curl);
 		
-		System.out.println(curl.getIncludeURLs());
+		for(String url:curl.getIncludeURLs())
+		{
+			System.out.println(url);
+		}
 		
 	}
 }

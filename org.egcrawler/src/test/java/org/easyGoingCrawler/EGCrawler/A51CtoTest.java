@@ -8,6 +8,7 @@ import org.easyGoingCrawler.DAO.EGDAOMongo;
 import org.easyGoingCrawler.analyzer.CSDNBlogAnalyzer;
 import org.easyGoingCrawler.docWriter.Blog;
 import org.easyGoingCrawler.docWriter.Bloger;
+import org.easyGoingCrawler.docWriter.Url;
 import org.easyGoingCrawler.framwork.CrawlURI;
 import org.easyGoingCrawler.framwork.EGCrawler;
 import org.easyGoingCrawler.framwork.Fetcher;
@@ -84,5 +85,23 @@ public class A51CtoTest
 		}
 	}
 	
+	// test bloger
+	//@Test 
+	public void TestURl()
+	{
+		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
+		EGDAOMongo Mongo= appcontext.getBean("EGDAOMongo", EGDAOMongo.class);
+		Query q_chinaunix = new Query(where("host").is("blog.chinaunix.net")).limit(5);
+		Query q_csdn = new Query(where("host").is("blog.csdn.net")).limit(5);
+		Query q_sochina = new Query(where("host").is("my.oschina.net")).limit(5);
+		Query q_51cto = new Query(where("host").is("blog.51cto.com")).limit(5);
+		
+		List<CrawlURI> urls = Mongo.get("blog.51cto.com");
+		for (CrawlURI u:urls)
+		{
+			System.out.println(u);
+			//break;
+		}
+	}
 	
 }

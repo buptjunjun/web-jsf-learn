@@ -25,7 +25,7 @@ public class MongoHtmlWriterTest
 		curl.setStatus(CrawlURI.STATUS_OK);
 		curl.setHost("blog.csdn.net");
 		fetcher.fetch(curl);
-		//System.out.println(curl.getContent());
+		System.out.println(curl.getContent());
 		docwriter.write(curl);
 		//Bloger bloger = new CSDNBlogerAnalyzer().analyze(null, curl.getEncode(), curl.getContent());
 	}

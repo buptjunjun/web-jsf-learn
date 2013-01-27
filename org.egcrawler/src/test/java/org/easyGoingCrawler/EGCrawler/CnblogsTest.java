@@ -8,6 +8,7 @@ import org.easyGoingCrawler.DAO.EGDAOMongo;
 import org.easyGoingCrawler.analyzer.CSDNBlogAnalyzer;
 import org.easyGoingCrawler.docWriter.Blog;
 import org.easyGoingCrawler.docWriter.Bloger;
+import org.easyGoingCrawler.docWriter.Url;
 import org.easyGoingCrawler.framwork.CrawlURI;
 import org.easyGoingCrawler.framwork.EGCrawler;
 import org.easyGoingCrawler.framwork.Fetcher;
@@ -21,7 +22,7 @@ import org.springframework.data.mongodb.core.query.Query;
 public class CnblogsTest
 {
 	// test Crawler
-	@Test 
+	//@Test 
 	public void TestCrawler()
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
@@ -53,7 +54,8 @@ public class CnblogsTest
 		Query q_csdn = new Query(where("host").is("blog.csdn.net")).limit(5);
 		Query q_sochina = new Query(where("host").is("my.oschina.net")).limit(5);
 		Query q_51cto = new Query(where("host").is("blog.51cto.com")).limit(5);
-		List<Blog> blog = Mongo.mongoOps.find( q_csdn,Blog.class);
+		Query q_cnblogs = new Query(where("host").is("www.cnblogs.com")).limit(5);
+		List<Blog> blog = Mongo.mongoOps.find( q_cnblogs,Blog.class);
 		for (Blog b:blog)
 		{
 			System.out.println(b);
@@ -82,4 +84,25 @@ public class CnblogsTest
 		}
 	}
 	
+	
+	// test url
+	@Test 
+	public void TestUrl()
+	{
+		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
+		EGDAOMongo Mongo= appcontext.getBean("EGDAOMongo", EGDAOMongo.class);
+		Query q_chinaunix = new Query(where("host").is("blog.chinaunix.net")).limit(5);
+		Query q_csdn = new Query(where("host").is("blog.csdn.net")).limit(100);
+		Query q_sochina = new Query(where("host").is("my.oschina.net")).limit(5);
+		Query q_51cto = new Query(where("host").is("blog.51cto.com").and("flag").is(0)).limit(100);
+		Query q_cnblogs = new Query(where("host").is("www.cnblogs.com").and("flag").is(0)).limit(200);
+		
+		List<Url> urls = Mongo.mongoOps.find( q_cnblogs,Url.class);
+		for (Url b:urls)
+		{
+			System.out.println(b);
+			//break;
+		}
+		System.out.println(urls.size());
+	}
 }
