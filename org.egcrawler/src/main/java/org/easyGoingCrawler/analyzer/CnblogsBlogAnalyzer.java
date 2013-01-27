@@ -86,8 +86,12 @@ public class CnblogsBlogAnalyzer implements Analyzer<Blog>
 			String postDateStr = mpost.group();
 			int postdatePosition = mpost.end();
 			
+			int end = postdatePosition+80;
+			if(end > docText.length())
+				end = docText.length()-1;
+				
 			//visits and comments 
-			String vandc = docText.substring(postdatePosition,postdatePosition+80); 
+			String vandc = docText.substring(postdatePosition,end); 
 			vandc = vandc.replaceFirst("([a-zA-z_-]+\\d+)|[\u4e00-\u9fa5]+\\d+", " ");
 			
 			//visit		
@@ -119,7 +123,7 @@ public class CnblogsBlogAnalyzer implements Analyzer<Blog>
 			blog.setComment(comments);
 			blog.setVisit(visits);
 			blog.setTags(cats);
-			
+			blog.setTitle(title);
 			Date postdate = formater.parse(postDateStr);
 			blog.setPostDate(postdate);
 			blog.setCrawledDate(new Date());
@@ -155,6 +159,7 @@ public class CnblogsBlogAnalyzer implements Analyzer<Blog>
 //				return null;
 //			}
 //			blog.setContent(e.getText());
+			blog.setBlogerURL(this.getBlogerUrl(curl.getUrl()));
 			blog.setUrl(curl.getUrl());
 			blog.setId(Converter.urlEncode(curl.getUrl()));
 			;
@@ -179,18 +184,18 @@ public class CnblogsBlogAnalyzer implements Analyzer<Blog>
 	static public void main(String [] args)
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
-		Fetcher fetcher = appcontext.getBean("fetcherHtmlUnitJs",Fetcher.class);
+		Fetcher fetcher = appcontext.getBean("fetcherHtmlUnit",Fetcher.class);
 		
 		CrawlURI curl = new CrawlURI();
 		//curl.setUrl("http://www.cnblogs.com/binb/archive/2013/01/03/xiangxiong_tencent.html");
-		curl.setUrl("http://www.cnblogs.com/mr0513/archive/2012/12/14/2818742.html");
+		curl.setUrl("http://www.cnblogs.com/firstyi/archive/2007/04/26/728289.html");
 		curl.setStatus(CrawlURI.STATUS_OK);
 		curl.setHost("www.cnblogs.com");
 		fetcher.fetch(curl);
 		String content = null;
 		
 		content = curl.getContent();
-		//System.out.println(content);
+		System.out.println(content);
 //		try
 //		{
 //			FileWriter fout = new FileWriter(new File("51cto.html"));

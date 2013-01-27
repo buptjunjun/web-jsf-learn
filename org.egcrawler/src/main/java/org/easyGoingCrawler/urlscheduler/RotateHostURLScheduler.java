@@ -140,15 +140,15 @@ public class RotateHostURLScheduler extends URLScheduler
 	public void insertSeeds()
 	{
 		Url tmpurl = new Url();		
-		tmpurl.setUrl("http://blog.csdn.net/web/index.html");
-		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
-		tmpurl.setFlag(Url.UNCRAWLED);
-		tmpurl.setHost("blog.csdn.net");
-		tmpurl.setLastCrawled(new Date());
-		tmpurl.setType(Url.URL_OTHER);
-		this.egdao.insert(tmpurl);
+//		tmpurl.setUrl("http://blog.csdn.net/web/index.html");
+//		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
+//		tmpurl.setFlag(Url.UNCRAWLED);
+//		tmpurl.setHost("blog.csdn.net");
+//		tmpurl.setLastCrawled(new Date());
+//		tmpurl.setType(Url.URL_OTHER);
+//		this.egdao.insert(tmpurl);
 		
-		tmpurl.setUrl("http://www.cnblogs.com/index.html");
+		tmpurl.setUrl("http://www.cnblogs.com/AllBloggers.aspx");
 		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
 		tmpurl.setFlag(Url.UNCRAWLED);
 		tmpurl.setHost("www.cnblogs.com");
@@ -156,29 +156,29 @@ public class RotateHostURLScheduler extends URLScheduler
 		tmpurl.setType(Url.URL_OTHER);
 		this.egdao.insert(tmpurl);
 		
-		tmpurl.setUrl("http://blog.chinaunix.net/");
-		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
-		tmpurl.setFlag(Url.UNCRAWLED);
-		tmpurl.setHost("blog.chinaunix.net");
-		tmpurl.setLastCrawled(new Date());
-		tmpurl.setType(Url.URL_OTHER);
-		this.egdao.insert(tmpurl);
-		
-		tmpurl.setUrl("http://www.oschina.net/blog");
-		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
-		tmpurl.setFlag(Url.UNCRAWLED);
-		tmpurl.setHost("my.oschina.net");
-		tmpurl.setLastCrawled(new Date());
-		tmpurl.setType(Url.URL_OTHER);
-		this.egdao.insert(tmpurl);
-		
-		tmpurl.setUrl("http://blog.51cto.com/");
-		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
-		tmpurl.setFlag(Url.UNCRAWLED);
-		tmpurl.setHost("blog.51cto.com");
-		tmpurl.setLastCrawled(new Date());
-		tmpurl.setType(Url.URL_OTHER);
-		this.egdao.insert(tmpurl);
+//		tmpurl.setUrl("http://blog.chinaunix.net/");
+//		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
+//		tmpurl.setFlag(Url.UNCRAWLED);
+//		tmpurl.setHost("blog.chinaunix.net");
+//		tmpurl.setLastCrawled(new Date());
+//		tmpurl.setType(Url.URL_OTHER);
+//		this.egdao.insert(tmpurl);
+//		
+//		tmpurl.setUrl("http://www.oschina.net/blog/");
+//		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
+//		tmpurl.setFlag(Url.UNCRAWLED);
+//		tmpurl.setHost("my.oschina.net");
+//		tmpurl.setLastCrawled(new Date());
+//		tmpurl.setType(Url.URL_OTHER);
+//		this.egdao.insert(tmpurl);
+//		
+//		tmpurl.setUrl("http://blog.51cto.com/");
+//		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
+//		tmpurl.setFlag(Url.UNCRAWLED);
+//		tmpurl.setHost("blog.51cto.com");
+//		tmpurl.setLastCrawled(new Date());
+//		tmpurl.setType(Url.URL_OTHER);
+//		this.egdao.insert(tmpurl);
 	}
 	
 	

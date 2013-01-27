@@ -40,10 +40,10 @@ public class CnblogsBlogerAnalyzer implements Analyzer<Bloger>
 				Matcher m = this.patternPosts.matcher(docText);
 				m.find();
 				int postsPosition = m.end();
-				
-				String postsStr = docText.substring(postsPosition,postsPosition+80);
-				
-				String postsStr1 = docText.substring(postsPosition,postsPosition+30);
+				int end = postsPosition+80;
+				if(end > docText.length()-1)
+					end = docText.length()-1;
+				String postsStr = docText.substring(postsPosition,end);
 				
 				Matcher mpost = pattern.matcher(postsStr);
 				

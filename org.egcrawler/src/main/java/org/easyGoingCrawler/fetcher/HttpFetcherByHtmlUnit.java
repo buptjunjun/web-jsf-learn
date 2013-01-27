@@ -44,7 +44,7 @@ public class HttpFetcherByHtmlUnit extends Fetcher
 	public HttpFetcherByHtmlUnit(boolean enableJs)
 	{
 		// TODO Auto-generated constructor stub
-		this(enableJs ,5,2);
+		this(enableJs ,3,2);
 	}
    
 	public HttpFetcherByHtmlUnit(boolean enableJs, int jsTimeout, int conTimeout)
@@ -57,10 +57,10 @@ public class HttpFetcherByHtmlUnit extends Fetcher
 		}
 
 		// TODO Auto-generated constructor stub
-		webClient = new WebClient();
+		webClient = new WebClient(BrowserVersion.FIREFOX_3_6);
 		webClient.getCache().setMaxSize(100);	
 		webClient.setRedirectEnabled(true);
-		webClient.setTimeout(conTimeout*1000);
+		webClient.setTimeout(conTimeout*2*1000);
 		webClient.setThrowExceptionOnFailingStatusCode(false);
 		webClient.setJavaScriptEnabled(enableJs);
 		webClient.setThrowExceptionOnScriptError(false);
@@ -68,9 +68,8 @@ public class HttpFetcherByHtmlUnit extends Fetcher
 		if(this.enableJs)
 		{
 			webClient.setAjaxController(new NicelyResynchronizingAjaxController());		
-			webClient.setJavaScriptTimeout(jsTimeout*1000);
-			webClient.waitForBackgroundJavaScript(jsTimeout*1000);
-
+			webClient.setJavaScriptTimeout(jsTimeout*5*1000);
+			webClient.waitForBackgroundJavaScript(jsTimeout*10*1000);
 		}
 	}
 	
@@ -99,7 +98,8 @@ public class HttpFetcherByHtmlUnit extends Fetcher
 			curl.setEncode(encoding == null ? this.defaultEncode:encoding);
 			curl.setLastCrawlDate(new Date());	
 			curl.setReserve(page);
-			loger.error(Thread.currentThread().getName()+"-"+ "##HttpFetcherByHtmlUnit: curl="+curl);
+			System.out.println(Thread.currentThread().getName()+"-"+ "##HttpFetcherByHtmlUnit: curl="+curl);
+			
 			
 		}
 		catch (Exception e)
@@ -128,7 +128,7 @@ public class HttpFetcherByHtmlUnit extends Fetcher
 		
 		Fetcher fetcher = new HttpFetcherByHtmlUnit();
 		CrawlURI curl = new CrawlURI();
-		curl.setUrl("http://www.cnblogs.com/baihmpgy/archive/2013/01/06/2847449.html");
+		curl.setUrl("http://www.cnblogs.com/hooray/archive/2011/05/30/2063074.html");
 		curl.setStatus(CrawlURI.STATUS_OK);
 		fetcher.fetch(curl);
 	

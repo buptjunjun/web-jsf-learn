@@ -137,7 +137,7 @@ public class EGDAOMongo implements EGDAO
 	public List<CrawlURI> get(String key)
 	{
 		// TODO Auto-generated method stub
-		return this.queryByhost(key, 100);
+		return this.queryByhost(key, 10);
 	}
 	
 	static public void main(String [] args)
@@ -151,7 +151,7 @@ public class EGDAOMongo implements EGDAO
 		
 		
 		//Blog blog = Mongo.mongoOps.findOne( q_chinaunix,Blog.class);
-		List<Blog> blog = Mongo.mongoOps.find( q_chinaunix,Blog.class);
+		List<Blog> blog = Mongo.mongoOps.find( q_51cto,Blog.class);
 		for (Blog b:blog)
 		{
 			System.out.println(b);
