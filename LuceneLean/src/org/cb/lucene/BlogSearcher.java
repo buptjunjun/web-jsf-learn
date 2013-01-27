@@ -110,7 +110,7 @@ public class BlogSearcher extends Task
 	{
 		BaseSearcher bsearch = new BaseSearcher("E:/Lucene");
 		BlogSearcher blogsearch = new BlogSearcher(bsearch);
-		List<Blog> lb = blogsearch.searchBlog("java 正则 汉字");
+		List<Blog> lb = blogsearch.searchBlog("javascript 取得标签名字");
 		for(Blog blog:lb)
 		{
 			System.out.println("blog:"+blog+"\ntitle:"+blog.getTitle()+"\n tags:"+blog.getTags()+"\n" +blog.getTags()+"content:\n"+"\n-----------------++++---------------------------------\n");
