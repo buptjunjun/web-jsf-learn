@@ -139,7 +139,16 @@ public class RotateHostURLScheduler extends URLScheduler
 	
 	public void insertSeeds()
 	{
-		Url tmpurl = new Url();		
+		Url tmpurl = new Url();	
+		
+		tmpurl.setUrl("http://www.ibm.com/developerworks/cn/");
+		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
+		tmpurl.setFlag(Url.UNCRAWLED);
+		tmpurl.setHost("ibm.cn");
+		tmpurl.setLastCrawled(new Date());
+		tmpurl.setType(Url.URL_OTHER);
+		this.egdao.insert(tmpurl);
+		
 //		tmpurl.setUrl("http://blog.csdn.net/web/index.html");
 //		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
 //		tmpurl.setFlag(Url.UNCRAWLED);
@@ -148,13 +157,13 @@ public class RotateHostURLScheduler extends URLScheduler
 //		tmpurl.setType(Url.URL_OTHER);
 //		this.egdao.insert(tmpurl);
 		
-		tmpurl.setUrl("http://www.cnblogs.com/AllBloggers.aspx");
-		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
-		tmpurl.setFlag(Url.UNCRAWLED);
-		tmpurl.setHost("www.cnblogs.com");
-		tmpurl.setLastCrawled(new Date());
-		tmpurl.setType(Url.URL_OTHER);
-		this.egdao.insert(tmpurl);
+//		tmpurl.setUrl("http://www.cnblogs.com/AllBloggers.aspx");
+//		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
+//		tmpurl.setFlag(Url.UNCRAWLED);
+//		tmpurl.setHost("www.cnblogs.com");
+//		tmpurl.setLastCrawled(new Date());
+//		tmpurl.setType(Url.URL_OTHER);
+//		this.egdao.insert(tmpurl);
 		
 //		tmpurl.setUrl("http://blog.chinaunix.net/");
 //		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));

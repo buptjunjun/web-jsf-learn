@@ -44,7 +44,7 @@ public class HttpFetcherByHtmlUnit extends Fetcher
 	public HttpFetcherByHtmlUnit(boolean enableJs)
 	{
 		// TODO Auto-generated constructor stub
-		this(enableJs ,3,2);
+		this(enableJs ,3,10);
 	}
    
 	public HttpFetcherByHtmlUnit(boolean enableJs, int jsTimeout, int conTimeout)
