@@ -100,8 +100,17 @@ public class IteyeBlogAnalyzer implements Analyzer<Blog>
 			
 			Matcher m = pattern.matcher(postDate);
 			Boolean b = m.find();
-			postDate = m.group();
-
+			Date post = new Date();
+			if(b == true)
+			{
+				postDate = m.group();
+				post = formater.parse(postDate);
+			}
+			else 
+			{
+				// 比如 "6小时前"
+				post = new Date();			
+			}
 			
 			blog.setBlogerURL(url);
 			blog.setHost(host);
@@ -112,7 +121,7 @@ public class IteyeBlogAnalyzer implements Analyzer<Blog>
 			blog.setVisit(Converter.praseIntFromStr(visit));
 			blog.setTags(cats);
 			
-			Date post = formater.parse(postDate);
+			
 			blog.setPostDate(post);
 			blog.setCrawledDate(new Date());
 			
@@ -163,7 +172,7 @@ public class IteyeBlogAnalyzer implements Analyzer<Blog>
 		
 		CrawlURI curl = new CrawlURI();
 	//	curl.setUrl("http://blog.csdn.net/m13666368773/article/details/8432839");
-		curl.setUrl("http://gaopenghigh.iteye.com/blog/1716658");
+		curl.setUrl("http://doppp.iteye.com/blog/1777150");
 		curl.setStatus(CrawlURI.STATUS_OK);
 		fetcher.fetch(curl);
 		curl.setHost("www.iteye.com/blogs");
@@ -193,7 +202,7 @@ public class IteyeBlogAnalyzer implements Analyzer<Blog>
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	//	System.out.println(blog);
+		System.out.println(blog);
 		PrintWriter p = new PrintWriter(fo);
 		
 		p.println(blog);

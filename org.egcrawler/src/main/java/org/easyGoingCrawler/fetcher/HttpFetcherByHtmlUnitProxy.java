@@ -58,7 +58,7 @@ public class HttpFetcherByHtmlUnitProxy extends Fetcher
 	public HttpFetcherByHtmlUnitProxy(boolean enableJs)
 	{
 		// TODO Auto-generated constructor stub
-		this(enableJs ,20,2);
+		this(enableJs ,10,20);
 	}
    
 	public HttpFetcherByHtmlUnitProxy(boolean enableJs, int jsTimeout, int conTimeout)

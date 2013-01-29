@@ -2,6 +2,7 @@ package org.easyGoingCrawler.util;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -79,7 +80,12 @@ public class ProxyManager extends TimerTask
 			if(this.fetchTimes>this.visitLimit)
 			{
 				this.fetchTimes = 0;
+				
 				currentProxy=(currentProxy+1)%lp.size();
+				while(lp.get(currentProxy).getConnectTime()<0)
+				{
+					currentProxy=(currentProxy+1)%lp.size();
+				}
 			}
 			return p;
 		}
@@ -101,11 +107,11 @@ public class ProxyManager extends TimerTask
 	private List<Proxy>  getProxyFromFile(String file)
 	{
 		List<Proxy> lp = new ArrayList<Proxy>();
-		
+		BufferedReader bf= null;
 		try
 		{
 			FileReader f = new FileReader(file);
-			BufferedReader bf = new BufferedReader(f);
+			bf = new BufferedReader(f);
 			String line = null;
 			while( (line = bf.readLine()) != null)
 			{	
@@ -121,6 +127,21 @@ public class ProxyManager extends TimerTask
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		finally
+		{
+			if(bf!=null)
+			{
+				try
+				{
+					bf.close();
+					bf = null;
+				} catch (IOException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		return lp;
 	}
@@ -140,7 +161,7 @@ public class ProxyManager extends TimerTask
 
 		try
 		{
-			boolean success =  executorService.awaitTermination(20, TimeUnit.SECONDS);
+			boolean success =  executorService.awaitTermination(30, TimeUnit.SECONDS);
 			if(!success)
 				executorService.shutdown();
 		} catch (InterruptedException e)
@@ -171,11 +192,11 @@ public class ProxyManager extends TimerTask
 		}	
 		executorService.shutdown();
 	
-		Collections.sort(lp);
+		/*Collections.sort(lp);
 		for(Proxy p:lp)
 		{
 			System.out.println(p);
-		}
+		}*/
 	}
 	
 	public static void main(String []str)

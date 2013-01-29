@@ -51,6 +51,7 @@
    			<entry key="${host_51cto}" value="${save_51cto}"></entry>
    			<entry key="${host_oschina}" value="${save_oschina}"></entry>
    			<entry key="${host_ibmcn}" value="${save_ibmcn}"></entry>
+   			<entry key="${host_iteye}" value="${save_iteye}"></entry>
    		</map>
   	</constructor-arg>
    </bean>
@@ -65,6 +66,7 @@
    			<entry key="${host_51cto}" value="${hold_51cto}"></entry>
    			<entry key="${host_oschina}" value="${hold_oschina}"></entry>
    			<entry key="${host_ibmcn}" value="${hold_ibmcn}"></entry>
+   			<entry key="${host_iteye}" value="${hold_iteye}"></entry>
    		</map>
   	</constructor-arg>
    </bean>
@@ -82,8 +84,7 @@
    		<constructor-arg ref="pattern_hold"></constructor-arg>
    </bean>
   
-  <!-- fetcher --> 
-  
+  <!-- fetcher -->  
   <bean id="fetcherByWebDriver" class="org.easyGoingCrawler.fetcher.HttpFetcherByWebDriver" scope="prototype" /> 
   <bean id="fetcherHtmlUnitXML" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnitXML" scope="prototype" /> 
   <bean id="fetcherHtmlUnit" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnit" scope="prototype" /> 
@@ -93,6 +94,8 @@
   <bean id="fetcher" class="org.easyGoingCrawler.fetcher.HttpFetcher" scope="prototype" />
   <bean id="fetcherProxy" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnitProxy" scope="prototype" >
   </bean>
+  
+  
    <!-- extractor -->
   <bean id="extractor" class="org.easyGoingCrawler.extractor.HTMLExtractor" scope="prototype"/>
   
@@ -137,6 +140,7 @@
   			<entry key="${host_oschina}" value-ref="OschinaBlogAnalyzer"></entry>
   			<entry key="${host_51cto}" value-ref="A51ctoBlogAnalyzer"></entry>
   			<entry key="${host_ibmcn}" value-ref="IBMBlogAnalyzer"></entry>
+  			<entry key="${host_iteye}" value-ref="IteyeBlogAnalyzer"></entry>
   		</map>
   	</constructor-arg>
   </bean>
@@ -151,6 +155,7 @@
   			<entry key="${host_oschina}" value-ref="OschinaBlogerAnalyzer"></entry>
   			<entry key="${host_51cto}" value-ref="A51ctoBlogerAnalyzer"></entry>
   			<entry key="${host_ibmcn}" value-ref="IBMBlogerAnalyzer"></entry>
+  			<entry key="${host_iteye}" value-ref="IteyeBlogerAnalyzer"></entry>
   		</map>
   	</constructor-arg>
   </bean>
@@ -168,8 +173,8 @@
   <bean id="A51ctoBlogerAnalyzer"  class="org.easyGoingCrawler.analyzer.A51ctoBlogerAnalyzer"></bean>
   <bean id="IBMBlogAnalyzer"  class="org.easyGoingCrawler.analyzer.IBMBlogAnalyzer"></bean>
   <bean id="IBMBlogerAnalyzer"  class="org.easyGoingCrawler.analyzer.IBMBlogerAnalyzer"></bean>
-  
-  
+  <bean id="IteyeBlogAnalyzer"  class="org.easyGoingCrawler.analyzer.IteyeBlogAnalyzer"></bean>
+  <bean id="IteyeBlogerAnalyzer"  class="org.easyGoingCrawler.analyzer.IteyeBlogerAnalyzer"></bean>
   
   <!-- csdn  -->
   <bean id="csdnscheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
@@ -232,7 +237,7 @@
   </bean>
   <!-- 51cto end -->
   
-    <!-- cnblog  -->
+  <!-- cnblog  -->
   <bean id="CnblogsScheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
  		<constructor-arg ref="EGDAOMongo"></constructor-arg>
  		<constructor-arg value="${host_cnblogs}"></constructor-arg>
@@ -259,6 +264,21 @@
 		<constructor-arg ref = "IbmcnScheduleer"></constructor-arg>
 		<constructor-arg ref ="docwriter"></constructor-arg>
 		<constructor-arg value="${host_ibmcn}"></constructor-arg>
+  </bean>
+  <!-- IBM cn end -->
+  
+   <!-- IBM cn  -->
+  <bean id="IteyeScheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
+ 		<constructor-arg ref="EGDAOMongo"></constructor-arg>
+ 		<constructor-arg value="${host_iteye}"></constructor-arg>
+ 		<constructor-arg ref="urlAnalyzer"></constructor-arg>
+ </bean>
+  <bean id="Iteyecrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
+		<constructor-arg ref = "fetcherProxy"></constructor-arg>
+		<constructor-arg ref = "extractor"></constructor-arg>
+		<constructor-arg ref = "IteyeScheduleer"></constructor-arg>
+		<constructor-arg ref ="docwriter"></constructor-arg>
+		<constructor-arg value="${host_iteye}"></constructor-arg>
   </bean>
   <!-- IBM cn end -->
 </beans>
