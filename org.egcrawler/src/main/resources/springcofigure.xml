@@ -50,6 +50,7 @@
    			<entry key="${host_chinaunix}" value="${save_chinaunix}"></entry>
    			<entry key="${host_51cto}" value="${save_51cto}"></entry>
    			<entry key="${host_oschina}" value="${save_oschina}"></entry>
+   			<entry key="${host_ibmcn}" value="${save_ibmcn}"></entry>
    		</map>
   	</constructor-arg>
    </bean>
@@ -63,6 +64,7 @@
    			<entry key="${host_chinaunix}" value="${hold_chinaunix}"></entry>
    			<entry key="${host_51cto}" value="${hold_51cto}"></entry>
    			<entry key="${host_oschina}" value="${hold_oschina}"></entry>
+   			<entry key="${host_ibmcn}" value="${hold_ibmcn}"></entry>
    		</map>
   	</constructor-arg>
    </bean>
@@ -134,6 +136,7 @@
   			<entry key="${host_chinaunix}" value-ref="ChinaUnixBlogAnalyzer"></entry>
   			<entry key="${host_oschina}" value-ref="OschinaBlogAnalyzer"></entry>
   			<entry key="${host_51cto}" value-ref="A51ctoBlogAnalyzer"></entry>
+  			<entry key="${host_ibmcn}" value-ref="IBMBlogAnalyzer"></entry>
   		</map>
   	</constructor-arg>
   </bean>
@@ -147,6 +150,7 @@
   			<entry key="${host_chinaunix}" value-ref="ChinaUnixBlogerAnalyzer"></entry>
   			<entry key="${host_oschina}" value-ref="OschinaBlogerAnalyzer"></entry>
   			<entry key="${host_51cto}" value-ref="A51ctoBlogerAnalyzer"></entry>
+  			<entry key="${host_ibmcn}" value-ref="IBMBlogerAnalyzer"></entry>
   		</map>
   	</constructor-arg>
   </bean>
@@ -162,6 +166,8 @@
   <bean id="OschinaBlogerAnalyzer"  class="org.easyGoingCrawler.analyzer.OschinaBlogerAnalyzer"></bean> 
   <bean id="A51ctoBlogAnalyzer"  class="org.easyGoingCrawler.analyzer.A51ctoBlogAnalyzer"></bean>
   <bean id="A51ctoBlogerAnalyzer"  class="org.easyGoingCrawler.analyzer.A51ctoBlogerAnalyzer"></bean>
+  <bean id="IBMBlogAnalyzer"  class="org.easyGoingCrawler.analyzer.IBMBlogAnalyzer"></bean>
+  <bean id="IBMBlogerAnalyzer"  class="org.easyGoingCrawler.analyzer.IBMBlogerAnalyzer"></bean>
   
   
   
@@ -240,4 +246,19 @@
 		<constructor-arg value="${host_cnblogs}"></constructor-arg>
   </bean>
   <!-- cnblog end -->
+  
+   <!-- IBM cn  -->
+  <bean id="IbmcnScheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
+ 		<constructor-arg ref="EGDAOMongo"></constructor-arg>
+ 		<constructor-arg value="${host_ibmcn}"></constructor-arg>
+ 		<constructor-arg ref="urlAnalyzer"></constructor-arg>
+ </bean>
+  <bean id="Ibmcncrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
+		<constructor-arg ref = "fetcherHtmlUnit"></constructor-arg>
+		<constructor-arg ref = "extractor"></constructor-arg>
+		<constructor-arg ref = "IbmcnScheduleer"></constructor-arg>
+		<constructor-arg ref ="docwriter"></constructor-arg>
+		<constructor-arg value="${host_ibmcn}"></constructor-arg>
+  </bean>
+  <!-- IBM cn end -->
 </beans>
