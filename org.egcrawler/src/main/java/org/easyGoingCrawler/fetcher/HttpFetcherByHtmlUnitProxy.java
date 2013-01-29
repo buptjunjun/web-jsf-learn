@@ -52,16 +52,16 @@ public class HttpFetcherByHtmlUnitProxy extends Fetcher
 	public HttpFetcherByHtmlUnitProxy()
 	{
 		// TODO Auto-generated constructor stub
-		this(false,null);
+		this(false);
 	}
 	
-	public HttpFetcherByHtmlUnitProxy(boolean enableJs,String proxyFile)
+	public HttpFetcherByHtmlUnitProxy(boolean enableJs)
 	{
 		// TODO Auto-generated constructor stub
-		this(enableJs ,20,2,proxyFile);
+		this(enableJs ,20,2);
 	}
    
-	public HttpFetcherByHtmlUnitProxy(boolean enableJs, int jsTimeout, int conTimeout,String proxyFile)
+	public HttpFetcherByHtmlUnitProxy(boolean enableJs, int jsTimeout, int conTimeout)
 	{
 		
 		this.enableJs = enableJs;

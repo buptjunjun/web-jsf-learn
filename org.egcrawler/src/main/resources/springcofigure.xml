@@ -90,8 +90,6 @@
   </bean>
   <bean id="fetcher" class="org.easyGoingCrawler.fetcher.HttpFetcher" scope="prototype" />
   <bean id="fetcherProxy" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnitProxy" scope="prototype" >
-  	<constructor-arg value="#{true}"></constructor-arg>
-  	<constructor-arg value="${proxyFile}"></constructor-arg>
   </bean>
    <!-- extractor -->
   <bean id="extractor" class="org.easyGoingCrawler.extractor.HTMLExtractor" scope="prototype"/>
