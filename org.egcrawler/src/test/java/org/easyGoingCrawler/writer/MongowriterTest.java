@@ -17,7 +17,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class MongowriterTest
 {
-	@Test
+	//@Test
 	public void test()
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
@@ -35,14 +35,14 @@ public class MongowriterTest
 		//Bloger bloger = new CSDNBlogerAnalyzer().analyze(null, curl.getEncode(), curl.getContent());
 	}
 	
-//	/@Test
+	@Test
 	public void testRead()
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
 
 		EGDAOMongo mongo = appcontext.getBean("EGDAOMongo",EGDAOMongo.class);
 	
-		List<Html> l = mongo.getLatestHtml("www.cnblogs.com", 3);
+		List<Html> l = mongo.getLatestHtml("ibm.cn", 3);
 		MirrorWriter mirrorwriter = appcontext.getBean("mirrorwriter",MirrorWriter.class);
 		for(Html h:l)
 		{
