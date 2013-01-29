@@ -47,9 +47,9 @@ public class URLAnalyzer
 		//String url = "http://my.oschina.net/kzhou/blog/99360";
 		//String url = "http://my.oschina.net/u/126717";
 		//String url = "http://my.oschina.net/dourgulf";
-		String url = "http://www.iteye.com/blogs/category/mobile";
+		String url = "http://home.cnblogs.com/u/JimmyZhang/followers/2/";
 
-		String pattern4save = "http://[a-zA-z|0-9|-|_]+\\.iteye.com/blog/[0-9]+";
+		String pattern4save = "(http://home.cnblogs.com/u/[a-zA-z|0-9|_|-]+[/]?.*)|(http://www.cnblogs.com/[a-zA-z|0-9|_|-]+[/]?)|(http://www.cnblogs.com/p[0-9]+)|(http://www.cnblogs.com/[a-zA-z|0-9|_|-]+/default.html\\?page=[0-9]+)";
 		String pattern4hold = "(http://[a-zA-z|0-9|-|_]+\\.iteye.com[/]?)|(http://[a-zA-z|0-9|-|_]+\\.iteye.com/\\?page=\\d+)|(http://www.iteye.com/blogs/.*)";
 		System.out.println(Pattern.matches(pattern4save, url));
 		System.out.println(Pattern.matches(pattern4hold, url));

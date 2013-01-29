@@ -158,7 +158,7 @@ public class OschinaBlogAnalyzer implements Analyzer<Blog>
 		
 		CrawlURI curl = new CrawlURI();
 	//	curl.setUrl("http://blog.csdn.net/m13666368773/article/details/8432839");
-		curl.setUrl("http://my.oschina.net/u/616092/blog/99399");
+		curl.setUrl("http://my.oschina.net/huxuanhui/blog/106136");
 		curl.setStatus(CrawlURI.STATUS_OK);
 		fetcher.fetch(curl);
 		curl.setHost("my.oschina.net");
