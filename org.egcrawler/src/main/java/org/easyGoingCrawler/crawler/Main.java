@@ -41,10 +41,10 @@ public class Main
 	public  static void  main(String [] args)
 	{
 		Main main = new Main();
-		/*String [] crawler = {"CSDNcrawler","ChinaUnixcrawler","OsChinacrawler","A51ctocrawler","Cnblogscrawler"};
-		String [] threads = {"csdn_threads","chinaunix_threads","oschina_threads","a51cto_threads","cnblogs_threads"};*/
-		String [] crawler = {"Cnblogscrawler"};
-		String [] threads = {"cnblogs_threads"};
+		String [] crawler = {"CSDNcrawler","ChinaUnixcrawler","OsChinacrawler","A51ctocrawler","Cnblogscrawler","Ibmcncrawler","Iteyecrawler"};
+		String [] threads = {"csdn_threads","chinaunix_threads","oschina_threads","a51cto_threads","cnblogs_threads","ibmcn_threads","iteye_threads"};
+//		String [] crawler = {"Cnblogscrawler"};
+//		String [] threads = {"cnblogs_threads"};
 		/*String [] crawler = {"CSDNcrawler","ChinaUnixcrawler","OsChinacrawler","A51ctocrawler"};
 		String [] threads = {"csdn_threads","chinaunix_threads","oschina_threads","a51cto_threads"};*/
 		for(int i = 0; i < crawler.length; i++)
@@ -69,7 +69,7 @@ public class Main
 	{
 		int poolSize = 3;
 		
-		String psize = Localizer.getMessage("threads");
+		String psize = Localizer.getMessage(threads);
 		try
 		{
 			poolSize = Integer.parseInt(psize);
