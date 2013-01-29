@@ -50,32 +50,32 @@ public class HttpFetcherByWebDriver extends Fetcher
 	{
 		
 		String path ="";
-		System.setProperty("webdriver.firefox.bin","E:\\Program Files\\Mozilla Firefox\\firefox.exe");
+		System.setProperty("webdriver.firefox.bin","D:/Program Files/Mozilla Firefox/firefox.exe");
 		//System.setProperty("webdriver.ie.driver","C:/Program Files (x86)/Internet Explorer/iexplore.exe");
 	
 		// 上边是设置firefox可执行文件的路径			
 		// 关图片
-		firefoxProfile = new FirefoxProfile();
+/*		firefoxProfile = new FirefoxProfile();
 		firefoxProfile.setPreference("permissions.default.image", 2);
 		
 		// 关掉flash
-		firefoxProfile.setPreference("dom.ipc.plugins.enabled.libflashplayer.so", false);
+		firefoxProfile.setPreference("dom.ipc.plugins.enabled.libflashplayer.so", false);*/
 		// 禁用css,不方便调试了。。
 		//firefoxProfile.setPreference("permissions.default.stylesheet", 2);
 		// 启动快速加载，不过好像没什么改变。照官方说法在load结束前就可以开始操作，不过我这还是被blocked直到页面加载完毕   
 	    //firefoxProfile.setPreference("webdriver.load.strategy", "unstable");
 
 		//driver = new InternetExplorerDriver();
-		File file1 = new File("C:/Users/junjun/AppData/Roaming/Mozilla/Firefox/Profiles/p8y3jpgb.default/extensions/requestpolicy@requestpolicy.com.xpi");
-		try
+		//File file1 = new File("C:/Users/junjun/AppData/Roaming/Mozilla/Firefox/Profiles/p8y3jpgb.default/extensions/requestpolicy@requestpolicy.com.xpi");
+	/*	try
 		{
 			firefoxProfile.addExtension(file1);
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		driver = new FirefoxDriver(firefoxProfile);
+		}*/
+		driver = new FirefoxDriver();
 		
 		// TODO Auto-generated constructor stub
 		webClient = new WebClient();

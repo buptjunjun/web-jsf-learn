@@ -73,7 +73,6 @@ public class HttpFetcher extends Fetcher
 {
 	private Logger logger = Logger.getLogger(HttpFetcher.class);
 	// map from host name to ip address
-	private static Hashtable host2ip = new Hashtable(); 
 	/**
 	 * fetch a html file 
 	 * @param url the url of one html file

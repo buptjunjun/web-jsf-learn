@@ -3,7 +3,21 @@ package org.easyGoingCrawler.util;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import org.easyGoingCrawler.util.Localizer;
 
@@ -13,7 +27,7 @@ import org.easyGoingCrawler.util.Localizer;
  * @author andyWebsense
  *
  */
-public class ProxyManager
+public class ProxyManager extends TimerTask
 {
 	 private List<Proxy> lp  = new ArrayList<Proxy>();
 	 
@@ -24,20 +38,30 @@ public class ProxyManager
 	 //the limit one proxy are used each round
 	 private int visitLimit = 80;
 	 static private ProxyManager proxyManager = null;
+	 private Timer timer = null;
+	 private int proxyScheduleInterval = Integer.parseInt(Localizer.getMessage("proxyScheduleInterval"));
 	 
 	 private ProxyManager()
 	 {
 		 String proxyFile = Localizer.getMessage("proxyFile");
 		 this.lp = getProxyFromFile(proxyFile);
 		 this.visitLimit = Integer.parseInt(Localizer.getMessage("visitLimit"));
+		 timer =  new Timer();
+		 timer.schedule(this, 0, proxyScheduleInterval*1000);
 	 }
 	 
+	 /**
+	  * singleton model
+	  * @return
+	  */
 	 static  public ProxyManager getInstance()
 	 {
-		synchronized(proxyManager)
+		synchronized(ProxyManager.class)
 		{
 			if(proxyManager == null)
-				proxyManager = new ProxyManager();
+			{
+				proxyManager = new ProxyManager();				
+			}
 		}
 		return proxyManager;
 	 }
@@ -90,7 +114,7 @@ public class ProxyManager
 				String ip = split[0].trim();
 				String port = split[1].trim();
 				int portInt = Integer.parseInt(port);
-				Proxy p = new Proxy(null,ip,portInt,null);
+				Proxy p = new Proxy(null,ip,portInt,"http://www.iteye.com/blogs");
 				lp.add(p);
 			}
 		} catch (Exception e)
@@ -98,8 +122,78 @@ public class ProxyManager
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-
 		return lp;
 	}
+	
+	/**/
+	private void testUsable()
+	{
+		ExecutorService executorService = Executors.newFixedThreadPool(this.lp.size());
+		 HashMap<Proxy,Future<Integer>> resultFuture =  new HashMap<Proxy,Future<Integer>>();
+		boolean flag = false;
+		for(Proxy p: this.lp)
+		{
+			Future<Integer> f = executorService.submit(p);
+			resultFuture.put(p, f);
+		}
+		
+
+		try
+		{
+			boolean success =  executorService.awaitTermination(20, TimeUnit.SECONDS);
+			if(!success)
+				executorService.shutdown();
+		} catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			executorService.shutdown();
+		}
+		
+		for(Entry<Proxy, Future<Integer>> entry: resultFuture.entrySet())
+		{
+			Future<Integer> f = entry.getValue();
+			int time = Proxy.ERROR;
+			try
+			{
+				time = f.get();
+			} catch (InterruptedException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Proxy p = entry.getKey();
+			p.setConnectTime(time);
+		}	
+		executorService.shutdown();
+	
+		Collections.sort(lp);
+		for(Proxy p:lp)
+		{
+			System.out.println(p);
+		}
+	}
+	
+	public static void main(String []str)
+	{
+		ProxyManager pm = ProxyManager.getInstance();
+		//pm.testUsable();
+
+	}
+	 
+	 @Override
+	public void run()
+	{
+		 synchronized(this.lp)
+		{	
+			 this.testUsable();
+		}
+	
+	}
+
 }
+
