@@ -140,11 +140,19 @@ public class RotateHostURLScheduler extends URLScheduler
 	public void insertSeeds()
 	{
 		Url tmpurl = new Url();	
-		
-		tmpurl.setUrl("http://www.ibm.com/developerworks/cn/");
+//		
+//		tmpurl.setUrl("http://www.ibm.com/developerworks/cn/");
+//		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
+//		tmpurl.setFlag(Url.UNCRAWLED);
+//		tmpurl.setHost("ibm.cn");
+//		tmpurl.setLastCrawled(new Date());
+//		tmpurl.setType(Url.URL_OTHER);
+//		this.egdao.insert(tmpurl);
+	
+		tmpurl.setUrl("http://www.iteye.com/blogs");
 		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
 		tmpurl.setFlag(Url.UNCRAWLED);
-		tmpurl.setHost("ibm.cn");
+		tmpurl.setHost("www.iteye.com/blogs");
 		tmpurl.setLastCrawled(new Date());
 		tmpurl.setType(Url.URL_OTHER);
 		this.egdao.insert(tmpurl);
