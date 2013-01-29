@@ -2,6 +2,7 @@ package org.easyGoingCrawler.fetcher;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.easyGoingCrawler.framwork.CrawlURI;
@@ -34,8 +35,8 @@ public class HttpFetcherTest
 			curl.setUrl(urls[i++%3]);
 			curl.setHttpstatus(-1);
 			fetcher.fetch(curl);
-			System.out.println(i+" " +curl);
-			if(curl.getHttpstatus() != 200)
+			//System.out.println(i+" " +curl);
+			if(curl.getHttpstatus() == 404)
 				break;
 //			String content = new String (curl.getContent());
 //			flag = content.contains("800");
@@ -43,7 +44,9 @@ public class HttpFetcherTest
 			
 			try
 			{
-				TimeUnit.SECONDS.sleep(50);
+				int sleep = 5+new Random().nextInt(10);
+				System.out.println("sleep"+ " "+sleep) ;
+				TimeUnit.SECONDS.sleep(sleep);
 			} catch (InterruptedException e)
 			{
 				// TODO Auto-generated catch block
@@ -55,7 +58,7 @@ public class HttpFetcherTest
 //		String testProps = appcontext.getBean("testProps", String.class);
 //		System.out.println(testProps);
 	}
-	@Test
+	//@Test
 	public void TestIteye()
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
