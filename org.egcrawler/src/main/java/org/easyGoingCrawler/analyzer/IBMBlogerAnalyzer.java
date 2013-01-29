@@ -34,11 +34,11 @@ public class IBMBlogerAnalyzer implements Analyzer<Bloger>
 				Document doc = Jsoup.parse(content);
 				//判断是否是 需要的blog
 				Element summary = doc.getElementById("dw-summary-article");
+				if( summary == null )return null;
 				Element  authorpopup = summary.getElementById("authortip1");
+				if(authorpopup == null) return null;
 				Element articleRating = summary.getElementById("art-rating-summary");
-				
-				if( summary == null || authorpopup == null || articleRating == null)
-					return null;
+				if( articleRating == null)return null;
 				
 				// url of Bloger
 				Elements ename = summary.getElementsByClass("dwauthor");

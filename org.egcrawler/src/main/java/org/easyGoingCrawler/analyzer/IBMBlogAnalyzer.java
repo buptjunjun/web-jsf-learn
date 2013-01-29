@@ -42,11 +42,11 @@ public class IBMBlogAnalyzer implements Analyzer<Blog>
 			Document doc = Jsoup.parse(content);
 			//判断是否是 需要的blog
 			Element summary = doc.getElementById("dw-summary-article");
+			if( summary == null )return null;
 			Element  authorpopup = summary.getElementById("authortip1");
+			if(authorpopup == null) return null;
 			Element articleRating = summary.getElementById("art-rating-summary");
-			
-			if( summary == null || authorpopup == null || articleRating == null)
-				return null;
+			if( articleRating == null)return null;
 			
 			// url of Bloger
 			Elements ename = summary.getElementsByClass("dwauthor");
@@ -153,7 +153,7 @@ public class IBMBlogAnalyzer implements Analyzer<Blog>
 //		
 //		curl = (CrawlURI) AnalyzerUtil.readObj("ibm.dat");
 		
-			System.out.println(curl.getContent());
+		//	System.out.println(curl.getContent());
 
 		Blog blog = new IBMBlogAnalyzer().analyze(curl);
 		
