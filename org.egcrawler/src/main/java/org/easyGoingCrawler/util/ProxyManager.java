@@ -37,7 +37,7 @@ public class ProxyManager extends TimerTask
 	 // the position of current proxy
 	 private int currentProxy = 0;
 	 //the limit one proxy are used each round
-	 private int visitLimit = 80;
+	 private int visitLimit = 60;
 	 static private ProxyManager proxyManager = null;
 	 private Timer timer = null;
 	 private int proxyScheduleInterval = Integer.parseInt(Localizer.getMessage("proxyScheduleInterval"));
@@ -77,7 +77,7 @@ public class ProxyManager extends TimerTask
 			Proxy p = lp.get(currentProxy);
 			this.fetchTimes++;
 			
-			if(this.fetchTimes>this.visitLimit)
+			if(this.fetchTimes>this.visitLimit || p.getConnectTime()<0)
 			{
 				this.fetchTimes = 0;
 				
@@ -100,7 +100,7 @@ public class ProxyManager extends TimerTask
 	public void setVisitLimit(int visitLimit)
 	{
 		if(visitLimit <=0)
-			visitLimit = 80;
+			visitLimit = 60;
 		this.visitLimit = visitLimit;
 	}
 
