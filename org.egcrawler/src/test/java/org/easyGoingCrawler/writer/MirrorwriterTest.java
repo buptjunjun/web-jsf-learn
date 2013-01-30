@@ -25,9 +25,9 @@ public class MirrorwriterTest
 		
 		CrawlURI curl = new CrawlURI();
 		//curl.setUrl("http://blog.csdn.net/m13666368773/article/details/8432839");
-		curl.setUrl("http://tsun424.blog.51cto.com/1048838/437752");
+		curl.setUrl("http://my.oschina.net/bairrfhoinn/blog/106138");
 		curl.setStatus(CrawlURI.STATUS_OK);
-		curl.setHost("blog.51cto.com");
+		curl.setHost("my.oschina.net");
 		fetcher.fetch(curl);
 		System.out.println(curl.getContent());
 		String path = docwriter.getPath(curl);
@@ -76,9 +76,25 @@ public class MirrorwriterTest
 	   
 	}
 	
-	
-	//@Test
 	public void testOSChina()
+	{
+		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
+		Fetcher fetcher = appcontext.getBean("fetcherHtmlUnitJs",Fetcher.class);
+		MirrorWriter docwriter = appcontext.getBean("mirrorwriter",MirrorWriter.class);
+		
+		CrawlURI curl = new CrawlURI();
+		curl.setUrl("http://www.cnblogs.com/jiagoushi/archive/2013/01/23/2872824.html");
+		curl.setStatus(CrawlURI.STATUS_OK);
+		curl.setHost("www.cnblogs.com");
+		fetcher.fetch(curl);
+		System.out.println(curl.getContent());
+		String path = docwriter.getPath(curl);
+		//System.out.println(path);
+		docwriter.write(curl);
+	   
+	}
+	//@Test
+	public void testCnblogs()
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
 		Fetcher fetcher = appcontext.getBean("fetcherHtmlUnitJs",Fetcher.class);
