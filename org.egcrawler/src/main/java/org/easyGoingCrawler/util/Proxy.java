@@ -140,7 +140,7 @@ public class Proxy implements Callable<Integer> ,Comparable
 	       
 	       // return if the status is not 200
 	       if (statusCode != 200)
-	    	   return ERROR;
+	    	   return 0-statusCode;
 	       
 	       long end = System.currentTimeMillis();			  
 	       return (int) (end - begin);

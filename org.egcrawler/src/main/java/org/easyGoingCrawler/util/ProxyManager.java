@@ -192,11 +192,11 @@ public class ProxyManager extends TimerTask
 		}	
 		executorService.shutdown();
 	
-		/*Collections.sort(lp);
+		/*Collections.sort(lp);*/
 		for(Proxy p:lp)
 		{
 			System.out.println(p);
-		}*/
+		}
 	}
 	
 	public static void main(String []str)
