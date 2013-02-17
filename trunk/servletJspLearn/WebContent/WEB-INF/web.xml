@@ -154,5 +154,34 @@
     <servlet-name>ListServlet</servlet-name>
     <url-pattern>/listServlet</url-pattern>
   </servlet-mapping>
-
+  
+  
+  <!-- chapter 9 -->
+  <servlet>
+    <servlet-name>LoginServlet9</servlet-name>
+    <servlet-class>junjun.chapter9.LoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginServlet9</servlet-name>
+    <url-pattern>/login9</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>LoginChkServlet</servlet-name>
+    <servlet-class>junjun.chapter9.LoginChkServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginChkServlet</servlet-name>
+    <url-pattern>/loginchk</url-pattern>
+  </servlet-mapping>
+  
+      <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>junjun.chapter9.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
