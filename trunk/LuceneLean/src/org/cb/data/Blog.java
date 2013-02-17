@@ -11,42 +11,42 @@ public class Blog
 	@ObjectToField(analyzed = false, fieldName = "id", store = true, type = "String")
 	private String id = null;
 	
-	@ObjectToField(analyzed = false, fieldName = "host", store = true, type = "String")
+	@ObjectToField(analyzed = false, fieldName = "host", store = false, type = "String")
 	private String host = null;
 	
-	@ObjectToField(analyzed = false, fieldName = "url", store = true, type = "String")
+	@ObjectToField(analyzed = false, fieldName = "url", store = false, type = "String")
 	private String url = null;           // url
 	
-	@ObjectToField(analyzed = true, fieldName = "title", store = true, type = "String")
+	@ObjectToField(analyzed = true, fieldName = "title", store = false, type = "String")
 	String title = null;
 	
-	@ObjectToField(analyzed = true, fieldName = "content", store = true, type = "String")
+	@ObjectToField(analyzed = true, fieldName = "content", store = false, type = "String")
 	private String content = null;       // content of the bolg
 	
 	private  String html = null;
 	
-	@ObjectToField(analyzed = false, fieldName = "encode", store = true, type = "String")
+	@ObjectToField(analyzed = false, fieldName = "encode", store = false, type = "String")
 	private String encode = "utf8";      // encode of the bolg content
 	
-	@ObjectToField(analyzed = false, fieldName = "blogerURL", store = true, type = "String")
+	@ObjectToField(analyzed = false, fieldName = "blogerURL", store = false, type = "String")
 	private String blogerURL = "";       // the author's url
 	
-	@ObjectToField(analyzed = false, fieldName = "comment", store = true, type = "Integer")
+	@ObjectToField(analyzed = false, fieldName = "comment", store = false, type = "Integer")
 	private int comment = 0;			 // how many comments the blog has been earnt
 	
-	@ObjectToField(analyzed = false, fieldName = "visit", store = true, type = "Integer")
+	@ObjectToField(analyzed = false, fieldName = "visit", store = false, type = "Integer")
 	private int visit = 0;				 // how many times the blog has been visited
 	
-	@ObjectToField(analyzed = true, fieldName = "tags", store = true, type = "List")
+	@ObjectToField(analyzed = true, fieldName = "tags", store = false, type = "List")
 	private List<String> tags = null; 		 // tags of pictures
 	
-	@ObjectToField(analyzed = false, fieldName = "pictures", store = true, type = "Integer")
+	@ObjectToField(analyzed = false, fieldName = "pictures", store = false, type = "Integer")
 	private int pictures = 0;			 // how many pictues in the blog's content
 	
-	@ObjectToField(analyzed = false, fieldName = "postDate", store = true, type = "Date")
+	@ObjectToField(analyzed = false, fieldName = "postDate", store = false, type = "Date")
 	private Date postDate = null;    
 	
-	@ObjectToField(analyzed = false, fieldName = "crawledDate", store = true, type = "Date")
+	@ObjectToField(analyzed = false, fieldName = "crawledDate", store = false, type = "Date")
 	private Date crawledDate = new Date();
 	
 	private int magicNum = -1;
