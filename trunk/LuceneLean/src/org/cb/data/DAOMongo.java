@@ -83,8 +83,7 @@ public class DAOMongo {
        
 		Bloger bloger = this.mongoOps.findById(id, Bloger.class);
         
-		return bloger;
-         
+		return bloger;         
 	}
 	
 	public Blog searchBlog(String id)
@@ -92,6 +91,19 @@ public class DAOMongo {
     	 HashMap m = new HashMap();
     	 m.put("_id", id);
          List<Blog> lp = searchBlog(m,1, Blog.class);
+         if(lp!= null && lp.size()>=1)
+         {
+        	 Blog blog = lp.remove(0);
+        	 return blog;
+         }
+         return null;
+         
+	}
+	
+	public Blog searchBlog(String key,List<String> ids)
+	{
+    	
+         List<Blog> lp = searchBlog(key,ids, ids.size(),Blog.class);
          if(lp!= null && lp.size()>=1)
          {
         	 Blog blog = lp.remove(0);
@@ -130,6 +142,18 @@ public class DAOMongo {
 		List<T> lp = mongoOps.find(q, cls);
         return lp;
          
+	}
+	
+	public <T extends Object>  List<T> searchBlog (String key,List<String> constrains , int limit, Class cls)
+	{
+		if( constrains == null || constrains.size() == 0|| limit < 1) return null;
+		Criteria cons = null;
+		boolean flag = false;
+		cons = Criteria.where(key).in(constrains);
+		
+		Query q = new Query(cons).limit(limit);
+		List<T> lp = mongoOps.find(q, cls);
+        return lp;     
 	}
 	
 	public static void main(String[] args)
