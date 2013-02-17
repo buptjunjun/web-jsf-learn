@@ -50,7 +50,7 @@ public class BaseIndexer
 			iwc = new IndexWriterConfig(Version.LUCENE_40, analyzer);
 			iwc.setRAMBufferSizeMB(1024.0);
 			iwc.setMaxBufferedDocs(1000);
-			iwc.setOpenMode(OpenMode.CREATE);
+			iwc.setOpenMode(OpenMode.CREATE_OR_APPEND);
 			writer = new IndexWriter(dir, iwc);			
 			
 		} catch (IOException e)
