@@ -1,13 +1,35 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" 
+		 contentType="text/html; charset=GBK"
+    	 pageEncoding="GBK"
+    	 import="org.search.beans.*,java.util.*"
+    	 %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<link rel="icon" href="http://localhost:8080/searchTech/icon/ico.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="http://localhost:8080/searchTech/icon/ico.ico" type="image/x-icon" />
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<title>ÂëÁúËÑË÷|ÔÛ³ÌÐòÔ±×Ô¼ºµÄËÑË÷ÒýÇæ</title>
+
+<style type="text/css">
+		html{text-align:center;}
+		body{text-align:center;}
+	</style>
 </head>
 <body>
-<%out.println("hello world");
-%>
+<div style="margin-top:100px">	
+	<img  src="http://localhost:8080/searchTech/icon/LOGO2.png"><br>
+
+	<div style="margin-bottom:300px">
+	<form action="/searchTech/search" method="get">
+		<div>
+		<input name="searchwords" type="text" maxlength="100" style='height:23px;width:400px;margin-right:10px;font-size:18px;'/> 
+		<input name="submit" value=" GO " type="submit" style='color:white; border:0px; margin-right:10px;font-size:22px;background:#1060f3'/>
+		</div>
+	</form>
+	</div>
+</div>
+	<%@ include file="/pages/footer.jsp" %>
 </body>
 </html>

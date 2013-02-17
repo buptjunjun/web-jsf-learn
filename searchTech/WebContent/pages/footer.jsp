@@ -8,11 +8,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div style="color: #cdcdcd; margin-top: 30px; padding-top: 10px; border-top: 5px solid #286BA7" id="footer">
-		<div class="span6 blogContent">
+	<div style="color: #333333; margin-top: 30px; padding-top: 10px; border-top: 5px solid #1060f3" id="footer">
+		<div class="">
 			京ICP备11027501号 京公网安备110108000590号 
 			<br> 
-			&copy;2013 码龙搜索 | <a href="/about">关于码龙搜索 / About US</a>
+			&copy;2013 码龙搜索 | <a style="color:#333333"href="/searchTech/pages/about.jsp">关于码龙搜索 / About US</a>
 		</div>
 	</div>
 </body>
