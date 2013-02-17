@@ -9,6 +9,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=GBK">
 <title>码龙搜索 | 咱程序员自己的搜索引擎</title>
+<link rel="icon" href="http://localhost:8080/searchTech/icon/ico.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="http://localhost:8080/searchTech/icon/ico.ico" type="image/x-icon" />
 </head>
 <body>
 	<%@ include file="/pages/header.jsp" %>

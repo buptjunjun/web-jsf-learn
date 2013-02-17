@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div style="color:#286BA7">
-		<a href="../"><img  src="http://localhost:8080/searchTech/icon/LOGO4.png"></a>	
+		<a href="../"><img  src="http://localhost:8080/searchTech/icon/LOGO4.png" border="0"></a>	
 	
 		<a style="margin-right:5px" href="http://www.baidu.com/" target="_blank">°Ù¶È</a>
 		<a style="margin-right:5px" href="https://www.google.com.hk/" target="_blank">google</a>
