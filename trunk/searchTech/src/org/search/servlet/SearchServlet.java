@@ -11,36 +11,45 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.search.beans.ResultBean;
-
 public class SearchServlet extends HttpServlet
 {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException
 	{
-		req.setCharacterEncoding("GBK");
-		String queryStr = req.getParameter("searchwords");
+		try
+		{
+			req.setCharacterEncoding("GBK");
+			int a = 1/0;
+			String queryStr = req.getParameter("searchwords");
+			if(queryStr == null)
+			{
+	//			RequestDispatcher dispacher = req.getRequestDispatcher("/pages/search.jsp");
+	//			dispacher.forward(req, resp);
+				resp.sendRedirect("pages/search.jsp");
+				return;
+			}
+			queryStr = new String(queryStr.getBytes(),"GBK");
+			ResultBean rb = new ResultBean(queryStr);
 		
-		if(queryStr == null)
-		{
-			RequestDispatcher dispacher = req.getRequestDispatcher("/pages/search.jsp");
-			dispacher.forward(req, resp);
-			return;
+			if(rb == null)
+			{
+	//			RequestDispatcher dispacher = req.getRequestDispatcher("/pages/search.jsp");
+	//			dispacher.forward(req, resp);
+				resp.sendRedirect("pages/search.jsp");
+				return;
+			}
+			HttpSession session = req.getSession();
+			session.setMaxInactiveInterval(60*10);
+			session.setAttribute("result", rb);
+			//RequestDispatcher dispacher = req.getRequestDispatcher("/pages/search.jsp");
+			resp.sendRedirect("pages/search.jsp");
 		}
-		queryStr = new String(queryStr.getBytes(),"GBK");
-		ResultBean rb = new ResultBean(queryStr);
-	
-		if(rb == null)
+		catch(Exception e)
 		{
-			RequestDispatcher dispacher = req.getRequestDispatcher("/pages/search.jsp");
-			dispacher.forward(req, resp);
-			return;
+			e.printStackTrace();
+			resp.sendError(400);
 		}
-		HttpSession session = req.getSession();
-		session.setMaxInactiveInterval(2*1000);
-		session.setAttribute("result", rb);
-		RequestDispatcher dispacher = req.getRequestDispatcher("/pages/search.jsp");
-		dispacher.forward(req, resp);
 	}
 	
 	@Override
