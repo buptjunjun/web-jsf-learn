@@ -2,7 +2,9 @@ package org.easyGoingCrawler.DAO;
 
 import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +32,7 @@ import org.springframework.data.mongodb.core.query.Order;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
+import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 
@@ -139,36 +142,7 @@ public class EGDAOMongo implements EGDAO
 		// TODO Auto-generated method stub
 		return this.queryByhost(key, 10);
 	}
-	
-	static public void main(String [] args)
-	{
-		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
-		EGDAOMongo Mongo= appcontext.getBean("EGDAOMongo", EGDAOMongo.class);
-		Query q_chinaunix = new Query(where("host").is("blog.chinaunix.net")).limit(5);
-		Query q_csdn = new Query(where("host").is("blog.csdn.net")).limit(5);
-		Query q_sochina = new Query(where("host").is("my.oschina.net")).limit(5);
-		Query q_51cto = new Query(where("host").is("blog.51cto.com")).limit(5);
-		
-		
-		//Blog blog = Mongo.mongoOps.findOne( q_chinaunix,Blog.class);
-		List<Blog> blog = Mongo.mongoOps.find( q_51cto,Blog.class);
-		for (Blog b:blog)
-		{
-			System.out.println(b);
-			try
-			{
-				Document doc = Jsoup.parse(b.getContent());
-				String content = doc.text();
-				System.out.println(content+"\n\n");
-			} catch (Exception e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			//break;
-		}
 
-	}
 	
 	/**
 	 * 去的最近的html
@@ -182,6 +156,86 @@ public class EGDAOMongo implements EGDAO
 		q.sort().on("crawledDate", Order.DESCENDING);
 		html = this.mongoOps.find(q, Html.class);
 		return html;
+	}
+	
+	/**
+	 * 去的最近的html
+	 * @return
+	 */
+	public List<Blog> getLatestBlog(String host,int limit)
+	{
+		List<Blog> blog = new ArrayList<Blog>();
+		Query q = new Query(where("host").is(host));
+		q.limit(limit);
+		q.sort().on("crawledDate", Order.DESCENDING);
+		blog = this.mongoOps.find(q, Blog.class);
+		return blog;
+	}
+	
+	/*
+	 * get the size of a collection
+	 */
+	public long getCollectionCount(Class cls)
+	{
+		Query q = new Query();
+		return this.mongoOps.count(q, cls);
+	
+	}
+	
+	/*
+	 * get the size of a collection
+	 */
+	public long getCollectionCountQuery(Query q,Class cls)
+	{
+	
+		return this.mongoOps.count(q,cls );
+		
+	}
+	
+	/*
+	 * get the size of a collection
+	 */
+	public long getCollectionCountByTime(String field,Date start , Date end,Class cls)
+	{
+		Query q = new Query(where(field).gt(start).lte(end));
+		return this.mongoOps.count(q,cls);
+		
+	}
+	
+	
+	static public void main(String [] args) throws ParseException
+	{
+		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
+		EGDAOMongo Mongo= appcontext.getBean("EGDAOMongo", EGDAOMongo.class);
+		Query q_chinaunix = new Query(where("host").is("blog.chinaunix.net")).limit(5);
+		Query q_csdn = new Query(where("host").is("blog.csdn.net")).limit(5);
+		Query q_sochina = new Query(where("host").is("my.oschina.net")).limit(5);
+		Query q_51cto = new Query(where("host").is("blog.51cto.com")).limit(5);
+		
+		
+//		//Blog blog = Mongo.mongoOps.findOne( q_chinaunix,Blog.class);
+//		List<Blog> blog = Mongo.mongoOps.find( q_51cto,Blog.class);
+//		for (Blog b:blog)
+//		{
+//			System.out.println(b);
+//			try
+//			{
+//				Document doc = Jsoup.parse(b.getContent());
+//				String content = doc.text();
+//				System.out.println(content+"\n\n");
+//			} catch (Exception e)
+//			{
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			//break;
+//		}
+		 java.text.SimpleDateFormat f = new  java.text.SimpleDateFormat("yyyy-MM-dd hh:mm");
+		Date start = f.parse("2013-2-1 00:00");
+		Date end = f.parse("2013-3-1 00:00");
+		long amount = Mongo.getCollectionCount(Blog.class);
+		long amount1 = Mongo.getCollectionCountByTime("crawledDate",start,end , Blog.class);
+		System.out.println();
 	}
 
 }

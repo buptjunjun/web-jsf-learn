@@ -90,7 +90,7 @@ public class IBMBlogAnalyzer implements Analyzer<Blog>
 			
 			blog.setBlogerURL(url); // set as the name of author
 			blog.setHost(host);
-			
+			blog.setTitle(title);
 			blog.setEncode(encode);
 			blog.setPictures(imgs);
 			blog.setComment(-1);// comments set to -1
