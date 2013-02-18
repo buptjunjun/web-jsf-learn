@@ -5,6 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<link rel="icon" href="http://localhost:8080/searchTech/icon/ico.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="http://localhost:8080/searchTech/icon/ico.ico" type="image/x-icon" />
 <title>码龙搜索|帮程序员创造价值</title>
 <style type="text/css">
 	html{text-align:center;}

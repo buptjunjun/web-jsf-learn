@@ -6,11 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=GBK">
 <title>码龙搜索|咱程序员自己的搜索引擎</title>
-
+<link rel="icon" href="http://localhost:8080/searchTech/icon/ico.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="http://localhost:8080/searchTech/icon/ico.ico" type="image/x-icon" />
 </head>
 <body>
 	<div style="color:#286BA7">
-		<a href="../"><img  src="http://localhost:8080/searchTech/icon/LOGO3.png"></a>	
+		<a href="../"><img  src="http://localhost:8080/searchTech/icon/LOGO3.png" border="0"></a>	
 	
 	</div>
 </body>

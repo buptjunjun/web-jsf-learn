@@ -20,7 +20,7 @@ public class SearchServlet extends HttpServlet
 		try
 		{
 			req.setCharacterEncoding("GBK");
-			int a = 1/0;
+			//int a = 1/0;
 			String queryStr = req.getParameter("searchwords");
 			if(queryStr == null)
 			{
@@ -40,9 +40,10 @@ public class SearchServlet extends HttpServlet
 				return;
 			}
 			HttpSession session = req.getSession();
-			session.setMaxInactiveInterval(60*10);
+			session.setMaxInactiveInterval(60*5);
 			session.setAttribute("result", rb);
 			//RequestDispatcher dispacher = req.getRequestDispatcher("/pages/search.jsp");
+			//dispacher.forward(req, resp);
 			resp.sendRedirect("pages/search.jsp");
 		}
 		catch(Exception e)

@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=GBK">
-<title>Insert title here</title>
+<link rel="icon" href="http://localhost:8080/searchTech/icon/ico.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="http://localhost:8080/searchTech/icon/ico.ico" type="image/x-icon" />
 </head>
 <body>
 	<div style="color: #333333; margin-top: 30px; padding-top: 10px; border-top: 5px solid #1060f3" id="footer">

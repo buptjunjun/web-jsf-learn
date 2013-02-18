@@ -15,7 +15,7 @@
 <body>
 	<%@ include file="/pages/header.jsp" %>
 	<br>
-	<form action="/searchTech/search" method="get">
+	<form name= "form" action="/searchTech/search" method="post">
 		<div>
 			<input name="searchwords" type="text" maxlength="100" style='height:23px;width:400px;margin-right:10px;font-size:18px;'/> 
 			<input name="submit" value=" GO " type="submit" style='color:white; border:0px; margin-right:10px;font-size:22px;background:#1060f3'/>
