@@ -5,6 +5,11 @@
 	<groupId>org.egcrawler</groupId>
 	<artifactId>org.egcrawler</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	
+	<properties>  
+    <jettyVersion>7.2.0.v20101020</jettyVersion>  
+  </properties> 
+	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -94,6 +99,7 @@
 			<version>1.9.16</version>
 		</dependency>
 
+
 		<!-- log -->
 		<dependency>
 			<groupId>log4j</groupId>
@@ -115,6 +121,41 @@
 			<artifactId>slf4j-nop</artifactId>
 			<version>1.6.1</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>lucenelearn</groupId>
+			<artifactId>lucenelearn</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+	<dependency>  
+      <groupId>org.eclipse.jetty</groupId>  
+      <artifactId>jetty-server</artifactId>  
+      <version>${jettyVersion}</version>  
+    </dependency>
 	</dependencies>
+	 
+   
+  <build>  
+    <plugins>  
+      <plugin>  
+        <!-- This plugin is needed for the servlet example -->  
+        <groupId>org.mortbay.jetty</groupId>  
+        <artifactId>jetty-maven-plugin</artifactId>  
+        <version>${jettyVersion}</version>  
+      </plugin>  
+      <plugin>  
+        <groupId>org.codehaus.mojo</groupId>  
+        <artifactId>exec-maven-plugin</artifactId>  
+        <version>1.1</version>  
+        <executions>  
+          <execution><goals><goal>java</goal></goals></execution>  
+        </executions>  
+        <configuration>  
+          <mainClass>org.example.HelloWorld</mainClass>  
+        </configuration>  
+      </plugin>  
+    </plugins>  
+  </build>  
 </project>
 
