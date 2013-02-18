@@ -18,11 +18,11 @@
 	</style>
 </head>
 <body>
-<div style="margin-top:100px">	
+<div style="margin-top:50px">	
 	<img  src="http://localhost:8080/searchTech/icon/LOGO2.png"><br>
 
-	<div style="margin-bottom:300px">
-	<form action="/searchTech/search" method="get">
+	<div style="margin-bottom:200px">
+	<form action="/searchTech/search" method="post">
 		<div>
 		<input name="searchwords" type="text" maxlength="100" style='height:23px;width:400px;margin-right:10px;font-size:18px;'/> 
 		<input name="submit" value=" GO " type="submit" style='color:white; border:0px; margin-right:10px;font-size:22px;background:#1060f3'/>

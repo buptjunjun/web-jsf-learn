@@ -37,7 +37,6 @@ public class BaseSearcher extends Searcher
 {
 
     private IndexSearcher searcher = null;
-    private Analyzer analyzer = null;
     private String indexPath;
     public static int topN = 30;
     // only one index reader 
@@ -50,7 +49,7 @@ public class BaseSearcher extends Searcher
     	if(ReaderGenerator == null)
     		ReaderGenerator = new IndexReaderGenerator(indexPath);
 		
-    	analyzer = new IKAnalyzer();
+    	
 	    searcher = new IndexSearcher(ReaderGenerator.getReader());
 	    MultiFieldQueryParser m = null;
 	    DefaultSimilarity ds = null;
@@ -71,7 +70,8 @@ public class BaseSearcher extends Searcher
 		
 		try
 		{
-			QueryParser qp = new QueryParser(Version.LUCENE_40,fieldName,this.analyzer);
+			Analyzer  analyzer = new IKAnalyzer();
+			QueryParser qp = new QueryParser(Version.LUCENE_40,fieldName,analyzer);
 			System.out.println(qp.toString());
 			qp.setDefaultOperator(Operator.AND);
 			
@@ -116,8 +116,8 @@ public class BaseSearcher extends Searcher
 				fields[i] = fieldName.get(i);
 			 
 			Map<String,Float> termBoost = new HashMap<String,Float>();
-			
-			TokenStream tokenStream = this.analyzer.tokenStream("", new StringReader(queryStr));
+			Analyzer  analyzer = new IKAnalyzer();
+			TokenStream tokenStream = analyzer.tokenStream("", new StringReader(queryStr));
 			 BooleanQuery q = new BooleanQuery (); 
 			 
 			 tokenStream.addAttribute(CharTermAttribute.class);  
