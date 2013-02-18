@@ -202,6 +202,12 @@ public class EGDAOMongo implements EGDAO
 		
 	}
 	
+	public List getItemByRegex(String field,String regex,int limit,Class cls )
+	{
+		Query q = new Query(where(field).regex(regex));
+		q.limit(limit);
+		return this.mongoOps.find(q, cls);
+	}
 	
 	static public void main(String [] args) throws ParseException
 	{
@@ -230,11 +236,12 @@ public class EGDAOMongo implements EGDAO
 //			}
 //			//break;
 //		}
-		 java.text.SimpleDateFormat f = new  java.text.SimpleDateFormat("yyyy-MM-dd hh:mm");
-		Date start = f.parse("2013-2-1 00:00");
-		Date end = f.parse("2013-3-1 00:00");
-		long amount = Mongo.getCollectionCount(Blog.class);
-		long amount1 = Mongo.getCollectionCountByTime("crawledDate",start,end , Blog.class);
+//		java.text.SimpleDateFormat f = new  java.text.SimpleDateFormat("yyyy-MM-dd hh:mm");
+//		Date start = f.parse("2013-2-1 00:00");
+//		Date end = f.parse("2013-3-1 00:00");
+//		long amount = Mongo.getCollectionCount(Blog.class);
+//		long amount1 = Mongo.getCollectionCountByTime("crawledDate",start,end , Blog.class);
+		List<Url> ret = Mongo.getItemByRegex("url","http://home.cnblogs.com/u/[a-zA-z|0-9|_|-]+/followers[/]?.*",1000,Url.class);
 		System.out.println();
 	}
 
