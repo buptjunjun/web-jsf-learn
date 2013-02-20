@@ -104,7 +104,7 @@ public class HtmlUnitTest {
     
     public void testPost(String query) throws FailingHttpStatusCodeException, IOException 
     {
-    		URL url = new URL("http://localhost:8080/searchTech/pages/search.jsp");
+    		URL url = new URL("http://www.coderlong.com/searchTech/pages/search.jsp");
     	   final WebClient webClient = new WebClient();
 
     	    // Get the first page
