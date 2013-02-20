@@ -99,7 +99,8 @@ public class EGDAOMongo implements EGDAO
 				q= new Query(Criteria.where("flag").is(Url.UNCRAWLED).and("host").is(host));
 			else
 				q = new Query(Criteria.where("flag").is(Url.UNCRAWLED).and("host").is(host).and("type").is(Url.URL_BLOG));
-			
+		
+//			q = new Query(Criteria.where("flag").is(0).and("url").regex("(http://home.cnblogs.com/u/[a-zA-z|0-9|_|-]+[/]?)|(http://home.cnblogs.com/u/[a-zA-z|0-9|_|-]+/followers[/]?.*)|(http://home.cnblogs.com/u/[a-zA-z|0-9|_|-]+/followees[/]?.*)"));
 	        q.sort().on("date", Order.ASCENDING);
 	        q.limit(limit);
 	             
@@ -241,7 +242,7 @@ public class EGDAOMongo implements EGDAO
 //		Date end = f.parse("2013-3-1 00:00");
 //		long amount = Mongo.getCollectionCount(Blog.class);
 //		long amount1 = Mongo.getCollectionCountByTime("crawledDate",start,end , Blog.class);
-		List<Url> ret = Mongo.getItemByRegex("url","http://home.cnblogs.com/u/[a-zA-z|0-9|_|-]+/followers[/]?.*",1000,Url.class);
+		List<Url> ret = Mongo.getItemByRegex("url","http://home.cnblogs.com/u/[a-zA-z|0-9|_|-]+/",1000,Url.class);
 		System.out.println();
 	}
 
