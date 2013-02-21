@@ -73,23 +73,15 @@ public class ProxyManager extends TimerTask
 		{
 			if(currentProxy > lp.size() -1)
 				return null;
+			int i = 0;
+			currentProxy=(currentProxy+1)%lp.size();
+			while(lp.get(currentProxy).getConnectTime()<0 && i++ < lp.size())
+			{
+				currentProxy=(currentProxy+1)%lp.size();
+			}
+			
 			
 			Proxy p = lp.get(currentProxy);
-			this.fetchTimes++;
-			
-			if (p.getConnectTime()<0)
-				currentProxy=(currentProxy+1)%lp.size();
-			
-			if(this.fetchTimes>this.visitLimit)
-			{
-				this.fetchTimes = 0;
-				
-				currentProxy=(currentProxy+1)%lp.size();
-				while(lp.get(currentProxy).getConnectTime()<0)
-				{
-					currentProxy=(currentProxy+1)%lp.size();
-				}
-			}
 			return p;
 		}
 	}
