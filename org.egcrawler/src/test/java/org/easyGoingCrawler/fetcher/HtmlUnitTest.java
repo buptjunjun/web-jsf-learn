@@ -15,10 +15,12 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebRequestSettings;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlPasswordInput;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 import com.gargoylesoftware.htmlunit.util.NameValuePair;
 
+import org.easyGoingCrawler.util.FetcherUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,7 +48,7 @@ public class HtmlUnitTest {
     /**
      * Test /index.html
      */
-    @Test
+ //   @Test
     public void testIndexHtml() throws Exception {
 //        System.out.println("Connecting to: " + webUrl);
 //        webUrl = "http://www.cnblogs.com/58top/archive/2012/12/28/how-to-generate-unique-promotion-discount-codes-in-php.html";
@@ -124,5 +126,47 @@ public class HtmlUnitTest {
     	    final HtmlPage page2 = button.click();
     	   // FileWriter f = new FileWriter("result.txt");
     	    System.out.println(page2.asXml());
+    }
+    
+   // @Test
+    public void testPostCnblog() throws FailingHttpStatusCodeException, IOException 
+    {
+    	   URL url = new URL("http://passport.cnblogs.com/login.aspx?ReturnUrl=http%3A%2F%2Fwww.cnblogs.com%2F");
+    	   final WebClient webClient = new WebClient();
+
+    	    // Get the first page
+    	    final HtmlPage page1 = webClient.getPage(url);
+
+    	    // Get the form that we are dealing with and within that form, 
+    	    // find the submit button and the field that we want to change.
+    	    final HtmlForm form = page1.getFormByName("frmLogin");
+    	    final HtmlTextInput name = form.getInputByName("tbUserName");
+    	    final HtmlPasswordInput password = form.getInputByName("tbPassword");
+    	    
+    	    final HtmlSubmitInput button = form.getInputByName("btnLogin");
+
+    	    // Change the value of the text field
+    	    name.setValueAttribute("buptjunjun");
+    	    password.setValueAttribute("1234abcd");
+
+    	    // Now submit the form by clicking the button and get back the second page.
+    	    final HtmlPage page2 = button.click();
+    	   // FileWriter f = new FileWriter("result.txt");
+    	   // System.out.println(page2.asXml());
+    	    
+    	    final HtmlPage page3 = webClient.getPage("http://home.cnblogs.com/u/webooxx/");
+    	    System.out.println(page3.asText());
+    }
+    
+    @Test
+    public void testFetcherUtil() throws FailingHttpStatusCodeException, MalformedURLException, IOException
+    {
+//    	 WebClient webClient = FetcherUtil.getLoginedWebClinet(
+//    			 "http://passport.cnblogs.com/login.aspx?ReturnUrl=http%3A%2F%2Fwww.cnblogs.com%2F"
+//    			 ,"frmLogin","tbUserName","tbPassword","btnLogin","buptjunjun","1234abcd");
+    	
+    	WebClient webClient = FetcherUtil.getLoginedWebClinet("src\\main\\resources\\loginCnblog.txt");
+    	 final HtmlPage page3 = webClient.getPage("http://home.cnblogs.com/u/webooxx/");
+    	 System.out.println(page3.asText());
     }
 }
