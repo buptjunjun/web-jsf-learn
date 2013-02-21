@@ -1,5 +1,6 @@
 package org.easyGoingCrawler.framwork;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -116,7 +117,7 @@ public class EGCrawler  extends Thread
 				// do a crawl job
 				this.doOneTask();			
 												
-				int random  = Math.abs(new Random().nextInt(this.interval));
+				int random  = Math.abs(new Random(new Date().getTime()).nextInt(this.interval));
 				System.out.println(Thread.currentThread().getName() + "will do one task , and now sleep "+ (this.interval+random) +"seconds");
 				// sleep a time
 				TimeUnit.SECONDS.sleep(this.interval+random);
