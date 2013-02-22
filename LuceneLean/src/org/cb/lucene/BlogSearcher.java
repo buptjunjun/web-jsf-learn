@@ -16,6 +16,8 @@ import org.apache.lucene.search.similarities.DefaultSimilarity;
 import org.apache.lucene.search.similarities.Similarity;
 import org.cb.common.Task;
 import org.cb.data.Blog;
+import org.cb.lucene.BaseSearcher;
+import org.cb.lucene.Searcher;
 import org.cb.util.converter;
 
 public class BlogSearcher extends Task
