@@ -25,11 +25,12 @@ public class SearchServlet extends HttpServlet
 			//int a = 1/0;
 			String queryStr = req.getParameter("searchwords");
 			session.setAttribute("queryStr", queryStr);
-			if(queryStr == null)
+			
+			if(queryStr == null || queryStr.trim().equals(""))
 			{
 	//			RequestDispatcher dispacher = req.getRequestDispatcher("/pages/search.jsp");
 	//			dispacher.forward(req, resp);
-				resp.sendRedirect("pages/search.jsp");
+				resp.sendRedirect("index.jsp");
 				return;
 			}
 			queryStr = new String(queryStr.getBytes(),"GBK");
