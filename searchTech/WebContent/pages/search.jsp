@@ -36,6 +36,10 @@
  	color: #CC0000;
     font-style: normal;
     }
+   #content
+   {
+   	  border-right:solid 1px;
+   }
 </style>
 
 </head>
