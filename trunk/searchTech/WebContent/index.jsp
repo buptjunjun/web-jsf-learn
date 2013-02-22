@@ -9,16 +9,17 @@
 <head>
 <link rel="icon" href="icon/ico.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="icon/ico.ico" type="image/x-icon" />
-<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<meta http-equiv="Content-Type" charset=GBK"  content="java c c++ python android 程序 员 码农 码龙  web html jsp servlet 开发">
 <title>码龙搜索|咱程序员自己的搜索引擎</title>
 
 <style type="text/css">
 		html{text-align:center;}
 		body{text-align:center;}
+		
 	</style>
 </head>
 <body>
-<div style="margin-top:50px">	
+<div style="margin-top:10%">	
 	<img  src="icon/LOGO2.png"><br>
 
 	<div style="margin-bottom:200px">
@@ -31,6 +32,7 @@
 	</div>
 	
 </div>
-	<%@ include file="/pages/footer.jsp" %>
+
+<%@ include file="/pages/footer.jsp" %>
 </body>
 </html>

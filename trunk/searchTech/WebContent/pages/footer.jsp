@@ -7,9 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=GBK">
 <link rel="icon" href="/icon/ico.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="/icon/ico.ico" type="image/x-icon" />
+<style>
+#bottom{position:absolute;width:100%;margin-top:20px;bottom:0;left:0;}
+</style> 
 </head>
 <body>
-	<div style="color: #333333; margin-top: 30px; padding-top: 10px; border-top: 5px solid #1060f3" id="footer">
+	<div id = "bottom" style="color: #333333; margin-top: 30px; padding-top: 10px; border-top: 5px solid #1060f3" id="footer">
 		<div class="">
 			京ICP备11027501号 京公网安备110108000590号 
 			<br> 
