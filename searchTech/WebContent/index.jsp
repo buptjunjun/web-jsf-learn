@@ -22,7 +22,7 @@
 <div style="margin-top:10%">	
 	<img  src="icon/LOGO2.png"><br>
 
-	<div style="margin-bottom:200px">
+	<div style="margin-bottom:25%">
 	<form name= "form" action=<%= request.getContextPath()+"/search"%> method="post">
 		<div>
 			<input name="searchwords" type="text" maxlength="100" style='height:23px;width:400px;margin-right:10px;font-size:18px;'/> 
