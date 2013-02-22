@@ -8,7 +8,7 @@
 <link rel="icon" href="/icon/ico.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="/icon/ico.ico" type="image/x-icon" />
 <style>
-#bottom{position:absolute;width:100%;margin-top:20px;bottom:0;left:0;}
+
 </style> 
 </head>
 <body>
