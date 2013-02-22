@@ -9,15 +9,43 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=GBK">
 <title>码龙搜索 | 咱程序员自己的搜索引擎</title>
-<link rel="icon" href="http://localhost:8080/searchTech/icon/ico.ico" type="image/x-icon" />
-<link rel="shortcut icon" href="http://localhost:8080/searchTech/icon/ico.ico" type="image/x-icon" />
+<link rel="icon" href="../icon/ico.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../icon/ico.ico" type="image/x-icon" />
+
+<script type="text/javascript">
+
+    // reset the query String
+	function resetQueryStr()
+	{
+		var queryStr = document.getElementById("queryStr");
+		var queryStrInput = document.getElementById("searchwords");
+		var queryText = queryStr.innerText;
+		var queryText = queryStr.innerHTML;
+		
+		if(queryText != null && queryText != "undefined")
+			queryStrInput.value = queryText;
+		else
+			queryStrInput.value = "";
+		
+	}
+</script>
+
+<!--   color of em --> 
+<style>
+ em{   
+ 	color: #CC0000;
+    font-style: normal;
+    }
+</style>
+
 </head>
 <body>
 	<%@ include file="/pages/header.jsp" %>
 	<br>
-	<form name= "form" action="/searchTech/search" method="post">
+	
+	<form name= "form" action=<%= request.getContextPath()+"/search"%> method="post">
 		<div>
-			<input name="searchwords" type="text" maxlength="100" style='height:23px;width:400px;margin-right:10px;font-size:18px;'/> 
+			<input id="searchwords" name="searchwords" type="text" maxlength="100" style='height:23px;width:400px;margin-right:10px;font-size:18px;'/> 
 			<input name="submit" value=" GO " type="submit" style='color:white; border:0px; margin-right:10px;font-size:22px;background:#1060f3'/>
 		</div>
 	</form>
@@ -61,8 +89,15 @@
 			   out.println("<div><a href='search.jsp?page="+(pageNum-1)+"' >上一页</a> <a href='search.jsp?page="+(pageNum+1)+"' >下一页</a></div>");
 		   
 	   }
+	   String queryStr = (String)session.getValue("queryStr");
+	   out.println("<div  style ='display:none' id='queryStr' >"+queryStr+"</div>");
 	  %>
 	</div>
 	<%@ include file="/pages/footer.jsp" %>
+	
+	<script type="text/javascript">
+	
+	 resetQueryStr();
+	</script>
 </body>
 </html>
