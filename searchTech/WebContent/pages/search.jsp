@@ -33,13 +33,18 @@
 <!--   color of em --> 
 <style>
  em{   
- 	color: #CC0000;
+    color: #CC0000;
     font-style: normal;
     }
-   #content
-   {
-   	  border-right:solid 1px;
-   }
+body
+{
+padding-left:20px;
+}
+#content
+{
+	width:800px;
+	padding-right:10px;	
+}
 </style>
 
 </head>
@@ -78,7 +83,7 @@
 		   {
 			   ResultItemBean b = resultBeans.get(i);
 			   
-			   out.println("<div style='width:800px;'>");
+			   out.println("<div>");
 			   out.println("<div><a href='"+b.getUrl()+"'  target='_blank'>"+b.getTitle()+"</a></div>");
 			   out.println("<div>"+b.getContent()+"..."+"</div>");	
 			   out.println("<div style='color:green'>"+b.getUrl() +"  |  "+ b.getDate().toLocaleString()+"</div>");	
