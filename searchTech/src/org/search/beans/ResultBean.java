@@ -1,14 +1,18 @@
 package org.search.beans;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
 import org.cb.data.Blog;
 import org.cb.data.DAOMongo;
 import org.cb.lucene.BaseSearcher;
 import org.cb.lucene.BlogSearcher;
+import org.cb.util.HighLighter;
 import org.cb.util.searchTool;
 import org.search.beans.ResultItemBean;
 
@@ -30,14 +34,40 @@ public class ResultBean
 		
 		List<Blog> lb = DAOMongo.getInstance().searchBlog("_id",ids);
 		if(lb != null)
-		for(Blog blog:lb)
 		{
-			String subContent = blog.getContent().length()<=200? blog.getContent() : blog.getContent().substring(0, 200);
-			subContent  = toHtml(subContent);
-			String title = toHtml(blog.getTitle());
-			this.results.add(new ResultItemBean(title,subContent,blog.getUrl(),blog.getTags(),blog.getPostDate()));
-			//System.out.println("blog:"+blog+"\ntitle:"+blog.getTitle()+"\n tags:"+blog.getTags()+"\n" +blog.getTags()+"content:\n"+"\n-----------------++++---------------------------------\n");
-		}	
+			HighLighter highlighter = new HighLighter();
+			for(Blog blog:lb)
+			{
+				String subContent;
+				String content =  blog.getContent();
+				content  = toHtml(content);
+				try
+				{
+					subContent = highlighter.getHightLight(queryStr, content, 200);
+				} catch (Exception e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					subContent = (content == null || content.length() <= 200 ? content: content.substring(0,200));
+				}
+				
+				
+				String title = toHtml(blog.getTitle());
+				try
+				{
+					title = highlighter.getHightLight(queryStr, title, 200);
+				}  
+				catch (Exception e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					title = toHtml(blog.getTitle());
+				}
+				
+				this.results.add(new ResultItemBean(title,subContent,blog.getUrl(),blog.getTags(),blog.getPostDate()));
+				//System.out.println("blog:"+blog+"\ntitle:"+blog.getTitle()+"\n tags:"+blog.getTags()+"\n" +blog.getTags()+"content:\n"+"\n-----------------++++---------------------------------\n");
+			}	
+		}
 	}
 	public List<ResultItemBean> getResults()
 	{
