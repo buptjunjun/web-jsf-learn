@@ -148,17 +148,18 @@ public class CnblogsBlogAnalyzer implements Analyzer<Blog>
 			if(blog == null)
 				return null;
 			
-//			HtmlPage p = (HtmlPage) curl.getReserve();
-//			HtmlElement ebody = p.getBody();
-//			HtmlElement e = ebody.getElementById("cnblogs_post_body");
-//			blog.setContent(e.asText());
-			WebDriver p = (WebDriver) curl.getReserve();
-			WebElement e = p.findElement(By.id("cnblogs_post_body"));
-			if ( e==null)
-			{
-				return null;
-			}
-			blog.setContent(e.getText());
+			HtmlPage p = (HtmlPage) curl.getReserve();
+			HtmlElement ebody = p.getBody();
+			HtmlElement e = ebody.getElementById("cnblogs_post_body");
+			blog.setContent(e.asText());
+//			WebDriver p = (WebDriver) curl.getReserve();
+//			WebElement e = p.findElement(By.id("cnblogs_post_body"));
+//			if ( e==null)
+//			{
+//				return null;
+//			}
+//			blog.setContent(e.getText());
+			
 			blog.setBlogerURL(this.getBlogerUrl(curl.getUrl()));
 			blog.setUrl(curl.getUrl());
 			blog.setId(Converter.urlEncode(curl.getUrl()));

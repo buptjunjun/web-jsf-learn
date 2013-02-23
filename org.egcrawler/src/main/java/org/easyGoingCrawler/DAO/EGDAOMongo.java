@@ -95,12 +95,12 @@ public class EGDAOMongo implements EGDAO
 			Query q ;
 			
 			// querying a blog's probability is  70% 
-//			if( new Random().nextInt(10) < 3)
-//				q= new Query(Criteria.where("flag").is(Url.UNCRAWLED).and("host").is(host));
-//			else
-//				q = new Query(Criteria.where("flag").is(Url.UNCRAWLED).and("host").is(host).and("type").is(Url.URL_BLOG));
-//		
-			q = new Query(Criteria.where("flag").is(0).and("url").regex("(http://home.cnblogs.com/u/[a-zA-z|0-9|_|-]+[/]?)|(http://home.cnblogs.com/u/[a-zA-z|0-9|_|-]+/followers[/]?.*)|(http://home.cnblogs.com/u/[a-zA-z|0-9|_|-]+/followees[/]?.*)"));
+			if( new Random().nextInt(10) < 3)
+				q= new Query(Criteria.where("flag").is(Url.UNCRAWLED).and("host").is(host));
+			else
+				q = new Query(Criteria.where("flag").is(Url.UNCRAWLED).and("host").is(host).and("type").is(Url.URL_BLOG));
+		
+			//q = new Query(Criteria.where("flag").is(0).and("url").regex("(http://home.cnblogs.com/u/[a-zA-z|0-9|_|-]+[/]?)|(http://home.cnblogs.com/u/[a-zA-z|0-9|_|-]+/followers[/]?.*)|(http://home.cnblogs.com/u/[a-zA-z|0-9|_|-]+/followees[/]?.*)"));
 	        q.sort().on("date", Order.ASCENDING);
 	        q.limit(limit);
 	             
