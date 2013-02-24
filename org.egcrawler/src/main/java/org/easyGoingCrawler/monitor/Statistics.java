@@ -94,8 +94,8 @@ public class Statistics
 	
 	public String getStatistics(String hostName,Date date)
 	{  
-	    Long fetchedUrl = this.Mongo.getCollectionCountByTimeByHost(hostName,"lastCrawled", date, new Date(), Url.class);
-	    Long fetchedBlog = this.Mongo.getCollectionCountByTimeByHost(hostName,"crawledDate", date, new Date(), Blog.class);	
+	  //  Long fetchedUrl = this.Mongo.getCollectionCountByTimeByHost(hostName,"lastCrawled", date, new Date(), Url.class);
+	  //  Long fetchedBlog = this.Mongo.getCollectionCountByTimeByHost(hostName,"crawledDate", date, new Date(), Blog.class);	
 	    Long totalUrl = this.Mongo.getCollectionCountByHost(hostName, Url.class);
 		Long totalBlog = this.Mongo.getCollectionCountByHost(hostName,Blog.class);
 		
@@ -103,8 +103,8 @@ public class Statistics
 		String div = "<div>";
 		div +="  totalUrl:"+totalUrl+"<br>";
 		div +="  totalBlog:"+totalBlog+"<br>";
-		div +=hostName+"  fetchedUrl:"+fetchedUrl+"<br>";
-		div +=hostName+"  fetchedBlog:"+fetchedBlog+"<br>";		
+	//	div +=hostName+"  fetchedUrl:"+fetchedUrl+"<br>";
+	//	div +=hostName+"  fetchedBlog:"+fetchedBlog+"<br>";		
 		div+="</div>";
 		
 		return div;
