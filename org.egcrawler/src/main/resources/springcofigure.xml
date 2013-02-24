@@ -35,8 +35,13 @@
   		<list>
  			<value>${host_csdn}</value> 		   
 			<value>${host_chinaunix}</value>
-			 <!-- <value>${host_cnblogs}</value> --> 
+			 <value>${host_cnblogs}</value> 
 			  <value>${host_51cto}</value>
+			   <value>${host_ibmcn}</value>
+			   <value>${host_oschina}</value>
+			   <value>${host_iteye}</value>
+			   
+			   
 		</list>
   	</constructor-arg>
   </bean>

@@ -15,19 +15,34 @@ import org.eclipse.jetty.servlet.ServletHolder;
   * @author andyWebsense
   *
   */
-public class MainServer
+public class MainServer extends Thread
 {
+	@Override
+	public void run()
+	{
+		 Server server = new Server(8081);  
+         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+         context.setContextPath("/");
+            
+         // http://localhost:8081/hello   
+         context.addServlet(new ServletHolder(new EGCrawlerInfoServlet()), "/host"); 
+         context.addServlet(new ServletHolder(new ProxyInfoServlet()), "/proxy");
+         context.addServlet(new ServletHolder(new MainPageServlet()), "/"); 
+         server.setHandler(context);     
+         try
+		{
+			server.start();
+			server.join();  
+		} catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+       
+	}
       
     public static void main(String[] args) throws Exception  
     {  
-    	 Server server = new Server(8081);  
-         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-         context.setContextPath("/");
-         server.setHandler(context);        
-         // http://localhost:8081/hello   
-         context.addServlet(new ServletHolder(new EGCrawlerInfoServlet()), "/hello");  
-         server.setHandler(context);       
-         server.start();  
-         server.join();  
+    	new MainServer().start();
     }  
 }

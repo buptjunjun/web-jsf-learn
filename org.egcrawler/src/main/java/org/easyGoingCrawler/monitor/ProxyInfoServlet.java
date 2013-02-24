@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.easyGoingCrawler.util.Proxy;
+import org.easyGoingCrawler.util.ProxyManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class EGCrawlerInfoServlet extends HttpServlet
+public class ProxyInfoServlet extends HttpServlet
 {
 	private static  Date startTime = null;
 	private Date currentTime = null;
@@ -56,32 +58,41 @@ public class EGCrawlerInfoServlet extends HttpServlet
 		p.println("<p2> server start at:"+startTime.toLocaleString()+"<p2><br>");
 		p.println("<p2> now is :"+currentTime.toLocaleString()+"<p2><br>");
 		p.println("<p2> the interval is : :"+interval/60+" minitues "+interval%60+" seconds<p2><br><br>");
+
 		p.println("<a href='/host'>host</a>");
 		p.println("<a href='/proxy'>proxy</a>");
-		p.println("<a href='/'>mainpage</a><br>");
+		p.println("<a href='/'>mainpage</a>");
 		
-		p.println("<form name = 'form' method='post' action='host'>");
-		p.println("host:");
-		p.println("<select name='host'>");
-		for( String h:hosts)
-			p.println("<option value='"+h+"'>"+h+"</option>");		
-		p.println("</select>");
-		
-		p.println(" <input type='submit' value='submit' /><br>");
-		p.println("</form>");
-		if (host == null || host.trim().equals(""))
-			host = "unknow";
-		
-		p.println("<p2> host:"+host+"<p2>");
-		
-		if(statistics == null)
-			statistics = new Statistics(this.startTime,this.currentTime);
-		
-		p.println("<div>"+statistics.getTotal()+"</div>");
-		if(!host.equals("unknow"));
-				p.println(statistics.getHtml(host));
+		p.println(getProxyHtml());
 		p.println("<body><html>");
 	}
 	
+	private String getProxyHtml()
+	{
+		String divs ="<div>";
+		ProxyManager manager = ProxyManager.getInstance();
+		List<Proxy> lp = manager.getLp();
+		
+		int i = 0;
+		int count = 0;
+		for(Proxy p:lp)
+		{
+			if(p.getConnectTime() <= manager.getMaxResponseTime() && p.getConnectTime() >0)
+				count++;
+		}		
+		divs+=" total proxies number:"+ lp.size()+"<br>";
+		divs+=" useful proxies number:"+ count+"<br>";
+		divs+="max response time:" +manager.getMaxResponseTime()+"<br><br>";
+		
+		for(Proxy p:lp)
+		{
+			divs+=i+++":"+p.toString()+"<br>";
+			if(p.getConnectTime() <= manager.getMaxResponseTime())
+				count++;
+		}
+		
+		divs+="</div>";
+		return divs;
+	}
 	
 }

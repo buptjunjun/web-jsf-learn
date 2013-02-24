@@ -85,7 +85,7 @@ public class Proxy implements Callable<Integer> ,Comparable
 	@Override
 	public String toString()
 	{
-	  return this.ip +":"+this.port+ ":"+this.connectTime;
+	  return this.ip +":"+this.port+ ","+this.connectTime;
 	}
 
 	public Integer call() throws Exception

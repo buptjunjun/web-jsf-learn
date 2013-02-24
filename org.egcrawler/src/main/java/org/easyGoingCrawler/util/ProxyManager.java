@@ -32,7 +32,12 @@ public class ProxyManager extends TimerTask
 {
 	 private List<Proxy> lp  = new ArrayList<Proxy>();
 	 
-	 //how many times when we visit a url using the the current proxy 
+	 public List<Proxy> getLp()
+	{
+		return lp;
+	}
+
+	//how many times when we visit a url using the the current proxy 
 	 private long fetchTimes = 0;
 	 // the position of current proxy
 	 private int currentProxy = 0;
@@ -41,14 +46,18 @@ public class ProxyManager extends TimerTask
 	 static private ProxyManager proxyManager = null;
 	 private Timer timer = null;
 	 private int proxyScheduleInterval = Integer.parseInt(Localizer.getMessage("proxyScheduleInterval"));
-	 
-	 private ProxyManager()
+	 // the max response time from the test site.
+	 private int maxResponseTime = 10000;
+	
+
+	private ProxyManager()
 	 {
 		 String proxyFile = Localizer.getMessage("proxyFile");
 		 this.lp = getProxyFromFile(proxyFile);
 		 this.visitLimit = Integer.parseInt(Localizer.getMessage("visitLimit"));
 		 timer =  new Timer();
 		 timer.schedule(this, 0, proxyScheduleInterval*1000);
+		 maxResponseTime = Integer.parseInt(Localizer.getMessage("maxResponseTime"));
 	 }
 	 
 	 /**
@@ -75,7 +84,7 @@ public class ProxyManager extends TimerTask
 				return null;
 			int i = 0;
 			currentProxy=(currentProxy+1)%lp.size();
-			while(lp.get(currentProxy).getConnectTime()<0 && i++ < lp.size())
+			while( (lp.get(currentProxy).getConnectTime()<0 ||lp.get(currentProxy).getConnectTime() > this.maxResponseTime)  && i++ < lp.size())
 			{
 				currentProxy=(currentProxy+1)%lp.size();
 			}
@@ -197,7 +206,7 @@ public class ProxyManager extends TimerTask
 	public static void main(String []str)
 	{
 		ProxyManager pm = ProxyManager.getInstance();
-		//pm.testUsable();
+		pm.testUsable();
 
 	}
 	 
@@ -210,6 +219,16 @@ public class ProxyManager extends TimerTask
 		}
 	
 	}
+	 
+	 public int getMaxResponseTime()
+		{
+			return maxResponseTime;
+		}
+
+		public void setMaxResponseTime(int maxResponseTime)
+		{
+			this.maxResponseTime = maxResponseTime;
+		}
 
 }
 

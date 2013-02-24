@@ -163,6 +163,20 @@ public class EGDAOMongo implements EGDAO
 	 * 去的最近的html
 	 * @return
 	 */
+	public List<Url> getLatestUrl(String host,int limit)
+	{
+		List<Url> html = new ArrayList<Url>();
+		Query q = new Query(where("host").is(host));
+		q.limit(limit);
+		q.sort().on("lastCrawled", Order.DESCENDING);
+		html = this.mongoOps.find(q, Url.class);
+		return html;
+	}
+	
+	/**
+	 * 去的最近的html
+	 * @return
+	 */
 	public List<Blog> getLatestBlog(String host,int limit)
 	{
 		List<Blog> blog = new ArrayList<Blog>();
@@ -203,12 +217,33 @@ public class EGDAOMongo implements EGDAO
 		
 	}
 	
+	/*
+	 * get the size of a collection
+	 */
+	public long getCollectionCountByHost(String host,Class cls)
+	{
+		Query q = new Query(where("host").is(host));
+		return this.mongoOps.count(q,cls);
+		
+	}
+	
+	/*
+	 * get the size of a collection
+	 */
+	public long getCollectionCountByTimeByHost(String host,String field,Date start , Date end,Class cls)
+	{
+		Query q = new Query(where("host").is(host).and(field).gt(start).lte(end));
+		return this.mongoOps.count(q,cls);
+		
+	}
+	
 	public List getItemByRegex(String field,String regex,int limit,Class cls )
 	{
 		Query q = new Query(where(field).regex(regex));
 		q.limit(limit);
 		return this.mongoOps.find(q, cls);
 	}
+	
 	
 	static public void main(String [] args) throws ParseException
 	{
