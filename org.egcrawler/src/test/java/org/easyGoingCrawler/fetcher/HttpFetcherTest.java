@@ -14,7 +14,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class HttpFetcherTest
 {
-	@Test
+//	@Test
 	public void FetcherTest()
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
@@ -96,5 +96,19 @@ public class HttpFetcherTest
 			}
 		}
 
+	}
+	
+	@Test
+	public void test()
+	{
+		
+	ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
+	Fetcher fetcher = appcontext.getBean("fetcherHtmlUnitJs",Fetcher.class);
+	CrawlURI curl = new CrawlURI();
+	curl.setUrl("http://www.jyeoo.com/math2/ques/search?f=0&s=0&t=0&q=0b79b0c2-bb1f-44bf-a2fd-44aa1fa81fef");
+	curl.setStatus(CrawlURI.STATUS_OK);
+	fetcher.fetch(curl);
+	String html = curl.getContent();
+	System.out.println(html);
 	}
 }
