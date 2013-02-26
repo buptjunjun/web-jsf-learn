@@ -278,6 +278,7 @@ public class EGDAOMongo implements EGDAO
 //		long amount = Mongo.getCollectionCount(Blog.class);
 //		long amount1 = Mongo.getCollectionCountByTime("crawledDate",start,end , Blog.class);
 		List<Url> ret = Mongo.getItemByRegex("url","http://home.cnblogs.com/u/[a-zA-z|0-9|_|-]+/",1000,Url.class);
+		long count = Mongo.getCollectionCount(Blog.class);
 		System.out.println();
 	}
 

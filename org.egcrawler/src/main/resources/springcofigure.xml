@@ -29,6 +29,23 @@
 <!-- Default bean name is 'mongo' -->
    <mongo:mongo host="localhost" port="27017"/> 
   
+    
+   <!-- remote server -->
+   <mongo:mongo id = "rmongo" host="42.96.143.59" port="27017">
+    <mongo:options connections-per-host="8"
+     threads-allowed-to-block-for-connection-multiplier="4"
+     connect-timeout="10000" 
+     max-wait-time="5500" 
+     auto-connect-retry="true"
+     socket-keep-alive="true"
+     socket-timeout="10000"
+     slave-ok="true"
+     write-number="1"
+     write-timeout="0"
+     write-fsync="true" />
+   </mongo:mongo>
+
+   
   <!-- host list -->
   <bean id="hosts" class="java.util.ArrayList">
   	<constructor-arg>
@@ -79,6 +96,13 @@
    <!-- EG DAO -->
    <bean id ="EGDAOMongo" class="org.easyGoingCrawler.DAO.EGDAOMongo" p:pattern_save-ref="pattern_save"> 
    		<constructor-arg ref="mongo"></constructor-arg>
+   		<constructor-arg value="blogdb"></constructor-arg>
+   		<constructor-arg ref="hosts">  </constructor-arg> 
+   </bean>
+   
+     <!-- EG DAO remote -->
+   <bean id ="rEGDAOMongo" class="org.easyGoingCrawler.DAO.EGDAOMongo" p:pattern_save-ref="pattern_save"> 
+   		<constructor-arg ref="rmongo"></constructor-arg>
    		<constructor-arg value="blogdb"></constructor-arg>
    		<constructor-arg ref="hosts">  </constructor-arg> 
    </bean>
