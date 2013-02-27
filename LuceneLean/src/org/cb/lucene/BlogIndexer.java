@@ -119,7 +119,8 @@ public class BlogIndexer extends BaseIndexer
 	static public void main(String [] args)
 	{
 		DAOMongo mongo = new DAOMongo("blogdb");
-		BlogIndexer bi = new BlogIndexer("E:/Lucene");
+		DAOMongo rmongo = new DAOMongo("42.96.143.59",27017,"blogdb");
+		BlogIndexer bi = new BlogIndexer("Z:/lucenedata/Lucene");
 		bi.setMongo(mongo);
 		List<Blog> lblog = mongo.searchBlog(null, -1, 100);
 		int size = 1;
@@ -131,10 +132,12 @@ public class BlogIndexer extends BaseIndexer
 				bi.indexBlogs(b);
 				b.setMagicNum(DAOMongo.INDEXED);
 				mongo.updateBlog(b);
+				rmongo.insert(b);
 			}
 			System.out.println("indexed " + lblog.get(0)+"  and .....");
 			size+=lblog.size();
 			lblog = mongo.searchBlog(null, -1, 100);
+			
 		}
 		long end = System.currentTimeMillis();
 		
