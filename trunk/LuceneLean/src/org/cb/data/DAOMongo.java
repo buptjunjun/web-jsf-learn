@@ -16,6 +16,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.apache.log4j.Logger;
 import org.cb.data.*;
+
+import com.mongodb.DBAddress;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 import com.mongodb.WriteConcern;
@@ -36,6 +38,24 @@ public class DAOMongo {
 		try
 		{
 			Mongo mongo = new Mongo("");
+			mongo.setWriteConcern(WriteConcern.SAFE);
+			mongoOps = new MongoTemplate(mongo, dbName);
+		} catch (UnknownHostException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MongoException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public DAOMongo(String host , int port , String dbName)
+	{
+		try
+		{
+			Mongo mongo = new Mongo(host,port);
 			mongo.setWriteConcern(WriteConcern.SAFE);
 			mongoOps = new MongoTemplate(mongo, dbName);
 		} catch (UnknownHostException e)
@@ -156,6 +176,20 @@ public class DAOMongo {
         return lp;     
 	}
 	
+  public boolean insert(Object obj)
+    {
+    	try
+    	{
+    		this.mongoOps.insert(obj);
+    		return true;
+    	}
+    	catch(Exception e)
+    	{
+    		e.printStackTrace();
+    		return false;
+    	}
+    }
+	  
 	public static void main(String[] args)
     {
     	DAOMongo mongo = new DAOMongo("blogdb");
