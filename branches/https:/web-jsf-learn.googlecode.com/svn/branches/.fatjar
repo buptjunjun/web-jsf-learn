@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Sun Jan 06 21:33:57 CST 2013
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=false
+onejar.checkbox=false
+jarname=org.egcrawler_fat.jar
+manifest.mergeall=false
+manifest.mainclass=org.easyGoingCrawler.crawler.Main
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=
+includes=
