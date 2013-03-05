@@ -105,7 +105,7 @@ public class HttpFetcherTest
 	ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
 	Fetcher fetcher = appcontext.getBean("fetcherHtmlUnitJs",Fetcher.class);
 	CrawlURI curl = new CrawlURI();
-	curl.setUrl("http://www.jyeoo.com/math2/ques/search?f=0&s=0&t=0&q=0b79b0c2-bb1f-44bf-a2fd-44aa1fa81fef");
+	curl.setUrl("http://www.blogjava.net/wenjiale/archive/2011/08/22/356965.html");
 	curl.setStatus(CrawlURI.STATUS_OK);
 	fetcher.fetch(curl);
 	String html = curl.getContent();
