@@ -16,7 +16,7 @@
 		<div class="">
 			京ICP备11027501号 京公网安备110108000590号 
 			<br> 
-			&copy;2013 码龙搜索 | <a style="color:#333333"href=<%=request.getContextPath()+"/pages/about.jsp"%> >关于码龙搜索 / About US</a>
+			&copy;2013 码龙搜索 | <a style="color:#333333"href=<%=request.getContextPath()+"/about"%> >关于码龙搜索 / About US</a>
 		</div>
 	</div>
 </body>

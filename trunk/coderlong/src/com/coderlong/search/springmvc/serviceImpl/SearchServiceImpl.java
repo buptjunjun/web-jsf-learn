@@ -15,7 +15,7 @@ public class SearchServiceImpl implements SearchService
 	{
 		// TODO Auto-generated method stub
 		 List<SearchResult>  result = new ArrayList<SearchResult>();
-		 result.add(new SearchResult("aaa","aaa","aaa",new ArrayList(),new Date()));
+		 result.add(new SearchResult(criteria.getQuery(),criteria.getQuery(),criteria.getQuery(),new ArrayList(),new Date()));
 		return result;
 	}
 }
