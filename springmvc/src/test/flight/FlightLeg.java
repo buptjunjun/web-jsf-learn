@@ -10,6 +10,13 @@ public class FlightLeg
 	private Airport arriveAt;
 	private Date departOn;
 	private Date arriveOn;
+	public FlightLeg(Airport departFrom,Airport arriveA,Date departOn,Date arriveOn)
+	{
+		this.departFrom=departFrom;
+		this.arriveAt=arriveAt;
+		this.departOn=departOn;
+		this.arriveOn=arriveOn;
+	}
 	
 	public Airport getDepartFrom()
 	{
