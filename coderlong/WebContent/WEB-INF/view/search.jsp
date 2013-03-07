@@ -52,12 +52,14 @@ padding-left:20px;
 	
 	<br>
 	<div id ="content" >
-		<ul>
+	<ul>
 		<c:forEach items="${results}" var="result">
-			<li>${result¡£title}</li>		
+			<li>${result.title}</li>
+			
 		</c:forEach>
 	</ul>
 	</div>
+	
 	<%@ include file="common/footer.jsp" %>
 	
 	<script type="text/javascript">
