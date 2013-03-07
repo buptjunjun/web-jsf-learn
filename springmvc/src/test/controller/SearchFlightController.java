@@ -1,6 +1,7 @@
 package test.controller;
 
 import java.sql.Date;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ public class SearchFlightController extends SimpleFormController
 		this.setCommandName("searchFligtCriteria");
 		this.setCommandClass(SearchFligtCriteria.class);
 		// if error goto fromview
-		this.setFormView("beginSearch");
+		this.setFormView("searchBegin");
 		// if successed goto success view
 		this.setSuccessView("listFlights");		
 	}
@@ -33,10 +34,14 @@ public class SearchFlightController extends SimpleFormController
 	protected void initBinder(HttpServletRequest request,
 			ServletRequestDataBinder binder) throws Exception
 	{
-		// TODO Auto-generated method stub
-		super.initBinder(request, binder);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"),true));
+		//注册自定义的属性编辑器  
+	    //1、日期  
+	    DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+	    CustomDateEditor dateEditor = new CustomDateEditor(df, true);  
+	    //表示如果命令对象有Date类型的属性，将使用该属性编辑器进行类型转换  
+	    binder.registerCustomEditor(Date.class, dateEditor);      
 	}
+	
 	
 	@Override
 	protected ModelAndView onSubmit(Object command) throws Exception
@@ -53,4 +58,5 @@ public class SearchFlightController extends SimpleFormController
 	{
 		this.flights = flights;
 	}
+	
 }

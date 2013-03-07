@@ -13,20 +13,26 @@
 	<h1>search for flight </h1>	
 	
 	<!-- searchFligtCriteria is the "searchFligtCriteria" in SearchFlightController -->
+	<form:errors></form:errors> 
 	<spring:nestedPath path="searchFligtCriteria">
-		<form action="search" method="post">
+		<form action="" method="post">
 			<spring:bind path="departFrom">
 				<input type="text" name="${status.expression }" value="${status.value }"/>
 			</spring:bind>
+		<%-- 	date :
 			<spring:bind path="departOn">
 				<input type="text" name="${status.expression }" value="${status.value }"/>
-			</spring:bind>
+			</spring:bind> --%>
+			<br>
 			<spring:bind path="arriveAt">
 				<input type="text" name="${status.expression }" value="${status.value }"/>
 			</spring:bind>
-			<spring:bind path="returnOn">
+<%-- 			date:
+			<spring:bind path="departOn">
 				<input type="text" name="${status.expression }" value="${status.value }"/>
 			</spring:bind>
+			<br> --%>
+			
 			<input type="submit" value="search">
 		</form>
 	</spring:nestedPath>
