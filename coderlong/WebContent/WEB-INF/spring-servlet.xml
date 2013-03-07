@@ -28,6 +28,16 @@
      		
      </bean>
      
+     <bean name="/" class="com.coderlong.search.springmvc.controller.SearchController">
+     	<property name="searchService" ref="searchService"></property>
+     	<property name="viewPath" value="search"></property>
+     	<property name="viewPathSuccess" value="search"></property>
+     	<property name="criteria">
+   			<value>com.coderlong.search.springmvc.beans.SearchCriteria</value>
+  		</property>
+     		
+     </bean>
+     
      <bean name="/about" class="com.coderlong.search.springmvc.controller.AboutController">
    	    <property name="viewPath" value="common/about"></property>
      </bean>
