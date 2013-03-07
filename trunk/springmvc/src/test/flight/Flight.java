@@ -62,6 +62,6 @@ public class Flight
 		Date end = this.getLastLeg().getArriveOn();
 		Assert.isTrue(end.compareTo(start) > 0,"Start date must be before end date");
 		return (end.getTime() - start.getTime());
-		}
+	}
 	
 }

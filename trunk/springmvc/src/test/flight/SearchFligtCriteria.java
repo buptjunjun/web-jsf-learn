@@ -3,7 +3,7 @@ package test.flight;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class SearchFligthCriteria
+public class SearchFligtCriteria
 {
 	private String departFrom;
 	private String arriveAt;
