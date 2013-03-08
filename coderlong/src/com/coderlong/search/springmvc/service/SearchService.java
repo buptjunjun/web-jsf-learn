@@ -2,8 +2,7 @@ package com.coderlong.search.springmvc.service;
 
 import java.util.List;
 
-import com.coderlong.search.springmvc.beans.SearchCriteria;
-import com.coderlong.search.springmvc.beans.SearchResult;
+import coderlong.search.springmvc.beans.SearchCriteria;
 
 public interface SearchService
 {

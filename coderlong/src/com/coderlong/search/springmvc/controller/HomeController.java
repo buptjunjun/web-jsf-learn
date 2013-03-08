@@ -7,11 +7,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 import org.springframework.web.servlet.support.WebContentGenerator;
 
-public class AboutController extends AbstractController
+public class HomeController extends AbstractController
 {
 
 	
-	public AboutController()
+	public HomeController()
 	{
 		// set the support method
 		this.setSupportedMethods(new String [] {WebContentGenerator.METHOD_GET});
