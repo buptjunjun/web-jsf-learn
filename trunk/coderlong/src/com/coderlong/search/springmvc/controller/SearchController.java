@@ -1,60 +1,37 @@
 package com.coderlong.search.springmvc.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.validation.Errors;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.SimpleFormController;
+import org.springframework.web.servlet.mvc.AbstractController;
 
-import com.coderlong.search.springmvc.beans.SearchCriteria;
-import com.coderlong.search.springmvc.beans.SearchResult;
-import com.coderlong.search.springmvc.service.SearchService;
+import coderlong.search.springmvc.beans.SearchCriteria;
+import coderlong.search.springmvc.service.SearchService;
 
-public class SearchController extends SimpleFormController
+import com.mysql.jdbc.StringUtils;
+
+public class SearchController extends AbstractController
 {
 	private SearchService searchService=null;
-	private SearchCriteria criteria = null;
-	public SearchCriteria getCriteria()
-	{
-		return criteria;
-	}
-
-	public void setCriteria(SearchCriteria criteria)
-	{
-		this.criteria = criteria;
-	}
-
-	public SearchController()
-	{
-		this.setFormView(this.getViewPath());
-		this.setSuccessView(this.getViewPathSuccess());
-		this.setCommandName("criteria");
-		this.setCommandClass(SearchCriteria.class);
-	}
+	
 	
 	@Override
-	protected Map referenceData(HttpServletRequest request, Object command,
-			Errors errors) throws Exception
+	protected ModelAndView handleRequestInternal(HttpServletRequest arg0,
+			HttpServletResponse arg1) throws Exception
 	{
-		criteria =( SearchCriteria)command;
-		List<SearchResult> results = searchService.search(criteria);
-		Map mav = new HashMap();
+		String query = arg0.getParameter("query");
+		if(StringUtils.isEmptyOrWhitespaceOnly(query))
+		{
+			query = null;
+		}
 		
-		mav.put("criteria",criteria);
-		mav.put("results",results);
-		return mav;
-	}
-	@Override
-	protected ModelAndView onSubmit(Object command) throws Exception
-	{
-		criteria =( SearchCriteria)command;
+		SearchCriteria criteria = new SearchCriteria(query);
 		List<SearchResult> results = searchService.search(criteria);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName(this.getViewPathSuccess());
+		mav.setViewName(this.viewPath);
 		mav.addObject("criteria",criteria);
 		mav.addObject("results",results);
 		return mav;
@@ -66,16 +43,6 @@ public class SearchController extends SimpleFormController
 	}
 	
 	private String viewPath = null;
-	private String viewPathSuccess = null;
-	public String getViewPathSuccess()
-	{
-		return viewPathSuccess;
-	}
-
-	public void setViewPathSuccess(String viewPathSuccess)
-	{
-		this.viewPathSuccess = viewPathSuccess;
-	}
 
 	public String getViewPath()
 	{
