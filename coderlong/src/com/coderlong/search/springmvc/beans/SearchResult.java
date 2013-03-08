@@ -11,7 +11,17 @@ public class SearchResult
 	private String url = "";
 	private List<String> tags = null;
 	private Date  date = null;
-	
+	private Object reserve = null;
+	public Object getReserve()
+	{
+		return reserve;
+	}
+
+	public void setReserve(Object reserve)
+	{
+		this.reserve = reserve;
+	}
+
 	public SearchResult(String title , String content, String url ,List<String> tags ,Date  date )
 	{
 		this.title = title;
