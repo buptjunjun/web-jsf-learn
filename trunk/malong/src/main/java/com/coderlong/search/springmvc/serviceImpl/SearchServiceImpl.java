@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.search.beans.ResultBean;
+import org.search.beans.ResultItemBean;
+
 import com.coderlong.search.springmvc.beans.SearchResult;
 
 import com.coderlong.search.springmvc.beans.SearchCriteria;
@@ -18,19 +21,12 @@ public class SearchServiceImpl implements SearchService
 		// TODO Auto-generated constructor stub
 	}
 
-	public List<SearchResult> search(SearchCriteria criteria)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
-	
-/*	@Override
 	public List<SearchResult> search(SearchCriteria criteria)
 	{
 		// TODO Auto-generated method stub
 		 List<SearchResult>  result = new ArrayList<SearchResult>();
-		 if(StringUtils.isEmptyOrWhitespaceOnly(criteria.getQuery()))
+		 if(criteria.getQuery() == null )
 				 return result;
 		 ResultBean rb = new ResultBean(criteria.getQuery());
 		 
@@ -58,5 +54,5 @@ public class SearchServiceImpl implements SearchService
 		}
 		return ret;
 	}
-	*/
+	
 }
