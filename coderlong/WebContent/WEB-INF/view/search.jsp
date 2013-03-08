@@ -54,10 +54,8 @@ padding-left:20px;
 	<spring:nestedPath path="searchCriteria">
 	<form name= "form" action="" method="get">
 		<div>
-		   <spring:bind path="query">
-				<input id="query" name="${status.expression }" value="${status.value }" type="text" maxlength="100" style='height:23px;width:400px;margin-right:10px;font-size:18px;'/> 
-			</spring:bind>		
-			<input name="submit" value=" GO " type="submit" style='color:white; border:0px; margin-right:10px;font-size:22px;background:#1060f3'/>
+		  <input id="query" name="query" type="text" maxlength="100" style='height:23px;width:400px;margin-right:10px;font-size:18px;'/> 
+		  <input name="submit" value=" GO " type="submit" style='color:white; border:0px; margin-right:10px;font-size:22px;background:#1060f3'/>
 		</div>
 	</form>
 	
