@@ -1,7 +1,12 @@
 package com.coderlong.search.springmvc.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.validation.Errors;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
@@ -31,6 +36,18 @@ public class SearchController extends SimpleFormController
 		this.setCommandClass(SearchCriteria.class);
 	}
 	
+	@Override
+	protected Map referenceData(HttpServletRequest request, Object command,
+			Errors errors) throws Exception
+	{
+		criteria =( SearchCriteria)command;
+		List<SearchResult> results = searchService.search(criteria);
+		Map mav = new HashMap();
+		
+		mav.put("criteria",criteria);
+		mav.put("results",results);
+		return mav;
+	}
 	@Override
 	protected ModelAndView onSubmit(Object command) throws Exception
 	{
