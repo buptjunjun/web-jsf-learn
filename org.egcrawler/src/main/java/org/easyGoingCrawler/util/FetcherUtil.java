@@ -1,17 +1,26 @@
 package org.easyGoingCrawler.util;
 
+import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.imageio.ImageReader;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
+import com.gargoylesoftware.htmlunit.html.HtmlImage;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlPasswordInput;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
@@ -81,6 +90,7 @@ public class FetcherUtil
 		String submitTag = p.getProperty("submitTag");
 		String name = p.getProperty("name");
 		String passwd = p.getProperty("passwd");
+		String code = p.getProperty("CodeNumberTextBox");
 		
 	    // Get the first page
 	    final HtmlPage page1 = webClient.getPage(loginUrl);
@@ -91,14 +101,40 @@ public class FetcherUtil
 	    final HtmlTextInput nameinput = form.getInputByName(nameTag);
 	    final HtmlPasswordInput passwordinput = form.getInputByName(passwdTag);    
 	    final HtmlSubmitInput button = form.getInputByName(submitTag);
+	    final HtmlTextInput codeInput = form.getInputByName(code);
+	    
+	    HtmlImage image = (HtmlImage) form.getElementsByTagName("img").get(0);
+	    ImageReader imageReader = image.getImageReader();
+		BufferedImage bufferedImage = imageReader.read(0);
 
+		JFrame f2 = new JFrame();
+		JLabel l = new JLabel();
+		l.setIcon(new ImageIcon(bufferedImage));
+		f2.getContentPane().add(l);
+		f2.setSize(100, 100);
+		f2.setTitle("ÑéÖ¤Âë");
+		f2.setVisible(true);
+		
+	    int count = 0;
+	    String ret = JOptionPane.showInputDialog("http://www.jyeoo.com"+image.getAttribute("src"));
+		
+		codeInput.setValueAttribute(ret);
+	    
 	    // Change the value of the text field
 	    nameinput.setValueAttribute(name);
 	    passwordinput.setValueAttribute(passwd);
 
 	    // Now submit the form by clicking the button and get back the second page.
 	    final HtmlPage page2 = button.click();
-	   
+	   System.out.println("##########"+page2.getTitleText()+"#############################");
+	   try
+		{
+			TimeUnit.SECONDS.sleep(5);
+		} catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	    
 	    return webClient;
 	    
