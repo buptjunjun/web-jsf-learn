@@ -8,7 +8,7 @@ import org.cb.lucene.BlogSearcher;
 
 public class searchTool
 {
-	static private BaseSearcher bsearch = new BaseSearcher("Z:/data/lucenedata/Lucene");
+	static private BaseSearcher bsearch = new BaseSearcher(Localizer.getMessage("luceneDir"));
 	static private BlogSearcher blogsearch = new BlogSearcher(bsearch);
 	
 	public static List<Blog>  search(String queryStr )

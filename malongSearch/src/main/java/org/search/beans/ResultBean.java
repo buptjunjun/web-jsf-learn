@@ -102,4 +102,10 @@ public class ResultBean
 	{
 		this.results = results;
 	}
+	
+	public static void main(String [] args)
+	{
+		ResultBean rb = new ResultBean("java");
+		rb.getResults();
+	}
 }
