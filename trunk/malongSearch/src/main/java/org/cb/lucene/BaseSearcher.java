@@ -33,13 +33,14 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 import org.apache.lucene.analysis.Analyzer;
+import org.cb.util.Localizer;
 
 public class BaseSearcher extends Searcher
 {
 
     private IndexSearcher searcher = null;
     private String indexPath;
-    public static int topN = 30;
+    public static int topN = Integer.parseInt(Localizer.getMessage("resultLimit"));
     // only one index reader 
     static private IndexReaderGenerator ReaderGenerator = null;
     
