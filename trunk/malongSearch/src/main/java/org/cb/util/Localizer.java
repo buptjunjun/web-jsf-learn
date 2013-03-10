@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -17,7 +18,7 @@ public class Localizer
 {
 	private static Properties p = new Properties();
 	
-	static String confFile = "src/main/resources/setting.properties";
+	static String confFile = "setting.properties";
 	static 
 	{
 		load();
@@ -31,16 +32,12 @@ public class Localizer
 	}
 	
 	static private void load()
-	{
-		
-		FileInputStream fi = null;		
+	{	
+		InputStream stream = null;
 		try
 		{
-			File f = new File(confFile);
-			if (!f.exists() || !f.canRead() || f.isHidden())
-				return ;
-			fi = new FileInputStream(f);		
-			p.load(fi);
+			stream = Localizer.class.getClassLoader().getResourceAsStream(confFile);		
+			p.load(stream);
 		}
 		catch (FileNotFoundException e1)
 		{
@@ -58,8 +55,8 @@ public class Localizer
 		{
 			try
 			{
-				if (fi != null)
-					fi.close();
+				if (stream != null)
+					stream.close();
 			} 
 			catch (IOException e)
 			{
