@@ -30,7 +30,7 @@ line-height:200px;
 		<div style="text-align:center">
 			<div style="background-color:white; margin-top:20px; color:red; font-size:100px; ">
 			 <%=request.getAttribute("javax.servlet.error.status_code")%>
-			<div style=" margin-top:20px; color:#1060f3; font-size:30px;">Óöµ½´íÎóÀ²£¡£¡£¡<a  style=" margin-top:20px; color:#1060f3; font-size:30px;" href="../">·µ»Ø</a>	</div>
+			<div style=" margin-top:20px; color:#1060f3; font-size:30px;">Óöµ½´íÎóÀ²£¡£¡£¡<a  style=" margin-top:20px; color:#1060f3; font-size:30px;" href=<%=request.getContextPath() %> >·µ»Ø</a>	</div>
 			</div>
 			
 			<br>
