@@ -64,13 +64,17 @@ padding-left:20px;
 	<br>
 	<div id ="content" >
 	<ul>
-		<c:forEach items="${results}" var="result">
+<%-- 	     <c:forEach items="${results}" var="result">
+			<li>${result.title}</li>
+			
+		</c:forEach> --%>
+ 		<c:forEach items="${results}" var="result">
 			<div>	
 			<div><a href=${result.url}  target="_blank"> ${result.title}</a></div>
 			<div>${result.content}</div>
 			<div style='color:green'> ${result.url}  |  ${result.date}</div>
 			</div><br>
-		</c:forEach>
+		</c:forEach> 
 	</ul>
 	</div>
 	<div  style ='display:none' id="queryStr" >${criteria.query}</div>
