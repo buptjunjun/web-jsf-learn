@@ -46,8 +46,7 @@
 		</dependency>
 
 
-		<!-- mvn install:install-file -Dfile=E:\我的文件夹\学习\java\lucene\IKAnalyzer2012FF_u1.jar 
-			-DgroupId=org.wltea -DartifactId=IKAnalyzer -Dversion=201 2FF_u1 -Dpackaging=jar -->
+		<!-- mvn install:install-file -Dfile=E:\我的文件夹\学习\java\lucene\IKAnalyzer2012FF_u1.jar  -DgroupId=org.wltea -DartifactId=IKAnalyzer -Dversion=201 2FF_u1 -Dpackaging=jar -->
 		<dependency>
 			<groupId>org.wltea</groupId>
 			<artifactId>IKAnalyzer</artifactId>
