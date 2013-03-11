@@ -69,6 +69,15 @@ padding-left:10px;
 		</c:forEach> 
 	
 	</div>
+	
+	<c:if test="${page > 0}">
+		<a href=search?query=${criteria.query}&page=${page-1}>上一页</a>
+	</c:if>
+	
+	<c:if test="${page < 2}">
+		<a href="search?query=${criteria.query}&page=${page+1}">下一页</a>
+	</c:if>
+	
 	<div  style ='display:none' id="queryStr" >${criteria.query}</div>
 	<%@ include file="common/footer.jsp" %>
 	
