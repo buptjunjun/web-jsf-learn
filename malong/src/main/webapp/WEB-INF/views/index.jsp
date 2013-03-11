@@ -18,7 +18,7 @@
 	</style>
 </head>
 <body>
-<div style="margin-top:10%">	
+<div style="margin-top:3%">	
 	<img  src="icon/LOGO2.png"><br>
 
 	<div style="margin-bottom:25%">
