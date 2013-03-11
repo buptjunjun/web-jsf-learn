@@ -16,6 +16,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.apache.log4j.Logger;
 import org.cb.data.*;
+import org.cb.util.Localizer;
+
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 import com.mongodb.WriteConcern;
@@ -38,7 +40,7 @@ public class DAOMongo {
 		{
 			if(mongo == null)
 			{
-				 mongo = new DAOMongo("blogdb");
+				 mongo = new DAOMongo(Localizer.getMessage("mongodb"));
 			}
 		}
 		return mongo;
@@ -48,7 +50,7 @@ public class DAOMongo {
 	{
 		try
 		{
-			Mongo mongo = new Mongo("");
+			Mongo mongo = new Mongo(Localizer.getMessage("mongohost"));
 			mongo.setWriteConcern(WriteConcern.SAFE);
 			mongoOps = new MongoTemplate(mongo, dbName);
 		} catch (UnknownHostException e)
