@@ -14,7 +14,7 @@
 <body>
 	<div id = "bottom" style="color: #333333; margin-top: 30px; padding-top: 10px; border-top: 5px solid #1060f3" id="footer">
 		<div class="">
-			京ICP备11027501号 京公网安备110108000590号 
+			京ICP备1301154号 
 			<br> 
 			&copy;2013 码龙搜索 | <a style="color:#333333"href=<%=request.getContextPath()+"/about"%> >关于码龙搜索 / About US</a>
 		</div>

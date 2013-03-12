@@ -62,7 +62,7 @@ padding-left:10px;
 	<div id ="content" >
 		<c:forEach items="${results}" var="result">
 			<div>	
-			<div><a href=${result.url}  target="_blank"> ${result.title}</a></div>
+			<div><a href=display?url=${result.url}  target="_blank"> ${result.title}</a></div>
 			<div>${result.content}</div>
 			<div style='color:green'> ${result.url}  |  ${result.date}</div>
 			</div><br>

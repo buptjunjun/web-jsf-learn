@@ -30,6 +30,9 @@
    	    <property name="viewPath" value="common/about"></property>
      </bean>
      
+     <bean name="/display" class="com.coderlong.search.springmvc.controller.DisplayController">
+   	    <property name="viewPath" value="display"></property>
+     </bean>
      
       <bean name="/" class="com.coderlong.search.springmvc.controller.HomeController">
    	    <property name="viewPath" value="index"></property>
