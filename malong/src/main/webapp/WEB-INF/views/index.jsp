@@ -32,18 +32,19 @@
 			</form>
 			</div>
 		
-			<div  style="text-align:center;;font-size:18px;" >
+			<div  style="text-align:center;;font-size:14px;color:#1060f3" >
 				<table style="margin:auto; width:80%">
 				<tr>
 				<c:forEach items="${hosts}" var ="hot"  varStatus="vstatus">			
 						<c:if test="${vstatus.index % 8 == 0 && vstatus.index > 0}" >
 							</tr><tr>
 						</c:if>		
-					<td><a target="_blank" href="search?query=${hot.name}">${hot.name}</a></td>
+					<td><a target="_blank" href="search?query=${hot.name}" style="color:#1060f3">${hot.name}</a></td>
 				</c:forEach>
 				</tr>
 				</table>
 			</div>
+			<br>
 			<%@ include file="common/footer.jsp" %>
 	</div>	
 	
