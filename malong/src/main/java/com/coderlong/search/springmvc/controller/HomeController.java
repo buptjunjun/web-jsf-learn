@@ -7,9 +7,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 import org.springframework.web.servlet.support.WebContentGenerator;
 
+import com.coderlong.search.springmvc.beans.HotItems;
+
 public class HomeController extends AbstractController
 {
 
+	private HotItems hots = null;
 	
 	public HomeController()
 	{
@@ -24,6 +27,7 @@ public class HomeController extends AbstractController
 	{
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(this.getViewPath());		
+		mav.addObject("hosts", hots.getHotItems());
 		return mav;
 		
 	}
@@ -39,6 +43,15 @@ public class HomeController extends AbstractController
 		this.viewPath = viewPath;
 	}
 
+	public HotItems getHots()
+	{
+		return hots;
+	}
+
+	public void setHots(HotItems hots)
+	{
+		this.hots = hots;
+	}
 
 	
 	
