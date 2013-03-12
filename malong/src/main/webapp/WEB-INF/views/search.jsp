@@ -43,6 +43,8 @@ padding-left:10px;
 	width:800px;
 	padding-right:10px;	
 	padding-left:1px;	
+	font-family: arial;
+	
 }
 </style>
 
@@ -64,12 +66,12 @@ padding-left:10px;
 	</form>
 	
 	<br>
-	<div id ="content" >
+	<div id ="content" style="" >
 		<c:forEach items="${results}" var="result">
 			<div>	
 			<div><a href=display?url=${result.url}  target="_blank"> ${result.title}</a></div>
-			<div>${result.content}</div>
-			<div style='color:green'> ${result.url}  |  ${result.date}</div>
+			<div style="font-size: 14px;color:#000000;line-height: 115%;">${result.content}</div>
+			<div style='color:#008000; font-size:13px;padding-top:3px'> ${result.url}  |  ${result.date}</div>
 			</div><br>
 		</c:forEach> 
 	
