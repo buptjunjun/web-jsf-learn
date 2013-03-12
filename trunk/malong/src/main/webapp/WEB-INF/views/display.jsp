@@ -50,7 +50,7 @@
             _frame.style.height="720px";
         }  
   
-        callframe.location.href="http://deographics.com/";  
+        //callframe.location.href="http://deographics.com/";  
     </script>   
 
 </body>

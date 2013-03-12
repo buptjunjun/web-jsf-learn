@@ -12,7 +12,7 @@
 </style> 
 </head>
 <body>
-	<div  style="color: #333333; padding-top: 10px; border-top: 5px solid #1060f3" id="footer">
+	<div  style="color: #333333; padding-top: 20px; border-top: 5px solid #1060f3" id="footer">
 		<div class="">
 			<a href="http://www.miibeian.gov.cn/" >¾©ICP±¸1301154ºÅ</a> 
 			 
