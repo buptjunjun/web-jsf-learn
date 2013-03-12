@@ -70,6 +70,7 @@ padding-left:10px;
 	
 	</div>
 	
+	<div style="padding-bottom:10px">
 	<c:if test="${page > 0}">
 		<a href=search?query=${criteria.query}&page=${page-1}>上一页</a>
 	</c:if>
@@ -77,7 +78,7 @@ padding-left:10px;
 	<c:if test="${page < 2}">
 		<a href="search?query=${criteria.query}&page=${page+1}">下一页</a>
 	</c:if>
-	
+	</div>
 	<div  style ='display:none' id="queryStr" >${criteria.query}</div>
 	<%@ include file="common/footer.jsp" %>
 	
