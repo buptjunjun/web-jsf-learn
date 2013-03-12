@@ -14,6 +14,11 @@
      <!-- static resource ,for example js , html, image   -->    
       <mvc:resources mapping="/icon/**" location="/icon/" />  
       <mvc:annotation-driven/>    
+     <bean id = "hots" class=" com.coderlong.search.springmvc.beans.HotItems" scope="singleton">
+     	<constructor-arg >
+     		<value>hot.properties</value>
+     	</constructor-arg>
+     </bean>
      
      <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
      	<property name="prefix" value="/WEB-INF/views/"></property>
@@ -36,6 +41,7 @@
      
       <bean name="/" class="com.coderlong.search.springmvc.controller.HomeController">
    	    <property name="viewPath" value="index"></property>
+   	    <property name="hots" ref="hots"></property>
      </bean>
     
 </beans>
