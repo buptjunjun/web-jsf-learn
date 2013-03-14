@@ -32,8 +32,8 @@
 			</form>
 			</div>
 		
-			<div  style="text-align:center;;font-size:14px;color:#1060f3" >
-				<table style="margin:auto; width:80%">
+			<div  style="text-align:center;;font-size:14px;color:#1060f3;border:solid 1px #CCCCCC;width:80%" >
+				<table style="margin:auto; width:100%;">
 				<tr>
 				<c:forEach items="${hosts}" var ="hot"  varStatus="vstatus">			
 						<c:if test="${vstatus.index % 8 == 0 && vstatus.index > 0}" >
