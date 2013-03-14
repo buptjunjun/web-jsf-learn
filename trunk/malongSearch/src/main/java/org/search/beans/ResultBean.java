@@ -38,12 +38,14 @@ public class ResultBean
 			HighLighter highlighter = new HighLighter();
 			for(Blog blog:lb)
 			{
-				String subContent;
+				String subContent = null;
 				String content =  blog.getContent();
 				content  = toHtml(content);
 				try
 				{
-					subContent = highlighter.getHightLight(queryStr, content, 200);
+					String hsubContent = highlighter.getHightLight(queryStr, content, 200);
+					if(hsubContent!=null)
+						subContent = hsubContent;
 				} catch (Exception e)
 				{
 					// TODO Auto-generated catch block
@@ -55,7 +57,10 @@ public class ResultBean
 				String title = toHtml(blog.getTitle());
 				try
 				{
-					title = highlighter.getHightLight(queryStr, title, 200);
+					String htitle = highlighter.getHightLight(queryStr, title, 200);
+					if(htitle != null)
+						title = htitle;
+						
 				}  
 				catch (Exception e)
 				{
