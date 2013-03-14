@@ -26,7 +26,7 @@
 		 <div id="load" style="margin-top:200px"><img src="http://sysimages.tq.cn/images/analysis_images/ajax-loader.gif" />&nbsp;loading.</div> 
 			<iframe id="frame" name="frame" style="visibility:hidden"
 					 onreadystatechange="stateChangeIE(this)" onload="stateChangeFirefox(this)"  src="${url}"
-				frameBorder="0" width="80%" scrolling="yes" height="400"></iframe>
+				frameBorder="0" width="90%" scrolling="yes" height="400"></iframe>
 		</div>
 	</div>
 	<%@ include file="common/footer.jsp"%>
