@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 
 
-import org.cb.data.Blog;
-import org.cb.data.DAOMongo;
+
+import org.easyGoingCrawler.DAO.DAOMongo;
+import org.easyGoingCrawler.docWriter.Blog;
 import org.easyGoingCrawler.docWriter.Html;
 import org.junit.Test;
 
@@ -36,12 +37,13 @@ public class fillNullTitle
 	    	    org.easyGoingCrawler.docWriter.Blog tmp = (org.easyGoingCrawler.docWriter.Blog) analyzer.analyze(blog.getHost(), blog.getEncode(),h.get(0).getHtml() );
 	    		blog.setTitle(tmp.getTitle());
 	    		
-	    		mongo.updateBlogTitle(blog);
 	    		
 	    		
+	    		mongo.updateBlog(blog);
 	    		//List<Blog> ret1 = mongo.searchBlog(hm, 1, Blog.class);
     		}
     		//System.out.println();
+    		
     		ret = mongo.searchBlog(map, 100, Blog.class);
     	}
     	

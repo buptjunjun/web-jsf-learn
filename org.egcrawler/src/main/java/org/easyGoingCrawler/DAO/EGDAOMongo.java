@@ -35,6 +35,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
+import com.mongodb.WriteConcern;
 
 
 public class EGDAOMongo implements EGDAO
@@ -49,6 +50,8 @@ public class EGDAOMongo implements EGDAO
 	@Qualifier("pattern_save")
     private Map<String,String> pattern_save = new HashMap<String,String>();
     
+	
+	
     public EGDAOMongo(Mongo mongoServer,String dbName, List<String> hosts )
 	{
     	this.mongoServer = mongoServer;
