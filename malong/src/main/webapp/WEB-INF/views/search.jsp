@@ -67,14 +67,22 @@ padding-left:10px;
 	
 	<br>
 	<div id ="content" style="" >
-		<c:forEach items="${results}" var="result">
-			<div>	
-			<div><a href=display?url=${result.url}  target="_blank"> ${result.title}</a></div>
-			<div style="font-size: 14px;color:#000000;line-height: 115%;">${result.content}</div>
-			<div style='color:#008000; font-size:13px;padding-top:3px'> ${result.url}  |  ${result.date}</div>
-			</div><br>
-		</c:forEach> 
-	
+	<c:choose>
+		<c:when test="${itemamount >0  }">
+			<c:forEach items="${results}" var="result">
+				<div>	
+				<div><a href=display?url=${result.url}  target="_blank"> ${result.title}</a></div>
+				<div style="font-size: 14px;color:#000000;line-height: 115%;">${result.content}</div>
+				<div style='color:#008000; font-size:13px;padding-top:3px'> ${result.url}  |  ${result.date}</div>
+				</div><br>
+			</c:forEach> 
+		</c:when>
+		
+		<c:when test="${itemamount <= 0}">
+			<p style="color:red">靠！没找到答案喔!! 给点福利，消消气</p><br>
+			<iframe id="frame" name="frame"   src="http://feifei.com/image/ppmm/" frameBorder="0" width="1000" scrolling="yes" height="760"></iframe>
+		</c:when>
+	</c:choose>
 	</div>
 	
 	<div style="padding-bottom:10px">

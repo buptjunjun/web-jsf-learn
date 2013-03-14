@@ -30,7 +30,7 @@ public class SearchServiceImpl implements SearchService
 				 return result;
 		 ResultBean rb = new ResultBean(criteria.getQuery());
 		 
-		 //result.add(new SearchResult(criteria.getQuery(),criteria.getQuery(),criteria.getQuery(),new ArrayList(),new Date()));
+		// result.add(new SearchResult(criteria.getQuery(),criteria.getQuery(),criteria.getQuery(),new ArrayList(),new Date()));
 		return ResultBean2SearchResults(rb);
 	}
 	

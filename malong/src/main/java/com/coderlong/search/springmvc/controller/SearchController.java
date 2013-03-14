@@ -70,11 +70,15 @@ public class SearchController extends AbstractController
 		}
 
 		int begin = 10*pageNUM;
+		int end = begin;
 		if(begin > results.size() -10)
 			begin = results.size()-10;
-		else if(begin < 0) begin = 0;
+		 if(begin < 0) begin = 0;
 		
-		List<SearchResult> tmp = results.subList(begin, begin+10);
+		if(begin +10 > results.size()-1)
+			end = results.size();
+		else end=begin+10;
+		List<SearchResult> tmp = results.subList(begin, end);
 		
 		session.putValue("criteria",criteria);
 				
@@ -82,6 +86,7 @@ public class SearchController extends AbstractController
 		mav.setViewName(this.viewPath);
 		mav.addObject("criteria",criteria);
 		mav.addObject("page",pageNUM);
+		mav.addObject("itemamount",tmp.size());
 		mav.addObject("results",tmp);
 		return mav;
 	}
