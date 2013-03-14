@@ -17,6 +17,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.apache.log4j.Logger;
 import org.cb.data.*;
 import org.cb.util.Localizer;
+import org.cb.util.converter;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
@@ -87,7 +88,7 @@ public class DAOMongo {
     		 m.put("host", host);
     	 m.put("magicNum", magicNum);
     	 
-         List<Blog> lp = searchBlog(m,limit, Blog.class);
+         List<Blog> lp = searchItem(m,limit, Blog.class);
          return lp;
          
 	}
@@ -105,7 +106,7 @@ public class DAOMongo {
 	{
     	 HashMap m = new HashMap();
     	 m.put("_id", id);
-         List<Blog> lp = searchBlog(m,1, Blog.class);
+         List<Blog> lp = searchItem(m,1, Blog.class);
          if(lp!= null && lp.size()>=1)
          {
         	 Blog blog = lp.remove(0);
@@ -117,7 +118,7 @@ public class DAOMongo {
 	
 	public List<Blog> searchBlog(String key,List<String> ids)
 	{   	
-         List<Blog> lp = searchBlog(key,ids, ids.size(),Blog.class);
+         List<Blog> lp = searchItem(key,ids, ids.size(),Blog.class);
          return lp;
          
 	}
@@ -128,7 +129,7 @@ public class DAOMongo {
 //         return lp;
 //         
 //	}
-	public <T extends Object>  List<T> searchBlog (Map<String ,Object> constrains , int limit, Class cls)
+	public <T extends Object>  List<T> searchItem (Map<String ,Object> constrains , int limit, Class cls)
 	{
 		if( constrains == null || limit < 1) return null;
 		Criteria cons = null;
@@ -153,7 +154,7 @@ public class DAOMongo {
          
 	}
 	
-	public <T extends Object>  List<T> searchBlog (String key,List<String> constrains , int limit, Class cls)
+	public <T extends Object>  List<T> searchItem (String key,List<String> constrains , int limit, Class cls)
 	{
 		if( constrains == null || constrains.size() == 0|| limit < 1) return null;
 		
@@ -163,22 +164,49 @@ public class DAOMongo {
         return lp;     
 	}
 	
+	public Html searchHtml(String id)
+	{
+    	 HashMap m = new HashMap();
+    	 m.put("_id", id);
+         List<Html> lp = searchItem(m,1, Html.class);
+         if(lp!= null && lp.size()>=1)
+         {
+        	 Html html = lp.remove(0);
+        	 return html;
+         }
+         return null;
+         
+	}
+	
 	public static void main(String[] args)
     {
-    	DAOMongo mongo = new DAOMongo("blogdb");
+    //	DAOMongo mongo = new DAOMongo("blogdb");
 /*    	List<Blog> lbolg = mongo.searchBlog("blog.csdn.net", -1, 10);
     	for(Blog b:lbolg)
     		System.out.println(b);*/
     	
     //	Blog blog = mongo.searchBlog("ea90e77322c73e4aea1f204ed0eef8e4");
-    	List<Blog> blogs = mongo.searchBlog("blog.csdn.net", 800, 1);
+    	
+    	DAOMongo.getInstance().testHtml();
+       
+    }
+	
+	public void testBlog()
+	{
+		List<Blog> blogs = mongo.searchBlog("blog.csdn.net", 800, 1);
     	System.out.println("before changing magicNum" + blogs);
     	Blog blog = blogs.get(0); 
     	blog.setMagicNum(1111);
     	mongo.updateBlog(blog);
     	blogs = mongo.searchBlog("blog.csdn.net", 799, 1);
     	System.out.println("after changing the magicNum to 800" + blogs);
+	}
+	
+	public void testHtml()
+	{
+		String url = "http://blog.chinaunix.net/uid-27018087-id-3465258.html";
+		Html html = mongo.searchHtml(converter.urlEncode(url));
+		System.out.println(html.host);
     	
-       
-    }
+	}
 }
