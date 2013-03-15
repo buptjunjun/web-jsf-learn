@@ -34,7 +34,7 @@ public class HighLighter
 	public static void main(String[] args) throws Exception
 	{
 		HighLighter test = new HighLighter();
-		String queryStr = "hello";
+		String queryStr = "hello/hello";
 		String content = "here we go,hello my doand here we go,hello my doandhere we go,hello my doand";
 		String res = test.getHightLight(queryStr, content,100);
 		System.out.println(res);
@@ -50,6 +50,9 @@ public class HighLighter
 
 	public String getHightLight(String queryStr,String content,int size) throws IOException, InvalidTokenOffsetsException, ParseException
 	{	
+		if(queryStr != null)
+			queryStr = queryStr.replace("/",  " " );
+		
 		Query query  = qp.parse(queryStr);
 		highlighter = new Highlighter(simpleHTMLFormatter, new QueryScorer(query));
 		highlighter.setTextFragmenter(new SimpleFragmenter(size));// 这个100是指定关键字字符串的context的长度，你可以自己设定，因为不可能返回整篇正文内容
