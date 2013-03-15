@@ -14,20 +14,17 @@ public class Insert2Remote
 	{
 
 		String mongohost = Localizer.getMessage("mongohost");
-		String luceneDir = Localizer.getMessage("luceneDir");
 		String mongodb = Localizer.getMessage("mongodb");
 		String host = Localizer.getMessage("host");
 		String unindexedflag = Localizer.getMessage("unindexedflag");
-		String indexedflag = Localizer.getMessage("indexedflag");
+		String inserunindexedflag = Localizer.getMessage("inserunindexedflag");
 
 		int unindexedflag_int = Integer.parseInt(unindexedflag); 
-		int indexedflag_int = Integer.parseInt(indexedflag); 
+		int inserunindexedflag_int = Integer.parseInt(inserunindexedflag); 
 		
 		DAOMongo rmongo = new DAOMongo(mongohost,27017,mongodb);
 		DAOMongo mongo = new DAOMongo(mongodb);
-		BlogIndexer bi = new BlogIndexer(luceneDir);
-		bi.setMongo(mongo);
-		List<Blog> lblog = mongo.searchBlog(host, unindexedflag_int, 100);
+		List<Blog> lblog = mongo.searchBlog(host, inserunindexedflag_int, 100);
 		int size = 1;
 		long begin = System.currentTimeMillis();
 		while(lblog!=null && lblog.size()!=0 )
@@ -38,17 +35,18 @@ public class Insert2Remote
 				try
 				{
 					rmongo.insert(b);
-					mongo.updateBlog(b);
+				
 				} catch (Exception e)
 				{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				mongo.updateBlog(b);
 				System.out.println("insert:"+b.getUrl());
 			}
 			System.out.println("indexed " + lblog.get(0)+"  and .....");
 			size+=lblog.size();
-			lblog = mongo.searchBlog(host, unindexedflag_int, 100);
+			lblog = mongo.searchBlog(host, inserunindexedflag_int, 100);
 		}
 		long end = System.currentTimeMillis();	
 		System.out.println("size:" + size+"   "+(end-begin)/1000);
