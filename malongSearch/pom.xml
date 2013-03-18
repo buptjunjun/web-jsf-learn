@@ -44,7 +44,12 @@
 			<artifactId>lucene-highlighter</artifactId>
 			<version>4.0.0</version>
 		</dependency>
-
+	
+	 <dependency>
+	    <groupId>jdom</groupId>
+	    <artifactId>jdom</artifactId>
+	    <version>1.0</version>
+	   </dependency>
 
 		<!-- mvn install:install-file -Dfile=E:\我的文件夹\学习\java\lucene\IKAnalyzer2012FF_u1.jar  -DgroupId=org.wltea -DartifactId=IKAnalyzer -Dversion=201 2FF_u1 -Dpackaging=jar -->
 		<dependency>
