@@ -20,6 +20,7 @@
 	</style>
 </head>
 <body>
+<%@ include file="common/common.jsp" %>
 	<div style="">	
 		<img  src="icon/LOGO2.png"><br>
 	
@@ -39,7 +40,7 @@
 						<c:if test="${vstatus.index % 8 == 0 && vstatus.index > 0}" >
 							</tr><tr>
 						</c:if>		
-					<td><a target="_blank" href="search?query=${hot.name}" style="color:#1060f3">${hot.name}</a></td>
+					<td><a target="_blank" href="<%=prefix%>search?query=${hot.name}" style="color:#1060f3">${hot.name}</a></td>
 				</c:forEach>
 				</tr>
 				</table>

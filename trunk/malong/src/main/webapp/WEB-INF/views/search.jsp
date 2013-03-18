@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" charset=GBK"  content="java c c++ python android 程序 员 码农 码龙  web html jsp servlet 开发">
-<title>码龙搜索 | 咱程序员自己的搜索引擎</title>
+<title>码龙搜索 -${criteria.query}</title>
 <link rel="icon" href="../icon/ico.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="../icon/ico.ico" type="image/x-icon" />
 
@@ -51,6 +51,7 @@ padding-left:10px;
 </head>
 <body>
 	<div style="width:50%">
+	<%@ include file="common/common.jsp" %>
 	<%@ include file="common/header.jsp" %> 
 	</div>
 	
@@ -71,11 +72,33 @@ padding-left:10px;
 		<c:when test="${itemamount >0  }">
 			<c:forEach items="${results}" var="result">
 				<div>	
-				<div><a href=display?url=${result.url}  target="_blank"> ${result.title}</a></div>
+				<div><a href="<%=prefix%>page/${result.reserve}"  target="_blank"> ${result.title}</a></div>
 				<div style="font-size: 14px;color:#000000;line-height: 115%;">${result.content}</div>
 				<div style='color:#008000; font-size:13px;padding-top:3px'> ${result.url}  |  ${result.date}</div>
 				</div><br>
 			</c:forEach> 
+			
+			<div>
+				<c:forEach var="i" begin="0" end="${totalpage}" step="1" varStatus="cur" >
+					<c:choose	>
+						<c:when test="${page==i }">
+							<a href="<%=prefix%>search?query=${ criteria.query}&page=${i}" style=" font-size:19px;color:blue">${i}</a>
+						</c:when>
+						<c:otherwise>
+							<a href="<%=prefix%>search?query=${criteria.query}&page=${i}" style=" font-size:19px;color:green">${i}</a>
+						</c:otherwise>
+					</c:choose>						
+				</c:forEach>
+				
+				<c:if test="${page > 0 }">
+					<a href="<%=prefix%>search?query=${ criteria.query}&page=${page-1}" style=" font-size:19px;color:blue">&lt上一页</a>
+				</c:if>
+				
+				<c:if test="${page < totalpage}">
+					<a href="<%=prefix%>search?query=${ criteria.query}&page=${page+1}" style=" font-size:19px;color:blue">下一页&gt</a>
+				</c:if>
+			</div>
+			<br>
 		</c:when>
 		
 		<c:when test="${itemamount <= 0}">
@@ -86,14 +109,7 @@ padding-left:10px;
 	</div>
 	
 	<div style="padding-bottom:10px">
-	<c:if test="${page > 0}">
-		<a href=search?query=${criteria.query}&page=${page-1}>上一页</a>
-	</c:if>
 	
-	<c:if test="${page < 2}">
-		<a href="search?query=${criteria.query}&page=${page+1}">下一页</a>
-	</c:if>
-	</div>
 	<div  style ='display:none' id="queryStr" >${criteria.query}</div>
 	<%@ include file="common/footer.jsp" %>
 	
