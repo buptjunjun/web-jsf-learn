@@ -69,6 +69,31 @@ public class SiteMapCreater
 		return root;	
 	}
 	
+	public Element createSiteMap(String url)
+	{
+		Element root = new Element("sitemap");
+		Element loc = new Element("loc");
+		Element lastmod = new Element("lastmod");
+		loc.setText(url);
+		lastmod.setText((date.getYear()+1900)+"-"+(date.getMonth()+1)+"-"+date.getDay());
+		root.addContent(loc);
+		root.addContent(lastmod);
+		
+		return root;	
+	}
+	
+	public Element CreateSitemapindex(int from, int to)
+	{
+		Element root = new Element("sitemapindex"); 
+		for(int i = from ; i<=to; i++)
+		{
+			String file = fileName+(from++)+".xml";
+			Element e = createSiteMap(file);
+			root.addContent(e);
+		}
+		
+		return root;
+	}
 	
 	/**
 	 * @param args
@@ -145,6 +170,10 @@ public class SiteMapCreater
 			//System.out.println(xml);
 			
 		}
+		Element e =	CreateSitemapindex(0,1);
+		XMLOutputter outputter = new XMLOutputter();
+		FileOutputStream file = new  FileOutputStream(new File("sitemapindex.xml"));
+		 outputter.output(e, file);
 		long end = System.currentTimeMillis();	
 			
 	}
