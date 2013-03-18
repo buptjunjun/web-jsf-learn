@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=GBK">
 <link rel="icon" href="/icon/ico.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="/icon/ico.ico" type="image/x-icon" />
-<title>码龙搜索|帮程序员创造价值</title>
+<title>码龙搜索-${blog.title}</title>
 <script language="javascript"	src="/js/jquery-1.7.1.js"></script>
 <style type="text/css">
 	html{text-align: center;}
@@ -16,21 +16,22 @@
 
 </head>
 <body>
-
 	<div style="text-align: center; margin-bottom: 10px">
 		<div style="color: #286BA7">
 			<a href=<%=request.getContextPath() + "/"%>><img
 				src=<%=request.getContextPath() + "/icon/LOGO3.png"%> border="0"></a>
 		</div>
 		<div style="text-align: center">
-		 <div id="load" style="margin-top:200px"><img src="http://sysimages.tq.cn/images/analysis_images/ajax-loader.gif" />&nbsp;loading.</div> 
+		 <%-- <div id="load" style="margin-top:200px"><img src="http://sysimages.tq.cn/images/analysis_images/ajax-loader.gif" />&nbsp;loading.</div> 
 			<iframe id="frame" name="frame" style="visibility:hidden"
 					 onreadystatechange="stateChangeIE(this)" onload="stateChangeFirefox(this)"  src="${url}"
 				frameBorder="0" width="90%" scrolling="yes" height="400"></iframe>
-		</div>
+		</div> --%>
+		
+		"${blog.content}"
 	</div>
 	<%@ include file="common/footer.jsp"%>
-
+<!-- 
      <script>     
         function stateChangeIE(_frame){  
             if (_frame.readyState=="interactive"){ //state: loading ,interactive, complete  
@@ -52,6 +53,6 @@
   
         //callframe.location.href="http://deographics.com/";  
     </script>   
-
+ -->
 </body>
 </html>
