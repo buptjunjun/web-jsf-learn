@@ -1,6 +1,7 @@
 package com.coderlong.search.springmvc.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,10 +17,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 import org.springframework.web.servlet.support.WebContentGenerator;
 
+import com.coderlong.search.springmvc.beans.HotBlogs;
+
 @Controller
 public class DisplayController
 {
-
+	private HotBlogs hotblogs = null;
+	
 	
 	public DisplayController()
 	{
@@ -49,10 +53,13 @@ public class DisplayController
 		id = new String(id.getBytes("iso-8859-1"),"GBK");
 
 		Blog blog = DAOMongo.getInstance().searchBlog(id);
-	
+		//if(isHotBlog(blog))
+			hotblogs.addItem(blog);
+			
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("blog", blog);
 		mav.addObject("url", blog.getUrl());
+		mav.addObject("hotblogs", hotblogs.gethotblogs());
 		mav.setViewName(this.getViewPath());		
 		return mav;
 		
@@ -70,6 +77,23 @@ public class DisplayController
 	}
 
 
+	public HotBlogs getHotblogs()
+	{
+		return hotblogs;
+	}
+	public void setHotblogs(HotBlogs hotblogs)
+	{
+		this.hotblogs = hotblogs;
+	}
 	
-	
+	public boolean isHotBlog(Blog blog)
+	{
+		if(blog == null)
+			return false;
+		
+		String content = blog.getContent();
+		if( (blog.getPictures() > 4 || (content!=null && content.length() > 200 && content.length() < 800) || blog.getComment() > 3 )&& new Date().getSeconds()%30 == 15)
+			return true;
+		return false;
+	}
 }
