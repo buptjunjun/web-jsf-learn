@@ -85,6 +85,15 @@ public class DAOMongo {
 		mongoOps.updateFirst(new Query(where("_id").is(blog.getId())), new Update().set("magicNum", blog.getMagicNum()), Blog.class);
 	}
 	
+	public void updateBlogHtml(String id ,String html)
+	{
+		if(html == null) 
+			return;
+		
+		mongoOps.updateFirst(new Query(where("_id").is(id)), new Update().set("html", html), Blog.class);
+	}
+	
+	
 	public List<Blog> searchBlog(String host,int magicNum ,int limit)
 	{
     	 HashMap m = new HashMap();
@@ -92,7 +101,19 @@ public class DAOMongo {
     		 m.put("host", host);
     	 m.put("magicNum", magicNum);
     	 
-         List<Blog> lp = searchBlog(m,limit, Blog.class);
+         List<Blog> lp = searchItem(m,limit, Blog.class);
+         return lp;
+         
+	}
+	
+	public List<Html> searchHtml(String host,int magicNum ,int limit)
+	{
+    	 HashMap m = new HashMap();
+    	 if(host!=null)
+    		 m.put("host", host);
+    	 m.put("magicNum", magicNum);
+    	 
+         List<Html> lp = searchItem(m,limit, Html.class);
          return lp;
          
 	}
@@ -110,7 +131,7 @@ public class DAOMongo {
 	{
     	 HashMap m = new HashMap();
     	 m.put("_id", id);
-         List<Blog> lp = searchBlog(m,1, Blog.class);
+         List<Blog> lp = searchItem(m,1, Blog.class);
          if(lp!= null && lp.size()>=1)
          {
         	 Blog blog = lp.remove(0);
@@ -118,6 +139,27 @@ public class DAOMongo {
          }
          return null;
          
+	}
+	public Html searchHtml(String id)
+	{
+    	 HashMap m = new HashMap();
+    	 m.put("_id", id);
+         List<Html> lp = searchItem(m,1, Html.class);
+         if(lp!= null && lp.size()>=1)
+         {
+        	 Html html = lp.remove(0);
+        	 return html;
+         }
+         return null;
+         
+	}
+	
+	public void updateHtml(Html html)
+	{
+		if(html == null) 
+			return;
+		
+		mongoOps.updateFirst(new Query(where("_id").is(html.getId())), new Update().set("magicNum", html.getMagicNum()), Html.class);
 	}
 	
 	public Blog searchBlog(String key,List<String> ids)
@@ -139,7 +181,7 @@ public class DAOMongo {
 //         return lp;
 //         
 //	}
-	public <T extends Object>  List<T> searchBlog (Map<String ,Object> constrains , int limit, Class cls)
+	public <T extends Object>  List<T> searchItem (Map<String ,Object> constrains , int limit, Class cls)
 	{
 		if( constrains == null || limit < 1) return null;
 		Criteria cons = null;

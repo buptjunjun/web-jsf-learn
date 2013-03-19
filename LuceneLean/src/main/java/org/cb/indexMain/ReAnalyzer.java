@@ -38,13 +38,13 @@ public class ReAnalyzer extends Thread
 	{
 
 	    Map<String,Analyzer> hosts = new HashMap<String,Analyzer>();
-	    //hosts.put("blog.csdn.net", new CSDNAnalyzer());
+	    hosts.put("blog.csdn.net", new CSDNAnalyzer());
 	    hosts.put("blog.chinaunix.net", new ChinaunixAnalyzer());
-	    //hosts.put("blog.51cto.com",new A51ctoAnalyzer());
-	    //hosts.put("my.oschina.net",new OschinaAnalyzer());
-	    //hosts.put("www.iteye.com/blogs",new IteyeAnalyzer());
+	    hosts.put("blog.51cto.com",new A51ctoAnalyzer());
+	    hosts.put("my.oschina.net",new OschinaAnalyzer());
+	    hosts.put("www.iteye.com/blogs",new IteyeAnalyzer());
 	    hosts.put("ibm.cn",new IBMAnalyzer());
-	    //hosts.put("www.cnblogs.com",new CnblogsAnalyzer());
+	    hosts.put("www.cnblogs.com",new CnblogsAnalyzer());
 	    
 	    
 		//String host = Localizer.getMessage("host");
