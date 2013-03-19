@@ -16,43 +16,31 @@
 
 </head>
 <body>
-	<div style="text-align: center; margin-bottom: 10px">
-		<div style="color: #286BA7">
-			<a href=<%=request.getContextPath() + "/"%>><img
-				src=<%=request.getContextPath() + "/icon/LOGO3.png"%> border="0"></a>
+	<div style="text-align: center">
+		<div style="color: #286BA7 ; border:1px solid">
+				<a href=<%=request.getContextPath() + "/"%>><img src=<%=request.getContextPath() + "/icon/LOGO3.png"%> border="0"></a>
+				<%@ include file="common/searchBox.jsp" %>
 		</div>
-		<div style="text-align: center">
-		 <%-- <div id="load" style="margin-top:200px"><img src="http://sysimages.tq.cn/images/analysis_images/ajax-loader.gif" />&nbsp;loading.</div> 
-			<iframe id="frame" name="frame" style="visibility:hidden"
-					 onreadystatechange="stateChangeIE(this)" onload="stateChangeFirefox(this)"  src="${url}"
-				frameBorder="0" width="90%" scrolling="yes" height="400"></iframe>
-		</div> --%>
+	
 		
-		"${blog.content}"
+		<div style="border:1px solid; width:1024px">
+			<div style="float:left;width:50%;border:1px solid">${blog.content}<br>	
+			
+			</div>
+			
+					
+				
+		
+			<div style="float:right;border:1px solid">
+				<%@ include file="common/hotBlogs.jsp" %>
+			</div>
+		</div>
+		<div>
+			<jsp:include  page="common/footer.jsp" >
+		</div>
 	</div>
-	<%@ include file="common/footer.jsp"%>
-<!-- 
-     <script>     
-        function stateChangeIE(_frame){  
-            if (_frame.readyState=="interactive"){ //state: loading ,interactive, complete  
-                var loader = document.getElementById("load");  
-                loader.innerHTML  = "";  
-                loader.style.display = "none";    
-                _frame.style.visibility = "visible";    
-                _frame.style.height="720px";
-            }     
-        }  
-  
-        function stateChangeFirefox(_frame){  
-            var loader = document.getElementById("load");  
-            loader.innerHTML  = "";  
-            loader.style.display = "none";    
-            _frame.style.visibility = "visible";
-            _frame.style.height="720px";
-        }  
-  
-        //callframe.location.href="http://deographics.com/";  
-    </script>   
- -->
+	
+	<br>
+	
 </body>
 </html>
