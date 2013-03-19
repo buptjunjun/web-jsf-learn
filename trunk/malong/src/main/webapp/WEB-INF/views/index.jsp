@@ -25,12 +25,7 @@
 		<img  src="icon/LOGO2.png"><br>
 	
 			<div style="margin-bottom:20px">
-			<form name= "form" action=<%= request.getContextPath()+"/search"%> method="get">
-				<div>
-					<input name="query" type="text" maxlength="100" style='height:23px;width:400px;margin-right:10px;font-size:18px;'/> 
-					<input name="submit" value=" GO " type="submit" style='color:white; border:0px; margin-right:10px;font-size:22px;background:#1060f3'/>
-				</div>
-			</form>
+				<%@ include file="common/searchBox.jsp" %>
 			</div>
 		
 			<div  style="text-align:center;;font-size:14px;color:#1060f3;border:solid 1px #CCCCCC;width:80%" >

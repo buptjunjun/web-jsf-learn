@@ -10,23 +10,6 @@
 <link rel="icon" href="../icon/ico.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="../icon/ico.ico" type="image/x-icon" />
 
-<script type="text/javascript">
-
-// reset the query String
-function resetQueryStr()
-{
-	var queryStr = document.getElementById("queryStr");
-	var queryStrInput = document.getElementById("query");
-	var queryText = queryStr.innerText;
-	var queryText = queryStr.innerHTML;
-	
-	if(queryText != null && queryText != "undefined")
-		queryStrInput.value = queryText;
-	else
-		queryStrInput.value = "";
-	
-}
-</script>
 
 <!--   color of em --> 
 <style>
@@ -57,64 +40,54 @@ padding-left:10px;
 	
 	<br>
 		
-	<form name= "form" action="" method="get">
-		<div>
-		  <input id="query" name="query" type="text" maxlength="100" style='height:23px;width:400px;margin-right:10px;font-size:18px;'/> 
-		  <input name="submit" value=" GO " type="submit" style='color:white; border:0px; margin-right:10px;font-size:22px;background:#1060f3'/>
-		  <a style="margin-right:5px" href="http://www.baidu.com/s?wd=${ criteria.query}" target="_blank">百度</a>
-		  <a style="margin-right:5px" href="http://www.google.com.hk/search?hl=zh-CN&newwindow=1&safe=strict&site=&source=hp&q=${ criteria.query}" target="_blank">google</a>
-		</div>
-	</form>
+	<%@ include file="common/searchBox.jsp" %>
 	
 	<br>
 	<div id ="content" style="" >
-	<c:choose>
-		<c:when test="${itemamount >0  }">
-			<c:forEach items="${results}" var="result">
-				<div>	
-				<div><a href="<%=prefix%>page/${result.reserve}"  target="_blank"> ${result.title}</a></div>
-				<div style="font-size: 14px;color:#000000;line-height: 115%;">${result.content}</div>
-				<div style='color:#008000; font-size:13px;padding-top:3px'> ${result.url}  |  ${result.date}</div>
-				</div><br>
-			</c:forEach> 
-			
-			<div>
-				<c:forEach var="i" begin="0" end="${totalpage}" step="1" varStatus="cur" >
-					<c:choose	>
-						<c:when test="${page==i }">
-							<a href="<%=prefix%>search?query=${ criteria.query}&page=${i}" style=" font-size:19px;color:blue">${i}</a>
-						</c:when>
-						<c:otherwise>
-							<a href="<%=prefix%>search?query=${criteria.query}&page=${i}" style=" font-size:19px;color:green">${i}</a>
-						</c:otherwise>
-					</c:choose>						
-				</c:forEach>
+		<div  style="text-align:center;font-size:14px;color:#1060f3;border:solid 1px #CCCCCC;width:60%" >
+			<c:choose>
+				<c:when test="${itemamount >0  }">
+					<c:forEach items="${results}" var="result">
+						<div>	
+						<div><a href="<%=prefix%>page/${result.reserve}"  target="_blank"> ${result.title}</a></div>
+						<div style="font-size: 14px;color:#000000;line-height: 115%;">${result.content}</div>
+						<div style='color:#008000; font-size:13px;padding-top:3px'> ${result.url}  |  ${result.date}</div>
+						</div><br>
+					</c:forEach> 
+					
+					<div>
+						<c:forEach var="i" begin="0" end="${totalpage}" step="1" varStatus="cur" >
+							<c:choose	>
+								<c:when test="${page==i }">
+									<a href="<%=prefix%>search?query=${ criteria.query}&page=${i}" style=" font-size:19px;color:blue">${i}</a>
+								</c:when>
+								<c:otherwise>
+									<a href="<%=prefix%>search?query=${criteria.query}&page=${i}" style=" font-size:19px;color:green">${i}</a>
+								</c:otherwise>
+							</c:choose>						
+						</c:forEach>
+						
+						<c:if test="${page > 0 }">
+							<a href="<%=prefix%>search?query=${ criteria.query}&page=${page-1}" style=" font-size:19px;color:blue">&lt上一页</a>
+						</c:if>
+						
+						<c:if test="${page < totalpage}">
+							<a href="<%=prefix%>search?query=${ criteria.query}&page=${page+1}" style=" font-size:19px;color:blue">下一页&gt</a>
+						</c:if>
+					</div>
+					<br>
+				</c:when>
 				
-				<c:if test="${page > 0 }">
-					<a href="<%=prefix%>search?query=${ criteria.query}&page=${page-1}" style=" font-size:19px;color:blue">&lt上一页</a>
-				</c:if>
-				
-				<c:if test="${page < totalpage}">
-					<a href="<%=prefix%>search?query=${ criteria.query}&page=${page+1}" style=" font-size:19px;color:blue">下一页&gt</a>
-				</c:if>
+				<c:when test="${itemamount <= 0}">
+					<p style="color:red">no items found!</p><br>
+					<iframe id="frame" name="frame"   src="http://feifei.com/image/ppmm/" frameBorder="0" width="1000" scrolling="yes" height="760"></iframe>
+				</c:when>
+			</c:choose>
 			</div>
-			<br>
-		</c:when>
-		
-		<c:when test="${itemamount <= 0}">
-			<p style="color:red">靠！没找到答案喔!! 给点福利，消消气</p><br>
-			<iframe id="frame" name="frame"   src="http://feifei.com/image/ppmm/" frameBorder="0" width="1000" scrolling="yes" height="760"></iframe>
-		</c:when>
-	</c:choose>
 	</div>
 	
-	<div style="padding-bottom:10px">
 	
-	<div  style ='display:none' id="queryStr" >${criteria.query}</div>
 	<%@ include file="common/footer.jsp" %>
 	
-	<script type="text/javascript">
 	
-	 resetQueryStr();
-	</script>
 </body>
