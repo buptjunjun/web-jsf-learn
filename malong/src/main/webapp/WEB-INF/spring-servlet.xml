@@ -19,6 +19,10 @@
      		<value>hot.properties</value>
      	</constructor-arg>
      </bean>
+      <bean id = "hotblogs" class=" com.coderlong.search.springmvc.beans.HotBlogs" scope="singleton">
+     	  <property name="maxblog" value="10"></property>
+     </bean>
+     
      
      <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
      	<property name="prefix" value="/WEB-INF/views/"></property>
@@ -37,6 +41,8 @@
      
      <bean name="/display" class="com.coderlong.search.springmvc.controller.DisplayController">
    	    <property name="viewPath" value="display"></property>
+   	    <property name="hotblogs" ref="hotblogs"></property>
+   	    
      </bean>
      
       <bean name="/" class="com.coderlong.search.springmvc.controller.HomeController">
