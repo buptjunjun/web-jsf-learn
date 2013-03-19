@@ -20,7 +20,7 @@ public class Insert2Remote
 		String inserunindexedflag = Localizer.getMessage("inserunindexedflag");
 
 		int unindexedflag_int = Integer.parseInt(unindexedflag); 
-		int inserunindexedflag_int = Integer.parseInt(inserunindexedflag); 
+		int inserunindexedflag_int = 1118;//Integer.parseInt(inserunindexedflag); 
 		
 		DAOMongo rmongo = new DAOMongo(mongohost,27017,mongodb);
 		DAOMongo mongo = new DAOMongo(mongodb);
