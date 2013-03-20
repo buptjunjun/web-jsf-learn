@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=GBK"
 	isErrorPage="true" pageEncoding="GBK"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,31 +18,61 @@
 
 </head>
 <body>
-	<div style="text-align: center">
-		<div style="color: #286BA7 ; border:1px solid">
+	<div style="color: #286BA7 ; border-bottom:1px dashed ; padding-bottom:20px">
 				<a href=<%=request.getContextPath() + "/"%>><img src=<%=request.getContextPath() + "/icon/LOGO3.png"%> border="0"></a>
 				<%@ include file="common/searchBox.jsp" %>
 		</div>
+
+		
 	
-		
-		<div style="border:1px solid; width:1024px">
-			<div style="float:left;width:50%;border:1px solid">${blog.content}<br>	
-			
-			</div>
-			
+		<table width="100%"   height="100%" border="0"   cellspacing="0"   cellpadding="0" style="padding-left:6%; padding-right:6%">
+			<tr>
+				<td>
+					<table border= "0">
+						<tr>
+							<td width="700px" align="center"   valign="middle">
+							<br>
+							<div style="padding-right:10px; border-right:  1px dashed; text-align: left">
+								<div style="font-size:20px;color:red;text-align:center">
+									${ blog.title}
+								</div>
+								<br>
+								<div style="font-size:20px;color:green;text-align:center">
+										tags:
+
+									<c:forEach items="${blog.tags}" var="result">
+										${tag }
+									</c:forEach>
+									| ${blog.crawledDate.year+1990}-${blog.crawledDate.month+1}-${blog.crawledDate.date}
+									
+								</div>
+								<br>
+								${blog.html}<br>
+							</div>	
+							</td>
+							<td valign="top">
+							<div style="padding-left:10px; text-align: left">
+								<br>
+								<%@ include file="common/hotBlogs.jsp" %>
+							</div>
+							</td>
+						</tr>
+					</table>
+				<td>
+			</tr>
+			<tr>
+				<td>
 					
-				
+				<td>
+			</tr>
+		</table>
 		
-			<div style="float:right;border:1px solid">
-				<%@ include file="common/hotBlogs.jsp" %>
-			</div>
-		</div>
-		<div>
-			<jsp:include  page="common/footer.jsp" >
-		</div>
+			
+			
+
 	</div>
 	
-	<br>
+<%@ include file="common/footer.jsp" %>
 	
 </body>
 </html>
