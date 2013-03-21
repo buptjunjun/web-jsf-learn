@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 
+import com.coderlong.search.springmvc.beans.HotBlogs;
 import com.coderlong.search.springmvc.beans.SearchCriteria;
 import com.coderlong.search.springmvc.beans.SearchResult;
 import com.coderlong.search.springmvc.service.SearchService;
@@ -26,7 +27,7 @@ public class SearchController
 {
 	private SearchService searchService=null;
 	public static final int sessionMaxInactiveInterval = 5*16;
-	
+	private HotBlogs hotblogs = null;
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	protected ModelAndView handleRequestInternal(HttpServletRequest arg0,
 			HttpServletResponse arg1) throws Exception
@@ -95,6 +96,7 @@ public class SearchController
 		mav.addObject("itemamount",tmp.size());
 		mav.addObject("totalpage",new Integer(totalPage));
 		mav.addObject("results",tmp);
+		mav.addObject("hotblogs", hotblogs.gethotblogs());
 		return mav;
 	}
 	
@@ -182,5 +184,12 @@ public class SearchController
 	{
 		this.viewPath = viewPath;
 	}
-
+	public HotBlogs getHotblogs()
+	{
+		return hotblogs;
+	}
+	public void setHotblogs(HotBlogs hotblogs)
+	{
+		this.hotblogs = hotblogs;
+	}
 }
