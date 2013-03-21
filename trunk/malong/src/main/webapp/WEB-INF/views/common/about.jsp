@@ -8,6 +8,8 @@
 <link rel="shortcut icon" href="http://localhost:8080/searchTech/icon/ico.ico" type="image/x-icon" />
 <meta http-equiv="Content-Type" content="text/html; charset=GBK">
 <title>码龙搜索|帮程序员创造价值</title>
+<meta name="keywords" content="it技术,技术搜索,码龙,计算机技术,计算机技术搜索，互联网技术，移动互联网网技术，程序员的搜索引擎" />
+<meta name="description" content="码龙搜索是一个程序员的搜索引擎" /> 
 <style type="text/css">
 	html{text-align:center;}
 	body{text-align:center;}

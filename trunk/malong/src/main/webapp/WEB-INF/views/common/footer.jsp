@@ -17,6 +17,12 @@
 			<a href="http://www.miibeian.gov.cn/" >京ICP备1301154号</a> 
 			 
 			&copy;2013 码龙网 | <a style="color:#333333"href=<%=request.getContextPath()+"/about"%> >关于码龙网 / About US</a>
+				<br>
+			<a href="http://coderlong.com/siteMap/sitemapindex.xml" >网站地图</a> 
+				<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffb1e8254305390e201a6ca25e67af8c3' type='text/javascript'%3E%3C/script%3E"));
+</script>
 		</div>
 	</div>
 </body>
