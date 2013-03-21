@@ -20,7 +20,7 @@
      	</constructor-arg>
      </bean>
       <bean id = "hotblogs" class=" com.coderlong.search.springmvc.beans.HotBlogs" scope="singleton">
-     	  <property name="maxblog" value="10"></property>
+     	  <property name="maxblog" value="15"></property>
      </bean>
      
      
@@ -32,6 +32,7 @@
     <bean name="/search" class="com.coderlong.search.springmvc.controller.SearchController">
      	<property name="searchService" ref="searchService"></property>
      	<property name="viewPath" value="search"></property>
+     	<property name="hotblogs" ref="hotblogs"></property>
      </bean>
      
  
@@ -48,6 +49,7 @@
       <bean name="/" class="com.coderlong.search.springmvc.controller.HomeController">
    	    <property name="viewPath" value="index"></property>
    	    <property name="hots" ref="hots"></property>
+   	    <property name="hotblogs" ref="hotblogs"></property>
      </bean>
     
 </beans>
