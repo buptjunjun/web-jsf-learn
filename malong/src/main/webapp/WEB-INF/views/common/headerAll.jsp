@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div style="color:#286BA7">
-		<a href= <%=request.getContextPath()+"/" %> ><img  src=<%= request.getContextPath()+"/icon/LOGO3.png" %> border="0"></a>	
+		<a href= <%=request.getContextPath()+"/" %> ><img   alt="logo" src=<%= request.getContextPath()+"/icon/LOGO3.png" %> border="0"></a>	
 	
 	</div>
 </body>
