@@ -7,9 +7,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=GBK">
-<link rel="icon" href="/icon/ico.ico" type="image/x-icon" />
-<link rel="shortcut icon" href="/icon/ico.ico" type="image/x-icon" />
 <title>码龙搜索-${blog.title}</title>
+<meta name="keywords" content="${blog.title}" />
+<meta name="description" content="${blog.title}" /> 
+<link rel="icon" href="../icon/ico.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../icon/ico.ico" type="image/x-icon" />
 <script language="javascript"	src="/js/jquery-1.7.1.js"></script>
 <style type="text/css">
 	html{text-align: center;}
@@ -18,6 +20,7 @@
 
 </head>
 <body>
+<%@ include file="common/common.jsp" %>
 	<div style="color: #286BA7 ; border-bottom:1px dashed ; padding-bottom:20px">
 				<a href=<%=request.getContextPath() + "/"%>><img src=<%=request.getContextPath() + "/icon/LOGO3.png"%> border="0"></a>
 				<%@ include file="common/searchBox.jsp" %>
@@ -27,31 +30,55 @@
 	
 		<table width="100%"   height="100%" border="0"   cellspacing="0"   cellpadding="0" style="padding-left:6%; padding-right:6%">
 			<tr>
-				<td>
+				<td  align="center" >
 					<table border= "0">
 						<tr>
-							<td width="700px" align="center"   valign="middle">
+							<td width="70%" align="center"   valign="top" valign="middle">
 							<br>
-							<div style="padding-right:10px; border-right:  1px dashed; text-align: left">
+							<div style="padding-right:10px; text-align: left">
 								<div style="font-size:20px;color:red;text-align:center">
 									${ blog.title}
 								</div>
 								<br>
-								<div style="font-size:20px;color:green;text-align:center">
-										tags:
+								<div style="font-size:14px;color:green;text-align:center">
+									
 
-									<c:forEach items="${blog.tags}" var="result">
-										${tag }
+									<c:forEach items="${blog.tags}" var="tag">
+										${tag }&nbsp
 									</c:forEach>
 									| ${blog.crawledDate.year+1990}-${blog.crawledDate.month+1}-${blog.crawledDate.date}
 									
 								</div>
 								<br>
-								${blog.html}<br>
+								${content}
+								<br>
+								
+								<div>
+								<c:if test="${totalPage > 0 }">
+									<c:forEach var="i" begin="0" end="${totalPage}" step="1" varStatus="cur" >
+										<c:choose>
+											<c:when test="${page==i }">
+												<a href="<%=prefix%>page/${blog.id}?page=${i}" style=" font-size:19px;color:blue">${i}</a>
+											</c:when>
+											<c:otherwise>
+												<a href="<%=prefix%>page/${blog.id}?page=${i}"  style=" font-size:19px;color:green">${i}</a>
+											</c:otherwise>
+										</c:choose>						
+									</c:forEach>
+									
+									<c:if test="${page > 0 }">
+										<a href="<%=prefix%>page/${blog.id}?page=${page-1}"  style=" font-size:19px;color:blue">&lt上一页</a>
+									</c:if>
+									
+									<c:if test="${page < totalPage }">
+										<a href="<%=prefix%>page/${blog.id}?page=${page+1}"  style=" font-size:19px;color:blue">下一页&gt</a>
+									</c:if>
+								</c:if>
+								</div>
 							</div>	
 							</td>
 							<td valign="top">
-							<div style="padding-left:10px; text-align: left">
+							<div style="padding-left:10px;  border-left:  1px dashed;text-align: left">
 								<br>
 								<%@ include file="common/hotBlogs.jsp" %>
 							</div>

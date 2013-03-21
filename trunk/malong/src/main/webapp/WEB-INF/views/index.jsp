@@ -22,13 +22,13 @@
 <body>
 <%@ include file="common/common.jsp" %>
 	<div style="">	
-		<img  src="icon/LOGO2.png"><br>
+		<img alt="logo" src="icon/LOGO2.png"><br>
 	
 			<div style="margin-bottom:20px">
 				<%@ include file="common/searchBox.jsp" %>
 			</div>
 		
-			<div  style="text-align:center;;font-size:14px;color:#1060f3;border:solid 1px #CCCCCC;width:80%" >
+			<div  style="text-align:center;;font-size:14px;color:#1060f3;border: 1px #CCCCCC;width:100%;padding-left:10%;padding-right:10%" >
 				<table style="margin:auto; width:100%;">
 				<tr>
 				<c:forEach items="${hosts}" var ="hot"  varStatus="vstatus">			
@@ -41,6 +41,8 @@
 				</table>
 			</div>
 			<br>
+			<br>
+			
 			<%@ include file="common/footer.jsp" %>
 	</div>	
 	
