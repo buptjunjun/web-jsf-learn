@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -15,7 +17,8 @@ public class HotBlogs
 {
 
 	private static List<Blog> hotblogs= null;
-	private int maxblog = 10;
+	private Map<String ,Blog> mapblgs = new HashMap<String,Blog>();
+	private int maxblog = 20;
 	public HotBlogs()
 	{	
 		hotblogs = new ArrayList<Blog>();		
@@ -26,7 +29,18 @@ public class HotBlogs
 
 	synchronized public void addItem(Blog item)
 	{
-		hotblogs.add(item);
+		
+		if(!this.mapblgs.containsKey(item.getId()))
+		{
+			hotblogs.add(item);
+			mapblgs.put(item.getId(), item);
+		}
+		if(this.hotblogs.size() > maxblog)
+		{
+			Blog b = this.hotblogs.get(0);
+			this.remove(b);
+			mapblgs.remove(b.getId());
+		}
 	}
 	
 	public synchronized  void remove(Blog item)
@@ -36,7 +50,7 @@ public class HotBlogs
 	
 	public synchronized  void remove(int  location)
 	{
-		if(location > hotblogs.size() && location < hotblogs.size())
+		if(location >= 0 && location < hotblogs.size())
 			hotblogs.remove(location);
 	}
 
