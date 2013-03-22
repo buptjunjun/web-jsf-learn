@@ -38,13 +38,13 @@ public class ReAnalyzer extends Thread
 	{
 
 	    Map<String,Analyzer> hosts = new HashMap<String,Analyzer>();
-	    hosts.put("blog.csdn.net", new CSDNAnalyzer());
-	    hosts.put("blog.chinaunix.net", new ChinaunixAnalyzer());
-	    hosts.put("blog.51cto.com",new A51ctoAnalyzer());
-	    hosts.put("my.oschina.net",new OschinaAnalyzer());
-	    hosts.put("www.iteye.com/blogs",new IteyeAnalyzer());
-	    hosts.put("ibm.cn",new IBMAnalyzer());
-	    hosts.put("www.cnblogs.com",new CnblogsAnalyzer());
+//	    hosts.put("blog.csdn.net", new CSDNAnalyzer());
+//	    hosts.put("blog.chinaunix.net", new ChinaunixAnalyzer());
+//	    hosts.put("blog.51cto.com",new A51ctoAnalyzer());
+//	    hosts.put("my.oschina.net",new OschinaAnalyzer());
+//	    hosts.put("www.iteye.com/blogs",new IteyeAnalyzer());
+    hosts.put("ibm.cn",new IBMAnalyzer());
+//	    hosts.put("www.cnblogs.com",new CnblogsAnalyzer());
 	    
 	    
 		//String host = Localizer.getMessage("host");
@@ -75,7 +75,7 @@ public class ReAnalyzer extends Thread
 		
 		DAOMongo rmongo = new DAOMongo(mongohost,27017,mongodb);
 		DAOMongo mongo = new DAOMongo(mongodb);
-		List<Html> lblog = mongo.searchHtml(host, inserunindexedflag_int, 100);
+		List<Html> lblog = mongo.searchHtml(host, inserunindexedflag_int, 500);
 		int size = 1;
 		long begin = System.currentTimeMillis();
 		while(lblog!=null && lblog.size()!=0 )
@@ -98,7 +98,7 @@ public class ReAnalyzer extends Thread
 			}
 			System.out.println("indexed " + lblog.get(0)+"  and .....");
 			size+=lblog.size();
-			lblog = mongo.searchHtml(host, inserunindexedflag_int, 100);
+			lblog = mongo.searchHtml(host, inserunindexedflag_int, 500);
 			try
 			{
 				TimeUnit.SECONDS.sleep(1);
@@ -109,6 +109,6 @@ public class ReAnalyzer extends Thread
 			}
 		}
 		long end = System.currentTimeMillis();	
-		System.out.println("size:" + size+"   "+(end-begin)/1000);
+		System.out.println(host+" size:" + size+"   "+(end-begin)/1000);
 	}
 }

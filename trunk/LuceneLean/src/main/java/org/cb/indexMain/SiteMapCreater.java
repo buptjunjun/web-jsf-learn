@@ -23,13 +23,13 @@ public class SiteMapCreater
 	String freq = "weekly";
 	String prio = "0.8";
 	// how many xmls
-	public static int indexNum = 2;
+	public static int indexNum = 20;
 	//how many url per page
-	public static int sizeOfpage= 2;
+	public static int sizeOfpage= 10000;
 	//content length of bolg 
-	public static int lengthLimit = 1;
+	public static int lengthLimit = 600;
 	
-	public static int beginId = 0;
+	public static int beginId = 5;
 	public String fileName = "site_map_content_";
 	public Element createUrl(String id)
 	{
@@ -43,7 +43,7 @@ public class SiteMapCreater
 		changefreq.setText(freq);
 		priority.setText(prio);
 		
-		url.addContent(loc).addContent(lastmod).addContent(changefreq).addContent(priority);
+		url.addContent(loc).addContent(changefreq).addContent(priority);
 		return url;
 		
 	}
@@ -77,7 +77,7 @@ public class SiteMapCreater
 		loc.setText(url);
 		lastmod.setText((date.getYear()+1900)+"-"+(date.getMonth()+1)+"-"+date.getDay());
 		root.addContent(loc);
-		root.addContent(lastmod);
+		//root.addContent(lastmod);
 		
 		return root;	
 	}
@@ -145,10 +145,10 @@ public class SiteMapCreater
 				for(Blog b : lblog) 
 				{				
 					b.setMagicNum(unindexedflag_int);		
-					//mongo.updateBlog(b);
+					mongo.updateBlog(b);
 					String id = b.getId();
 					int length = (b.getContent() == null ? 0:b.getContent().length());
-					if(length > lengthLimit)
+					if(length > lengthLimit && b.getPictures()==0)
 						ids.add(id);
 					System.out.println("add:"+b.getUrl());				
 					
@@ -170,7 +170,7 @@ public class SiteMapCreater
 			//System.out.println(xml);
 			
 		}
-		Element e =	CreateSitemapindex(0,1);
+		Element e =	CreateSitemapindex(beginId,beginId+indexNum);
 		XMLOutputter outputter = new XMLOutputter();
 		FileOutputStream file = new  FileOutputStream(new File("sitemapindex.xml"));
 		 outputter.output(e, file);
