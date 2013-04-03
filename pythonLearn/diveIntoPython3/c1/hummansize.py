@@ -21,3 +21,13 @@ def approximate_size(size,a_kilobyte_is_1024_bytes=True):
 if __name__=='__main__':
     print(approximate_size(1000000000000, False))
     print(approximate_size(1000000000000))
+    
+    #使用命名参数
+    print(approximate_size(size=1000000000000,a_kilobyte_is_1024_bytes=False))
+    
+    #交换顺序没有关系
+    print(approximate_size(a_kilobyte_is_1024_bytes=False,size=1000000000000))
+    
+     # 如果某个参数是命名参数 那么右边的所有参数都必须是命名参数
+     #print(approximate_size(a_kilobyte_is_1024_bytes=False,1000000000000))
+    
