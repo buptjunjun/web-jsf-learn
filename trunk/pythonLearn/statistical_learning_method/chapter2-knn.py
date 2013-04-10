@@ -1,6 +1,6 @@
+import random
 
-
-def findMedians(nums,begin,end):
+def findMedians(nums,begin,end,mid):
     '''
                  寻找中位数
      params:
@@ -8,13 +8,13 @@ def findMedians(nums,begin,end):
      return median
     '''
     position =  partition(nums,begin,end);
-    middle = (begin+end)/2
-    if position == middle:
+    middle = (int)((begin+end)/2)
+    if position == mid:
         return position
-    elif position > middle:
-        return findMedians(nums,begin,middle)
+    elif position > mid:
+        return findMedians(nums,begin,position-1,mid)
     else :
-        return  findMedians(nums,middle,end)
+        return  findMedians(nums,position+1,end,mid)
     
     
     
@@ -27,8 +27,13 @@ def partition (nums,begin,end):
     return pivot的位置
     '''
     
-    pivot = nums[begin]
+    tmpPos = (int)(random.uniform(begin,end))
     
+    tmp = nums[tmpPos]
+    nums[tmpPos] = nums[begin]
+    nums[begin] = tmp;
+    
+    pivot = nums[begin]   
     low = begin
     high = end
     while low < high:
@@ -45,6 +50,9 @@ def partition (nums,begin,end):
         
         
 if __name__ == '__main__':
-    nums = [3,2,1,5,7]
-    print(findMedians(nums,0,len(nums)-1))
+    nums = [3,2,1,5,7,0,2,5,8,9,0,33,445,66,754,-223,-1,-2,-2]
+    mid = findMedians(nums,0,len(nums)-1,(int)((len(nums)-1)/2))
     print(nums)
+    print(mid)
+    print(nums[mid])
+    
