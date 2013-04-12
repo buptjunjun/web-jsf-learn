@@ -55,6 +55,8 @@ class kdtreeNode:
       def __init__(self):
           self.lchild = kdtreeNode
           self.rchild = kdtreeNode
+          self.lchild.parent = self
+          self.rchild.parent = self
       
 class kdtree:
     data = []
@@ -76,10 +78,10 @@ class kdtree:
         if self.data == None or len(self.data)==0:
             return
         print(self.data)
-        self.createKDTree_private(self.data,0,0,len(self.data)-1,self.root,None)
+        self.createKDTree_private(self.data,0,0,len(self.data)-1,self.root)
         
        
-    def createKDTree_private(self,data,currentDim,start,end,pointer,parent):
+    def createKDTree_private(self,data,currentDim,start,end,pointer):
         if start < 0 :
             return
         if end >= len(data):
@@ -105,8 +107,8 @@ class kdtree:
         high = midPos + 1
         pointer.lchild = kdtreeNode()
         pointer.rchild = kdtreeNode()
-        self.createKDTree_private(data,currentDim,start,low,pointer.lchild,pointer)
-        self.createKDTree_private(data,currentDim,high,end,pointer.rchild,pointer) 
+        self.createKDTree_private(data,currentDim,start,low,pointer.lchild)
+        self.createKDTree_private(data,currentDim,high,end,pointer.rchild) 
         
     def printtree(self):
         self.printtree1(self.root)
