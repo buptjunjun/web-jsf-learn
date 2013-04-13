@@ -53,10 +53,9 @@ class kdtreeNode:
       data = None;
       
       def __init__(self):
-          self.lchild = kdtreeNode
-          self.rchild = kdtreeNode
-          self.lchild.parent = self
-          self.rchild.parent = self
+          self.lchild = None
+          self.rchild = None
+       
       
 class kdtree:
     data = []
@@ -107,6 +106,8 @@ class kdtree:
         high = midPos + 1
         pointer.lchild = kdtreeNode()
         pointer.rchild = kdtreeNode()
+        pointer.lchild.parent = pointer
+        pointer.rchild.parent = pointer
         self.createKDTree_private(data,currentDim,start,low,pointer.lchild)
         self.createKDTree_private(data,currentDim,high,end,pointer.rchild) 
         
@@ -119,17 +120,46 @@ class kdtree:
         print(node.data)
         self.printtree1(node.lchild)
         self.printtree1(node.rchild)
+   
+    def printtree2(self,node):
+        if node == None or node.data==None: 
+            return
+        print(node.data)
+        self.printtree1(node.lchild)
+        self.printtree1(node.rchild)
+             
+    def findLeaf(self,point):
+        if point == None or len(point) != self.dim:
+            return None       
+        tmproot = self.root
+        if tmproot.lchild == None and tmproot.rchild == None:
+            return tmproot
         
+        currentDim = 0
+        while tmproot.lchild != None or tmproot.rchild != None:
+            if tmproot.data[currentDim] <=  point[currentDim]:
+                tmproot = tmproot.rchild
+            else:
+                tmproot = tmproot.lchild
+            currentDim = (currentDim+1)%self.dim
         
+        return tmproot
+            
+         
         
         
 if __name__ == '__main__':
-    nums = [(1,21,2),(1,28,7),(91,21,11),(1,2,0),(13,23,8),(12,21,3)]
+    nums = [(7,2),(5,4),(9,6),(2,3),(4,7),(8,1)]
 #    mid = findMedians(nums,0,len(nums)-1,(int)((len(nums)-1)/2),1)
 #    print(nums)
 #    print(mid)
 #    print(nums[mid])
     
-    tree = kdtree(nums,3)
+    tree = kdtree(nums,2)
     tree.createKDTree()
+    print("---------------")
     tree.printtree()
+    
+    leaf = tree.findLeaf((1,2))
+    print("----------------")
+    print(leaf.data)
