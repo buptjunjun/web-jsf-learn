@@ -162,4 +162,7 @@ if __name__ == '__main__':
     
     leaf = tree.findLeaf((1,2))
     print("----------------")
-    print(leaf.data)
+    if leaf.data == None:
+        print(leaf.parent.data)
+    else:
+        print(leaf.data)
