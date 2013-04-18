@@ -1,12 +1,13 @@
 def insertsort (data):
     '''
-            插入排序
+            插入排序 从小到大
     '''
     if data == None:
         return
     
     for j in range(1,len(data)):
         elem = data[j]
+        #插入位置
         position = j
         for i in range(j-1,-1,-1):
             if elem < data[i]:
@@ -19,7 +20,7 @@ def insertsort (data):
 
 def insertsortBS (data):
     '''
-            插入排序 使用 二分搜索查找插入位置
+                插入排序 使用 二分搜索查找插入位置
     '''
     if data == None:
         return
@@ -28,9 +29,9 @@ def insertsortBS (data):
         elem = data[j]
         if elem >= data[j-1]:
             continue;
-        
+        # 插入位置
         position = -1    
-        # binary search
+        # 二分搜索 确定插入位置
         low = 0
         high = j-1;
         while low < high:
@@ -42,10 +43,10 @@ def insertsortBS (data):
             else:
                 position = middle;
                 break; 
-        
+        # 插入位置
         if position < 0:
             position = low;
-            
+        #将插入位置及其以后的元素往后移动
         for i in range(j-1,position-1,-1):
             data[i+1] = data[i] 
         data[position] = elem;
