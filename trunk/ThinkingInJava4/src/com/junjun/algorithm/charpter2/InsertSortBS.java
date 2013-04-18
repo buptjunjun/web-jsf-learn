@@ -23,6 +23,9 @@ public class InsertSortBS extends Sort
 		for(int i = 1;i <s.length; i++)
 		{	
 			int key = s[i];
+			if(key >= s[i-1])
+				continue;
+				
 			//下面进行二分查找 寻找插入点
 			int insertPos = -1;// p就是要插入的位置
 			int p = 0;
