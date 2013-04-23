@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" />
+<title>YUI upload test</title>
+<link href="css.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<!-- Load Queue widget CSS and jQuery -->
+<style type="text/css">@import url(/servletJspLearn/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css);</style>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+
+<!-- Third party script for BrowserPlus runtime (Google Gears included in Gears runtime now) -->
+<script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
+
+<!-- Load plupload and all it's runtimes and finally the jQuery queue widget -->
+<script type="text/javascript" src="/servletJspLearn/plupload/js/plupload.full.js"></script>
+<script type="text/javascript" src="/servletJspLearn/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js"></script>
+
+<script type="text/javascript">
+// Convert divs to queue widgets when the DOM is ready
+$(function() {
+	// Setup flash version
+	$("#flash_uploader").pluploadQueue({
+		// General settings
+		runtimes : 'flash',
+		url : 'http://10.228.119.2:8080/servletJspLearn/upload',
+		max_file_size : '6000mb',
+		chunk_size : '50mb',
+		unique_names : true,
+
+		// Resize images on clientside if we can
+		resize : {width : 320, height : 240, quality : 90},
+
+		// Specify what files to browse for
+		filters : [
+			{title : "Zip files", extensions : "zip"},
+			{title : "Image files", extensions : "jpg,gif,png"}
+			
+		],
+
+		// Flash settings
+		flash_swf_url : '/servletJspLearn/plupload/js/plupload.flash.swf'
+	});
+
+ 	// Setup gears version
+	$("#gears_uploader").pluploadQueue({
+		// General settings
+		runtimes : 'gears',
+		url : 'http://10.228.119.2:8080/servletJspLearn/upload',
+		max_file_size : '6000mb',
+		chunk_size : '50mb',
+		unique_names : true,
+
+		// Resize images on clientside if we can
+		resize : {width : 320, height : 240, quality : 90},
+
+		// Specify what files to browse for
+		filters : [
+			{title : "Image files", extensions : "jpg,gif,png"},
+			{title : "Zip files", extensions : "zip"}
+		]
+	});
+
+	// Setup silverlight version
+	$("#silverlight_uploader").pluploadQueue({
+		// General settings
+		runtimes : 'silverlight',
+		url : 'http://10.228.119.2:8080/servletJspLearn/upload',
+		max_file_size : '60000mb',
+		chunk_size : '50mb',
+		unique_names : true,
+
+		// Resize images on clientside if we can
+		resize : {width : 320, height : 240, quality : 90},
+
+		// Specify what files to browse for
+		filters : [
+			{title : "Image files", extensions : "jpg,gif,png"},
+			{title : "Zip files", extensions : "zip"}
+		],
+
+		// Silverlight settings
+		silverlight_xap_url : '/servletJspLearn/plupload/js/plupload.silverlight.xap'
+	});
+
+	// Setup browserplus version
+	$("#browserplus_uploader").pluploadQueue({
+		// General settings
+		runtimes : 'browserplus',
+		url : 'http://10.228.119.2:8080/servletJspLearn/upload',
+		max_file_size : '60000mb',
+		chunk_size : '50mb',
+		unique_names : true,
+		dragdrop : false, // Disabled since BrowserPlus is to buggy
+
+		// Resize images on clientside if we can
+		resize : {width : 320, height : 240, quality : 90},
+
+		// Specify what files to browse for
+		filters : [
+			{title : "Image files", extensions : "jpg,gif,png"},
+			{title : "Zip files", extensions : "zip"}
+		]
+	});
+
+	// Setup html5 version
+	$("#html5_uploader").pluploadQueue({
+		// General settings
+		runtimes : 'html5',
+		url : 'http://10.228.119.2:8080/servletJspLearn/upload',
+		max_file_size : '6000mb',
+		chunk_size : '50mb',
+		unique_names : true,
+
+		// Resize images on clientside if we can
+		resize : {width : 320, height : 240, quality : 90},
+
+		// Specify what files to browse for
+		filters : [
+			{title : "Image files", extensions : "jpg,gif,png"},
+			{title : "Zip files", extensions : "zip"}
+		]
+	});
+
+	// Setup html4 version
+	$("#html4_uploader").pluploadQueue({
+		// General settings
+		runtimes : 'html4',
+		url : 'http://10.228.119.2:8080/servletJspLearn/upload'
+	}); 
+});
+</script>
+
+...
+
+<h4>Flash runtime</h4>
+<div id="flash_uploader">You browser doesn't have Adobe Flash installed.</div>
+
+<h4>Gears runtime</h4>
+<div id="gears_uploader">You browser doesn't have Google Gears plugin installed.</div>
+
+<h4>Silverlight runtime</h4>
+<div id="silverlight_uploader">You browser doesn't have Microsoft Silverlight plugin installed.</div>
+
+<h4>BrowserPlus runtime</h4>
+<div id="browserplus_uploader">You don't have the Yahoo BrowserPlus plugin installed.</div>
+
+<h4>HTML 5 runtime</h4>
+<div id="html5_uploader">You browser doesn't support native upload. Try Firefox 3 or Safari 4.</div>
+
+<h4>HTML 4 runtime</h4>
+<div id="html4_uploader">You browser doesn't support simple upload forms. Are you using Lynx?</div>
+			
+	
+</body>
+</html>
