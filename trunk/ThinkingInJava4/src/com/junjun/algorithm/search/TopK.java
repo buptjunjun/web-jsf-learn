@@ -148,7 +148,7 @@ public class TopK
 	
 	public static void main(String[] args)
 	{
-		int []testdata =  {2,1,3,5,4};
+		int []testdata =  {1111,-1,3,1,1,-1,-1};
 		TopK topk = new TopK();
 		topk.setTestData(testdata);
 		//  π”√∂—’“µΩtopk
