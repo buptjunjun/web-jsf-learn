@@ -3,7 +3,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 /**
- * 二分查找类
+ * 随机数的生成
  * @author junjun
  *
  */
