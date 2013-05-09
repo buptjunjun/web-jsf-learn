@@ -130,16 +130,24 @@ public class RandomArray
 	{
 		// 待打乱的数组
 		int [] array = {1,2,3,4,5,6,7,8,9};
+		print(array,0,array.length - 1 ,"original array");
+		
 		RandomArray r = new RandomArray();
 		int [] ret = r.disturb1(array);
+		print(array,0,array.length - 1 ,"disturb1");
 		
-		for(int i = 0;i < ret.length;i++)
-			System.out.print(ret[i]+" ");
-		
-		System.out.print ("\n");
 		ret = r.disturb2(array);	
-		for(int i = 0;i < ret.length;i++)
-			System.out.print (ret[i]+" " );
+		print(array,0,array.length - 1 ,"disturb2");
 			
+	}
+	
+	static void print(int [] A,int from,int to,String msg)
+	{	
+		System.out.print(msg+" \n");
+		for(int i = from; i<=to; i++)
+		{
+			System.out.print(A[i]+" ");
+		}
+		System.out.print("\n");
 	}
 }
