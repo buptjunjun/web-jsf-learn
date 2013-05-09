@@ -23,6 +23,8 @@ public class QuickSort
 		A[i] = A[j];
 		A[j] = tmp;
 	}
+	
+	
 	/**
 	 *  将一个数组A[m,n] 分解，使得A[pivot]的左边的值都小于A[pivot]，A[pivot]的右边的值都大于于A[pivot]。
 	 *  比如A=[1,2,5,0,3,6] pivot=4 A[pivot] = 3.
@@ -52,7 +54,7 @@ public class QuickSort
 	 * @pivot 轴心的位置
 	 * @return pivot的新位置
 	 */
-	public int partition(int [] A, int m,int n,int pivot)
+	public int partition1(int [] A, int m,int n,int pivot)
 	{
 		swap(A,m,pivot);
 		
@@ -69,7 +71,69 @@ public class QuickSort
 		swap(A,m,border);
 		return border;
 	}
+	
+	/**
+	 *  将一个数组A[m,n] 分解，使得A[pivot]的左边的值都小于A[pivot]，A[pivot]的右边的值都大于于A[pivot]。
+	 *  比如A=[1,2,5,0,3,6] pivot=4 A[pivot] = 3.
+	 *  最后的到的结果为[1,2,0,3,5,6] 返回 3
+	 *  
+	 *  算法：交换A[pivot] <-> A[m]
+	 *  	i=m+1;j=n
+	 *      1、从后往前搜索 j--,找到第一个小于A[m](pivot)的元素 然后A[m]<->A[j] m = j;j--
+	 *      2、从前往后搜索i++,找到第一个大于A[m](pivot)的元素 然后A[m]<->A[i] m = i; j--
+	 *      3、重复1,2 直到 i>=j
+	 *      
+	 *      例如：
+	 *      [4,2,8,7,1,3,5,6]
+	 *      如果pivot为A[0]=4 i = 1,j=7 m = 0
+	 *      第一步：  i<j 从后向前 i=1 j=7 A[j] = 6 m=0  A[j]>=A[m] 										 	当前数组为：4,2,8,7,1,3,5,6
+	 *      第二步：  i<j 从后向前 i=1 j=6 A[j] = 5 m=0  A[j]>=A[m] 											当前数组为：4,2,8,7,1,3,5,6   
+	 *      第三步：  i<j 从后向前 i=1 j=5 A[j] = 3 m=0  A[j]<A[m] 交换A[j]<->A[m](4和3) m=j=5 		                                     当前数组为：3,2,8,7,1,4,5,6
+	 *      第四步：  i<j 从前向后i=1 j=5 A[i] = 2 m=5   A[i]<=A[m]									 		 当前数组为：3,2,8,7,1,4,5,6         
+	 *      第五步：  i<j 从前向后 i=2 j=5 A[i] = 8 m=5  A[i]>A[m] 交换A[i]<->A[m](8和4) m=i=2  	  	           	当前数组为： 3,2,4,7,1,8,5,6
+	 *		第六步：  i<j 从后向前 i=2 j=5 A[j] = 8 m=2  A[j]>=A[m]  								                                    当前数组为：3,2,4,7,1,8,5,6
+	 *      第七步：  i<j 从后向前 i=2 j=4 A[j] = 1 m=2  A[j]<A[m]  交换A[j]<->A[m](4和A1) m=j=4					 当前数组为：3,2,1,7,4,8,5,6
+	 *      第八步：  i<j 从前向后  i=2 j=4 A[i] = 1 m=4  A[i]<=A[m] 											当前数组为：3,2,1,7,4,8,5,6
+	 *      第九步：  i<j 从前向后  i=3 j=4 A[i] = 7 m=4  A[i] >A[m] 交换A[j]<->A[m](7和4) m=3					当前数组为：3,2,1,4,7,8,5,6
+	 *      第十步      i<j 从后向前 i=3 j=4 A[j] = 7 A[j]>=A[m] 													当前数组为：3,2,1,4,7,8,5,6
+	 *      最后         i>=j i=j=3 返回3(A[3]=4)
+	 * @param A 数组
+	 * @pivot 轴心的位置
+	 * @return pivot的新位置
+	 */
+	public int partition2(int [] A, int m,int n,int pivot)
+	{
+		swap(A,m,pivot);
+		
+		int i = m+1; 
+		int j = n;
+		while(i < j)
+		{
+			//从后向前
+			while(i < j && A[j] > A[m]) j--;
+			swap(A,j,m);
+			m = j;
+			//从前向后
+			while(i < j && A[i] < A[m]) i++;
+			swap(A,i,m);
+			m=i;
+		}
+		return i;
+	}
 
+
+	/**
+	 *  将一个数组A[m,n] 分解，使得A[pivot]的左边的值都小于A[pivot]，A[pivot]的右边的值都大于于A[pivot]。
+	 *  比如A=[1,2,5,0,3,6] pivot=4 A[pivot] = 3.
+	 *  最后的到的结果为[1,2,0,3,5,6] 返回 3
+	 * @param A 数组
+	 * @pivot 轴心的位置
+	 * @return pivot的新位置
+	 */
+	public int partition(int [] A, int m,int n,int pivot)
+	{
+		return partition2(A,m,n,pivot);
+	}
 	/**
 	 * 对A[m...n]进行快速排序 选择A[m,n]中A[m]为pivot
 	 * @param A 
@@ -112,9 +176,10 @@ public class QuickSort
 	{
 		int [] A = {4,2,8,7,1,3,5,6};
 		QuickSort qs = new QuickSort();
+		print(A, 0,A.length-1,"original array ");
 		
 		//测试partition
-		int pivot = qs.partition(A, 0,A.length-1,3);
+		int pivot = qs.partition2(A, 0,A.length-1,3);
 		print(A, 0,A.length-1,"测试partition");
 		System.out.println("pivot = " + pivot+"   A["+pivot+"] = " +A[pivot]);
 	
