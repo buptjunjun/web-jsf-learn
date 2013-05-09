@@ -70,7 +70,7 @@ public class Random
 	
 	/**
 	 * 仅仅调用 random01() 得到random 0 n 
-	 * randomab 问题可以最终转化为random0n问题  [a,b] = [0+a,(b-a)+a]
+	 * randomab 问题可以最终转化为random0n问题  [a,b] = [0+a,(b-a)+a]=[0，b-a]+[a,a]
 	 * 所以只需要计算 random(0,b-a)得到一个随机数再加上a即可
 	 * @param a 下限
 	 * @param b 上限
