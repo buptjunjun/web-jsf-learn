@@ -1,69 +1,35 @@
 '''
-Created on 2012-8-4
-python thread test
-@author: junjun
+ python 线程
 '''
-
-import time
 import threading
+import time
 
-# create a lock
-mylock = threading.RLock()
 
-# critial resource   
-num = 0
-# crate a class inherited from threading.Thread
-class timer(threading.Thread):
-    def __init__(self,num, interval):
-        # must init parent class
+class timer(threading.Thread):#从threading.Thread继承的
+    def __init__(self,num,interval):
         threading.Thread.__init__(self)
-        
         self.thread_num = num
         self.interval = interval
         self.thread_stop = False
-    #define run function , like java    
-    def run(self):
+    def run(self):#overwrite run method put what you want to do here
         while not self.thread_stop:
-            print("Thread Object(%d) ,Time:%s" %(self.thread_num,time.ctime()))
+            print('Thread Object(%d) , Time:%s\n' %(self.thread_num,time.ctime()));
             time.sleep(self.interval)
-    
     def stop(self):
         self.thread_stop = True
- 
-# test synchronize
-class MyThread(threading.Thread):
-   
-    def __init__(self,name):
-        # must init parent class ,set nama as the thread's name
-        threading.Thread.__init__(self)
-        self.t_name = name
-    
-    def run(self):   
-        global num   
-        while True:   
-            # get the clock
-            mylock.acquire()   
-            print ('\nThread(%s) locked, Number: %d'%(self.t_name, num))
-            if num%10 >= 9:   
-                mylock.release()   
-                print ('\nThread(%s) released, Number: %d'%(self.t_name, num))   
-                break   
-            num+=1   
-            print ('\nThread(%s) released, Number: %d'%(self.t_name, num))
-            try:
-                mylock.release()
-            except:
-                print("exception ")  
-            time.sleep(1)    
-            
-       
+        
 def test():
-    thread1 = MyThread("A")
-    thread2 = MyThread("B")
-    thread1.start()
-    thread2.start()
-
-test()
+    t = [];
+    for i in range(0,3):
+        thread = timer(i,2);
+        t.append(thread)
     
-        
-        
+    for thread in t:
+        thread.start()
+    time.sleep(20)
+    
+    for thread in t:
+        thread.stop()
+
+if __name__=="__main__":
+    test()
