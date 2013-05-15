@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
 * 这道题用到2个知识：宽度优先搜索BFS和枚举
@@ -20,16 +21,16 @@ import java.util.Scanner;
 class Board
 {
 	//长宽
-	public int width = 4;
-	public int height = 4;
+	static public int width = 4;
+	static public int height = 4;
 	private boolean [] board = null; 
 	
 	public Board father = null;
 
 	public Board(int width, int height)
 	{
-		this.width = width;
-		this.height = height;	
+		Board.width = width;
+		Board.height = height;	
 		board = new boolean [width*height];
 		
 		
@@ -171,61 +172,80 @@ class Board
 		
 		return true;
 	}
+	@Override
+	public int hashCode()
+	{
+		int hashcode = 0;
+		for(int i = 0;i<this.board.length;i++)
+		{
+			if(this.board[i]) hashcode+=Math.pow(2, i);
+		}
+		return hashcode;
+	}
 }
 
 
 public class Main1753
 {
 	// 使用set防止重复搜索
-	static HashSet<Board> boards = new HashSet<Board>();
+	static Set s = new HashSet<Integer>();
 	static Queue<Board> queue = new LinkedList<Board>();
 	static int count = 0;
 	static public Board search()
 	{
 		//翻转所有的棋子,如果满足条件返回 ,否则将当前状态加入到队列中取
-		while(true)
+		while(queue.size()>0)
 		{	
 			Board b = queue.poll();
-			count++;
+			if(b.ok())
+				return b;
 			for(int i = 0; i<b.width;i++)
 			{
 				for(int j = 0;j<b.height;j++)
 				{
 					Board cb = b.clone();
 					cb.flip(i, j);
+					// 如果还不是最终状态 将当前状态加入到队列中取
+					// 防止重复以前的状态 需要检查是否有这个board了
+					if(s.contains(cb.hashCode()))
+					{
+						cb.father = null;
+						cb = null;
+						continue;
+					}
+					s.add(cb.hashCode());
+					queue.add(cb);
 					cb.father = b;
 					//we find the board
 					if(cb.ok())
 						return cb;
-					// 如果还不是最终状态 将当前状态加入到队列中取
-					// 防止重复以前的状态 需要检查set中是否有这个board了
-					if(!boards.contains(cb))						
-					{
-						queue.add(cb);
-						boards.add(cb);
-					}
 				}
 			}
 		}
 		
-		//return null;
+		return null;
 	}
 	public static void main(String[] args)
 	{
 		Board b = new Board(4,4);
 		b.init();
 		queue.add(b);
-		boards.add(b);
+		if(!queue.contains(b))
+			queue.add(b);
 		Board ret = search();
-		int count = 0;
-		while(ret.father!=null)
+		if(ret == null)
+		{
+			System.out.print("Impossible");
+			return;
+		}
+		
+		while(ret!=null)
 		{
 			count++;
 			ret = ret.father;
 		}
-		if(ret == null)
-			System.out.println("impossible");
-		else System.out.println("\n"+count);
+		
+	   System.out.print(count-1);
 		
 	}
 }
