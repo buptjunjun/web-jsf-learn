@@ -11,6 +11,8 @@ import java.util.Set;
 * 这道题用到2个知识：宽度优先搜索BFS和枚举
 * BFS:宽度优先搜索可以用来求离初始状态的距离
 * 枚举：地球人都知道的,不用说太多
+* 测试数据:
+* http://hi.baidu.com/albert02/item/2b78ec886169e453e63d19b5
 *
 */
 
