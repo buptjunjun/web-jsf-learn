@@ -132,7 +132,7 @@ public class QuickSort
 	 */
 	public int partition(int [] A, int m,int n,int pivot)
 	{
-		return partition2(A,m,n,pivot);
+		return partition1(A,m,n,pivot);
 	}
 	/**
 	 * 对A[m...n]进行快速排序 选择A[m,n]中A[m]为pivot
@@ -174,12 +174,12 @@ public class QuickSort
 	
 	public static void main(String [] args)
 	{
-		int [] A = {4,2,8,7,1,3,5,6};
+		int [] A = {4,2,8};
 		QuickSort qs = new QuickSort();
 		print(A, 0,A.length-1,"original array ");
 		
 		//测试partition
-		int pivot = qs.partition2(A, 0,A.length-1,3);
+		int pivot = qs.partition1(A, 0,A.length-1,1);
 		print(A, 0,A.length-1,"测试partition");
 		System.out.println("pivot = " + pivot+"   A["+pivot+"] = " +A[pivot]);
 	
