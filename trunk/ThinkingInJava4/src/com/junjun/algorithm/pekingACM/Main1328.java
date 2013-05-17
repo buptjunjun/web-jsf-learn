@@ -10,10 +10,21 @@ import java.util.Scanner;
 import java.util.Set;
 
 /**
-* 
-*
+*   
+*   知识点:贪心算法,排序
+*   算法: 对于一组数据 雷达范围为d, 每一个岛屿为一个点p(i,j)
+*         1、按照岛屿的横坐标i对岛屿进行排序,从小到大.
+*         2、如果某一个点的纵坐标(离海岸线距离大于d) 问题无解
+*         3、计算每一个岛屿p,以d为半径与海岸线的(x轴)的交点（有两个,或者一个)这两个点在x轴上的区间为field[a,b]
+*         4、从左边第一个点开始,找有交集的fields,比如p1,p2,p3的filed有交集，p4的field与前面的点没有交集。那么p1,p2,p3就可以用一个雷达覆盖
+*            依次这样做,美找到一个这样的集合就需要一个雷达,最后返回需要的雷达数目。
+*    http://poj.org/problem?id=1328    
+*         
 */
 
+/**
+ * 岛屿 的坐标
+ */
 class Point implements Comparable
 {
 	public double x = 0;
@@ -31,6 +42,22 @@ class Point implements Comparable
 	}
 	
 	@Override
+	public boolean equals(Object arg0)
+	{
+		// TODO Auto-generated method stub
+		Point p = (Point)arg0;
+		if(this.x == p.x && this.y == p.y)
+			return true;
+		return false;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		// TODO Auto-generated method stub
+		return (int)(this.x+this.y);
+	}
+	@Override
 	public int compareTo(Object arg0)
 	{
 		Point p = (Point)arg0;
@@ -42,126 +69,98 @@ class Point implements Comparable
 		
 	}
 }
+
+
 public class Main1328
 {
-	public static boolean LEFT = true;
-	public static boolean RIGHT = false;
 	/**
-	 * ilands 表示 岛屿的坐标,d表示雷达的最大半径
+	 * 返回需要的雷达数目
 	 * 返回至少需要多少个雷达的个数
-	 * @param ilands
-	 * @param d
+	 * @param ilands 表示 岛屿的坐标
+	 * @param d d表示雷达的最大半径
 	 */
-	public static int  search(Point [] islands,int d,boolean beginDirection)
+	public static int countRadar(Point [] islands,Double d)
 	{
-		
+		//对岛屿按照x坐标排序
 		Arrays.sort(islands);
-	
 		int count = 0;
-		int i = 0;
-		boolean direction = beginDirection;
+	
+		 //一个岛屿按照d为半径与 x轴相交的区间
 		double [] baseField = null;
-		if(beginDirection == RIGHT)
+		
+		for(int i = 0;i < islands.length;i++)
 		{
-			for(i = 0;i < islands.length;i++)
+			Point p = islands[i];
+			
+			// 如果p.y大于半径这个island ,无解
+			if(p.y >d)
+				return -1;
+			
+			 //一个岛屿按照d为半径与 x轴相交的区间
+			double[] field = caculate(p,d);
+			
+			// 如果baseField为空表示一个新的集合开始
+			if(baseField == null)
 			{
-				Point p = islands[i];
-				
-				// 如果p.y大于半径这个island
-				if(p.y >d)
-					return -1;
-				
-				double[] field = caculate(p,d,direction);
-				
-				if(baseField == null)
-				{
-					 baseField =field ;
-					direction = !beginDirection;
-					count++;
-				}
-				else
-				{
-					baseField = intersect(baseField,field);
-					if (baseField[0] == Double.MIN_VALUE)
-					{
-						direction = beginDirection;
-						count++;
-						baseField = caculate(p,d,direction);
-						direction = !beginDirection;
-					}
-				}		
+				 baseField =field ;
+				 count++;
 			}
-		}
-		else
-		{
-			for(i = islands.length-1;i >=0 ;i--)
+			else
 			{
-				Point p = islands[i];
+				// 计算两个区间 的交集
+				baseField = intersect(baseField,field);
 				
-				// 如果p.y大于半径这个island
-				if(p.y >d)
-					return -1;
-				
-				double[] field = caculate(p,d,direction);
-				
-				if(baseField == null)
+				// 如果 baseField[0] == Double.MIN_VALUE 表示没有交集
+				if (baseField[0] == Double.MIN_VALUE)
 				{
-					 baseField =field ;
-					direction = !beginDirection;
+					//如果  表示没有交集,当成一个集合的新的开始 计数count加一,field作为当前的区间.
 					count++;
+					baseField = field;
 				}
-				else
-				{
-					baseField = intersect(baseField,field);
-					if (baseField[0] == Double.MIN_VALUE)
-					{
-						direction = beginDirection;
-						count++;
-						baseField = caculate(p,d,direction);
-						direction = !beginDirection;
-					}
-				}		
-			}
+			}		
 		}
-
+	
 		return count;
 	}
 	
-	
-	public static double[] caculate(Point p,int d,boolean direction)
+	/**
+	 * 一个岛屿按照d为半径与 x轴相交的区间
+	 * @param p 岛屿坐标
+	 * @param d 雷达半径
+	 * @return 交集区间 如果没有交集 返回 {Double.MIN_VALUE,Double.MIN_VALUE};
+	 */
+	public static double[] caculate(Point p,double d)
 	{   
 		double [] ret = {Double.MIN_VALUE,Double.MIN_VALUE};
 		if(p.y > d)
 			return ret;
+		
 		double width = Math.sqrt(d*d-p.y*p.y);
-		
-		if(direction == LEFT)
-		{
-			ret[0] = p.x-width;
-			ret[1] = p.x;
-		}
-		else if (direction == RIGHT)
-		{
-			ret[0] = p.x;
-			ret[1] = p.x+width;
-		}
-		
+		ret[0] = p.x-width;
+		ret[1] = p.x+width;
+
 		return ret;
 	}
 	
+	/**
+	 * 计算两个区间的相交的区间
+	 * @param range1
+	 * @param range2
+	 * @return 返回交集，如果不想交返回{Double.MIN_VALUE,Double.MIN_VALUE};
+	 */
 	public static double[] intersect(double [] range1,double [] range2)
 	{
 		double [] ret = {Double.MIN_VALUE,Double.MIN_VALUE};
-		if(range1[0]>=range2[1] || range1[1]<=range2[0])
+		if(range1[0]>range2[1] || range1[1]<range2[0])
 			return ret;
 		
 		double left = 0;
-		if(range1[0]<range2[0])
+		if(range1[0]<=range2[0])
 			left = range2[0];
 		else left = range1[0];
 		
 		double right = 0;
-		if(range1[1]>range2[1])
+		if(range1[1]>=range2[1])
 			right = range2[1];
 		else right = range1[1];
 		
@@ -170,63 +169,76 @@ public class Main1328
 		
 		return ret;
 	}
+	
+	
+	/**
+	 * 删除重复的岛屿坐标
+	 * @param p
+	 * @return
+	 */
+	public static Point [] removeDuplicate(Point [] p)
+	{
+		Set<Point> set = new HashSet<Point>();
+		set.addAll(Arrays.asList(p));
+		return set.toArray(new Point[set.size()]);
+	}
+	
+	
 	public static void main(String[] args)
 	{
 		Scanner scanner = new Scanner(System.in);
 		
+		//存放每一个case岛屿的数据
+		List<Point []> datas = new ArrayList<Point []>();
+		
+		//存放每一个case的雷达的半径
+		List<Double> ds = new ArrayList<Double>();
+		
+		//取得数据
 		String line = scanner.nextLine();
-		int caseCount = 1;
 		while(!line.startsWith("0 0"))
 		{
 			
 			String [] nums = line.split(" ");			
-			int n = Integer.valueOf(nums[0]);
-			int d = Integer.valueOf(nums[1]);
+			double n = Double.valueOf(nums[0]);
+			double d = Double.valueOf(nums[1]);
 			
-			Point [] list = new Point[n];
+			List<Point> listPoint = new ArrayList<Point>();
 			for(int i = 0; i<n; i++)
 			{
 				line = scanner.nextLine();
 				nums = line.split(" ");			
-				Double x = Double.valueOf(nums[0]);
-				Double y = Double.valueOf(nums[1]);
+				double x = Double.valueOf(nums[0]);
+				double y = Double.valueOf(nums[1]);
 				
+				//if(y<0) continue;
 				Point p = new Point(x,y);
-				list[i] = p;
+				listPoint.add(p);
 			}
 			
-			int count1 = search(list,d,LEFT);
-			int count2 = search(list,d,RIGHT);
-			int count = -1;
-			if( count1  < 0 && count2 < 0)
-				count = -1;
-			else if( count1  == -1 && count2 >= 0)
-			{
-				count = count2;
-			}
-			else if( count1  >=0  && count2 == -1)
-			{
-				count = count1;
-			}
-			else
-			{
-				count = count1>count2?count2:count1;
-			}
+			Point [] list = listPoint.toArray(new Point[listPoint.size()]);
 			
-			System.out.println("Case "+caseCount+": "+count);
-			caseCount++;
+			// 去除重复的点
+			list = removeDuplicate(list);
+			datas.add(list);
+			ds.add(d);
+			
+			line = scanner.nextLine();		
 			line = scanner.nextLine();
-			if(line.startsWith("0 0"))
-				break;
-			if(line.isEmpty())
-			{	
-				line = scanner.nextLine();
-				if(line.startsWith("0 0"))
-				break;
-			}
-			
 		}
 		scanner.close();
+		
+		//计算结果。
+		int caseCount = 0;
+		for(Point []list:datas)
+		{	
+			//当前case雷达的半径
+			double d = ds.get(caseCount);
+			//最少需要多少个雷达
+			int count = countRadar(list,d);			
+			System.out.println("Case "+(caseCount+1)+": "+count);
+			caseCount++;
+		}
 		
 	}
 }
