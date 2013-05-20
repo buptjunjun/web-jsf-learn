@@ -282,7 +282,7 @@ public class Main1753
 					//加入队列中
 					queue.add(cb);
 					
-					//如果我们已经搜索了65536个boade都没有找到，问题无解了
+					//如果我们已经搜索了65536个boad都没有找到，问题无解了
 					if(count >= 65536)
 						return null;
 				}
@@ -291,6 +291,7 @@ public class Main1753
 			b=null;
 		}
 		
+		//
 		return null;
 	}
 	public static void main(String[] args)
