@@ -26,6 +26,7 @@ public class RBTree
 	public Node root = null;
 	static public boolean RED = true;
 	static public boolean BLACK = false;
+	private Node NIL = new Node(Integer.MAX_VALUE,BLACK);
 	
 	//二叉树的一个节点
 	class Node
@@ -36,7 +37,7 @@ public class RBTree
 		public Node lchild = null;  //左孩子
 		public Node rchild = null;  //右孩子
 		
-		public Node(int data)
+		public Node(int data,boolean color)
 		{
 			// TODO Auto-generated constructor stub
 			this.data = data;
@@ -82,19 +83,7 @@ public class RBTree
 			this.deleteNode(root);
 	}
 	
-	/**
-	 * 一个机节点数为N的树的高度最高为N,最低为logN
-	 * 我们使用随机选择的方法，使得生成的搜索树高度的 期望为logN
-	 * @param datas
-	 */
-	public void createTreeRandom(int [] datas)
-	{
-		//我们将一个数组随机打乱
-		RandomArray ra = new RandomArray();
-		int [] data = ra.disturb2(datas);
-		
-		createTree(data);
-	}
+	
 	
 	private Node searchInsertPos(int data)
 	{
@@ -116,7 +105,7 @@ public class RBTree
 				return null;
 			
 			//找到了插入位置
-			if(cur == null)
+			if(cur == this.NIL)
 			{
 				return pre;
 			}	
@@ -149,21 +138,27 @@ public class RBTree
 	 * @param node
 	 * @return
 	 */
-	public boolean insertNode(int data)
+	public Node insertNode(int data)
 	{
 		//如果树为空 node直接作为树根
 		if(this.root == null)
 		{
-			this.root = new Node(data);
-			return true;
+			this.root = new Node(data,RED);
+			this.root.rchild = NIL;
+			this.root.lchild = NIL;
+			this.root.p = NIL;
+			
+			return this.root;
 		}
 		
 		Node insertNode = searchInsertPos(data);
 		if(insertNode == null)
-			return false;
+			return null;
 		else
 		{
-			Node n = new Node(data);
+			Node n = new  Node(data,RED);
+			n.lchild = this.NIL;
+			n.rchild = this.NIL;
 			if(data < insertNode.data) //如果比插入点小,插入到左孩子
 			{
 				insertNode.lchild = n;
@@ -175,10 +170,9 @@ public class RBTree
 				n.p = insertNode;
 			}
 			else  //插入失败
-				return false;
-		}
-		return true;
-		
+				return null;
+			return n;
+		}		
 	}
 	
 	/**
@@ -248,6 +242,43 @@ public class RBTree
 			return false;
 		
 		return this.deleteNode(node);
+	}
+	
+
+	/**
+	 * 右旋转
+	 * @param node
+	 */
+	public void RRotate(Node node)
+	{
+		Node parent = node.p;	
+		Node lchild_node = node.lchild;
+		Node rlchild_node = lchild_node.rchild;
+		
+		node.lchild = rlchild_node;
+		lchild_node.rchild = node;
+		
+		if(parent.rchild == node)
+			parent.rchild = lchild_node;
+		else parent.lchild = lchild_node;
+	}
+	
+	/**
+	 * 左旋转
+	 * @param node
+	 */
+	public void LRotate(Node node)
+	{
+		Node parent = node.p;
+		Node rchild_node = node.rchild;
+		Node lrchild_node = rchild_node.lchild;
+		
+		node.rchild = lrchild_node;
+		rchild_node.lchild = node;
+		
+		if(parent.rchild == node)
+			parent.rchild = rchild_node;
+		else parent.lchild = rchild_node;
 	}
 	
 	/**
@@ -349,7 +380,7 @@ public class RBTree
 	 */
 	public void print(Node node)
 	{
-		if(node == null)
+		if(node == NIL)
 			return;
 		System.out.print (node.data+" ");
 		print(node.lchild);
@@ -359,52 +390,37 @@ public class RBTree
 	public static void main(String [] args)
 	{	
 		int [] test = {4,2,1,3,6,5,7};
-		RBTree bst = new RBTree();
+		RBTree rbt = new RBTree();
 
 		/*打印一棵树
 		 *                  4  
 		 *               2		6
 		 *             1   3  5   7
 		 */
-		bst.createTree(test);
-		bst.print(bst.root);
+		rbt.createTree(test);
+		rbt.print(rbt.root);
 		
 		//max and min
-		System.out.println("max = "+bst.max(bst.root).data);
-		System.out.println("min = "+bst.min(bst.root).data);
+		System.out.println("max = "+rbt.max(rbt.root).data);
+		System.out.println("min = "+rbt.min(rbt.root).data);
 		
 		//search
-		Node node = bst.search(3);
+		Node node = rbt.search(4);
 		System.out.println("search = "+ node.data);
 		
-		//树高
-		System.out.println("树高:"+bst.height(bst.root));
+		//左旋  
+		System.out.println("左旋");
+		rbt.LRotate(node);
+		rbt.print(rbt.root);
 		
-		//delete
-		System.out.println("delete 3");
-		bst.deleteNode(3);
-		bst.print(bst.root);
+		//右旋
+		node = rbt.search(7);
+		System.out.println("\n右旋");
+		rbt.RRotate(node);
+		rbt.print(rbt.root);
+
 		
-		System.out.println("\ndelete 2");
-		bst.deleteNode(2);
-		bst.print(bst.root);
 		
-		System.out.println("\ndelete 4");
-		bst.deleteNode(4);
-		bst.print(bst.root);
-		
-		//随机建树
-		System.out.println("\n随机建树");
-		int total = 0;
-		int i = 0;
-		for( i = 0;i < 10;i++)
-		{
-			bst.createTreeRandom(test);
-			int height = bst.height(bst.root);
-			System.out.print("root= "+bst.root.data+" height is "+height +"| ");
-			total+=height;
-		}
-		System.out.println("\n随机建树平均高度:"+ ((total+0.0f)/i));
 		
 	}
 }
