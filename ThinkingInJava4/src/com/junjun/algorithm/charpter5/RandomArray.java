@@ -141,7 +141,7 @@ public class RandomArray
 			
 	}
 	
-	static void print(int [] A,int from,int to,String msg)
+	public static void print(int [] A,int from,int to,String msg)
 	{	
 		System.out.print(msg+" \n");
 		for(int i = from; i<=to; i++)
