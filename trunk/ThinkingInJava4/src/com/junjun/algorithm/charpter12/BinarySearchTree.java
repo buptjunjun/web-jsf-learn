@@ -36,10 +36,36 @@ public class BinarySearchTree
 	 */
 	public void createTree(int [] datas)
 	{
+		this.root = null;
 		for(int i = 0;i < datas.length;i++)
 		{		
 			this.insertNode(datas[i]);
 		}
+	}
+	
+	/**
+	 * 返回树的高度
+	 * @param node
+	 * @return
+	 */
+	public int height(Node node)
+	{
+		if(node == null)
+			return 0;
+		int hl = height(node.lchild);
+		int hr = height(node.rchild);
+		if(hl < hr)
+			return hr+1;
+		else return hl+1;
+	}
+	
+	/**
+	 * 删除树
+	 */
+	public void clear()
+	{
+		while(this.root != null)
+			this.deleteNode(root);
 	}
 	
 	/**
@@ -51,9 +77,9 @@ public class BinarySearchTree
 	{
 		//我们将一个数组随机打乱
 		RandomArray ra = new RandomArray();
-		ra.disturb1(datas);
+		int [] data = ra.disturb2(datas);
 		
-		createTree(datas);
+		createTree(data);
 	}
 	
 	private Node searchInsertPos(int data)
@@ -337,6 +363,9 @@ public class BinarySearchTree
 		Node node = bst.search(3);
 		System.out.println("search = "+ node.data);
 		
+		//树高
+		System.out.println("树高:"+bst.height(bst.root));
+		
 		//delete
 		System.out.println("delete 3");
 		bst.deleteNode(3);
@@ -349,5 +378,19 @@ public class BinarySearchTree
 		System.out.println("\ndelete 4");
 		bst.deleteNode(4);
 		bst.print(bst.root);
+		
+		//随机建树
+		System.out.println("\n随机建树");
+		int total = 0;
+		int i = 0;
+		for( i = 0;i < 10;i++)
+		{
+			bst.createTreeRandom(test);
+			int height = bst.height(bst.root);
+			System.out.print("root= "+bst.root.data+" height is "+height +"| ");
+			total+=height;
+		}
+		System.out.println("\n随机建树平均高度:"+ ((total+0.0f)/i));
+		
 	}
 }
