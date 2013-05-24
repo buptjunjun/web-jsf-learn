@@ -27,6 +27,9 @@ public class RBTree
 	static public boolean RED = true;
 	static public boolean BLACK = false;
 	private Node NIL = new Node(Integer.MAX_VALUE,BLACK);
+	{
+		NIL.color = BLACK;
+	}
 	
 	//二叉树的一个节点
 	class Node
@@ -45,11 +48,24 @@ public class RBTree
 	}
 	
 	/**
+	 * 创建一棵红黑树
+	 * @param datas
+	 * @return
+	 */
+	public void createRBTree(int [] datas)
+	{
+		this.root = null;
+		for(int i = 0;i < datas.length;i++)
+		{		
+			this.insert(datas[i]);
+		}
+	}
+	/**
 	 * 创建一棵二叉查找树
 	 * @param datas
 	 * @return
 	 */
-	public void createTree(int [] datas)
+	public void createBSTree(int [] datas)
 	{
 		this.root = null;
 		for(int i = 0;i < datas.length;i++)
@@ -65,7 +81,7 @@ public class RBTree
 	 */
 	public int height(Node node)
 	{
-		if(node == null)
+		if(node == this.NIL)
 			return 0;
 		int hl = height(node.lchild);
 		int hr = height(node.rchild);
@@ -120,16 +136,29 @@ public class RBTree
 	public Node search(int data)
 	{
 		Node cur = this.root;
-		while(cur!=null)
-		{
+		Node pre = this.root;
+		while(cur!=NIL)
+		{	pre = cur;
 			if(data < cur.data)
 				cur = cur.lchild;
 			else if(data > cur.data)
 				cur = cur.rchild;
 			else  
-				break;
+				break;		
 		}
-		return cur;
+		return pre;
+	}
+	
+	/**
+	 * 向红黑树中插入一个节点并且调整为新的红黑树
+	 * @param data
+	 */
+	public void insert(int data)
+	{
+		Node node= insertNode(data);
+		if(node == null)
+			return;
+		this.insertFixup(node);
 	}
 	
 	
@@ -138,7 +167,7 @@ public class RBTree
 	 * @param node
 	 * @return
 	 */
-	public Node insertNode(int data)
+	private Node insertNode(int data)
 	{
 		//如果树为空 node直接作为树根
 		if(this.root == null)
@@ -146,12 +175,15 @@ public class RBTree
 			this.root = new Node(data,RED);
 			this.root.rchild = NIL;
 			this.root.lchild = NIL;
-			this.root.p = NIL;
-			
+			this.root.p = null;
+			NIL.lchild = this.root;
+			NIL.rchild =this.root;
 			return this.root;
 		}
 		
+		//找到要插入的位置
 		Node insertNode = searchInsertPos(data);
+		//如果为空 表示已经有data存在了
 		if(insertNode == null)
 			return null;
 		else
@@ -182,7 +214,7 @@ public class RBTree
 	 */
 	public Node min(Node node)
 	{
-		while(node.lchild !=null)
+		while(node.lchild !=NIL)
 			node = node.lchild;
 		return node;
 	}
@@ -194,7 +226,7 @@ public class RBTree
 	 */
 	public Node max(Node node)
 	{
-		while(node.rchild !=null)
+		while(node.rchild !=NIL)
 			node = node.rchild;
 		return node;
 	}
@@ -204,7 +236,7 @@ public class RBTree
 	 */
 	public Node successor(Node node)
 	{
-		if(node.rchild == null)
+		if(node.rchild == NIL)
 		{
 			return null;
 		}
@@ -214,13 +246,151 @@ public class RBTree
 		return successor;
 	}
 	
+	/**
+	 *  插入一个节点后调整为新的红黑树
+	 */
+	private void insertFixup(Node n)
+	{
+		Node node = n;
+		//如果插入的是 根节点
+
+		if(node.p == null)
+		{
+			node.color = BLACK;
+			return;
+		}
+		
+		while(node.p!=null && node.p.color == RED&&node.p.p!=null )
+		{  		
+			//父节点
+			Node p = node.p;
+			//如果父节点是黑色 不会破坏红黑树的性质 直接返回
+			if(p.color==BLACK)
+				return;
+			
+			//如果父节点为红色违反了 规则"如果一个节点是红的其两个儿子是黑的"
+			//祖父节点 ,祖父节点一定存在的，因为而且不可能为NIL
+			Node pp =p.p;
+			 
+			/*下面按照父节点是祖父节点的左孩子还是右孩子分为2种情况,这两种情况是对称的*/
+			//如果父节点是祖父节点的左孩子
+			if(p == pp.lchild)
+			{
+				//祖父的右孩子,node的叔父节点
+				Node ppr =  pp.rchild;
+				
+				//按照叔父节点是红色还是黑色分为2种情况
+				
+				
+				if(ppr.color == RED) //叔父节点是红色
+				{
+					/**
+					 *            B -->pp
+					 *      p<--R   R -->ppr
+					 * node<--R  
+					 * 
+					 * 将 父亲和叔父的颜色修改为黑色 将祖父的颜色修改为红色  将祖父节点设为新的node 
+					 * 得到下面的图
+					 * 
+					 *  		  R -->node(新的node)
+					 *          B   B
+					 * 	      R  
+					 */
+					
+					//将 父亲和叔父的颜色修改为黑色
+					p.color = BLACK;
+					ppr.color = BLACK;
+					//将祖父的颜色修改为红色
+					pp.color = RED;
+					
+					//node变为其祖父节点
+					node = pp;
+				}
+				else//叔父节点是黑色
+				{
+					/**
+					 *  如果是node是p的右孩子左旋得到第二种情况
+					 *  		  B->pp
+					 *       p<-R   B->ppr
+					 * 	   		  R->node  
+					 * 
+					 *   在p处左旋 将node设置为p 划归到下面这一种情况
+					 *   
+					 *            B->pp
+					 *       p<-R   B->ppr
+					 *  node<-R  
+					 * 
+					 * 在pp处右旋转 将p设为黑色 pp设为红色 变为下面的形式
+					 *  		 B
+					 *        R     R
+					 *                B
+					 *  
+					 */
+					//按照node是其父节点的左孩子还是右孩子分为2种情况 
+					//这两种情况中，如果node是右孩子，可以通过做旋转划归为第二种情况---node是左孩子
+					if(node == p.rchild) 
+					{
+						//node是右孩子，左旋变为左孩子
+						this.LRotate(p);
+						node = p;
+					}
+					else //node是左孩子
+					{
+						pp.color = RED;
+						p.color = BLACK;
+						this.RRotate(pp);
+						
+					}
+				}
+			}
+			else//如果父节点是祖父节点的右孩子(对称的)
+			{
+				//祖父的右孩子,node的叔父节点
+				Node ppl =  pp.lchild;
+				
+				//按照叔父节点是红色还是黑色分为2种情况
+				if(ppl.color == RED) //叔父节点是红色
+				{
+					
+					//将 父亲和叔父的颜色修改为黑色
+					p.color = BLACK;
+					ppl.color = BLACK;
+					//将祖父的颜色修改为红色
+					pp.color = RED;
+					
+					//node变为其祖父节点
+					node = pp;
+				}
+				else//叔父节点是黑色
+				{
+					//按照node是其父节点的左孩子还是右孩子分为2种情况 
+					//这两种情况中，如果node是右孩子，可以通过做旋转划归为第二种情况---node是左孩子
+					if(node == p.lchild) 
+					{
+						//node是右孩子，左旋变为左孩子
+						this.RRotate(p);
+						node = p;
+					}
+					else //node是左孩子
+					{
+						pp.color = RED;
+						p.color = BLACK;
+						this.LRotate(pp);
+					}
+				}
+			}
+		
+		}
+		
+		this.root.color = BLACK;
+	}
 	
 	/**
 	 * 找node的前驱(中序)
 	 */
 	public Node predecessor(Node node)
 	{
-		if(node.lchild == null)
+		if(node.lchild == NIL)
 		{
 			return null;
 		}
@@ -251,16 +421,38 @@ public class RBTree
 	 */
 	public void RRotate(Node node)
 	{
+		if(node == null)
+			return;
 		Node parent = node.p;	
 		Node lchild_node = node.lchild;
 		Node rlchild_node = lchild_node.rchild;
 		
 		node.lchild = rlchild_node;
+		node.p = lchild_node;
+		
+		lchild_node.p = parent;
 		lchild_node.rchild = node;
 		
-		if(parent.rchild == node)
-			parent.rchild = lchild_node;
-		else parent.lchild = lchild_node;
+		if(rlchild_node != NIL)
+		{
+			rlchild_node.p = node;
+		}
+		
+		//如果是root特殊处理 设置新的root
+		if(parent == null)
+		{
+			this.root = lchild_node;
+			this.root.p = null;
+			NIL.lchild = this.root;
+			NIL.rchild =this.root;		
+		}
+		else
+		{
+			if(parent.lchild == node)
+				parent.lchild = lchild_node;
+			else
+				parent.rchild = lchild_node;
+		}
 	}
 	
 	/**
@@ -269,16 +461,39 @@ public class RBTree
 	 */
 	public void LRotate(Node node)
 	{
-		Node parent = node.p;
+		if(node == null)
+			return;
+		
+		Node parent = node.p;	
 		Node rchild_node = node.rchild;
 		Node lrchild_node = rchild_node.lchild;
 		
 		node.rchild = lrchild_node;
+		node.p = rchild_node;
+		
+		rchild_node.p = parent;
 		rchild_node.lchild = node;
 		
-		if(parent.rchild == node)
-			parent.rchild = rchild_node;
-		else parent.lchild = rchild_node;
+		if(lrchild_node != NIL)
+		{
+			lrchild_node.p = node;
+		}
+		
+		//如果是root特殊处理 设置新的root
+		if(parent == null)
+		{
+			this.root = rchild_node;
+			this.root.p = null;
+			NIL.lchild = this.root;
+			NIL.rchild =this.root;		
+		}
+		else
+		{
+			if(parent.lchild == node)
+				parent.lchild = rchild_node;
+			else
+				parent.rchild = rchild_node;
+		}
 	}
 	
 	/**
@@ -375,6 +590,7 @@ public class RBTree
 				
 	}
 	
+	static int count = 0;
 	/**
 	 * 先序打印一棵树
 	 */
@@ -382,45 +598,43 @@ public class RBTree
 	{
 		if(node == NIL)
 			return;
-		System.out.print (node.data+" ");
+		System.out.print ("("+node.data+","+node.color+")"+(count++)+" ");
 		print(node.lchild);
 		print(node.rchild);
 	}
 	
 	public static void main(String [] args)
-	{	
-		int [] test = {4,2,1,3,6,5,7};
+	{
+		int length = 1024;
+		int [] test = new int[length];
+		for(int i = 0;i < length;i++)
+			test[i] = i;	
+		
+		//将数列打乱
+		test = new  RandomArray().disturb2(test);
 		RBTree rbt = new RBTree();
-
-		/*打印一棵树
-		 *                  4  
-		 *               2		6
-		 *             1   3  5   7
-		 */
-		rbt.createTree(test);
+		
+		//建造红黑树
+		rbt.createRBTree(test);
 		rbt.print(rbt.root);
 		
-		//max and min
-		System.out.println("max = "+rbt.max(rbt.root).data);
-		System.out.println("min = "+rbt.min(rbt.root).data);
+		//树高
+		System.out.println("\n树高="+rbt.height(rbt.root));
 		
-		//search
-		Node node = rbt.search(4);
-		System.out.println("search = "+ node.data);
-		
-		//左旋  
-		System.out.println("左旋");
-		rbt.LRotate(node);
-		rbt.print(rbt.root);
-		
-		//右旋
-		node = rbt.search(7);
-		System.out.println("\n右旋");
-		rbt.RRotate(node);
-		rbt.print(rbt.root);
-
-		
-		
-		
+		//搜索test中每一个,没有搜索到某一个，则这棵树有问题
+		for(int i = 0;i < length;i++)
+		{
+			Node n = rbt.search(test[i]);
+			if(n==null)
+			{
+				System.out.println(test[i]+" is not in the tree");
+				return;
+			}
+			
+			//随机抽查
+			if(i%200 == 0)
+				System.out.println(i+" "+test[i]+"="+n.data+",");
+		}
+		System.out.println("ok");
 	}
 }
