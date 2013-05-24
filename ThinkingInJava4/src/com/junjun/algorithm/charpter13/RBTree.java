@@ -605,7 +605,7 @@ public class RBTree
 	
 	public static void main(String [] args)
 	{
-		int length = 1024;
+		int length = 1000000;
 		int [] test = new int[length];
 		for(int i = 0;i < length;i++)
 			test[i] = i;	
@@ -616,7 +616,7 @@ public class RBTree
 		
 		//建造红黑树
 		rbt.createRBTree(test);
-		rbt.print(rbt.root);
+		//rbt.print(rbt.root);
 		
 		//树高
 		System.out.println("\n树高="+rbt.height(rbt.root));
@@ -632,8 +632,8 @@ public class RBTree
 			}
 			
 			//随机抽查
-			if(i%200 == 0)
-				System.out.println(i+" "+test[i]+"="+n.data+",");
+			if(i%2000 == 0)
+				System.out.println(i+" "+test[i]+"=="+n.data+":"+(test[i]==n.data)+",");
 		}
 		System.out.println("ok");
 	}
