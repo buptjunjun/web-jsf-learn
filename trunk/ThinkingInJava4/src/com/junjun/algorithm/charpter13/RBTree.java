@@ -343,35 +343,25 @@ public class RBTree
 					}
 				}
 			}
-			else//如果父节点是祖父节点的右孩子(对称的)
-			{
-				//祖父的右孩子,node的叔父节点
+			else//如果父节点是祖父节点的右孩子(对称的) 将上面的 if(p == pp.lchild)情况下，l r 交换位置即可
+			{			
 				Node ppl =  pp.lchild;
-				
-				//按照叔父节点是红色还是黑色分为2种情况
-				if(ppl.color == RED) //叔父节点是红色
-				{
-					
-					//将 父亲和叔父的颜色修改为黑色
+							
+				if(ppl.color == RED)
+				{			
 					p.color = BLACK;
-					ppl.color = BLACK;
-					//将祖父的颜色修改为红色
-					pp.color = RED;
-					
-					//node变为其祖父节点
+					ppl.color = BLACK;				
+					pp.color = RED;			
 					node = pp;
 				}
-				else//叔父节点是黑色
-				{
-					//按照node是其父节点的左孩子还是右孩子分为2种情况 
-					//这两种情况中，如果node是右孩子，可以通过做旋转划归为第二种情况---node是左孩子
+				else
+				{				
 					if(node == p.lchild) 
-					{
-						//node是右孩子，左旋变为左孩子
+					{			
 						this.RRotate(p);
 						node = p;
 					}
-					else //node是左孩子
+					else 
 					{
 						pp.color = RED;
 						p.color = BLACK;
