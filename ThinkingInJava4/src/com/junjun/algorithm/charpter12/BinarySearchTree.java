@@ -2,6 +2,7 @@ package com.junjun.algorithm.charpter12;
 import java.util.*;
 import java.util.Map.Entry;
 
+import com.junjun.algorithm.charpter13.RBTree;
 import com.junjun.algorithm.charpter5.RandomArray;
 import com.junjun.algorithm.charpter8.QuickSort;
 
@@ -267,7 +268,7 @@ public class BinarySearchTree
 			else
 			{
 				//如果是左儿子
-				if(node.data < parent.data)
+				if(node == parent.lchild)
 				{
 					parent.lchild = null;
 				}
@@ -282,17 +283,25 @@ public class BinarySearchTree
 		{
 			//如果删除的是根
 			if(parent == null)
+			{
 				this.root = node.lchild;
+				if(node.lchild!=null)
+					node.lchild.p = null;
+			}
 			else
 			{
 				//如果是左儿子
 				if(node.data < parent.data)
 				{
 					parent.lchild = node.lchild;
+					if(node.lchild != null)
+						node.lchild.p = parent;
 				}
 				else
 				{
 					parent.rchild = node.lchild;
+					if(node.lchild != null)
+						node.lchild.p = parent;
 				}
 			}
 			node.p = null;
@@ -301,17 +310,25 @@ public class BinarySearchTree
 		{
 			//如果删除的是根
 			if(parent == null)
+			{
 				this.root = node.rchild;
+				if(node.rchild!=null)
+					node.rchild.p = null;
+			}
 			else
 			{
 				//如果是左儿子
 				if(node.data < parent.data)
 				{
 					parent.lchild = node.rchild;
+					if(node.rchild != null)
+						node.rchild.p = parent;
 				}
 				else
 				{
 					parent.rchild = node.rchild;
+					if(node.rchild != null)
+						node.rchild.p = parent;
 				}
 			}
 			node.p = null;
@@ -320,10 +337,10 @@ public class BinarySearchTree
 		{
 			//找到 node的后继
 			Node successor = this.successor(node);
-			//删除后继
-			this.deleteNode(successor);
 			//用后继来替换当前待删除的node
 			node.data = successor.data;
+			//递归:回到上面的三种情况
+			deleteNode(successor);
 		}
 		
 		return true;
@@ -342,11 +359,29 @@ public class BinarySearchTree
 		print(node.rchild);
 	}
 	
+	/**
+	 * 打印一棵树有多少个节点
+	 * @param node
+	 * @return
+	 */
+	public int countNode(Node node)
+	{
+		if(node == null) return 0;
+		else return 1+countNode(node.lchild) + countNode(node.rchild);
+	}
+	
 	public static void main(String [] args)
 	{	
 		int [] test = {4,2,1,3,6,5,7};
 		BinarySearchTree bst = new BinarySearchTree();
-
+		int length = 20;
+		test = new int[length];
+		for(int i = 0;i < length;i++)
+			test[i] = i;	
+		
+		//将数列打乱
+		test = new  RandomArray().disturb2(test);
+		RBTree rbt = new RBTree();
 		/*打印一棵树
 		 *                  4  
 		 *               2		6
@@ -364,23 +399,20 @@ public class BinarySearchTree
 		System.out.println("search = "+ node.data);
 		
 		//树高
-		System.out.println("树高:"+bst.height(bst.root));
+		System.out.println("测试树高:"+bst.height(bst.root));
 		
 		//delete
-		System.out.println("delete 3");
-		bst.deleteNode(3);
-		bst.print(bst.root);
-		
-		System.out.println("\ndelete 2");
-		bst.deleteNode(2);
-		bst.print(bst.root);
-		
-		System.out.println("\ndelete 4");
-		bst.deleteNode(4);
-		bst.print(bst.root);
+		System.out.println("测试删除");
+		System.out.print(bst.countNode(bst.root)+"  ");
+		for(int i = 0;i < test.length;i++)
+		{
+			bst.deleteNode(test[i]);
+			System.out.print(bst.countNode(bst.root)+"  ");
+		}
+		System.out.println();
 		
 		//随机建树
-		System.out.println("\n随机建树");
+		System.out.println("\n测试随机建树");
 		int total = 0;
 		int i = 0;
 		for( i = 0;i < 10;i++)
