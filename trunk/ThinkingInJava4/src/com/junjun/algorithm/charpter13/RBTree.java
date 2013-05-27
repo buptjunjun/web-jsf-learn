@@ -398,7 +398,7 @@ public class RBTree
 	public boolean deleteNode(int data)
 	{
 		Node node = search(data);
-		if(node == null)
+		if(node == null)	
 			return false;
 		
 		return this.deleteNode(node);
@@ -504,12 +504,12 @@ public class RBTree
 		}
 		
 		//先查找是否在树中
-		if(node == null)
+		if(node == NIL)
 			return false;
 		Node parent = node.p;
 
 		//左右子树都为空 叶子节点
-		if(node.lchild == null && node.rchild == null)
+		if(node.lchild == NIL && node.rchild == NIL)
 		{
 			//只有一个元素 且是根
 			if(parent == null)
@@ -517,52 +517,73 @@ public class RBTree
 			else
 			{
 				//如果是左儿子
-				if(node.data < parent.data)
+				if(node == parent.lchild)
 				{
-					parent.lchild = null;
+					parent.lchild = NIL;
 				}
 				else
 				{
-					parent.rchild = null;
+					parent.rchild = NIL;
 				}
 			}
 			node.p = null;
 		}
-		else if(node.lchild != null && node.rchild == null) //左子不为空 右子为空
+		else if(node.lchild != NIL && node.rchild == NIL) //左子不为空 右子为空
 		{
 			//如果删除的是根
 			if(parent == null)
+			{
 				this.root = node.lchild;
+				if(node.lchild!=null)
+					node.lchild.p = null;
+			}
 			else
 			{
 				//如果是左儿子
 				if(node.data < parent.data)
 				{
 					parent.lchild = node.lchild;
+					if(node.lchild != NIL)
+						node.lchild.p = parent;
+					
 				}
 				else
 				{
 					parent.rchild = node.lchild;
+					if(node.lchild != NIL)
+						node.lchild.p = parent;
 				}
+				if(node.color == BLACK)
+				   deleteFix(node.lchild);
 			}
 			node.p = null;
 		}		
-		else if(node.lchild == null && node.rchild != null) //左子为空 右子不为空
+		else if(node.lchild == NIL && node.rchild != NIL) //左子为空 右子不为空
 		{
 			//如果删除的是根
 			if(parent == null)
+			{
 				this.root = node.rchild;
+				if(node.rchild!=null)
+					node.rchild.p = null;
+			}
 			else
 			{
 				//如果是左儿子
 				if(node.data < parent.data)
 				{
 					parent.lchild = node.rchild;
+					if(node.rchild != NIL)
+						node.rchild.p = parent;
 				}
 				else
 				{
 					parent.rchild = node.rchild;
+					if(node.rchild != NIL)
+						node.rchild.p = parent;
 				}
+				if(node.color == BLACK)
+					deleteFix(node.rchild);
 			}
 			node.p = null;
 		}
@@ -570,14 +591,105 @@ public class RBTree
 		{
 			//找到 node的后继
 			Node successor = this.successor(node);
-			//删除后继
-			this.deleteNode(successor);
 			//用后继来替换当前待删除的node
 			node.data = successor.data;
+			//递归:回到上面的三种情况
+			deleteNode(successor);
 		}
 		
 		return true;
 				
+	}
+	
+	
+	private void deleteFix(Node x)
+	{
+		while(x.color == BLACK && x != this.root && x!=null && x.p!=null)
+		{
+			Node p = x.p;     //x的父亲
+				
+			//x是左孩子
+			if(x == p.lchild)
+			{
+				Node w = p.rchild;//w是x的兄弟
+				//"第一大种"情况如果w的颜色是红色
+				if (w.color == RED) //第一种情况 根据下面调整变成"第二大"种情况
+				{
+					w.color = BLACK;
+					p.color = RED;
+					this.LRotate(p); 
+				}
+				else //"第二大"种情况 --W为黑色
+				{
+					Node wl = w.lchild;
+					Node wr = w.rchild;
+					
+					
+					if(wl.color == BLACK && wr.color == BLACK)//第二种情况  w及其左右孩子都为黑色
+					{
+						w.color = RED;
+						x=p;  //将x移到p
+					}
+					else if(wr.color == BLACK) //第三种情况 w为黑色,w的左孩子为红色右孩子为黑色,可以调整为第四种情况
+					{
+						wl.color = BLACK;
+						w.color = RED;
+						this.RRotate(w);
+					}
+					else//第四种情况 w为黑色,w的右孩子为红色
+					{
+						w.color=p.color;
+						p.color=BLACK;
+						wr.color = BLACK;
+						this.LRotate(p);
+						x = this.root;	
+					}
+						
+				}
+			}
+			else
+			{
+
+				Node w = p.lchild;//w是x的兄弟
+				//"第一大种"情况如果w的颜色是红色
+				if (w.color == RED) //第一种情况 根据下面调整变成"第二大"种情况
+				{
+					w.color = BLACK;
+					p.color = RED;
+					this.RRotate(p); 
+				}
+				else //"第二大"种情况 --W为黑色
+				{
+					Node wl = w.lchild;
+					Node wr = w.rchild;
+					
+					
+					if(wr.color == BLACK && wl.color == BLACK)//第二种情况  w及其左右孩子都为黑色
+					{
+						w.color = RED;
+						x=p;  //将x移到p
+					}
+					else if(wl.color == BLACK) //第三种情况 w为黑色,w的左孩子为红色右孩子为黑色,可以调整为第四种情况
+					{
+						wr.color = BLACK;
+						w.color = RED;
+						this.LRotate(w);
+					}
+					else//第四种情况 w为黑色,w的右孩子为红色
+					{
+						w.color=p.color;
+						p.color=BLACK;
+						wl.color = BLACK;
+						this.RRotate(p);
+						x = this.root;
+						this.root.color = BLACK;
+						return;
+					}
+						
+				}
+			}
+		}
+
 	}
 	
 	static int count = 0;
@@ -593,11 +705,20 @@ public class RBTree
 		print(node.rchild);
 	}
 	
+	public int countNode(Node node)
+	{
+		if(node == NIL)
+			return 0;
+		return 1+countNode(node.lchild)+countNode(node.rchild);
+		
+	}
+	
 	public static void main(String [] args)
 	{
-		int length = 1000000;
+		int length = 40;
 		int [] test = new int[length];
-		for(int i = 0;i < length;i++)
+		int i = 0;
+		for(i = 0;i < length;i++)
 			test[i] = i;	
 		
 		//将数列打乱
@@ -612,7 +733,7 @@ public class RBTree
 		System.out.println("\n树高="+rbt.height(rbt.root));
 		
 		//搜索test中每一个,没有搜索到某一个，则这棵树有问题
-		for(int i = 0;i < length;i++)
+		for(i = 0;i < length;i++)
 		{
 			Node n = rbt.search(test[i]);
 			if(n==null)
@@ -626,5 +747,31 @@ public class RBTree
 				System.out.println(i+" "+test[i]+"=="+n.data+":"+(test[i]==n.data)+",");
 		}
 		System.out.println("ok");
+		
+		//删除所有的元素
+		System.out.println(0+":"+test[0]+",countNode="+rbt.countNode(rbt.root)+", height="+rbt.height(rbt.root));
+		for(i = 1;i < length/3;i++)
+		{
+			rbt.deleteNode(test[i]);
+			Node n =rbt.search(test[i]);
+			if(n==null)
+			{
+				System.out.println(test[i]+" is not in the tree");
+			}		
+	
+			System.out.println(i+":"+test[i]+",countNode="+rbt.countNode(rbt.root)+", height="+rbt.height(rbt.root));
+		}
+		System.out.println("ok");
+		
+		//插入测试
+		for(i = test.length;i < test.length*2;i++)
+			test[i-test.length] = i;	
+		//将数列打乱
+		test = new  RandomArray().disturb2(test);
+		for(i = 0;i < length;i++)
+		{
+			rbt.insert(test[i]);
+			System.out.println(i+":"+test[i]+",countNode="+rbt.countNode(rbt.root)+", height="+rbt.height(rbt.root));
+		}
 	}
 }
