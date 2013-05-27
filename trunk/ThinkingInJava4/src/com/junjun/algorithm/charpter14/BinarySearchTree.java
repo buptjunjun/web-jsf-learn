@@ -470,7 +470,7 @@ public class BinarySearchTree
 		bst.print(bst.root);
 		
 		//max and min
-		System.out.println("max = "+bst.max(bst.root).data);
+		System.out.println("\nmax = "+bst.max(bst.root).data);
 		System.out.println("min = "+bst.min(bst.root).data);
 		
 		//找第k小的数
@@ -482,7 +482,7 @@ public class BinarySearchTree
 		}
 		
 		//查看x是第几小的数
-		System.out.println("查看x是第几小的数");
+		System.out.println("\n查看x是第几小的数");
 		for(int i = 0;i < test.length;i++)
 		{
 			int rank = bst.OS_rank(test[i]);
