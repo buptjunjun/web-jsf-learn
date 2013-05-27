@@ -601,9 +601,14 @@ public class RBTree
 				
 	}
 	
-	
+	/**
+	 * 将一个节点删除后的节点y(y一定是黑色)的颜色放到"替换的节点"(就是参数x)上,
+	 * 如果x是红色,则x是"红黑色",如果x是黑色,x就是"黑黑色".
+	 * @param x
+	 */
 	private void deleteFix(Node x)
 	{
+		//while x就是"黑黑色"
 		while(x.color == BLACK && x != this.root && x!=null && x.p!=null)
 		{
 			Node p = x.p;     //x的父亲
@@ -647,7 +652,7 @@ public class RBTree
 						
 				}
 			}
-			else
+			else //x是右孩子,与前面的情况一模一样,把左右调换一下即可
 			{
 
 				Node w = p.lchild;//w是x的兄弟
@@ -688,8 +693,10 @@ public class RBTree
 						
 				}
 			}
-		}
-
+		}	
+		//如果x是红色,x就是"红黑色"
+		if(x!=null&&x!=NIL)
+			x.color = BLACK;
 	}
 	
 	static int count = 0;
@@ -749,10 +756,11 @@ public class RBTree
 		System.out.println("ok");
 		
 		//删除所有的元素
+		System.out.println("delete test:");
 		System.out.println(0+":"+test[0]+",countNode="+rbt.countNode(rbt.root)+", height="+rbt.height(rbt.root));
-		for(i = 1;i < length/3;i++)
+		for(i = 1;i < length/2;i++)
 		{
-			rbt.deleteNode(test[i]);
+			rbt.deleteNode(rbt.root.data);
 			Node n =rbt.search(test[i]);
 			if(n==null)
 			{
@@ -764,11 +772,13 @@ public class RBTree
 		System.out.println("ok");
 		
 		//插入测试
+		System.out.println("insert test:");
+		test = new int[50];
 		for(i = test.length;i < test.length*2;i++)
 			test[i-test.length] = i;	
 		//将数列打乱
 		test = new  RandomArray().disturb2(test);
-		for(i = 0;i < length;i++)
+		for(i = 0;i < test.length;i++)
 		{
 			rbt.insert(test[i]);
 			System.out.println(i+":"+test[i]+",countNode="+rbt.countNode(rbt.root)+", height="+rbt.height(rbt.root));
