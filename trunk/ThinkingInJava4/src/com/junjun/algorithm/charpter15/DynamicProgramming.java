@@ -18,10 +18,16 @@ public class DynamicProgramming
 {	
 	
 	
+	/**
+	 *  动态规划 求矩阵链乘法最优
+	 * @param p
+	 */
 	public void MatrixChainOrder(int [] p)
 	{
 		//计算矩阵链乘法最优值
+		//m[i,j]表示Ai,...,Aj 乘法最优的标量乘法次数
 		int [][] m =null;
+		//s[i][j]表示 将Ai,...,Aj最优时的分界(Ai..As)(As+1..Aj) 
 		int [][] s = null;
 		
 		int n = p.length-1 ;
@@ -58,6 +64,12 @@ public class DynamicProgramming
 		System.out.println("\n需要执行的标量计算次数为:"+m[1][n]);
 	}
 	
+	/**
+	 * 打印 最优的矩阵计算顺序
+	 * @param s
+	 * @param i
+	 * @param j
+	 */
 	public void printOptimalParens(int [][] s,int i,int j)
 	{
 		if(i == j)
@@ -70,12 +82,91 @@ public class DynamicProgramming
 			System.out.print(")");
 		}
 	}
+	
+	/**
+	 * 公共最长子序列 longest common sequence 
+	 * @param str1
+	 * @param str2
+	 */
+	public void LCS(char[] str1, char[] str2)
+	{
+		int len1 = str1.length;
+		int len2 = str2.length;
+		int [][] c = new int[len1][len2];
+		char [][] b = new char[len1][len2];
+		for(int i = 0;i <len1;i++)
+			c[i][0] = 0;
+		
+		for(int j = 0;j <len2;j++)
+			c[0][j] = 0;
+		
+		for(int i =1;i<len1;i++)
+			for(int j = 1;j<len2;j++)
+			{
+				if(str1[i] == str2[j])
+				{
+					c[i][j] = c[i-1][j-1]+1;
+					b[i][j] = '\\';
+				}
+				else
+				{
+					if(c[i-1][j] < c[i][j-1])
+					{
+						c[i][j] = c[i][j-1];
+						b[i][j] = '-';
+					}
+					else
+					{
+						c[i][j] = c[i-1][j];
+						b[i][j] = '|';
+					}
+				}
+				
+			}
+		
+		
+		for(int i = 0;i < len1;i++)
+		{
+			for(int j = 0;j < len2;j++)
+				System.out.print(b[i][j]+" ");
+			System.out.println();
+		}
+		System.out.println("str1:"+new String(str1).substring(1));
+		System.out.println("str2:"+new String(str2).substring(1));
+		System.out.println("最大公共子序列为:");
+		printLCS(b,str1,str1.length-1,str2.length-1);
+	}
+	
+	public void printLCS(char [][] b,char [] str1,int i,int j)
+	{
+		if(i==0 || j==0)
+			return;
+		if(b[i][j] == '\\')
+		{
+			System.out.print((char)str1[i]);
+			printLCS(b,str1,i-1,j-1);
+		}
+		else  if(b[i][j] == '-')
+			printLCS(b,str1,i,j-1);
+		else
+			printLCS(b,str1,i-1,j);
+			
+	}
 	public static void main(String [] args)
 	{
 		DynamicProgramming dp = new DynamicProgramming();
 		//动态规划计算最优的矩阵计算顺序
-		System.out.println("动态规划计算最优的矩阵计算顺序:");
+		System.out.println("---动态规划计算最优的矩阵计算顺序---");
 		int [] p = {30,35,15,5,10,20,25};
 		dp.MatrixChainOrder(p);
+		
+		//最长公共序列 str1[0]没有用
+		System.out.println("---最大公共子序列---");
+		char [] str1 = {'&','b','d','c','a','b','a'};
+		char [] str2 = {'&','a','b','c','b','d','a','b'};
+		dp.LCS(str1, str2);
+		
 	}
+	
+	
 }
