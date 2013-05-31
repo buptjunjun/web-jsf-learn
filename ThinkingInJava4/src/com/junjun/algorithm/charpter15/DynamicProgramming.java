@@ -85,6 +85,8 @@ public class DynamicProgramming
 	
 	/**
 	 * 公共最长子序列 longest common sequence 
+	 * 矩阵c 
+	 *     
 	 * @param str1
 	 * @param str2
 	 */
@@ -124,10 +126,14 @@ public class DynamicProgramming
 				
 			}
 		
-		
-		for(int i = 0;i < len1;i++)
-		{
-			for(int j = 0;j < len2;j++)
+		System.out.print("  ");
+		for(int j = 1;j < len2;j++)
+			System.out.print(str2[j]+" ");
+		System.out.println();
+		for(int i = 1;i < len1;i++)
+		{   
+			System.out.print(str1[i]+" ");
+			for(int j = 1;j < len2;j++)
 				System.out.print(b[i][j]+" ");
 			System.out.println();
 		}
@@ -152,6 +158,64 @@ public class DynamicProgramming
 			printLCS(b,str1,i-1,j);
 			
 	}
+	
+	
+	/**
+	 * 最长公共字串 
+	 */
+	public void LCS1(char[] str1, char[] str2)
+	{
+		int posi = 0;
+		int posj = 0;
+		int max = 0;
+		
+		int len1 = str1.length;
+		int len2 = str2.length;
+		int [][] c = new int[len1][len2];
+		for(int i = 0;i <len1;i++)
+			c[i][0] = 0;
+		
+		for(int j = 0;j <len2;j++)
+			c[0][j] = 0;
+		
+		for(int i =1;i<len1;i++)
+			for(int j = 1;j<len2;j++)
+			{
+				if(str1[i] == str2[j])
+				{
+					c[i][j] = c[i-1][j-1]+1;
+					if(c[i][j] > max)
+					{
+						max = c[i][j];
+						posi = i;
+						posj = j;
+					}
+				}
+				else
+				{
+					c[i][j] = 0;					
+				}
+				
+			}
+		
+		System.out.print("  ");
+		for(int j = 1;j < len2;j++)
+			System.out.print(str2[j]+" ");
+		System.out.println();
+		for(int i = 1;i < len1;i++)
+		{   
+			System.out.print(str1[i]+" ");
+			for(int j = 1;j < len2;j++)
+				System.out.print(c[i][j]+" ");
+			System.out.println();
+		}
+		System.out.println("str1:"+new String(str1).substring(1));
+		System.out.println("str2:"+new String(str2).substring(1));
+		System.out.println("最大公共子串为:" +new String(str1).subSequence(posi-max+1, posi+1));
+		
+	}
+	
+	
 	public static void main(String [] args)
 	{
 		DynamicProgramming dp = new DynamicProgramming();
@@ -161,10 +225,16 @@ public class DynamicProgramming
 		dp.MatrixChainOrder(p);
 		
 		//最长公共序列 str1[0]没有用
-		System.out.println("---最大公共子序列---");
-		char [] str1 = {'&','b','d','c','a','b','a'};
+		System.out.println("\n---最大公共子序列---");
+		char [] str1 = {'&','b','d','c','a','b'};
 		char [] str2 = {'&','a','b','c','b','d','a','b'};
 		dp.LCS(str1, str2);
+		
+		//最长公共序列 str1[0]没有用
+		System.out.println("\n\n---最大公共子序列---");
+		char [] str3 = {'&','b','d','c','a','b','a'};
+		char [] str4 = {'&','a','d','c','a','d','a','b'};
+		dp.LCS1(str3, str4);
 		
 	}
 	
