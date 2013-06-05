@@ -1,5 +1,6 @@
 package com.junjun.algorithm.graphAlgrithm;
 import java.util.*;
+import java.util.Map.Entry;
 
 
 /**
@@ -51,7 +52,7 @@ public class Graph
 		1 2 0 4 0
 		2 5 0
 		3 6 0 5 0
-		4 2 0
+		4 
 		5 4 0
 
 	 */
@@ -177,6 +178,9 @@ public class Graph
 		dfs(node);
 	}
 	
+	//用于拓扑排序
+	static int finishtime = 0;
+	static int begintime = 0;
 	public void dfs(Node node)
 	{	
 		//已经被访问过
@@ -187,24 +191,147 @@ public class Graph
 		System.out.print(node.getName() +" ");
 		//设置为已经访问过了
 		node.setFlag(2);
+		begintime++;
+		node.setBeginTime(begintime);
 		
 		//访问它的邻接节点
 		List<Edge> edges = node.getEdges();		
-		for(Edge edge: edges)
+		if(edges!=null)
+			for(Edge edge: edges)
+			{
+				Node to = edge.getTo();
+				dfs(to);
+			}
+		
+		finishtime++;
+		node.setVisitTime(finishtime);
+	}
+	
+	
+	/**
+	 * 拓扑排序,使用dfs
+	 * 其中 
+	 * begintime 表示开始访问的时间
+	 * finishtime 表示这个节点及其以后的节点都访问完的时间
+	 * 最后节点以finishtime排序 finishtime 按从大到小排序
+	 */
+	public void toplogic_sort()
+	{
+		System.out.println("\n----toplogic sort-----");
+		List<Node> l = new LinkedList<Node>();
+
+		for(Entry entry:this.graph.entrySet())
 		{
-			Node to = edge.getTo();
-			dfs(to);
+			Node node = (Node) entry.getValue();
+			if(node.getFlag()!=2)
+			{
+				this.dfs(node);
+			}
+			l.add(node);
+		}
+		
+		Collections.sort(l);
+		for(Node node:l)
+		{
+			System.out.print("("+node.getName()+":"+node.getBeginTime()+","+node.getVisitTime()+")  ");
 		}
 		
 	}
 	
+	/**
+	 * 寻找最大联通分量
+	 * @param name
+	 */
+	//low(u) 用来存储u或者u的子树能够追溯到的子树根节点号。
+	Map<Node,Integer> low = new HashMap<Node,Integer>();
 	
+	//dfn(u) 点u搜索的次序编号,时间戳
+	Map<Node,Integer> dfn = new HashMap<Node,Integer>();
+	Stack<Node> stack = new Stack<Node>();
+	int index = 0;
+	public void tarjan(Node u)
+	{
+		stack.add(u);                      //新节点压入栈
+		++index;
+		//确定新节点的编号和low值
+		low.put(u, index);
+		dfn.put(u, index);
+		//表示访问过的
+		u.setFlag(3);
+		
+		//遍历每一条边
+		List<Edge> edges = u.getEdges();
+		if(edges!=null)
+		{
+			for(Edge edge:edges)
+			{
+				Node v = edge.getTo();
+				//如果v是访问过的(flag == 3)
+				if(v.getFlag() != 3)
+				{
+					tarjan(v);
+					
+					int lowu = low.get(u);
+					int lowv = low.get(v);
+					int lower = lowu < lowv ? lowu:lowv;
+					low.put(u, lower);
+					
+				}
+				else if(stack.contains(v)) 
+				{
+					int lowu = low.get(u);
+					int dfnv = dfn.get(v);
+					int lower = lowu < dfnv ? lowu:dfnv;
+					low.put(u, lower);
+				}
+			}
+		}
+		
+		int lowu = low.get(u);
+		int dfnu = dfn.get(u);
+		if(dfnu == lowu)
+		{
+			
+		
+			System.out.print("(");
+			while(true)
+			{			
+				Node top = stack.pop();
+				System.out.print(top.getName()+" ");
+				if(top.equals(u))
+					break;
+			}
+			System.out.print(") \n");
+		}
+	}
+	
+	
+	/**
+	 * 最大强连通分量 Strongly connected component
+	 */
+	public void SCC()
+	{
+		System.out.println("\n----scc-----");
+		List<Node> l = new LinkedList<Node>();
+
+		for(Entry entry:this.graph.entrySet())
+		{
+			Node node = (Node) entry.getValue();
+			if(node.getFlag()!=3)
+			{
+				tarjan(node);
+			}
+		}
+		
+	}
 	public static void main(String [] args)
 	{
 		Graph g = new Graph();
 		g.createGraph();
 		g.print();
 		g.BFS("1");
-		g.DFS("1");
+		//g.DFS("1");
+		//g.toplogic_sort();
+		g.SCC();
 	}
 }
