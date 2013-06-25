@@ -128,13 +128,13 @@ public class HttpFetcherByHtmlUnit extends Fetcher
 		
 		Fetcher fetcher = new HttpFetcherByHtmlUnit();
 		CrawlURI curl = new CrawlURI();
-		curl.setUrl("http://www.cnblogs.com/hooray/archive/2011/05/30/2063074.html");
+		curl.setUrl("http://movie.douban.com/subject/6041219/?from=subject-page");
 		curl.setStatus(CrawlURI.STATUS_OK);
 		fetcher.fetch(curl);
 	
-//		FileWriter fout = new FileWriter(new File("51cto.html"));  
+		FileWriter fout = new FileWriter(new File("51cto.html"));  
 		String xml = curl.getContent();
-//		fout.write(xml);
+		fout.write(xml);
 		Document doc = Jsoup.parse(xml);
 		System.out.println(doc.text());
 //		System.out.println(xml);	

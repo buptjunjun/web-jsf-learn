@@ -41,10 +41,10 @@ public class Main
 	public  static void  main(String [] args)
 	{
 		Main main = new Main();
-		String [] crawler = {"CSDNcrawler","ChinaUnixcrawler","OsChinacrawler","A51ctocrawler","Cnblogscrawler","Ibmcncrawler","Iteyecrawler"};
-		String [] threads = {"csdn_threads","chinaunix_threads","oschina_threads","a51cto_threads","cnblogs_threads","ibmcn_threads","iteye_threads"};
-//		String [] crawler = {"Cnblogscrawler"};
-//		String [] threads = {"cnblogs_threads"};
+	//	String [] crawler = {"CSDNcrawler","ChinaUnixcrawler","OsChinacrawler","A51ctocrawler","Cnblogscrawler","Ibmcncrawler","Iteyecrawler"};
+	//	String [] threads = {"csdn_threads","chinaunix_threads","oschina_threads","a51cto_threads","cnblogs_threads","ibmcn_threads","iteye_threads"};
+		String [] crawler = {"Iteyecrawler"};
+		String [] threads = {"iteye_threads"};
 		/*String [] crawler = {"CSDNcrawler","ChinaUnixcrawler","OsChinacrawler","A51ctocrawler"};
 		String [] threads = {"csdn_threads","chinaunix_threads","oschina_threads","a51cto_threads"};*/
 		for(int i = 0; i < crawler.length; i++)

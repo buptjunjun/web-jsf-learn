@@ -29,14 +29,36 @@
 <!-- Default bean name is 'mongo' -->
    <mongo:mongo host="localhost" port="27017"/> 
   
+    
+   <!-- remote server -->
+   <mongo:mongo id = "rmongo" host="42.96.143.59" port="27017">
+    <mongo:options connections-per-host="8"
+     threads-allowed-to-block-for-connection-multiplier="4"
+     connect-timeout="10000" 
+     max-wait-time="5500" 
+     auto-connect-retry="true"
+     socket-keep-alive="true"
+     socket-timeout="10000"
+     slave-ok="true"
+     write-number="1"
+     write-timeout="0"
+     write-fsync="true" />
+   </mongo:mongo>
+
+   
   <!-- host list -->
   <bean id="hosts" class="java.util.ArrayList">
   	<constructor-arg>
   		<list>
  			<value>${host_csdn}</value> 		   
 			<value>${host_chinaunix}</value>
-			 <!-- <value>${host_cnblogs}</value> --> 
+			 <value>${host_cnblogs}</value> 
 			  <value>${host_51cto}</value>
+			   <value>${host_ibmcn}</value>
+			   <value>${host_oschina}</value>
+			   <value>${host_iteye}</value>
+			   <value>${host_douban_movie}</value>
+			   
 		</list>
   	</constructor-arg>
   </bean>
@@ -50,6 +72,9 @@
    			<entry key="${host_chinaunix}" value="${save_chinaunix}"></entry>
    			<entry key="${host_51cto}" value="${save_51cto}"></entry>
    			<entry key="${host_oschina}" value="${save_oschina}"></entry>
+   			<entry key="${host_ibmcn}" value="${save_ibmcn}"></entry>
+   			<entry key="${host_iteye}" value="${save_iteye}"></entry>
+   			<entry key="${host_douban_movie}" value="${save_douban_movie}"></entry>
    		</map>
   	</constructor-arg>
    </bean>
@@ -63,6 +88,9 @@
    			<entry key="${host_chinaunix}" value="${hold_chinaunix}"></entry>
    			<entry key="${host_51cto}" value="${hold_51cto}"></entry>
    			<entry key="${host_oschina}" value="${hold_oschina}"></entry>
+   			<entry key="${host_ibmcn}" value="${hold_ibmcn}"></entry>
+   			<entry key="${host_iteye}" value="${hold_iteye}"></entry>
+   			<entry key="${host_douban_movie}" value="${hold_douban_movie}"></entry>
    		</map>
   	</constructor-arg>
    </bean>
@@ -74,23 +102,36 @@
    		<constructor-arg ref="hosts">  </constructor-arg> 
    </bean>
    
+     <!-- EG DAO remote -->
+   <bean id ="rEGDAOMongo" class="org.easyGoingCrawler.DAO.EGDAOMongo" p:pattern_save-ref="pattern_save"> 
+   		<constructor-arg ref="rmongo"></constructor-arg>
+   		<constructor-arg value="blogdb"></constructor-arg>
+   		<constructor-arg ref="hosts">  </constructor-arg> 
+   </bean>
+   
    <!-- url analyzer to indecate wether to save to the database -->
    <bean id="urlAnalyzer" class="org.easyGoingCrawler.util.URLAnalyzer">
    		<constructor-arg ref="pattern_save"> </constructor-arg>
    		<constructor-arg ref="pattern_hold"></constructor-arg>
    </bean>
   
-  <!-- fetcher --> 
-  
+  <!-- fetcher -->  
   <bean id="fetcherByWebDriver" class="org.easyGoingCrawler.fetcher.HttpFetcherByWebDriver" scope="prototype" /> 
   <bean id="fetcherHtmlUnitXML" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnitXML" scope="prototype" /> 
   <bean id="fetcherHtmlUnit" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnit" scope="prototype" /> 
   <bean id="fetcherHtmlUnitJs" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnit" scope="prototype" >
   	<constructor-arg value="#{true}"></constructor-arg>
   </bean>
+  <bean id="fetcherHtmlUnitJsLogin" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnitLogin" scope="prototype" >
+  	<constructor-arg value="#{true}"></constructor-arg>
+  	<constructor-arg value="src\\main\\resources\\loginCnblog.txt"></constructor-arg>
+  </bean>
+  
   <bean id="fetcher" class="org.easyGoingCrawler.fetcher.HttpFetcher" scope="prototype" />
-  <bean id="fetcherProxy" class="org.easyGoingCrawler.fetcher.HttpFetcherProxy" scope="prototype" />
-    
+  <bean id="fetcherProxy" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnitProxy" scope="prototype" >
+  </bean>
+  
+  
    <!-- extractor -->
   <bean id="extractor" class="org.easyGoingCrawler.extractor.HTMLExtractor" scope="prototype"/>
   
@@ -134,6 +175,8 @@
   			<entry key="${host_chinaunix}" value-ref="ChinaUnixBlogAnalyzer"></entry>
   			<entry key="${host_oschina}" value-ref="OschinaBlogAnalyzer"></entry>
   			<entry key="${host_51cto}" value-ref="A51ctoBlogAnalyzer"></entry>
+  			<entry key="${host_ibmcn}" value-ref="IBMBlogAnalyzer"></entry>
+  			<entry key="${host_iteye}" value-ref="IteyeBlogAnalyzer"></entry>
   		</map>
   	</constructor-arg>
   </bean>
@@ -147,6 +190,8 @@
   			<entry key="${host_chinaunix}" value-ref="ChinaUnixBlogerAnalyzer"></entry>
   			<entry key="${host_oschina}" value-ref="OschinaBlogerAnalyzer"></entry>
   			<entry key="${host_51cto}" value-ref="A51ctoBlogerAnalyzer"></entry>
+  			<entry key="${host_ibmcn}" value-ref="IBMBlogerAnalyzer"></entry>
+  			<entry key="${host_iteye}" value-ref="IteyeBlogerAnalyzer"></entry>
   		</map>
   	</constructor-arg>
   </bean>
@@ -162,8 +207,10 @@
   <bean id="OschinaBlogerAnalyzer"  class="org.easyGoingCrawler.analyzer.OschinaBlogerAnalyzer"></bean> 
   <bean id="A51ctoBlogAnalyzer"  class="org.easyGoingCrawler.analyzer.A51ctoBlogAnalyzer"></bean>
   <bean id="A51ctoBlogerAnalyzer"  class="org.easyGoingCrawler.analyzer.A51ctoBlogerAnalyzer"></bean>
-  
-  
+  <bean id="IBMBlogAnalyzer"  class="org.easyGoingCrawler.analyzer.IBMBlogAnalyzer"></bean>
+  <bean id="IBMBlogerAnalyzer"  class="org.easyGoingCrawler.analyzer.IBMBlogerAnalyzer"></bean>
+  <bean id="IteyeBlogAnalyzer"  class="org.easyGoingCrawler.analyzer.IteyeBlogAnalyzer"></bean>
+  <bean id="IteyeBlogerAnalyzer"  class="org.easyGoingCrawler.analyzer.IteyeBlogerAnalyzer"></bean>
   
   <!-- csdn  -->
   <bean id="csdnscheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
@@ -218,7 +265,7 @@
  		<constructor-arg ref="urlAnalyzer"></constructor-arg>
  </bean>
   <bean id="A51ctocrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
-		<constructor-arg ref = "fetcherByWebDriver"></constructor-arg>
+		<constructor-arg ref = "fetcherHtmlUnitJs"></constructor-arg>
 		<constructor-arg ref = "extractor"></constructor-arg>
 		<constructor-arg ref = "A51ctoScheduleer"></constructor-arg>
 		<constructor-arg ref ="docwriter"></constructor-arg>
@@ -226,18 +273,48 @@
   </bean>
   <!-- 51cto end -->
   
-    <!-- cnblog  -->
+  <!-- cnblog  -->
   <bean id="CnblogsScheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
  		<constructor-arg ref="EGDAOMongo"></constructor-arg>
  		<constructor-arg value="${host_cnblogs}"></constructor-arg>
  		<constructor-arg ref="urlAnalyzer"></constructor-arg>
  </bean>
   <bean id="Cnblogscrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
-		<constructor-arg ref = "fetcherHtmlUnitJs"></constructor-arg>
+		<constructor-arg ref = "fetcherHtmlUnitJsLogin"></constructor-arg>
 		<constructor-arg ref = "extractor"></constructor-arg>
 		<constructor-arg ref = "CnblogsScheduleer"></constructor-arg>
 		<constructor-arg ref ="docwriter"></constructor-arg>
 		<constructor-arg value="${host_cnblogs}"></constructor-arg>
   </bean>
   <!-- cnblog end -->
+  
+   <!-- IBM cn  -->
+  <bean id="IbmcnScheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
+ 		<constructor-arg ref="EGDAOMongo"></constructor-arg>
+ 		<constructor-arg value="${host_ibmcn}"></constructor-arg>
+ 		<constructor-arg ref="urlAnalyzer"></constructor-arg>
+ </bean>
+  <bean id="Ibmcncrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
+		<constructor-arg ref = "fetcherHtmlUnit"></constructor-arg>
+		<constructor-arg ref = "extractor"></constructor-arg>
+		<constructor-arg ref = "IbmcnScheduleer"></constructor-arg>
+		<constructor-arg ref ="docwriter"></constructor-arg>
+		<constructor-arg value="${host_ibmcn}"></constructor-arg>
+  </bean>
+  <!-- IBM cn end -->
+  
+   <!-- IBM cn  -->
+  <bean id="IteyeScheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
+ 		<constructor-arg ref="EGDAOMongo"></constructor-arg>
+ 		<constructor-arg value="${host_iteye}"></constructor-arg>
+ 		<constructor-arg ref="urlAnalyzer"></constructor-arg>
+ </bean>
+  <bean id="Iteyecrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
+		<constructor-arg ref = "fetcherProxy"></constructor-arg>
+		<constructor-arg ref = "extractor"></constructor-arg>
+		<constructor-arg ref = "IteyeScheduleer"></constructor-arg>
+		<constructor-arg ref ="docwriter"></constructor-arg>
+		<constructor-arg value="${host_iteye}"></constructor-arg>
+  </bean>
+  <!-- IBM cn end -->
 </beans>

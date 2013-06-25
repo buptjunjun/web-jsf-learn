@@ -57,7 +57,7 @@
 			   <value>${host_ibmcn}</value>
 			   <value>${host_oschina}</value>
 			   <value>${host_iteye}</value>
-			   
+			   <value>${host_douban_movie}</value>
 			   
 		</list>
   	</constructor-arg>
@@ -74,6 +74,7 @@
    			<entry key="${host_oschina}" value="${save_oschina}"></entry>
    			<entry key="${host_ibmcn}" value="${save_ibmcn}"></entry>
    			<entry key="${host_iteye}" value="${save_iteye}"></entry>
+   			<entry key="${host_douban_movie}" value="${save_douban_movie}"></entry>
    		</map>
   	</constructor-arg>
    </bean>
@@ -89,6 +90,7 @@
    			<entry key="${host_oschina}" value="${hold_oschina}"></entry>
    			<entry key="${host_ibmcn}" value="${hold_ibmcn}"></entry>
    			<entry key="${host_iteye}" value="${hold_iteye}"></entry>
+   			<entry key="${host_douban_movie}" value="${hold_douban_movie}"></entry>
    		</map>
   	</constructor-arg>
    </bean>
