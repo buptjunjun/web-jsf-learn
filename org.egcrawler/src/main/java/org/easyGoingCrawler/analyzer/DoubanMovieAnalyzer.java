@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -27,9 +28,19 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class DoubanMovieAnalyzer implements Analyzer<Movie>
 {	
-	private Pattern pattern = Pattern.compile("\\d\\d\\d\\d-\\d+-\\d+ \\d+:\\d+");
-	private SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-	
+	private SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+	private Pattern patternInt = Pattern.compile("\\d+");
+	 static String loc = "制片国家/地区: ";
+	 static String language = "语言:";
+	 static String date = "上映日期:"; 
+	 static String length = "片长:";
+	 static String aname = "又名:";
+	 static String imdb = "IMDb";
+	 static int lengthLoc = loc.length();
+	 static int lengthDate = date.length(); 
+	 static int lengthLength = length.length();
+	 static int lengthAname = aname.length();
+	 
 	public DoubanMovieAnalyzer()
 	{
 		
@@ -43,6 +54,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 		try
 		{				
 			Document doc = Jsoup.parse(content);
+			str = doc.text();
 			String name = doc.title();
 			Elements directors = doc.getElementsMatchingOwnText("导演");
 			if(directors != null && !directors.isEmpty())
@@ -53,14 +65,72 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 				
 			}
 			
-			Elements actors = doc.getElementsMatchingOwnText("导演");
-			if(directors != null && !directors.isEmpty())
+			Elements actors = doc.getElementsMatchingOwnText("主演");
+			List<String> actorList = new ArrayList<String>();
+			if(actors != null && !actors.isEmpty())
 			{
-				Element director = directors.first();
-				Element e = director.nextElementSibling();
-				movie.setDirector(e.text());
-				
+				Element e = actors.first();
+				do
+				{
+					actorList.add(e.text());
+					e = e.nextElementSibling();
+				}
+				while(e!=null);
+				movie.setActors(actorList);
 			}
+			
+			Elements types = doc.getElementsMatchingOwnText("类型");
+			List<String> typeList = new ArrayList<String>();
+			if(types != null && !types.isEmpty())
+			{
+				Element e = types.first();
+				e = e.nextElementSibling();
+				do
+				{
+					typeList.add(e.text());
+					e = e.nextElementSibling();
+					if(e!=null && e.tagName().equals("br")) break;
+				}
+				while(e!=null);
+				movie.setType(typeList);
+			}
+			
+			// 国家
+			int start = str.indexOf(loc);
+			int end = str.indexOf(language);
+			String location = str.substring(start+lengthLoc, end);
+			movie.setLocation(location);
+
+			// 日期
+			start = str.indexOf(date);
+			end = str.indexOf(length);
+			String date1 = str.substring(start+lengthDate,end);
+			Date date = formater.parse(date1);
+			movie.setDate(date);
+			
+			// 片长
+			start = str.indexOf(length);
+			end = str.indexOf(aname);
+			String length = str.substring(start+lengthLength,end);		
+			Matcher m = patternInt.matcher(length);
+			m.find();
+			length = m.group();
+			int len = Integer.parseInt(length);
+			movie.setTimespan(len);
+			
+			// 又名
+			start = str.indexOf(aname);
+			end = str.indexOf(imdb);
+			if(start > 0 && end > 0)
+			{
+				String anotherName = str.substring(start+lengthAname,end);
+				String [] anotherNames = anotherName.split("/");
+				if (anotherNames != null)
+				{
+					movie.setAnotherName(Arrays.asList(anotherNames));
+				}
+			}
+		
 			
 		} 
 		catch (Exception e)
@@ -79,6 +149,8 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 		try
 		{
 			movie = this.analyze(curl.getHost(),curl.getEncode(),curl.getContent());
+			movie.setUrl(curl.getUrl());
+			movie.setId(Converter.urlEncode(curl.getUrl()));
 		}
 		catch(Exception e)
 		{

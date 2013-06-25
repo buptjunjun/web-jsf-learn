@@ -8,14 +8,14 @@ public class Movie
 	String id = null;
 	String url = null;           // url
 	String name = null;          //电影名称
-	String anotherName = null;   //又名
+	List<String> anotherName = null;   //又名
 	String description = null;	 //简介
 	String location = null;      //电影制片国家
 	String director = null;      //导演
 	List<String> actors = null;  //演员
 	List<String> type = null; 	 //类型
 	Date date = null;            //上映时间
-	int time = 0;	             //电影时长
+	int timespan = 0;	             //电影时长
 	float score = 0f ;           //电影评价分数
 	 
 	Date crawledDate = new Date();
@@ -30,11 +30,11 @@ public class Movie
 	{
 		this.name = name;
 	}
-	public String getAnotherName()
+	public List<String> getAnotherName()
 	{
 		return anotherName;
 	}
-	public void setAnotherName(String anotherName)
+	public void setAnotherName(List<String> anotherName)
 	{
 		this.anotherName = anotherName;
 	}
@@ -86,13 +86,13 @@ public class Movie
 	{
 		this.date = date;
 	}
-	public int getTime()
+	public int getTimespan()
 	{
-		return time;
+		return timespan;
 	}
-	public void setTime(int time)
+	public void setTimespan(int time)
 	{
-		this.time = time;
+		this.timespan = time;
 	}
 	public float getScore()
 	{
