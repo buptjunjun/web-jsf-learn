@@ -97,7 +97,7 @@
   
    <!-- EG DAO -->
    <bean id ="EGDAOMongo" class="org.easyGoingCrawler.DAO.EGDAOMongo" p:pattern_save-ref="pattern_save"> 
-   		<constructor-arg ref="mongo"></constructor-arg>
+   		<constructor-arg ref="rmongo"></constructor-arg>
    		<constructor-arg value="moviedb"></constructor-arg>
    		<constructor-arg ref="hosts">  </constructor-arg> 
    </bean>
