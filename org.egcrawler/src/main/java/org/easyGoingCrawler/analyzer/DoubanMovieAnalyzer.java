@@ -17,6 +17,7 @@ import org.easyGoingCrawler.framwork.Fetcher;
 import org.easyGoingCrawler.util.AnalyzerUtil;
 import org.easyGoingCrawler.util.Converter;
 import org.jsoup.Jsoup;
+import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -30,6 +31,8 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 {	
 	private SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
 	private Pattern patternInt = Pattern.compile("\\d+");
+	private Pattern patternURL = Pattern.compile("http://movie.douban.com/subject/\\d+/");
+
 	 static String loc = "制片国家/地区: ";
 	 static String language = "语言:";
 	 static String date = "上映日期:"; 
@@ -55,7 +58,12 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 		{				
 			Document doc = Jsoup.parse(content);
 			str = doc.text();
+			
+			//片名
 			String name = doc.title();
+			name = name.replace("(豆瓣)", "");
+			movie.setName(name);
+			
 			Elements directors = doc.getElementsMatchingOwnText("导演");
 			if(directors != null && !directors.isEmpty())
 			{
@@ -70,6 +78,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 			if(actors != null && !actors.isEmpty())
 			{
 				Element e = actors.first();
+				e = e.nextElementSibling();
 				do
 				{
 					actorList.add(e.text());
@@ -131,7 +140,31 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 				}
 			}
 		
+			//分数
+			Elements scoreEle = doc.getElementsByClass("rating_num");
+			if(scoreEle != null && !scoreEle.isEmpty())
+			{
+				String score = scoreEle.first().text();
+				if(!StringUtil.isBlank(score))
+				{
+					float scoref = Float.parseFloat(score);
+					movie.setScore(scoref);
+				}
+				else
+				{
+					movie.setScore(-1);
+				}
+			}
 			
+			//介绍
+			Elements des = doc.getElementsByAttributeValueContaining("property", "v:summary");
+			if(des != null && !des.isEmpty())
+			{
+				String description = des.text();
+				movie.setDescription(description);
+				
+			}
+		
 		} 
 		catch (Exception e)
 		{
@@ -149,8 +182,18 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 		try
 		{
 			movie = this.analyze(curl.getHost(),curl.getEncode(),curl.getContent());
-			movie.setUrl(curl.getUrl());
-			movie.setId(Converter.urlEncode(curl.getUrl()));
+			Matcher matcher = patternURL.matcher(curl.getUrl());
+			if(matcher.find())
+			{
+				String url = matcher.group();
+				movie.setUrl(url);
+				movie.setId(Converter.urlEncode(url));
+			}
+			else
+			{
+				movie = null;
+			}
+			
 		}
 		catch(Exception e)
 		{
@@ -168,7 +211,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 		
 		CrawlURI curl = new CrawlURI();
 	//	curl.setUrl("http://blog.csdn.net/m13666368773/article/details/8432839");
-		curl.setUrl("http://movie.douban.com/subject/2977731/?from=subject-page");
+		curl.setUrl("http://movie.douban.com/subject/6875412/?from=subject-page");
 		curl.setStatus(CrawlURI.STATUS_OK);
 		fetcher.fetch(curl);
 		curl.setHost("my.oschina.net");
