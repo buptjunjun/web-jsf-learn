@@ -31,7 +31,8 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 {	
 	private SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
 	private Pattern patternInt = Pattern.compile("\\d+");
-	private Pattern patternURL = Pattern.compile("http://movie.douban.com/subject/\\d+/");
+	private Pattern patternURL = Pattern.compile("http://movie.douban.com/subject/\\d+");
+	private Pattern patternDate = Pattern.compile("\\d\\d\\d\\d\\d-\\d\\d-\\d\\d");
 
 	 static String loc = "制片国家/地区: ";
 	 static String language = "语言:";
@@ -69,7 +70,8 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 			{
 				Element director = directors.first();
 				Element e = director.nextElementSibling();
-				movie.setDirector(e.text());
+				if(e!=null)
+					movie.setDirector(e.text());
 				
 			}
 			
@@ -107,26 +109,33 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 			// 国家
 			int start = str.indexOf(loc);
 			int end = str.indexOf(language);
-			String location = str.substring(start+lengthLoc, end);
-			movie.setLocation(location);
-
+			if(start>0)
+			{
+				String location = str.substring(start+lengthLoc, end>0?end:start+lengthLoc+5);
+				movie.setLocation(location);
+			}
 			// 日期
-			start = str.indexOf(date);
-			end = str.indexOf(length);
-			String date1 = str.substring(start+lengthDate,end);
-			Date date = formater.parse(date1);
-			movie.setDate(date);
+			Matcher mdate = patternDate.matcher(str);
+			if(mdate.find())
+			{
+				String date = mdate.group();
+				Date d = formater.parse(date);
+				movie.setDate(d);
+			}
 			
 			// 片长
 			start = str.indexOf(length);
 			end = str.indexOf(aname);
-			String length = str.substring(start+lengthLength,end);		
-			Matcher m = patternInt.matcher(length);
-			m.find();
-			length = m.group();
-			int len = Integer.parseInt(length);
-			movie.setTimespan(len);
-			
+			if(start>0)
+			{
+				String length = str.substring(start+lengthLength,end<0?start+lengthLength+10:end);		
+				Matcher m = patternInt.matcher(length);
+				if(m.find())
+				{	length = m.group();
+					int len = Integer.parseInt(length);
+					movie.setTimespan(len);
+				}
+			}
 			// 又名
 			start = str.indexOf(aname);
 			end = str.indexOf(imdb);
@@ -182,23 +191,17 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 		try
 		{
 			movie = this.analyze(curl.getHost(),curl.getEncode(),curl.getContent());
-			Matcher matcher = patternURL.matcher(curl.getUrl());
-			if(matcher.find())
-			{
-				String url = matcher.group();
-				movie.setUrl(url);
-				movie.setId(Converter.urlEncode(url));
-				curl.setUrl(url);
-			}
-			else
-			{
-				movie = null;
-			}
+		
+			String url = curl.getUrl();
+			movie.setUrl(url);
+			movie.setId(Converter.urlEncode(url));
+			curl.setUrl(url);
+		
 			
 		}
 		catch(Exception e)
 		{
-			System.out.println(e.toString());
+			System.out.println("error:"+curl.getUrl()+"\n"+e.toString());
 			return null;
 		}
 		return movie;

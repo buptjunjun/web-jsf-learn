@@ -149,7 +149,7 @@ public class RotateHostURLScheduler extends URLScheduler
 //		tmpurl.setType(Url.URL_OTHER);
 //		this.egdao.insert(tmpurl);
 	
-		tmpurl.setUrl("http://movie.douban.com/subject/6875412/");
+		tmpurl.setUrl("http://movie.douban.com/subject/1914621/");
 		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
 		tmpurl.setFlag(Url.UNCRAWLED);
 		tmpurl.setHost("movie.douban.com");

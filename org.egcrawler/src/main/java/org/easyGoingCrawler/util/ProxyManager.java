@@ -124,7 +124,7 @@ public class ProxyManager extends TimerTask
 				String ip = split[0].trim();
 				String port = split[1].trim();
 				int portInt = Integer.parseInt(port);
-				Proxy p = new Proxy(null,ip,portInt,"http://www.iteye.com/blogs");
+				Proxy p = new Proxy(null,ip,portInt,"http://movie.douban.com/");
 				lp.add(p);
 			}
 		} catch (Exception e)
