@@ -149,12 +149,12 @@ public class RotateHostURLScheduler extends URLScheduler
 //		tmpurl.setType(Url.URL_OTHER);
 //		this.egdao.insert(tmpurl);
 	
-		tmpurl.setUrl("http://www.iteye.com/blogs");
+		tmpurl.setUrl("http://movie.douban.com/subject/6875412/");
 		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
 		tmpurl.setFlag(Url.UNCRAWLED);
-		tmpurl.setHost("www.iteye.com/blogs");
+		tmpurl.setHost("movie.douban.com");
 		tmpurl.setLastCrawled(new Date());
-		tmpurl.setType(Url.URL_OTHER);
+		tmpurl.setType(Url.URL_BLOG);
 		this.egdao.insert(tmpurl);
 		
 //		tmpurl.setUrl("http://blog.csdn.net/web/index.html");

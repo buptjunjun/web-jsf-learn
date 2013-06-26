@@ -34,7 +34,7 @@ public class RotateHostURLSchedulerTest
 //		
 //		System.out.println(curl.getIncludeURLs());
 		
-		RotateHostURLScheduler urlscheduler = appcontext.getBean("csdnscheduleer", RotateHostURLScheduler.class);
+		RotateHostURLScheduler urlscheduler = appcontext.getBean("MovieScheduleer", RotateHostURLScheduler.class);
 		urlscheduler.insertSeeds();
 		CrawlURI curl = urlscheduler.get();
 		

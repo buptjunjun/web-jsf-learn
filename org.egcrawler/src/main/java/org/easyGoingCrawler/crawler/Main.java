@@ -43,7 +43,7 @@ public class Main
 		Main main = new Main();
 	//	String [] crawler = {"CSDNcrawler","ChinaUnixcrawler","OsChinacrawler","A51ctocrawler","Cnblogscrawler","Ibmcncrawler","Iteyecrawler"};
 	//	String [] threads = {"csdn_threads","chinaunix_threads","oschina_threads","a51cto_threads","cnblogs_threads","ibmcn_threads","iteye_threads"};
-		String [] crawler = {"MovieScheduleer"};
+		String [] crawler = {"Moviecrawler"};
 		String [] threads = {"douban_threads"};
 		/*String [] crawler = {"CSDNcrawler","ChinaUnixcrawler","OsChinacrawler","A51ctocrawler"};
 		String [] threads = {"csdn_threads","chinaunix_threads","oschina_threads","a51cto_threads"};*/

@@ -98,7 +98,7 @@
    <!-- EG DAO -->
    <bean id ="EGDAOMongo" class="org.easyGoingCrawler.DAO.EGDAOMongo" p:pattern_save-ref="pattern_save"> 
    		<constructor-arg ref="mongo"></constructor-arg>
-   		<constructor-arg value="blogdb"></constructor-arg>
+   		<constructor-arg value="moviedb"></constructor-arg>
    		<constructor-arg ref="hosts">  </constructor-arg> 
    </bean>
    
@@ -157,7 +157,7 @@
  	
     <!-- movie Html writer -->
   <bean id="MovieWriter" class=" org.easyGoingCrawler.docWriter.MovieWriter"
- 		p:urAnalyzer-ref ="urlAnalyzer"
+ 		p:urAnalyzer-ref ="urlAnalyzer" p:analyzer-ref ="DoubanMovieAnalyzer"
  		scope="prototype" >
  		<constructor-arg ref="EGDAOMongo"></constructor-arg>
  	</bean>
@@ -344,11 +344,11 @@
  </bean>
  
  <bean id="Moviecrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
-		<constructor-arg ref = "fetcherProxy"></constructor-arg>
+		<constructor-arg ref = "fetcherHtmlUnit"></constructor-arg>
 		<constructor-arg ref = "extractor"></constructor-arg>
 		<constructor-arg ref = "MovieScheduleer"></constructor-arg>
 		<constructor-arg ref ="docwriter"></constructor-arg>
 		<constructor-arg value="${host_douban_movie}"></constructor-arg>
   </bean>
-  <!-- IBM cn end -->
+  <!-- movie cn end -->
 </beans>

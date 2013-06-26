@@ -188,6 +188,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 				String url = matcher.group();
 				movie.setUrl(url);
 				movie.setId(Converter.urlEncode(url));
+				curl.setUrl(url);
 			}
 			else
 			{
