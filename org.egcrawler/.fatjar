@@ -1,5 +1,5 @@
 #Fat Jar Configuration File
-#Sun Jan 06 21:33:57 CST 2013
+#Wed Jun 26 20:45:37 CST 2013
 onejar.license.required=true
 manifest.classpath=
 manifest.removesigners=false
@@ -10,5 +10,5 @@ manifest.mainclass=org.easyGoingCrawler.crawler.Main
 manifest.file=<createnew>
 jarname.isextern=false
 onejar.expand=
-excludes=
+excludes=<po|org.egcrawler>;<cl|E\:\\\u6211\u7684\u6587\u4EF6\u5939\\eclipseworkpace\\lucenelearn>;<po|lucenelearn>
 includes=

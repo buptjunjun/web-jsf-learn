@@ -35,8 +35,8 @@ import com.mongodb.WriteConcern;
  * 
  */
 public class DAOMongo<T> {
-	public  final static int INDEXED = 1117;
-	public  final static int NOTINDEXED = -1;
+	public  final static int ASCENDING = 0;
+	public  final static int DESCENDING = 1;
 	private static final Logger log = Logger.getLogger(DAOMongo.class);
 	MongoOperations mongoOps = null;
 	
@@ -136,7 +136,7 @@ public class DAOMongo<T> {
 	public T search(String id,Class cls)
 	{
     	 HashMap m = new HashMap();
-    	 m.put("_id", id);
+    	 m.put("id", id);
          List<T> lp = search(m,1,cls);
          if(lp!= null && lp.size()>=1)
          {
@@ -156,7 +156,7 @@ public class DAOMongo<T> {
 	 * @param cls
 	 * @return
 	 */
-	public <T extends Object>  List<T> search (Map<String ,Object> constrains , int limit, Class cls)
+	public <T extends Object>  List<T> search (Map<String ,Object> constrains ,  int limit, Class cls)
 	{
 		if( constrains == null || limit < 1) return null;
 		Criteria cons = null;
@@ -176,6 +176,45 @@ public class DAOMongo<T> {
 			return null;
 		
 		Query q = new Query(cons).limit(limit);
+		List<T> lp = mongoOps.find(q, cls);
+        return lp;
+         
+	}
+	
+	/**
+	 * search records which meets the constrains of "constrains"
+	 * constrains is a map like : [id:123,"name":"abcd"]
+	 * @param <T>
+	 * @param constrains
+	 * @param limit
+	 * @param cls
+	 * @return
+	 */
+	public <T extends Object>  List<T> search (Map<String ,Object> constrains , String sortFiled,int sortWay, int limit, Class cls)
+	{
+		if( constrains == null || limit < 1) return null;
+		Criteria cons = null;
+		boolean flag = false;
+		for(Map.Entry entry:constrains.entrySet())
+		{
+			
+			String key = (String)entry.getKey();
+			if(flag == false)
+				cons = Criteria.where(key).is(entry.getValue());
+			else
+				cons = cons.and(key).is(entry.getValue());
+			flag = true;
+		}
+		
+		if(flag == false)
+			return null;
+		
+		Query q = new Query(cons).limit(limit);
+		if(sortWay == ASCENDING)
+			q.sort().on(sortFiled, Order.ASCENDING);
+		else if (sortWay == DESCENDING)
+			q.sort().on(sortFiled, Order.DESCENDING);
+		
 		List<T> lp = mongoOps.find(q, cls);
         return lp;
          
@@ -202,6 +241,7 @@ public class DAOMongo<T> {
 		List<T> lp = mongoOps.find(q, cls);
         return lp;     
 	}
+	
 	
 /**
  * insert a record

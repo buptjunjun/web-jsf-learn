@@ -32,11 +32,10 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 	private SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
 	private Pattern patternInt = Pattern.compile("\\d+");
 	private Pattern patternURL = Pattern.compile("http://movie.douban.com/subject/\\d+");
-	private Pattern patternDate = Pattern.compile("\\d\\d\\d\\d\\d-\\d\\d-\\d\\d");
-
+	private Pattern patternDate = Pattern.compile("\\d\\d\\d\\d-\\d\\d-\\d\\d");
 	 static String loc = "制片国家/地区: ";
 	 static String language = "语言:";
-	 static String date = "上映日期:"; 
+	 static String date = "日期:"; 
 	 static String length = "片长:";
 	 static String aname = "又名:";
 	 static String imdb = "IMDb";

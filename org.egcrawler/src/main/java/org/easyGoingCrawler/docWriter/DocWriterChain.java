@@ -36,11 +36,10 @@ public class DocWriterChain extends DocWriter
 			{
 				((HtmlPage)obj).cleanUp();
 			}
-			curl.setReserve(null);
 		}
 		catch(Exception e)
 		{
-			
+			e.printStackTrace();
 		}
 	}
 	

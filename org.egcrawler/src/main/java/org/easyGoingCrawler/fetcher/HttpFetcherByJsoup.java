@@ -105,7 +105,7 @@ public class HttpFetcherByJsoup extends Fetcher
 		FileWriter fout = new FileWriter(new File("51cto.html"));  
 		String xml = curl.getContent();
 		fout.write(xml);*/
-		Connection con = Jsoup.connect("http://baoku.baidu.com/search.php?ie=utf8&flag=sug&word=%E6%A2%A6%E5%B9%BB%E9%A3%9E%E7%90%B4");
+		Connection con = Jsoup.connect("http://baoku.baidu.com/search.php?word=%E6%A2%A6%E5%B9%BB%E9%A3%9E%E7%90%B4");
 		
 		 Document doc = con.get();
 		 System.out.println(doc.html());

@@ -154,8 +154,13 @@ public class EGCrawler  extends Thread
 			return;
 		}
 		this.fetcher.fetch(curl);
-		this.extractor.extract(curl);
-		this.docWriter.write(curl);
+		
+		if(this.extractor != null)
+			this.extractor.extract(curl);
+		
+		if(this.docWriter != null)
+			this.docWriter.write(curl);
+		
 		this.scheduler.put(curl);		
 	}
 	
