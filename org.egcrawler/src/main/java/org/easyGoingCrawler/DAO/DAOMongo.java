@@ -1,6 +1,8 @@
 package org.easyGoingCrawler.DAO;
 
+import java.lang.reflect.Field;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -17,6 +19,8 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.apache.log4j.Logger;
 import org.easyGoingCrawler.docWriter.Blog;
 import org.easyGoingCrawler.docWriter.Bloger;
+import org.easyGoingCrawler.docWriter.Movie;
+import org.easyGoingCrawler.util.Converter;
 
 
 import com.mongodb.DBAddress;
@@ -26,10 +30,11 @@ import com.mongodb.WriteConcern;
 
 
 /**s
- * Java Spring Data & MongoDB Example
+ * Java Spring Data & MongoDB 
+ * implement basic interface of a db: search insert update 
  * 
  */
-public class DAOMongo {
+public class DAOMongo<T> {
 	public  final static int INDEXED = 1117;
 	public  final static int NOTINDEXED = -1;
 	private static final Logger log = Logger.getLogger(DAOMongo.class);
@@ -40,7 +45,7 @@ public class DAOMongo {
 		try
 		{
 			Mongo mongo = new Mongo("");
-			mongo.setWriteConcern(WriteConcern.SAFE);
+			mongo.setWriteConcern(WriteConcern.NORMAL);
 			mongoOps = new MongoTemplate(mongo, dbName);
 		} catch (UnknownHostException e)
 		{
@@ -70,78 +75,88 @@ public class DAOMongo {
 			e.printStackTrace();
 		}
 	}
-	public void updateBlog(List<Blog> lblog)
+
+	/**
+	 * update  records which meets the constrains of "constrains"
+	 * constrains is a map like : [id:123,"name":"abcd"]
+	 * @param obj
+	 * @param constrains
+	 */
+	public void update(T obj,Map<String,String> constrains)
 	{
-		if(lblog == null) 
-			return;
-		for(Blog b: lblog)
-		{
-			this.updateBlog(b);
-		}
-	}
-	public void updateBlog(Blog blog)
-	{
-		if(blog == null) 
+		if(obj == null) 
 			return;
 		
-		mongoOps.updateFirst(new Query(where("_id").is(blog.getId())), new Update().set("magicNum", blog.getMagicNum()), Blog.class);
+		Criteria cons = null;
+		boolean flag = false;
+		for(Map.Entry entry:constrains.entrySet())
+		{
+			
+			String key = (String)entry.getKey();
+			if(flag == false)
+				cons = Criteria.where(key).is(entry.getValue());
+			else
+				cons = cons.and(key).is(entry.getValue());
+			flag = true;
+		}
+		
+		if(flag == false)
+			return ;
+		Query q = new Query(cons);
+		Update update = new Update();
+		
+		Class cls = obj.getClass();
+		Field [] fields = cls.getDeclaredFields();
+		for(Field field : fields)
+		{
+			try
+			{
+				field.setAccessible(true);
+				update.set(field.getName(), field.get(obj));
+			} catch (IllegalArgumentException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		mongoOps.updateFirst(q, update, cls );
 	}
 	
-	public List<Blog> searchBlog(String host,int magicNum ,int limit)
-	{
-    	 HashMap m = new HashMap();
-    	 if(host!=null)
-    		 m.put("host", host);
-    	 m.put("magicNum", magicNum);
-    	 
-         List<Blog> lp = searchBlog(m,limit, Blog.class);
-         return lp;
-         
-	}
 	
-	public Bloger getBloger(String id)
-	{
-		if(id == null) return null;
-       
-		Bloger bloger = this.mongoOps.findById(id, Bloger.class);
-        
-		return bloger;         
-	}
-	
-	public Blog searchBlog(String id)
+	/**
+	 * search a record according to the id
+	 * @param id
+	 * @param cls
+	 * @return
+	 */
+	public T search(String id,Class cls)
 	{
     	 HashMap m = new HashMap();
     	 m.put("_id", id);
-         List<Blog> lp = searchBlog(m,1, Blog.class);
+         List<T> lp = search(m,1,cls);
          if(lp!= null && lp.size()>=1)
          {
-        	 Blog blog = lp.remove(0);
-        	 return blog;
+        	 T obj = (T) lp.remove(0);
+        	 return obj;
          }
          return null;
          
 	}
 	
-	public Blog searchBlog(String key,List<String> ids)
-	{
-    	
-         List<Blog> lp = searchBlog(key,ids, ids.size(),Blog.class);
-         if(lp!= null && lp.size()>=1)
-         {
-        	 Blog blog = lp.remove(0);
-        	 return blog;
-         }
-         return null;
-         
-	}
-//	public List<Blog> searchBlog(String host,int magicNum ,int limit)
-//	{
-//		 Query q = new Query(Criteria.where("host").is(host).and("magicNum").is(magicNum)).limit(limit);
-//         List<Blog> lp = this.mongoOps.find(q, Blog.class);
-//         return lp;
-//         
-//	}
-	public <T extends Object>  List<T> searchBlog (Map<String ,Object> constrains , int limit, Class cls)
+	/**
+	 * search records which meets the constrains of "constrains"
+	 * constrains is a map like : [id:123,"name":"abcd"]
+	 * @param <T>
+	 * @param constrains
+	 * @param limit
+	 * @param cls
+	 * @return
+	 */
+	public <T extends Object>  List<T> search (Map<String ,Object> constrains , int limit, Class cls)
 	{
 		if( constrains == null || limit < 1) return null;
 		Criteria cons = null;
@@ -166,7 +181,17 @@ public class DAOMongo {
          
 	}
 	
-	public <T extends Object>  List<T> searchBlog (String key,List<String> constrains , int limit, Class cls)
+	/**
+	 * update  records which meets the constrains of "constrains"
+	 * the constrains is key in the set of "constrains";
+	 * @param <T>
+	 * @param key
+	 * @param constrains
+	 * @param limit
+	 * @param cls
+	 * @return
+	 */
+	public <T extends Object>  List<T> search (String key,List<String> constrains , int limit, Class cls)
 	{
 		if( constrains == null || constrains.size() == 0|| limit < 1) return null;
 		Criteria cons = null;
@@ -178,36 +203,54 @@ public class DAOMongo {
         return lp;     
 	}
 	
-  public boolean insert(Object obj)
-    {
-    	try
-    	{
-    		this.mongoOps.insert(obj);
-    		return true;
-    	}
-    	catch(Exception e)
-    	{
-    		e.printStackTrace();
-    		return false;
-    	}
-    }
+/**
+ * insert a record
+ * @param obj
+ * @return
+ */
+  public boolean insert(T obj)
+  {
+	try
+	{
+		this.mongoOps.insert(obj);
+		return true;
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		return false;
+	}
+  }
 	  
 	public static void main(String[] args)
     {
-    	DAOMongo mongo = new DAOMongo("blogdb");
+    	DAOMongo<Movie> mongo = new DAOMongo<Movie>("moviedb");
 /*    	List<Blog> lbolg = mongo.searchBlog("blog.csdn.net", -1, 10);
     	for(Blog b:lbolg)
     		System.out.println(b);*/
     	
     //	Blog blog = mongo.searchBlog("ea90e77322c73e4aea1f204ed0eef8e4");
-    	List<Blog> blogs = mongo.searchBlog("blog.csdn.net", 800, 1);
-    	System.out.println("before changing magicNum" + blogs);
-    	Blog blog = blogs.get(0); 
-    	blog.setMagicNum(1111);
-    	mongo.updateBlog(blog);
-    	blogs = mongo.searchBlog("blog.csdn.net", 799, 1);
-    	System.out.println("after changing the magicNum to 800" + blogs);
+    	Movie movie = new Movie();
+    	movie.setUrl("aaaaa");
+    	movie.setName("test1");
+    	movie.setId(Converter.urlEncode(movie.getUrl()));
+   	
+    	mongo.insert(movie);
     	
+    	Movie result = mongo.search(movie.getId(), movie.getClass());
+    	System.out.println(movie);
+   	
+    	movie.setName("test2");
+    	String [] l =  {"hhh","bbb"};
+    	List list = Arrays.asList(l);
+    	movie.setActors(list);
        
+    	Map m = new HashMap<String,String>();
+    	m.put("id", movie.getId());
+    	mongo.update(movie, m);
+    	
+    	 result = mongo.search(movie.getId(), movie.getClass());
+    	System.out.println(movie);
+    	
     }
 }
