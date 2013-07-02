@@ -351,7 +351,7 @@
   <!-- IBM cn end -->
   
   <!-- movie douban  -->
-  <bean id="MovieScheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
+  <bean id="MovieScheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLSchedulerDouban"  scope="singleton" >
  		<constructor-arg ref="EGDAOMongo"></constructor-arg>
  		<constructor-arg value="${host_douban_movie}"></constructor-arg>
  		<constructor-arg ref="urlAnalyzer"></constructor-arg>
