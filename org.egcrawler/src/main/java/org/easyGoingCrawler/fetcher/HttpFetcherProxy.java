@@ -52,6 +52,8 @@ import org.easyGoingCrawler.extractor.HTMLExtractor;
 import org.easyGoingCrawler.framwork.CrawlURI;
 import org.easyGoingCrawler.framwork.Fetcher;
 import org.easyGoingCrawler.util.FetcherUtil;
+import org.easyGoingCrawler.util.Proxy;
+import org.easyGoingCrawler.util.ProxyManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -64,8 +66,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class HttpFetcherProxy extends Fetcher
 {
 	private Logger logger = Logger.getLogger(HttpFetcherProxy.class);
-	// map from host name to ip address
-	private static Hashtable host2ip = new Hashtable(); 
 	/**
 	 * fetch a html file 
 	 * @param url the url of one html file
@@ -104,8 +104,10 @@ public class HttpFetcherProxy extends Fetcher
 		   // 初始化，此处构造函数就与3.1中不同
 	       httpclient = new DefaultHttpClient();
 	    // 代理的设置
-//	       HttpHost proxy = new HttpHost("117.41.182.188", 8080);
-//	       httpclient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+	       
+	       Proxy p =  ProxyManager.getInstance().getOneAvailableProxy();
+	       HttpHost proxy = new HttpHost(p.getIp(), p.getPort());
+	       httpclient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
 
 	       httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,20000);//连接时间20s
 	       httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 30000);//数据传输时间60s
@@ -195,7 +197,7 @@ public class HttpFetcherProxy extends Fetcher
 	         // 至此，我们可以将原byte数组按照正常编码专成字符串输出（如果找到了编码的话）
 	         
 	         
-	       //  curl.setContent(bytes);
+	         curl.setContent(new String(bytes,charSet));
 	         curl.setHttpstatus(statusCode);
 	         curl.setEncode(charSet);
 	         curl.setLastCrawlDate(new Date());
@@ -243,10 +245,10 @@ public class HttpFetcherProxy extends Fetcher
 		//test(ret);
 */	
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
-		Fetcher fetcher = appcontext.getBean("fetcher",Fetcher.class);
+		Fetcher fetcher = appcontext.getBean("fetcherBaseProxy",Fetcher.class);
 		
 		CrawlURI curl = new CrawlURI();
-		curl.setUrl("www.baidu.com");
+		curl.setUrl("https://api.douban.com/v2/movie/subject/10564052");
 		curl.setStatus(CrawlURI.STATUS_OK);
 		fetcher.fetch(curl);
 		System.out.println(new String (curl.getContent()));	

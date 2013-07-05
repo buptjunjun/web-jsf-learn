@@ -203,7 +203,7 @@ public class HttpFetcher extends Fetcher
 	         // 至此，我们可以将原byte数组按照正常编码专成字符串输出（如果找到了编码的话）
 	         
 	         
-	        // curl.setContent(bytes);
+	         curl.setContent(new String(bytes,charSet));
 	         curl.setHttpstatus(statusCode);
 	         curl.setEncode(charSet);
 	         curl.setLastCrawlDate(new Date());
@@ -254,11 +254,11 @@ public class HttpFetcher extends Fetcher
 		Fetcher fetcher = appcontext.getBean("fetcher",Fetcher.class);
 		
 		CrawlURI curl = new CrawlURI();
-		curl.setUrl("http://alanwu.blog.51cto.com/3652632/1106506");
+		curl.setUrl("https://api.douban.com/v2/movie/subject/10564052");
 		curl.setStatus(CrawlURI.STATUS_OK);
 		fetcher.fetch(curl);
-		//Document doc = Jsoup.parse(new String (curl.getContent(),"UTF-8"));
-	//	System.out.println(doc.text());	
+		Document doc = Jsoup.parse(curl.getContent());
+		System.out.println(doc.text());	
 	}
 
 	

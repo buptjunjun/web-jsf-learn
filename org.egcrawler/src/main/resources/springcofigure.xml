@@ -142,6 +142,7 @@
   	</bean>
   
   <bean id="fetcher" class="org.easyGoingCrawler.fetcher.HttpFetcher" scope="prototype" />
+   <bean id="fetcherBaseProxy" class="org.easyGoingCrawler.fetcher.HttpFetcherProxy" scope="prototype" />
   <bean id="fetcherProxy" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnitProxy" scope="prototype" >
   </bean>
   
