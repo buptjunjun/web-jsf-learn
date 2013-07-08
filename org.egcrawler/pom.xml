@@ -10,7 +10,15 @@
     <jettyVersion>7.2.0.v20101020</jettyVersion>  
   </properties> 
 	
+		
 	<dependencies>
+	<!-- json google -->
+		<dependency>  
+		    <groupId>com.google.code.gson</groupId>  
+		    <artifactId>gson</artifactId>  
+		    <version>2.2.2</version>  
+		</dependency>  
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
