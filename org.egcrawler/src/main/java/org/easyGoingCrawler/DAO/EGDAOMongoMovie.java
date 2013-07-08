@@ -5,7 +5,9 @@ import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,8 +46,6 @@ public class EGDAOMongoMovie implements EGDAO
 {
 	//MongoTemplate,  test is the db name.
 	DAOMongo<Movie> daomongo = null;
-    
-	private List<String> hosts = null;
     Movie movie = new Movie();
 	int magicNum;
 	String baseURL = "";
@@ -82,6 +82,7 @@ public class EGDAOMongoMovie implements EGDAO
 		for(Movie m : tmp)
 		{
 			CrawlURI curl = this.Movie2CrawlURI(m, this.baseURL);
+
 			curl.setReserve(new String(m.getId()));
 			list.add(curl);
 		}
@@ -89,6 +90,7 @@ public class EGDAOMongoMovie implements EGDAO
 		return list;
 	}
     
+	
 	/**
 	 * 
 	 * @param magicNum
@@ -165,14 +167,27 @@ public class EGDAOMongoMovie implements EGDAO
 		CrawlURI curl = new CrawlURI();
 		curl.setReserve(movie.getId());
 		Date date = movie.getDate();
-		String dateStr = date!=null ? date.getYear()+"":"";
+		String dateStr = date!=null ? 1900+date.getYear()+"":"";
 		String name = movie.getName();
-		name = name.replaceAll("&", " ");
-		name = name.replaceAll("#", " ");
-		name = name.replaceAll("\\?", " ");
+		if(name!=null)
+		{
+			name = name.trim();
+			String [] chineseName = name.split(" ");
+			if(chineseName != null && chineseName.length > 1)
+				name = chineseName[0];
+			
+			name = name.replaceAll("&", " ");
+			name = name.replaceAll("#", " ");
+			name = name.replaceAll("\\?", " ");
+		}
+		
+		
 		String query = name+" " +dateStr;
+		System.out.println("movie convert to curl:"+movie+"---"+query);
 		query = java.net.URLEncoder.encode(query);
 		curl.setUrl(baseURL+query);
+		
+		
 		return curl;
 	}
 
