@@ -15,12 +15,32 @@ public class Movie
 	List<String> actors = null;  //演员
 	List<String> type = null; 	 //类型
 	Date date = null;            //上映时间
-	int timespan = 0;	             //电影时长
+	int timespan = 0;	         //电影时长
+
 	float score = 0f ;           //电影评价分数
-	 
+	int voteCount = 0;
+	String kind = "m";             //movie or serial 
+
 	Date crawledDate = new Date();
 	int magicNum = -1;
 
+	public String getKind()
+	{
+		return kind;
+	}
+	public void setKind(String kind)
+	{
+		this.kind = kind;
+	}
+
+	public int getVoteCount()
+	{
+		return voteCount;
+	}
+	public void setVoteCount(int voteCount)
+	{
+		this.voteCount = voteCount;
+	}
 
 	public String getName()
 	{
