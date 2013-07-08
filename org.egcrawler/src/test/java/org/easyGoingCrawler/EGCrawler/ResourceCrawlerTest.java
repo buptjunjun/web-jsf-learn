@@ -4,6 +4,7 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 import java.util.List;
 
+import org.easyGoingCrawler.DAO.DAOMongo;
 import org.easyGoingCrawler.DAO.EGDAOMongo;
 import org.easyGoingCrawler.analyzer.CSDNBlogAnalyzer;
 import org.easyGoingCrawler.docWriter.Blog;
@@ -26,11 +27,14 @@ public class ResourceCrawlerTest
 	{
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
 		EGCrawler crawler = appcontext.getBean("MovieResourceCrawler",EGCrawler.class);
-		System.out.println("end");
-		System.out.println("end");
-		crawler.startCrawl();
-		crawler.start();
+		/*DAOMongo DAOMongoDouban = appcontext.getBean("DAOMongoDouban",DAOMongo.class);
+		DAOMongo DAOMongoMovie = appcontext.getBean("DAOMongo",DAOMongo.class);
 		
+		Fetcher fetcherBaseProxy = appcontext.getBean("fetcherBaseProxy",Fetcher.class);*/
+		crawler.setInterval(10);
+		crawler.start();
+		crawler.startCrawl();
+	
 		while(true)
 		{
 			try {
