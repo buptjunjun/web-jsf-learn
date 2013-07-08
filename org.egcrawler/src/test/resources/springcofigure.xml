@@ -169,9 +169,15 @@
  		<constructor-arg ref="EGDAOMongo"></constructor-arg>
  	</bean>
  	
-    <!-- movie Html writer -->
+    <!-- movie  writer -->
   <bean id="MovieWriter" class=" org.easyGoingCrawler.docWriter.MovieWriter"
  		p:urAnalyzer-ref ="urlAnalyzer" p:analyzer-ref ="DoubanMovieAnalyzer"
+ 		scope="prototype" >
+ 		<constructor-arg ref="EGDAOMongo"></constructor-arg>
+ 	</bean>
+ 
+   <bean id="ResourceWriter" class=" org.easyGoingCrawler.docWriter.ResourceWriter"
+ 		p:analyzer-ref ="ResourceAnanyzerBaidu"
  		scope="prototype" >
  		<constructor-arg ref="EGDAOMongo"></constructor-arg>
  	</bean>
@@ -243,6 +249,7 @@
   <bean id="IteyeBlogAnalyzer"  class="org.easyGoingCrawler.analyzer.IteyeBlogAnalyzer"></bean>
   <bean id="IteyeBlogerAnalyzer"  class="org.easyGoingCrawler.analyzer.IteyeBlogerAnalyzer"></bean>
   <bean id="DoubanMovieAnalyzer"  class="org.easyGoingCrawler.analyzer.DoubanMovieAnalyzer"></bean>
+  <bean id="ResourceAnanyzerBaidu"  class="org.easyGoingCrawler.analyzer.ResourceAnanyzerBaidu"></bean>
   
   <!-- csdn  -->
   <bean id="csdnscheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
@@ -381,9 +388,9 @@
  </bean>
   <bean id="MovieResourceCrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
 		<constructor-arg ref = "fetcherJsoup"></constructor-arg>
-		<constructor-arg value = "#{null}"></constructor-arg>
+		<constructor-arg ><null/></constructor-arg>
 		<constructor-arg ref = "RotateHostURLSchedulerMovie"></constructor-arg>
-		<constructor-arg value ="#{null}"></constructor-arg>
+		<constructor-arg ref ="ResourceWriter"></constructor-arg>
 		<constructor-arg value="${host_douban_movie}"></constructor-arg>
   </bean>
   
