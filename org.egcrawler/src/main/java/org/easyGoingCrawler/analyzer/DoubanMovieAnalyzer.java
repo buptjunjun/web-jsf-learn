@@ -95,14 +95,36 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 			{
 				Element e = types.first();
 				e = e.nextElementSibling();
+				int i= 0;
 				do
 				{
 					typeList.add(e.text());
 					e = e.nextElementSibling();
-					if(e!=null && e.tagName().equals("br")) break;
+					if(e!=null && e.tagName().equals("br") || i++ > 3) break;
 				}
 				while(e!=null);
 				movie.setType(typeList);
+			}
+
+			//评分人数
+			Elements votes = doc.getElementsByAttributeValue("property", "v:votes");
+			if(votes!=null && !votes.isEmpty())
+			{
+				Element vote = votes.first();
+				if(vote!=null)
+				{
+					String countStr = vote.text();
+					try
+					{
+						int countInt = Integer.parseInt(countStr);
+						movie.setVoteCount(countInt);
+					}
+					catch(Exception e)
+					{
+						e.printStackTrace();
+					}
+					
+				}
 			}
 			
 			// 国家
@@ -155,12 +177,19 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 				String score = scoreEle.first().text();
 				if(!StringUtil.isBlank(score))
 				{
-					float scoref = Float.parseFloat(score);
-					movie.setScore(scoref);
+					try
+					{
+						float scoref = Float.parseFloat(score);
+						movie.setScore(scoref);
+					}
+					catch(Exception e)
+					{
+						e.printStackTrace();
+					}
 				}
 				else
 				{
-					movie.setScore(-1);
+					movie.setScore(0);
 				}
 			}
 			
