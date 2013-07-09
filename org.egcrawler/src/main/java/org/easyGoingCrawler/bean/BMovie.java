@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.easyGoingCrawler.framwork.CrawlURI;
 import org.easyGoingCrawler.framwork.Fetcher;
+import org.jsoup.helper.StringUtil;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -20,16 +21,16 @@ public class BMovie
 	
 	private String url = null;               //url
 
-	@SerializedName("alt_title")  
+	@SerializedName("title")  
 	private String name = null;              //电影中文名称
 	
-	@SerializedName("title")                 //英文名字
+	@SerializedName("original_title")
 	private String en_name=null;
 
 	@SerializedName("aka")
 	private List<String> anotherName = null;   //又名
 	
-	@SerializedName("movie_type")
+	@SerializedName("subtype")
 	private String kind = "movie";             //电影or连续剧
 		
 	@SerializedName("images")
@@ -44,7 +45,7 @@ public class BMovie
 	@SerializedName("summary")
 	private String description = null;	 	 //简介
 	
-	@SerializedName("country")
+	@SerializedName("countries")
 	private List<String> location = null;	 //电影制片国家
 
 	@SerializedName("directors")
@@ -57,7 +58,7 @@ public class BMovie
 	private List<String> type = null; 	 	 //类型
 	
 	@SerializedName("year")
-	private int date = 1988;            	 //上映时间
+	private int date = 1900;            	 //上映时间
 	
 	@SerializedName("rating")
 	private BRating rating=null;          	 //评分人数
@@ -251,7 +252,7 @@ public class BMovie
 		Fetcher fetcher = appcontext.getBean("fetcher",Fetcher.class);
 		
 		CrawlURI curl = new CrawlURI();
-		curl.setUrl("https://api.douban.com/v2/movie/subject/5954626");
+		curl.setUrl("https://api.douban.com/v2/movie/subject/6875412");
 		curl.setStatus(CrawlURI.STATUS_OK);
 		fetcher.fetch(curl);
 		BDoubanMovieJson bdm = new BDoubanMovieJson();
@@ -259,6 +260,8 @@ public class BMovie
 		bdm.setJson(curl.getContent());
 		BMovie bm = bdm.toBMovie();
 		System.out.println();
+		System.out.println(StringUtil.isBlank(null));
+		System.out.println(StringUtil.isBlank("   "));
 
 	}
 

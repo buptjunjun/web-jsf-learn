@@ -170,7 +170,7 @@ public class Movie
 	public String toString()
 	{
 		// TODO Auto-generated method stub
-		return "id = "+this.id +" url =" + this.url +" name = " +this.name+" enname = "+this.enName;	
+		return "id = "+this.id +" url =" + this.url +" name = " +this.name+" kind = "+this.kind;	
 			    
 	}
 
