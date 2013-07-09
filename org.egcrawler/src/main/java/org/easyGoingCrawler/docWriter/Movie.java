@@ -8,6 +8,7 @@ public class Movie
 	String id = null;
 	String url = null;           // url
 	String name = null;          //电影名称
+	String enName = null;        //电影英文名称
 	List<String> anotherName = null;   //又名
 	String description = null;	 //简介
 	String location = null;      //电影制片国家
@@ -24,6 +25,14 @@ public class Movie
 	Date crawledDate = new Date();
 	int magicNum = -1;
 
+	public String getEnName()
+	{
+		return enName;
+	}
+	public void setEnName(String enName)
+	{
+		this.enName = enName;
+	}
 	public String getKind()
 	{
 		return kind;
@@ -161,7 +170,7 @@ public class Movie
 	public String toString()
 	{
 		// TODO Auto-generated method stub
-		return "id = "+this.id +" url =" + this.url +" name = " +this.name;	
+		return "id = "+this.id +" url =" + this.url +" name = " +this.name+" enname = "+this.enName;	
 			    
 	}
 
