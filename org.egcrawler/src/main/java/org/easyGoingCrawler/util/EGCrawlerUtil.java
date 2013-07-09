@@ -1,5 +1,7 @@
 package org.easyGoingCrawler.util;
 
+import org.jsoup.helper.StringUtil;
+
 public class EGCrawlerUtil
 {
 	/**
@@ -13,6 +15,23 @@ public class EGCrawlerUtil
 		return false;
 	}
 
+
+	
+	/**
+	 * http://movie.douban.com/subject/5954626 to 5954626
+	 * @param url
+	 * @return
+	 */
+	static public String getMovieIDFromUrl(String url)
+	{
+		String ret = null;
+		if(StringUtil.isBlank(url))
+			return ret;
+		
+		ret = url.replace("http://movie.douban.com/subject/", "");
+		
+		return ret;
+	}
 	/**
 	 * @param args
 	 */

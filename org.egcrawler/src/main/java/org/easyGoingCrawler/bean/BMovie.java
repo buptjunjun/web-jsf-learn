@@ -20,13 +20,16 @@ public class BMovie
 	
 	private String url = null;               //url
 
-	@SerializedName("title")  
-	private String name = null;              //电影名称
+	@SerializedName("alt_title")  
+	private String name = null;              //电影中文名称
 	
+	@SerializedName("title")                 //英文名字
+	private String en_name=null;
+
 	@SerializedName("aka")
 	private List<String> anotherName = null;   //又名
 	
-	@SerializedName("subtype")
+	@SerializedName("movie_type")
 	private String kind = "movie";             //电影or连续剧
 		
 	@SerializedName("images")
@@ -35,13 +38,13 @@ public class BMovie
 	@SerializedName("durations")
 	private List<Integer> durations = null;   //片长
 	
-	@SerializedName("languages")
+	@SerializedName("language")
 	private List<String> language = null;   //语言
 	
 	@SerializedName("summary")
 	private String description = null;	 	 //简介
 	
-	@SerializedName("countries")
+	@SerializedName("country")
 	private List<String> location = null;	 //电影制片国家
 
 	@SerializedName("directors")
@@ -69,6 +72,14 @@ public class BMovie
 	private int magicNum = -1;
 
 	
+	public String getEn_name()
+	{
+		return en_name;
+	}
+	public void setEn_name(String en_name)
+	{
+		this.en_name = en_name;
+	}
 	public List<Integer> getDurations()
 	{
 		return durations;
@@ -230,7 +241,7 @@ public class BMovie
 	public String toString()
 	{
 		// TODO Auto-generated method stub
-		return "id = "+this.id +" url =" + this.url +" name = " +this.name;	
+		return "id = "+this.id +" url =" + this.url +" name = " +this.name+" enname = " + this.en_name;	
 			    
 	}
 	
