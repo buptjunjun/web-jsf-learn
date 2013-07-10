@@ -21,7 +21,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ResourceAnanyzerBaidu implements Analyzer<List<BResource>>
 {
-    private int limit = 2;
+    private int limit = 3;
     private String type="baidu";
     private String unknow = "unknow";
     
@@ -45,6 +45,16 @@ public class ResourceAnanyzerBaidu implements Analyzer<List<BResource>>
 			int count = 0;
 			while(e !=  null)
 			{			
+				String description = null;
+				//¼ò½é
+				Elements ebrief  = e.getElementsByClass("singleBreif");
+				if(ebrief!=null && !ebrief.isEmpty())
+				{
+					Element brief = ebrief.first();
+					description  = brief.text();
+				}
+				
+				
 				Elements playAddresses = e.getElementsByClass("singPlayBtn");
 				if(playAddresses != null && !playAddresses.isEmpty())
 				{
@@ -62,7 +72,8 @@ public class ResourceAnanyzerBaidu implements Analyzer<List<BResource>>
 								String des = a.text();
 								String url = a.attr("ahref");
 								resource.setResourceURL(url);
-								resource.setDescription(des);
+								resource.setResourceDescription(des);
+								resource.setMovieDescription(description);
 								
 								if(StringUtil.isBlank(url))
 									break;
@@ -85,7 +96,7 @@ public class ResourceAnanyzerBaidu implements Analyzer<List<BResource>>
 					
 					BResource resource = new BResource();
 					resource.setResourceURL(url);
-					resource.setDescription(des);	
+					resource.setMovieDescription(description);
 					
 					resources.add(resource);
 					

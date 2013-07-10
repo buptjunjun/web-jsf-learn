@@ -14,9 +14,30 @@ public class BResource
     private String movieId = null;
     private String resourceURL;
     private String resourceType;  //暴风 iqiyi qvod 百度影音 bt 电驴 磁力链接
-    private String description = null;
-    private String host = null;
+    private String resourceDescription = null; //dvd qmv rmvb ...
+    private String movieDescription = null; // 该资源对mvoie简介
+	
 
+	private String host = null;
+	private Date crawledDate = new Date();
+	private int magicNum = -1;
+	
+	public String getResourceDescription()
+	{
+		return resourceDescription;
+	}
+	public void setResourceDescription(String resourceDescription)
+	{
+		this.resourceDescription = resourceDescription;
+	}
+	public String getMovieDescription()
+	{
+		return movieDescription;
+	}
+	public void setMovieDescription(String movieDescription)
+	{
+		this.movieDescription = movieDescription;
+	}
 	public String getHost()
 	{
 		return host;
@@ -49,16 +70,8 @@ public class BResource
 	{
 		this.resourceType = resourceType;
 	}
-	public String getDescription()
-	{
-		return description;
-	}
-	public void setDescription(String description)
-	{
-		this.description = description;
-	}
-	private Date crawledDate = new Date();
-	private int magicNum = -1;
+	
+
 	
 	public String getId()
 	{
@@ -90,6 +103,6 @@ public class BResource
 	public String toString()
 	{
 		// TODO Auto-generated method stub
-		return this.getResourceType()+":"+this.getHost()+":"+this.getResourceURL()+":"+this.getDescription()+":"+(this.getCrawledDate()!=null?this.getCrawledDate().toLocaleString():this.getCrawledDate());
+		return this.getResourceType()+":"+this.getHost()+":"+this.getResourceURL()+":"+this.getResourceDescription()+":"+(this.getCrawledDate()!=null?this.getCrawledDate().toLocaleString():this.getCrawledDate());
 	}
 }
