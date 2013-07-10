@@ -389,9 +389,9 @@
  </bean>
   <bean id="MovieResourceCrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
 		<constructor-arg ref = "fetcherJsoup"></constructor-arg>
-		<constructor-arg ref = "#{null}"></constructor-arg>
+		<constructor-arg ><null/></constructor-arg>
 		<constructor-arg ref = "RotateHostURLSchedulerMovie"></constructor-arg>
-		<constructor-arg ref ="#{null}"></constructor-arg>
+		<constructor-arg ref ="ResourceWriter"></constructor-arg>
 		<constructor-arg value="${host_douban_movie}"></constructor-arg>
   </bean>
   

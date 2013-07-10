@@ -43,10 +43,16 @@ public class Main
 		Main main = new Main();
 	//	String [] crawler = {"CSDNcrawler","ChinaUnixcrawler","OsChinacrawler","A51ctocrawler","Cnblogscrawler","Ibmcncrawler","Iteyecrawler"};
 	//	String [] threads = {"csdn_threads","chinaunix_threads","oschina_threads","a51cto_threads","cnblogs_threads","ibmcn_threads","iteye_threads"};
-		String [] crawler = {"Moviecrawler","MoviecrawlerProxy"};
-		String [] threads = {"douban_threads","douban_proxy_threads"};
+		/*String [] crawler = {"Moviecrawler","MoviecrawlerProxy","MovieResourceCrawler"};
+		String [] threads = {"douban_threads","douban_proxy_threads","movie_resource_threads"};*/
 		/*String [] crawler = {"CSDNcrawler","ChinaUnixcrawler","OsChinacrawler","A51ctocrawler"};
 		String [] threads = {"csdn_threads","chinaunix_threads","oschina_threads","a51cto_threads"};*/
+		String crawlerStr = Localizer.getMessage("crawlers");
+		String threadsStr = Localizer.getMessage("threads");
+		
+		String [] crawler = crawlerStr.trim().split(" ");
+		String [] threads = threadsStr.trim().split(" ");
+		
 		for(int i = 0; i < crawler.length; i++)
 			main.createAndStartCrawler(crawler[i],threads[i]);
 		

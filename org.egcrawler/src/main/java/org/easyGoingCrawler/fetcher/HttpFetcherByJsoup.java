@@ -68,7 +68,7 @@ public class HttpFetcherByJsoup extends Fetcher
 			String encoding = res.charset();	
 			curl.setEncode(encoding == null ? this.defaultEncode:encoding);
 			curl.setLastCrawlDate(new Date());	
-			System.out.println(Thread.currentThread().getName()+"-"+ "##HttpFetcherByHtmlUnit: curl="+curl);
+			System.out.println(Thread.currentThread().getName()+"-"+ "##HttpFetcherByJsoup: curl="+curl);
 			
 			
 		}
@@ -77,7 +77,7 @@ public class HttpFetcherByJsoup extends Fetcher
 			curl.setStatus(CrawlURI.STATUS_FETCH_ERROR);
 			curl.setContent(null);
 			curl.setReserve(null);
-			loger.error(Thread.currentThread().getName()+"-"+"##HttpFetcherByHtmlUnit:"+e.getMessage());
+			loger.error(Thread.currentThread().getName()+"-"+"##HttpFetcherByJsoup:"+e.getMessage());
 			return;
 		}		 
 	}

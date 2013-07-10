@@ -142,6 +142,7 @@
   	</bean>
   
   <bean id="fetcher" class="org.easyGoingCrawler.fetcher.HttpFetcher" scope="prototype" />
+   <bean id="fetcherBaseProxy" class="org.easyGoingCrawler.fetcher.HttpFetcherProxy" scope="prototype" />
   <bean id="fetcherProxy" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnitProxy" scope="prototype" >
   </bean>
   
@@ -358,7 +359,7 @@
   <!-- IBM cn end -->
   
   <!-- movie douban  -->
-  <bean id="MovieScheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
+  <bean id="MovieScheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLSchedulerDouban"  scope="singleton" >
  		<constructor-arg ref="EGDAOMongo"></constructor-arg>
  		<constructor-arg value="${host_douban_movie}"></constructor-arg>
  		<constructor-arg ref="urlAnalyzer"></constructor-arg>
