@@ -89,16 +89,22 @@ public class ResourceAnanyzerBaidu implements Analyzer<List<BResource>>
 				}
 				else
 				{
-					Elements titles= e.getElementsByClass("singleReportTitle");
-					Element title = titles.first();
-					String des = title.text();
-					String url = title.attr("ahref");
-					
-					BResource resource = new BResource();
-					resource.setResourceURL(url);
-					resource.setMovieDescription(description);
-					
-					resources.add(resource);
+					Elements titles= e.getElementsByAttributeValueContaining("class", "singleReportTitle");
+					if(titles!=null && !titles.isEmpty())
+					{
+						Element title = titles.first();
+						if(title!=null)
+						{
+							String des = title.text();
+							String url = title.attr("ahref");
+							
+							BResource resource = new BResource();
+							resource.setResourceURL(url);
+							resource.setMovieDescription(description);
+						
+							resources.add(resource);
+						}
+					}
 					
 				}
 				e = e.nextElementSibling();

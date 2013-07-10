@@ -167,15 +167,15 @@ public class EGDAOMongoMovie implements EGDAO
 		CrawlURI curl = new CrawlURI();
 		curl.setReserve(movie.getId());
 		Date date = movie.getDate();
-		String dateStr = date!=null ? 1900+date.getYear()+"":"";
+		String dateStr = "";//date!=null ? 1900+date.getYear()+"":"";
 		String name = movie.getName();
 		if(name!=null)
 		{
 			name = name.trim();
-			String [] chineseName = name.split(" ");
+			/*String [] chineseName = name.split(" ");
 			if(chineseName != null && chineseName.length > 1)
 				name = chineseName[0];
-			
+			*/
 			name = name.replaceAll("&", " ");
 			name = name.replaceAll("#", " ");
 			name = name.replaceAll("\\?", " ");
