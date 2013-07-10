@@ -383,7 +383,7 @@
   
   
   
-  <!-- movie douban  -->
+  <!-- movie resource  -->
   <bean id="RotateHostURLSchedulerMovie" class="org.easyGoingCrawler.urlscheduler.RotateHostURLSchedulerMovie"  scope="singleton" >
  		<constructor-arg ref="EGDAOMongoMovie"></constructor-arg>
  </bean>
