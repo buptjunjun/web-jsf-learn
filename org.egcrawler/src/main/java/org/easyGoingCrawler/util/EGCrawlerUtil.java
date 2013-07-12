@@ -25,6 +25,11 @@ public class EGCrawlerUtil
 		return ret;
 	}
 	
+	/**
+	 * è·å¾—æœ€åŸå§‹çš„çš„ç”µå½±åå­—
+	 * @param movie
+	 * @return
+	 */
 	static public String generateQueryOriginal(Movie movie)
 	{
 		String name = movie.getName();
@@ -47,6 +52,11 @@ public class EGCrawlerUtil
 	}
 	
 
+	/**
+	 * è·å¾—æœ€ç”µå½±ä¸­æ–‡åå­— å»é™¤éŸ©æ–‡ æ—¥æ–‡ è‹±æ–‡
+	 * @param movie
+	 * @return
+	 */
 	static Pattern p1 = Pattern.compile("[([a-zA-Z]+\\s*)]+[0-9]*");
 	static public String generateQueryOnlyChinese(Movie movie)
 	{
@@ -58,6 +68,7 @@ public class EGCrawlerUtil
 			
 			if(isChinese(name))
 			{
+				//å»é™¤è‹±æ–‡åå­—
 				Matcher m = p1.matcher(name);
 				String  groupStr = "";
 				while(m.find())
@@ -66,11 +77,24 @@ public class EGCrawlerUtil
 					
 				}
 				name = name.replace(groupStr, "");
+				
+				//å»é™¤æ—¥æ–‡ éŸ©æ–‡
+				if(isJapaneseAndKoreaByREG(name))
+				{
+					int location = firstElemOfJapaneseAndKoreaByREG(name);
+					if(location > 0)
+						name = name.substring(0,location);
+				}
 			}
 		}    
 		return name;
 	}
 	
+	/**
+	 * è·å–ç”µå½±ä¸Šæ˜ çš„æ—¶é—´
+	 * @param movie
+	 * @return
+	 */
 	static public String generateMovieDate(Movie movie)
 	{
 		Date date = movie.getDate();
@@ -78,7 +102,7 @@ public class EGCrawlerUtil
 		return dateStr;
 	}
 	
-	// ¸ù¾İUnicode±àÂëÍêÃÀµÄÅĞ¶ÏÖĞÎÄºº×ÖºÍ·ûºÅ
+	// æ ¹æ®Unicodeç¼–ç å®Œç¾çš„åˆ¤æ–­ä¸­æ–‡æ±‰å­—å’Œç¬¦å·
 	public static boolean isChinese(char c) {
 		Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
 		if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
@@ -93,7 +117,7 @@ public class EGCrawlerUtil
 		return false;
 	}
 
-	// ÍêÕûµÄÅĞ¶ÏÖĞÎÄºº×ÖºÍ·ûºÅ
+	// å®Œæ•´çš„åˆ¤æ–­ä¸­æ–‡æ±‰å­—å’Œç¬¦å·
 	public static boolean isChinese(String strName) {
 		if(strName==null)
 			return false;
@@ -108,7 +132,7 @@ public class EGCrawlerUtil
 		return false;
 	}
 
-	// Ö»ÄÜÅĞ¶Ï²¿·ÖCJK×Ö·û£¨CJKÍ³Ò»ºº×Ö£©
+	// åªèƒ½åˆ¤æ–­éƒ¨åˆ†CJKå­—ç¬¦ï¼ˆCJKç»Ÿä¸€æ±‰å­—ï¼‰
 	public static boolean isChineseByREG(String str) {
 		if (str == null) {
 			return false;
@@ -117,48 +141,65 @@ public class EGCrawlerUtil
 		return pattern.matcher(str.trim()).find();
 	}
 
-	// Ö»ÄÜÅĞ¶Ï²¿·ÖCJK×Ö·û£¨CJKÍ³Ò»ºº×Ö£©
+	// åªèƒ½åˆ¤æ–­éƒ¨åˆ†CJKå­—ç¬¦ï¼ˆCJKç»Ÿä¸€æ±‰å­—ï¼‰
 	public static boolean isChineseByName(String str) {
 		if (str == null) {
 			return false;
 		}
-		// ´óĞ¡Ğ´²»Í¬£º\\p ±íÊ¾°üº¬£¬\\P ±íÊ¾²»°üº¬
-		// \\p{Cn} µÄÒâË¼Îª Unicode ÖĞÎ´±»¶¨Òå×Ö·ûµÄ±àÂë£¬\\P{Cn} ¾Í±íÊ¾ UnicodeÖĞÒÑ¾­±»¶¨Òå×Ö·ûµÄ±àÂë
+		// å¤§å°å†™ä¸åŒï¼š\\p è¡¨ç¤ºåŒ…å«ï¼Œ\\P è¡¨ç¤ºä¸åŒ…å«
+		// \\p{Cn} çš„æ„æ€ä¸º Unicode ä¸­æœªè¢«å®šä¹‰å­—ç¬¦çš„ç¼–ç ï¼Œ\\P{Cn} å°±è¡¨ç¤º Unicodeä¸­å·²ç»è¢«å®šä¹‰å­—ç¬¦çš„ç¼–ç 
 		String reg = "\\p{InCJK Unified Ideographs}&&\\P{Cn}";
 		Pattern pattern = Pattern.compile(reg);
 		return pattern.matcher(str.trim()).find();
 	}
+	
+	// åˆ¤æ–­å­—ç¬¦ä¸²ä¸­æ˜¯å¦å«æœ‰éŸ©æ–‡æˆ–è€…æ—¥æ–‡
+	private static Pattern pattern = Pattern.compile("[\\u0800-\\u4e00\\u1100-\\u11ff\\uac00-\\ud7af\\u3130â€“\\u318F\\u3200â€“\\u32FF\\uA960â€“\\uA97F\\uD7B0â€“\\uD7FF\\uFF00â€“\\uFFEF]+");
+	private static Pattern pattern2 = Pattern.compile("[\\u0800-\\u4e00\\u1100-\\u11ff\\uac00-\\ud7af\\u3130â€“\\u318F\\u3200â€“\\u32FF\\uA960â€“\\uA97F\\uD7B0â€“\\uD7FF\\uFF00â€“\\uFFEF]");
+	public static boolean isJapaneseAndKoreaByREG(String str)
+	{		
+		return pattern.matcher(str.trim()).find();
+	}
+	/**
+	 * å­—ç¬¦ä¸²ä¸­ç¬¬ä¸€ä¸ªéŸ©æ–‡æˆ–æ—¥æ–‡å‡ºç°çš„ä½ç½®
+	 * @param str
+	 * @return
+	 */
+	public static int firstElemOfJapaneseAndKoreaByREG(String str)
+	{
+		Matcher m = pattern2.matcher(str);
+		if(m.find())
+		{
+			String s = m.group();
+			int location = str.indexOf(s);
+			return location;
+		}
+		else
+		{
+			return -1;
+		}
+	}
+	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args)
 	{
-		 String[] strArr = new String[] { "www.micmiu.com", "!@#$%^&*()_+{}[]|\"'?/:;<>,.", "£¡£¤¡­¡­£¨£©¡ª¡ª£º£»¡°¡±¡®¡¯¡¶¡·£¬¡££¿¡¢", "²»Òª°¡", "¤ä¤á¤Æ", "º«¼ÑÈË", "???" };
-
+/*		 String[] strArr = new String[] { "www.micmiu.com", "!@#$%^&*()_+{}[]|\"'?/:;<>,.", "ï¼ï¿¥â€¦â€¦ï¼ˆï¼‰â€”â€”ï¼šï¼›â€œâ€â€˜â€™ã€Šã€‹ï¼Œã€‚ï¼Ÿã€", "ä¸è¦å•Š", "ã‚„ã‚ã¦", "éŸ©ä½³äºº", "???" };
 	        for (String str : strArr) {
-
-	            System.out.println("===========> ²âÊÔ×Ö·û´®£º" + str);
-
-	            System.out.println("ÕıÔòÅĞ¶Ï½á¹û£º" + isChineseByREG(str) + " -- " + isChineseByName(str));
-
-	            System.out.println("UnicodeÅĞ¶Ï½á¹û £º" + isChinese(str));
-
-	            System.out.println("ÏêÏ¸ÅĞ¶ÏÁĞ±í£º");
-
+	            System.out.println("===========> æµ‹è¯•å­—ç¬¦ä¸²ï¼š" + str);
+	            System.out.println("æ­£åˆ™åˆ¤æ–­ç»“æœï¼š" + isChineseByREG(str) + " -- " + isChineseByName(str));
+	            System.out.println("Unicodeåˆ¤æ–­ç»“æœ ï¼š" + isChinese(str));
+	            System.out.println("è¯¦ç»†åˆ¤æ–­åˆ—è¡¨ï¼š");
 	            char[] ch = str.toCharArray();
-
 	            for (int i = 0; i < ch.length; i++) {
-
 	                char c = ch[i];
-
-	                System.out.println(c + " --> " + (isChinese(c) ? "ÊÇ" : "·ñ"));
-
+	                System.out.println(c + " --> " + (isChinese(c) ? "æ˜¯" : "å¦"));
 	            }
-
-	        }
+	        }*/
 	        
 	        
-	        String [] testQuerys = {"007£º´óÆÆÌìÄ»É±»ú Skyfall ","¸ÖÌúÏÀ3 Iron Man 3","dsaf ÎÚÔÆ±³ºóµÄĞÒ¸£Ïß12 : Silver Linings Playbook 12 ","ÎÚÔÆ±³ºóµÄĞÒ¸£Ïß 122","aaaaasdddd","¤ä¤á¤Æ12"};
+	        String [] testQuerys = {"ã±ã«ã½ã«ã ã£ã—ã‚…ï¼","007ï¼šå¤§ç ´å¤©å¹•æ€æœº Skyfall ","é’¢é“ä¾ 3 Iron Man3","dsaf ä¹Œäº‘èƒŒåçš„å¹¸ç¦çº¿12 : Silver Linings Playbook 12 ","ä¹Œäº‘èƒŒåçš„å¹¸ç¦çº¿ 122","aaaaasdddd","32 ä½ å¥½ã‚„ã‚ã¦12"};
 	        for(String test: testQuerys)
 	        {
 	        	Movie movie = new Movie();
@@ -166,6 +207,16 @@ public class EGCrawlerUtil
 	        	System.out.println(test+" ==> "+generateQueryOnlyChinese(movie));
 	        }
 
+	        String test = "ä¸å¯æ€è®®çš„æ•™å®¤ OVA ì•„ì‹œì•„ ì£¼ æ–­è€Œæ•¢è¡Œ é¬¼ç¥é¿ä¹‹ ã±ã«ã½ã«ã ã£ã—ã‚…ï¼OVA ã€Œæ–­ã˜ã¦è¡Œãˆã°é¬¼ç¥ã‚‚ã“ã‚Œã‚’é¿ãã€";
+	        System.out.println(test + "ischinese:"+isChinese(test));
+	        for(int i = 0;i < test.length()-1;i++)
+	        {
+	        	String s = test.substring(i,i+1);
+	        	System.out.println(s+" " +"  is Jpan or Krea:"+isJapaneseAndKoreaByREG(s));
+	        }
+	        
+	        
+	        
 	}
 
 }
