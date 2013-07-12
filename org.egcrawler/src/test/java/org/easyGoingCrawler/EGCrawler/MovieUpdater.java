@@ -21,6 +21,7 @@ import org.easyGoingCrawler.framwork.EGCrawler;
 import org.easyGoingCrawler.framwork.Fetcher;
 import org.easyGoingCrawler.util.EGCrawlerUtil;
 import org.jsoup.Jsoup;
+import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -40,7 +41,7 @@ public class MovieUpdater
 		DAOMongo dao = (DAOMongo) appcontext.getBean("DAOMongo");
 		Map constrain = new HashMap<String,String>();
 		constrain.put("magicNum", -1);
-		List<Movie> lmovie = dao.search(constrain,"crawledDate",DAOMongo.DESCENDING, 10,Movie.class);
+		List<Movie> lmovie = dao.search(constrain,"crawledDate",DAOMongo.ASCENDING, 10,Movie.class);
 		Fetcher fetcher = appcontext.getBean("fetcher",Fetcher.class);
 		while(true)
 		{
@@ -72,18 +73,19 @@ public class MovieUpdater
 				bdm.setCrawledDate(new Date());
 				
 				BMovie bm = bdm.toBMovie();			
-				this.updateMovie(m, bm,m.getMagicNum()+1);
+			/*	this.updateMovie(m, bm,m.getMagicNum()+1);*/
 				
 				// insert movie json
 				dao.insert(bdm);
 				// update movie
-				Map map = new HashMap<String,String>();
+/*				Map map = new HashMap<String,String>();
 		    	map.put("id", m.getId());
-				dao.update(m, map);
-				
+				dao.update(m, map);*/
+				System.out.println("updated:"+m);
 				try
 				{
-					Thread.currentThread().sleep(8);
+					System.out.println("sleep 8 seconds");
+					Thread.currentThread().sleep(8000);
 				} catch (InterruptedException e)
 				{
 					// TODO Auto-generated catch block
@@ -94,6 +96,15 @@ public class MovieUpdater
 		}		
 	}
 	
+	class UpdateThread extends Thread
+	{
+		@Override
+		public void run()
+		{
+			// TODO Auto-generated method stub
+			super.run();
+		}
+	}
 	public void updateMovie(Movie m, BMovie bm,int magicNum)
 	{
 		m.setMagicNum(magicNum);
@@ -101,7 +112,7 @@ public class MovieUpdater
 		
 		//设置kind
 		String kind = bm.getKind();
-		if(kind!=null)
+		if(!StringUtil.isBlank(kind))
 		{
 			kind = kind.trim();		
 			
@@ -115,15 +126,15 @@ public class MovieUpdater
 			}
 		}
 		
-		//更新中文名字
-		if(bm.getName()!=null)
+	/*	//更新中文名字
+		if(!StringUtil.isBlank(bm.getName()) && EGCrawlerUtil.isChinese(bm.getName()))
 			m.setName(bm.getName());
 		
 		//更新英文名字
-		if(bm.getEn_name()!=null)
-			m.setEnName(bm.getEn_name());
+		if(!StringUtil.isBlank(bm.getEn_name()))
+			m.setEnName(bm.getEn_name());*/
 		
-		//更新上映时间
+/*		//更新上映时间
 		if(bm.getDate()>1900 )
 		{
 			Date date = new Date();
@@ -150,7 +161,7 @@ public class MovieUpdater
 		}
 		
 		//类型
-		if(bm.getType()!=null)
+		if(bm.getType()!=null&&bm.getType().size() > 0)
 		{
 			m.setType(bm.getType());
 		}
@@ -163,8 +174,8 @@ public class MovieUpdater
 		if(bm.getLanguage()!=null && bm.getLanguage().size() >0)
 			m.setLocation(bm.getLanguage().get(0));
 		
-		if(bm.getDescription()!=null)
-			m.setDescription(bm.getDescription());
+		if(bm.getDescription()!=null && EGCrawlerUtil.isChinese(bm.getDescription()))
+			m.setDescription(bm.getDescription());*/
 			
 	}
 	
