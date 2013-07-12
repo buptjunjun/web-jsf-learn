@@ -22,6 +22,7 @@ import org.easyGoingCrawler.docWriter.Html;
 import org.easyGoingCrawler.docWriter.Movie;
 import org.easyGoingCrawler.docWriter.Url;
 import org.easyGoingCrawler.framwork.CrawlURI;
+import org.easyGoingCrawler.util.EGCrawlerUtil;
 import org.easyGoingCrawler.util.RandomList;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -166,23 +167,8 @@ public class EGDAOMongoMovie implements EGDAO
 	{
 		CrawlURI curl = new CrawlURI();
 		curl.setReserve(movie.getId());
-		Date date = movie.getDate();
-		String dateStr = "";//date!=null ? 1900+date.getYear()+"":"";
-		String name = movie.getName();
-		if(name!=null)
-		{
-			name = name.trim();
-			/*String [] chineseName = name.split(" ");
-			if(chineseName != null && chineseName.length > 1)
-				name = chineseName[0];
-			*/
-			name = name.replaceAll("&", " ");
-			name = name.replaceAll("#", " ");
-			name = name.replaceAll("\\?", " ");
-		}
 		
-		
-		String query = name+" " +dateStr;
+		String query = EGCrawlerUtil.generateQueryOnlyChinese(movie);
 		System.out.println("movie convert to curl:"+movie+"---"+query);
 		query = java.net.URLEncoder.encode(query);
 		curl.setUrl(baseURL+query);

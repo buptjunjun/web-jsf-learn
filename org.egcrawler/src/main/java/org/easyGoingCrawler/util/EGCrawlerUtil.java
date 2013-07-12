@@ -1,7 +1,10 @@
 package org.easyGoingCrawler.util;
 
+import java.util.Date;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.easyGoingCrawler.docWriter.Movie;
 import org.jsoup.helper.StringUtil;
 
 public class EGCrawlerUtil
@@ -22,6 +25,58 @@ public class EGCrawlerUtil
 		return ret;
 	}
 	
+	static public String generateQueryOriginal(Movie movie)
+	{
+		String name = movie.getName();
+		
+		if(name!=null)
+		{
+			name = name.trim();
+			/*String [] chineseName = name.split(" ");
+			if(chineseName != null && chineseName.length > 1)
+				name = chineseName[0];
+			*/
+			name = name.replaceAll("&", " ");
+			name = name.replaceAll("#", " ");
+			name = name.replaceAll("\\?", " ");
+			name = name.replaceAll(":", " ");
+		}
+		
+		
+		return name;
+	}
+	
+
+	static Pattern p1 = Pattern.compile("[([a-zA-Z]+\\s*)]+[0-9]*");
+	static public String generateQueryOnlyChinese(Movie movie)
+	{
+		
+		String name = generateQueryOriginal(movie);
+		
+		if(name!=null)
+		{
+			
+			if(isChinese(name))
+			{
+				Matcher m = p1.matcher(name);
+				String  groupStr = "";
+				while(m.find())
+				{
+					 groupStr = m.group();
+					
+				}
+				name = name.replace(groupStr, "");
+			}
+		}    
+		return name;
+	}
+	
+	static public String generateMovieDate(Movie movie)
+	{
+		Date date = movie.getDate();
+		String dateStr = date!=null ? 1900+date.getYear()+"":"";		
+		return dateStr;
+	}
 	
 	// 根据Unicode编码完美的判断中文汉字和符号
 	public static boolean isChinese(char c) {
@@ -100,6 +155,15 @@ public class EGCrawlerUtil
 
 	            }
 
+	        }
+	        
+	        
+	        String [] testQuerys = {"007：大破天幕杀机 Skyfall ","钢铁侠3 Iron Man 3","dsaf 乌云背后的幸福线12 : Silver Linings Playbook 12 ","乌云背后的幸福线 122","aaaaasdddd","やめて12"};
+	        for(String test: testQuerys)
+	        {
+	        	Movie movie = new Movie();
+	        	movie.setName(test);
+	        	System.out.println(test+" ==> "+generateQueryOnlyChinese(movie));
 	        }
 
 	}

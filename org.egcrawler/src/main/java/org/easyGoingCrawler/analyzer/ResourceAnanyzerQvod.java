@@ -19,7 +19,7 @@ import org.jsoup.select.Elements;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class ResourceAnanyzerQvodGoogle implements Analyzer<List<BResource>>
+public class ResourceAnanyzerQvod implements Analyzer<List<BResource>>
 {
     private int limit = 3;
     private String type="baidu";
@@ -33,11 +33,14 @@ public class ResourceAnanyzerQvodGoogle implements Analyzer<List<BResource>>
 		{
 			Document doc = Jsoup.parse(content);
 			
-			Element bigDiv = doc.getElementById("search_msg");
+			Elements results = doc.getElementsByClass("results");
+			Element bigDiv = null;
+			if(results!=null && !results.isEmpty())
+			   bigDiv= results.first();
 			if(bigDiv == null)
 				return null;
 			
-			Elements divs = bigDiv.getElementsByClass("singleMessage");
+			Elements divs = bigDiv.getElementsByClass("rb");
 			if(divs == null || divs.isEmpty()) 
 				return null;
 			
@@ -47,7 +50,7 @@ public class ResourceAnanyzerQvodGoogle implements Analyzer<List<BResource>>
 			{			
 				String description = null;
 				//¼ò½é
-				Elements ebrief  = e.getElementsByClass("singleBreif");
+				Elements ebrief  = e.getElementsByClass("pt");
 				if(ebrief!=null && !ebrief.isEmpty())
 				{
 					Element brief = ebrief.first();
@@ -159,7 +162,7 @@ public class ResourceAnanyzerQvodGoogle implements Analyzer<List<BResource>>
 		Fetcher fetcher = appcontext.getBean("fetcher",Fetcher.class);
 		
 		CrawlURI curl = new CrawlURI();
-		curl.setUrl("https://www.googleapis.com/customsearch/v1element?key=AIzaSyCVAXiUzRYsML1Pv6RwSG1gunmMikTzQqY&rsz=filtered_cse&num=10&hl=zh_CN&prettyPrint=false&source=gcsc&gss=.com&sig=351077565dad05b6847b1f7d41e36949&cx=014545285319128157587:opxtjupf3yk&q=¶¾Õ½&sort=&googlehost=www.google.com&oq=¶¾Õ½&gs_l=partner.3...12132.12132.2.12464.1.1.0.0.0.0.0.0..0.0.gsnos%2Cn%3D13..0.0.12135j147258225j2..1ac.&callback=google.search.Search.apiary15451");
+		curl.setUrl("http://www.sogou.com/web?p=40040100&sut=7467&sourceid=kbplayer_all&interation=196626&interV=kKIOkrELjbkPmLkElbkTkKIMkbELjbgQmLkElbcTkKILmrELjbcQmLkEmrELjbgRmLkEkLYTkKIM%0Alo%3D%3D_-158122751&ie=utf8&sst0=1373537192102");
 		curl.setStatus(CrawlURI.STATUS_OK);
 		curl.setHost("qvod");
 		fetcher.fetch(curl);
