@@ -78,7 +78,29 @@ public class EGCrawlerUtil
 	 */
 	public static void main(String[] args)
 	{
-		// TODO Auto-generated method stub
+		 String[] strArr = new String[] { "www.micmiu.com", "!@#$%^&*()_+{}[]|\"'?/:;<>,.", "！￥……（）——：；“”‘’《》，。？、", "不要啊", "やめて", "韩佳人", "???" };
+
+	        for (String str : strArr) {
+
+	            System.out.println("===========> 测试字符串：" + str);
+
+	            System.out.println("正则判断结果：" + isChineseByREG(str) + " -- " + isChineseByName(str));
+
+	            System.out.println("Unicode判断结果 ：" + isChinese(str));
+
+	            System.out.println("详细判断列表：");
+
+	            char[] ch = str.toCharArray();
+
+	            for (int i = 0; i < ch.length; i++) {
+
+	                char c = ch[i];
+
+	                System.out.println(c + " --> " + (isChinese(c) ? "是" : "否"));
+
+	            }
+
+	        }
 
 	}
 
