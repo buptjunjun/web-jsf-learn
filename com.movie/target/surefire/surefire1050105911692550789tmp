@@ -1,0 +1,27 @@
+#surefire
+#Tue Jul 16 09:06:23 CST 2013
+testClassesDirectory=D\:\\work\\myself\\com.movie\\target\\test-classes
+classPathUrl.2=C\:\\code\\dev\\Jaguar\\src\\thirdparty\\maven-repository\\junit\\junit\\3.8.1\\junit-3.8.1.jar
+useManifestOnlyJar=true
+classPathUrl.1=D\:\\work\\myself\\com.movie\\target\\classes
+reportsDirectory=D\:\\work\\myself\\com.movie\\target\\surefire-reports
+classPathUrl.0=D\:\\work\\myself\\com.movie\\target\\test-classes
+dirscanner.0=directoryScannerOptions
+providerConfiguration=org.apache.maven.surefire.junit.JUnit3Provider
+testSuiteDefinitionTestSourceDirectory=D\:\\work\\myself\\com.movie\\src\\test\\java
+surefireClassPathUrl.1=C\:\\code\\dev\\Jaguar\\src\\thirdparty\\maven-repository\\org\\apache\\maven\\surefire\\surefire-api\\2.7.1\\surefire-api-2.7.1.jar
+surefireClassPathUrl.0=C\:\\code\\dev\\Jaguar\\src\\thirdparty\\maven-repository\\org\\apache\\maven\\surefire\\surefire-junit3\\2.7.1\\surefire-junit3-2.7.1.jar
+report.2=org.apache.maven.surefire.report.XMLReporter
+useSystemClassLoader=true
+report.1=org.apache.maven.surefire.report.BriefFileReporter
+report.0=org.apache.maven.surefire.report.ForkingConsoleReporter
+excludes0=**/*$*
+isTrimStackTrace=true
+dirscanner.0.params=D\:\\work\\myself\\com.movie\\target\\test-classes|[**/Test*.java, **/*Test.java, **/*TestCase.java]|[**/*$*]
+enableAssertions=true
+includes2=**/*TestCase.java
+failIfNoTests=false
+includes1=**/*Test.java
+dirscanner.0.types=java.io.File|java.util.ArrayList|java.util.ArrayList
+includes0=**/Test*.java
+childDelegation=false
