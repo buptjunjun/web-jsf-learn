@@ -18,6 +18,7 @@ import org.easyGoingCrawler.DAO.DAOMongo;
 import org.easyGoingCrawler.bean.BResource;
 import org.easyGoingCrawler.docWriter.Movie;
 import org.easyGoingCrawler.util.Converter;
+import org.jsoup.helper.StringUtil;
 
 import com.google.gson.Gson;
 import com.movie.dao.service.DBMovieService;
@@ -79,49 +80,73 @@ public class ServletResource extends HttpServlet
 	
 	/**
 	 * update --> type,magicNum,id
-	 * add --->   type,magicNum,
+	 * add --->   type,magicNum,url,movieId
 	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException
 	{
 		String type = req.getParameter("type");  // add or update
-		if(StringUtils.isEmpty(type))
+		String errorResponse = "";
+		if(StringUtil.isBlank(type))
 		{
-			resp.getWriter().write("type is none");
-			resp.getWriter().flush();
-			return;
+			errorResponse += "type is none";			
 		}
 		
+		BResource resource = new BResource();
 		if(type.equals("update"))
 		{
 			String magicNum = req.getParameter("magicNum");
 			int magic = Integer.parseInt(magicNum);
-			String id = req.getParameter("id");				
+			String id = req.getParameter("id");		
 			
-			BResource resource = new BResource();
+			if(StringUtil.isBlank(magicNum))
+				errorResponse+=","+"magicNum is none";
+
+			if(StringUtil.isBlank(id))
+				errorResponse+=","+"id is none";
+			
 			resource.setId(id);
 			resource.setMagicNum(magic);
-		
-			this.rs.update(resource, field2updateResource);
+			
+			if(!StringUtil.isBlank(errorResponse))
+				this.rs.update(resource, field2updateResource);
 			
 		}
 		else if(type.equals("add"))
 		{	
-			String resourceUrl = req.getParameter("url");
+			String resourceURL = req.getParameter("url");
 			String movieId = req.getParameter("movieId");
 			String magicNum = req.getParameter("magicNum");
+			
+			if(StringUtil.isBlank(magicNum))
+				errorResponse+=","+"magicNum is none";
+			
+			if(StringUtil.isBlank(resourceURL))
+				errorResponse+=","+"resourceURL is none";
+
+			if(StringUtil.isBlank(movieId))
+				errorResponse+=","+"movieId is none";
+			
 			int magic = Integer.parseInt(magicNum);
-			BResource resource = new BResource();
 			resource.setMovieId(movieId);
-			resource.setResourceURL(resourceUrl);
-			resource.setId(Converter.urlEncode(resourceUrl));
+			resource.setResourceURL(resourceURL);
+			resource.setId(Converter.urlEncode(resourceURL));
 			resource.setMagicNum(magic);
 			
-			this.rs.add(resource);
+			if(!StringUtil.isBlank(errorResponse))
+				this.rs.add(resource);
 			
 		}	
-		
+		PrintWriter print =	resp.getWriter();
+
+		if(StringUtil.isBlank(errorResponse))
+		{
+			print.println(errorResponse);
+			return ;
+		}
+		print.println("ok");
+		return;
 	}
 	
 	private String url2id(String url)
@@ -150,13 +175,13 @@ public class ServletResource extends HttpServlet
 		
 	}
 	
-	private String getMoviesAndResources(String name)
-	{
+	
+	private String getMovies(String name)
+	{	
+		List<Movie> movies = this.ms.query(name);
+		Gson gson = new Gson();
+		return gson.toJson(movies);
 		
-		List<Movie> movie = this.ms.query(name);
-			
-		
-		return null;
 	}
 	
 	static public void main(String [] args)
