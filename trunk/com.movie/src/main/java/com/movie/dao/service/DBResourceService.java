@@ -15,4 +15,5 @@ public interface DBResourceService
 	public String delete(BResource r);
 	public String add(BResource r);
 	public List<BResource> get(String movieid);
+	public List<BResource> get(String movieid,int magicNum);
 }

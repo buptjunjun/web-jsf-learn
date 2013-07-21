@@ -14,4 +14,6 @@ public interface DBMovieService
 	public String add(Movie m);
 	public Movie get(String id);
 	public List<Movie> query(String query);
+	public List<Movie> get(int maigcNum,int limit);
+	
 }
