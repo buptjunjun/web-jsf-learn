@@ -38,7 +38,15 @@ public class ServletResource extends HttpServlet
 	
 	public ServletResource()
 	{
-
+		if(this.rs == null);
+		{
+			// TODO Auto-generated constructor stub
+			DAOMongo mongo = new DAOMongo("42.96.143.59",27017, "moviedb");
+			DBMovieService ms = new DBMovieServiceImpl(mongo);
+			DBResourceService rs = new DBResourceServiceImpl(mongo);
+			this.ms = ms;
+			this.rs = rs;
+		}
 	}
 
 	
@@ -50,18 +58,11 @@ public class ServletResource extends HttpServlet
 		String moviename = req.getParameter("name");
 		String charset = req.getParameter("charset");
 		String url = req.getParameter("url");
-		
+		String magicNumStr = req.getParameter("magicNum");
+		int magicNum = Integer.valueOf(magicNumStr);
 		if(StringUtils.isEmpty(charset))
 			charset = "utf8";
-		if(this.rs == null);
-		{
-			// TODO Auto-generated constructor stub
-			DAOMongo mongo = new DAOMongo("42.96.143.59",27017, "moviedb");
-			DBMovieService ms = new DBMovieServiceImpl(mongo);
-			DBResourceService rs = new DBResourceServiceImpl(mongo);
-			this.ms = ms;
-			this.rs = rs;
-		}
+		
 		
 		if(StringUtils.isEmpty(url))
 		{
@@ -69,11 +70,12 @@ public class ServletResource extends HttpServlet
 			return;
 		}
 		
-		String ret = getMovieAndResources(url);
+		String ret = getMovieAndResources(url,magicNum);
 		//ret = new String(ret.getBytes(),charset);
-		resp.setCharacterEncoding("UTF_8");//设置Response的编码方式为UTF-8	 
-		resp.setHeader("Content-type","text/html;charset=UTF-8");//向浏览器发送一个响应头，设置浏览器的解码方式为UTF-8,其实设置了本句，也默认设置了Response的编码方式为UTF-8，但是开发中最好两句结合起来使用
-		resp.setContentType("text/html;charset=UTF-8");//同上句代码作用一样	 
+		resp.setCharacterEncoding("UTF_8");
+		resp.setHeader("Content-type","text/html;charset=UTF-8");
+		resp.setContentType("text/html;charset=UTF-8"); 
+		resp.setHeader("Access-Control-Allow-Origin", "*");
 		resp.getWriter().write(ret);
 	}
 	
@@ -86,9 +88,10 @@ public class ServletResource extends HttpServlet
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException
 	{
+		resp.setHeader("Access-Control-Allow-Origin", "*");
 		String type = req.getParameter("type");  // add or update
-		String errorResponse = "";
-		if(StringUtil.isBlank(type))
+		String errorResponse = null;
+		if(null ==type || type.trim().equals(""))
 		{
 			errorResponse += "type is none";			
 		}
@@ -100,16 +103,16 @@ public class ServletResource extends HttpServlet
 			int magic = Integer.parseInt(magicNum);
 			String id = req.getParameter("id");		
 			
-			if(StringUtil.isBlank(magicNum))
+			if(null ==magicNum || magicNum.trim().equals(""))
 				errorResponse+=","+"magicNum is none";
 
-			if(StringUtil.isBlank(id))
+			if(null ==id || id.trim().equals(""))
 				errorResponse+=","+"id is none";
 			
 			resource.setId(id);
 			resource.setMagicNum(magic);
 			
-			if(!StringUtil.isBlank(errorResponse))
+			if(null ==errorResponse)
 				this.rs.update(resource, field2updateResource);
 			
 		}
@@ -119,13 +122,13 @@ public class ServletResource extends HttpServlet
 			String movieId = req.getParameter("movieId");
 			String magicNum = req.getParameter("magicNum");
 			
-			if(StringUtil.isBlank(magicNum))
+			if(null ==magicNum || magicNum.trim().equals(""))
 				errorResponse+=","+"magicNum is none";
 			
-			if(StringUtil.isBlank(resourceURL))
+			if(null ==resourceURL || resourceURL.trim().equals(""))
 				errorResponse+=","+"resourceURL is none";
 
-			if(StringUtil.isBlank(movieId))
+			if(null ==movieId || movieId.trim().equals(""))
 				errorResponse+=","+"movieId is none";
 			
 			int magic = Integer.parseInt(magicNum);
@@ -134,13 +137,13 @@ public class ServletResource extends HttpServlet
 			resource.setId(Converter.urlEncode(resourceURL));
 			resource.setMagicNum(magic);
 			
-			if(!StringUtil.isBlank(errorResponse))
+			if(null != errorResponse)
 				this.rs.add(resource);
 			
 		}	
 		PrintWriter print =	resp.getWriter();
 
-		if(StringUtil.isBlank(errorResponse))
+		if(null==errorResponse)
 		{
 			print.println(errorResponse);
 			return ;
@@ -154,25 +157,21 @@ public class ServletResource extends HttpServlet
 		return Converter.urlEncode(url);
 	}
 	
-	public String getMovieAndResources(String url)
+	public String getMovieAndResources(String url,int magicNum)
 	{
 		Gson gson = new Gson();
-		String id = url2id(url);
-		Movie movie = this.ms.get(id);	
-		if(movie == null)
-			return null;
+		String id = url2id(url.trim());
 		
-		List<BResource> lr = this.rs.get(movie.getId());
+		List<BResource> lr = this.rs.get(id,magicNum);
+		String ret = "[]";
 		if(lr == null || lr.size() <= 0)
-			return null;
+			return ret;
 		
 		List<Object> movies = new ArrayList<Object>(1);
-		
-		movies.add(movie);
-		movies.addAll(lr);
-		
-		return gson.toJson(movies);
-		
+
+		movies.addAll(lr);	
+		ret = gson.toJson(movies);		
+		return ret; 
 	}
 	
 	
