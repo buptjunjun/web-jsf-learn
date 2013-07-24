@@ -31,7 +31,7 @@ public class ResourceAnanyzerQvod implements Analyzer<List<BResource>>
     private int limit = 3;
     private String type="qvod";
     private String unknow = "unknow";
-    static private String regex = ".*[qQ][vV][oO][dD].*";
+    static private String regex = ".*([qQ][vV][oO][dD]|¿ì²¥|&#x5FEB;&#x64AD;|\u5FEB\u64AD).*";
     
 	public List<BResource> analyze(String host, String encode, String content)
 	{
@@ -110,6 +110,7 @@ public class ResourceAnanyzerQvod implements Analyzer<List<BResource>>
 	}
 	static public void main(String [] args)
 	{
+
 		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
 		Fetcher fetcher = appcontext.getBean("fetcher",Fetcher.class);
 		
@@ -123,6 +124,9 @@ public class ResourceAnanyzerQvod implements Analyzer<List<BResource>>
 		System.out.println(content);
 		List<BResource> list = new ResourceAnanyzerQvod().analyze(curl);
 		System.out.println(list);
+		
+		String test="asdfasd¿ì²¥asdfasd";
+		System.out.println(Pattern.matches(regex, test));
 		
 	}
 
