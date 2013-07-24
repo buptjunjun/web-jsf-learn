@@ -53,10 +53,10 @@
   
   <bean id="EGDAOMongoMovie" class="org.easyGoingCrawler.DAO.EGDAOMongoMovie">
   	<constructor-arg ref="DAOMongo"></constructor-arg>
-  	<constructor-arg value="-1"></constructor-arg>
-  	<constructor-arg value="http://baoku.player.baidu.com/search.php?word="></constructor-arg>
+  	<constructor-arg value="1"></constructor-arg>
+  	<constructor-arg value='https://www.googleapis.com/customsearch/v1element?key=AIzaSyCVAXiUzRYsML1Pv6RwSG1gunmMikTzQqY&amp;rsz=filtered_cse&amp;num=10&amp;hl=zh_CN&amp;prettyPrint=false&amp;source=gcsc&amp;gss=.com&amp;sig=351077565dad05b6847b1f7d41e36949&amp;cx=014545285319128157587:opxtjupf3yk&amp;sort=&amp;googlehost=www.google.com&amp;oq=andy2bereplaced&amp;q=andy2bereplaced'></constructor-arg>
   </bean>
-   
+
   <!-- host list -->
   <bean id="hosts" class="java.util.ArrayList">
   	<constructor-arg>
@@ -178,7 +178,7 @@
  	</bean>
  
    <bean id="ResourceWriter" class=" org.easyGoingCrawler.docWriter.ResourceWriter"
- 		p:analyzer-ref ="ResourceAnanyzerBaidu"
+ 		p:analyzer-ref ="ResourceAnanyzerQvod"
  		scope="prototype" >
  		<constructor-arg ref="EGDAOMongo"></constructor-arg>
  	</bean>
@@ -251,6 +251,7 @@
   <bean id="IteyeBlogerAnalyzer"  class="org.easyGoingCrawler.analyzer.IteyeBlogerAnalyzer"></bean>
   <bean id="DoubanMovieAnalyzer"  class="org.easyGoingCrawler.analyzer.DoubanMovieAnalyzer"></bean>
   <bean id="ResourceAnanyzerBaidu"  class="org.easyGoingCrawler.analyzer.ResourceAnanyzerBaidu"></bean>
+  <bean id="ResourceAnanyzerQvod"  class="org.easyGoingCrawler.analyzer.ResourceAnanyzerQvod"></bean>
   
   <!-- csdn  -->
   <bean id="csdnscheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
@@ -388,7 +389,7 @@
  		<constructor-arg ref="EGDAOMongoMovie"></constructor-arg>
  </bean>
   <bean id="MovieResourceCrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
-		<constructor-arg ref = "fetcherJsoup"></constructor-arg>
+		<constructor-arg ref = "fetcher"></constructor-arg>
 		<constructor-arg ><null/></constructor-arg>
 		<constructor-arg ref = "RotateHostURLSchedulerMovie"></constructor-arg>
 		<constructor-arg ref ="ResourceWriter"></constructor-arg>

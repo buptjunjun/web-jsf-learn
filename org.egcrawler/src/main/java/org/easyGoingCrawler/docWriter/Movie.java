@@ -173,5 +173,6 @@ public class Movie
 		return "id = "+this.id +" url =" + this.url +" name = " +this.name+" kind = "+this.kind;	
 			    
 	}
+	
 
 }

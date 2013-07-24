@@ -105,7 +105,7 @@ public class EGDAOMongoMovie implements EGDAO
 		{
 			HashMap map = new HashMap<String,String>();
 			map.put("magicNum", magicNum);
-			list = this.daomongo.search(map, "crawledDate",DAOMongo.ASCENDING,limit, movie.getClass());
+			list = this.daomongo.search(map, "voteCount",DAOMongo.DESCENDING,limit, movie.getClass());
 		}
 		catch(Exception e)
 		{
@@ -170,10 +170,18 @@ public class EGDAOMongoMovie implements EGDAO
 		
 		String query = EGCrawlerUtil.generateQueryOnlyChinese(movie);
 		System.out.println("movie convert to curl:"+movie+"---"+query);
-		query = java.net.URLEncoder.encode(query);
-		curl.setUrl(baseURL+query);
-		
-		
+		try
+		{
+			query = java.net.URLEncoder.encode(query, "utf-8");
+		} catch (UnsupportedEncodingException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			query = EGCrawlerUtil.generateQueryOnlyChinese(movie);
+		}
+		String queryUrl = baseURL.replaceAll("andy2bereplaced", query);
+		curl.setUrl(queryUrl);
+
 		return curl;
 	}
 

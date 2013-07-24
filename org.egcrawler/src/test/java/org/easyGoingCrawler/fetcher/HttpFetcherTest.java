@@ -103,9 +103,9 @@ public class HttpFetcherTest
 	{
 		
 	ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
-	Fetcher fetcher = appcontext.getBean("fetcherHtmlUnitJs",Fetcher.class);
+	Fetcher fetcher = appcontext.getBean("fetcher",Fetcher.class);
 	CrawlURI curl = new CrawlURI();
-	curl.setUrl("http://www.blogjava.net/wenjiale/archive/2011/08/22/356965.html");
+	curl.setUrl("https://www.googleapis.com/customsearch/v1element?key=AIzaSyCVAXiUzRYsML1Pv6RwSG1gunmMikTzQqY&rsz=filtered_cse&num=10&hl=zh_CN&prettyPrint=false&source=gcsc&gss=.com&sig=351077565dad05b6847b1f7d41e36949&cx=014545285319128157587:opxtjupf3yk&q=%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B&sort=&googlehost=www.google.com&oq=%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B");
 	curl.setStatus(CrawlURI.STATUS_OK);
 	fetcher.fetch(curl);
 	String html = curl.getContent();

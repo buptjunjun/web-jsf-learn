@@ -4,9 +4,11 @@ import java.lang.reflect.Field;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static org.springframework.data.mongodb.core.query.Criteria.*;
@@ -86,6 +88,27 @@ public class DAOMongo<T> {
 	{
 		if(obj == null) 
 			return;
+		Class cls = obj.getClass();
+		Field [] fields = cls.getDeclaredFields();
+		Set<String> fieldset = new HashSet<String>();
+		for(Field field: fields)
+		{
+			fieldset.add(field.getName());
+		}
+		
+		this.update(obj,constrains, fieldset);
+	}
+	
+	/**
+	 * update  records which meets the constrains of "constrains"
+	 * constrains is a map like : [id:123,"name":"abcd"]
+	 * @param obj
+	 * @param constrains
+	 */
+	public void update(T obj,Map<String,String> constrains,Set<String> fieldNames)
+	{
+		if(obj == null) 
+			return;
 		
 		Criteria cons = null;
 		boolean flag = false;
@@ -109,6 +132,9 @@ public class DAOMongo<T> {
 		Field [] fields = cls.getDeclaredFields();
 		for(Field field : fields)
 		{
+			String fieldName = field.getName();
+			if(!fieldNames.contains(fieldName))
+				continue;
 			try
 			{
 				field.setAccessible(true);
@@ -125,7 +151,6 @@ public class DAOMongo<T> {
 		}
 		mongoOps.updateFirst(q, update, cls );
 	}
-	
 	
 	/**
 	 * search a record according to the id
