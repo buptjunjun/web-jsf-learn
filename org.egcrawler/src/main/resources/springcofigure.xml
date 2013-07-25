@@ -145,7 +145,7 @@
    <bean id="fetcherBaseProxy" class="org.easyGoingCrawler.fetcher.HttpFetcherProxy" scope="prototype" />
   <bean id="fetcherProxy" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnitProxy" scope="prototype" >
   </bean>
-  
+  <bean id="httpsfetcher" class="org.easyGoingCrawler.fetcher.HttpsFetcher" scope="prototype" />
   
    <!-- extractor -->
   <bean id="extractor" class="org.easyGoingCrawler.extractor.HTMLExtractor" scope="prototype"/>
@@ -389,7 +389,7 @@
  		<constructor-arg ref="EGDAOMongoMovie"></constructor-arg>
  </bean>
   <bean id="MovieResourceCrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
-		<constructor-arg ref = "fetcher"></constructor-arg>
+		<constructor-arg ref = "httpsfetcher"></constructor-arg>
 		<constructor-arg ><null/></constructor-arg>
 		<constructor-arg ref = "RotateHostURLSchedulerMovie"></constructor-arg>
 		<constructor-arg ref ="ResourceWriter"></constructor-arg>
