@@ -55,6 +55,7 @@ public class EGDAOMongo implements EGDAO
     public EGDAOMongo(Mongo mongoServer,String dbName, List<String> hosts )
 	{
     	this.mongoServer = mongoServer;
+    	mongoServer.setWriteConcern(WriteConcern.NONE);
     	this.mongoOps = new org.springframework.data.mongodb.core.MongoTemplate(this.mongoServer,dbName);
     	this.hosts = hosts;
 

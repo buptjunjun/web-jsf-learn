@@ -50,11 +50,14 @@ public class ResourceAnanyzerQvod implements Analyzer<List<BResource>>
 				JSONObject result = (JSONObject) itr.next();
 				String description = result.getString("contentNoFormatting");
 				String url =result.getString("unescapedUrl"); 
+				String title = result.getString("titleNoFormatting");
+				description=title+" || "+description;
+				
 				if(isQvod(description))
 				{
 					BResource resource = new BResource();
 					resource.setResourceURL(url.trim());
-					resource.setMovieDescription(description);
+					resource.setMovieDescription(title+description);
 					resources.add(resource);
 				}
 			}
