@@ -25,7 +25,14 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
-        
+
+/**
+ * how to run  this sample:
+ *  it need two params -- first is the source file to be count, the other is the output dir.
+ *   hdfs://localhost:9000/user/root/a.txt hdfs://localhost:9000/user/root/b
+ * @author root
+ *
+ */
 public class WordCount {
         
  public static class Map extends Mapper<LongWritable, Text, Text, IntWritable> {
