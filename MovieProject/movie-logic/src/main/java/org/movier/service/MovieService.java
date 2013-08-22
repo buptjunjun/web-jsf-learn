@@ -5,7 +5,7 @@ import org.movier.bean.MovieUI;
 
 public interface  MovieService 
 {
-	public Movie getMovieUI(String id);
+	public Movie getMovie(String id);
 	public String updateMovie(Movie movie);
 	public String addMovie(Movie movie);
 	public String delMovie(String id);

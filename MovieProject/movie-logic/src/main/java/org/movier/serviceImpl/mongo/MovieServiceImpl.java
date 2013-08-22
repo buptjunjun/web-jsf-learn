@@ -1,13 +1,19 @@
 package org.movier.serviceImpl.mongo;
 
+import java.util.Date;
+
 import org.movier.bean.Movie;
 import org.movier.service.MovieService;
 
 public class MovieServiceImpl implements MovieService{
 
-	public Movie getMovieUI(String id) {
+	public Movie getMovie(String id) {
 		// TODO Auto-generated method stub
-		return null;
+		Movie m = new Movie();
+		m.setName("Titanic");
+		m.setDate(new Date());
+		m.setDescription("discrption discrption discrptiondiscrptiondiscrption discrption discrption discrption discrption discrption ");
+		return m;
 	}
 
 	public String updateMovie(Movie movie) {
