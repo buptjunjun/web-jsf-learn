@@ -10,4 +10,12 @@
 		  <version>0.0.1-SNAPSHOT</version>
 		
 	</parent>
+	<dependencies>
+		<!-- mongo db spring -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<version>1.0.3.RELEASE</version>
+		</dependency>
+	</dependencies>
 </project>
