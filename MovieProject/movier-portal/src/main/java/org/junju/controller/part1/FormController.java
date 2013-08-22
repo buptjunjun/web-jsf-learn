@@ -32,7 +32,7 @@ public class FormController {
 	@RequestMapping( method = RequestMethod.GET)
 	 public String editForm (Model model ){		
 				Form1 form = new Form1();
-			 form.setName("todo");
+			 form.setName("todo33");
 			  model.addAttribute("form", form);
 	         return "form";
     }
