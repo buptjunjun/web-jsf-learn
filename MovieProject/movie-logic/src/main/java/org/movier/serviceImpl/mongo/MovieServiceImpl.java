@@ -1,6 +1,7 @@
 package org.movier.serviceImpl.mongo;
 
 import java.util.Date;
+import java.util.List;
 
 import org.movier.bean.Movie;
 import org.movier.service.MovieService;
@@ -27,6 +28,11 @@ public class MovieServiceImpl implements MovieService{
 	}
 
 	public String delMovie(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Movie> getMovie(Date date, int limit) {
 		// TODO Auto-generated method stub
 		return null;
 	}
