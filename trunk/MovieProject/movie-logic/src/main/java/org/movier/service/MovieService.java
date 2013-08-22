@@ -1,11 +1,14 @@
 package org.movier.service;
 
-import org.movier.bean.Movie;
-import org.movier.bean.MovieUI;
+import java.util.Date;
+import java.util.List;
+
+import org.movier.bean.*;
 
 public interface  MovieService 
 {
 	public Movie getMovie(String id);
+	public List<Movie> getMovie(Date date,int limit);
 	public String updateMovie(Movie movie);
 	public String addMovie(Movie movie);
 	public String delMovie(String id);
