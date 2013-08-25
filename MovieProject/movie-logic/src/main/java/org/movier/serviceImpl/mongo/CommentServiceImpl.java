@@ -1,5 +1,6 @@
 package org.movier.serviceImpl.mongo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.movier.bean.BResource;
@@ -34,7 +35,14 @@ public class CommentServiceImpl implements CommentService{
 		return null;
 	}
 
-	
+	private List<Comment> mock()
+	{
+		List<Comment> ret = new ArrayList<Comment>();
+		
+		Comment com = new Comment();
+		com.setContent("不错");
+		return ret;
+	}
 
 	
 }
