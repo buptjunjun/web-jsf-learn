@@ -1,5 +1,7 @@
 package org.junjun.bean.part1;
 
+import java.util.List;
+
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -10,7 +12,17 @@ public class Form1
 	private String name;
 	
 	private int age;
+	private List<String> listStr = null;
 	
+	public List<String> getListStr() {
+		return listStr;
+	}
+	public void setListStr(List<String> listStr) {
+		this.listStr = listStr;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
 	public String getName() {
 		return name;
 	}

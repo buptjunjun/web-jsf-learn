@@ -1,5 +1,6 @@
 package org.movier.serviceImpl.mongo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.movier.bean.BResource;
@@ -13,11 +14,12 @@ public class RatingServiceImpl implements RatingService{
 
 	public Rating getRating(String id) {
 		// TODO Auto-generated method stub
-		return null;
+		return mock();
 	}
 
-	public String updateRating(Rating Rating) {
+	public String updateRating(Rating rating) {
 		// TODO Auto-generated method stub
+		System.out.println(rating);
 		return null;
 	}
 
@@ -31,7 +33,14 @@ public class RatingServiceImpl implements RatingService{
 		return null;
 	}
 
-	
+	private Rating mock()
+	{
+		Rating rat = new Rating();
+		rat.setBad(100);
+		rat.setGood(200);
+		
+		return rat;
+	}
 
 	
 }

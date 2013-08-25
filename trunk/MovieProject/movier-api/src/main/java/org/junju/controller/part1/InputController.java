@@ -14,7 +14,7 @@ public class InputController {
 	 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	 public String showInputPage (Model model ){		
-		
+				System.out.print("");
 	         return "inputtest";
     }
 	@RequestMapping(value = "/inputtest", method = RequestMethod.GET)

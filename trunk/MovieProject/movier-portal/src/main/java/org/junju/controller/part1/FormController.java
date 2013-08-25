@@ -2,6 +2,8 @@ package org.junju.controller.part1;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
@@ -33,6 +35,10 @@ public class FormController {
 	 public String editForm (Model model ){		
 				Form1 form = new Form1();
 			 form.setName("todo33");
+			 List<String> strs = new ArrayList<String>();
+			 strs.add("aa");
+			 strs.add("bb");
+			 form.setListStr(strs);
 			  model.addAttribute("form", form);
 	         return "form";
     }
@@ -42,6 +48,11 @@ public class FormController {
 	 public String dealwithForm (@ModelAttribute("form") @Valid Form1 formaa ,BindingResult bindingResult,
 			 				@RequestParam(value="image",required=false) MultipartFile image)
 	{
+		for(String str:formaa.getListStr())
+		{
+			System.out.println(str);
+		}
+		if(!image.isEmpty())
 		try
 		{
 			if(validateImage(image))
