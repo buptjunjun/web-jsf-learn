@@ -1,21 +1,35 @@
 package org.movier.serviceImpl.mongo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.movier.bean.BResource;
 import org.movier.service.ResourceService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ResourceServiceImpl implements ResourceService{
-
+	
+	public static final int LIMIT = 20; 
+	@Autowired
+	private DAOMongo mongo;
+	
 	public BResource getResource(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * get the resources of a movie according to the movieID;
+	 */
 	public List<BResource> getResources(String id) {
 		// TODO Auto-generated method stub
-		return this.mock();
+		Map constrains = new HashMap();
+		constrains.put("movieId", id);
+		List<BResource> ret = mongo.search(null, null, constrains, null, -1, LIMIT, BResource.class);
+		return ret;
+		//return this.mock();
 	}
 
 	public String updateResource(BResource res) {

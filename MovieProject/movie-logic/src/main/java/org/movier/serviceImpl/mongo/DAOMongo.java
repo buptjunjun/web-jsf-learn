@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.data.authentication.UserCredentials;
+import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -67,6 +70,28 @@ public class DAOMongo<T> {
 			e.printStackTrace();
 		}
 	}
+	
+	public DAOMongo(String host , int port , String dbName,String name,String password)
+	{
+		try
+		{
+			Mongo mongo = new Mongo(host,port);
+			mongo.setWriteConcern(WriteConcern.NONE);
+			UserCredentials userCredentials = new UserCredentials(name, password);
+			MongoDbFactory factory = new  SimpleMongoDbFactory(mongo,dbName, userCredentials);
+			mongoOps = new MongoTemplate(factory);
+			
+		} catch (UnknownHostException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MongoException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	  
 
 	/**
 	 * update  records which meets the constrains of "constrains"
@@ -244,4 +269,6 @@ public class DAOMongo<T> {
 	
 	return cons;
 }
+ 
+
 }
