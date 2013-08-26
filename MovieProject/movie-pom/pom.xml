@@ -10,5 +10,6 @@
  			<module >../movie-logic </module>
            <module >../movier-api </module>
             <module >../movier-portal </module>
+            <module >../movie-lucene </module>
 	</modules>
 </project>
