@@ -9266,7 +9266,6 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
 })( window );
 
-$jq = jQuery.noConflict();
 
 
 /*
@@ -9282,6 +9281,12 @@ if (regex.test(document.body.innerText)) {
   chrome.extension.sendRequest({}, function(response) {});
 } else 
 {
-	$title = $jq('title');
-	console.log($title.val());
+	$(function()
+	{
+		//$document = $(document);
+		$div = $("<div id ='_inserDiv_' style='margin:auto;background:green; width:1024px; height:40px'>hello</div>")
+		$body_first=$('body:first');
+		$div.insertBefore($body_first);
+	}
+	);
 }
