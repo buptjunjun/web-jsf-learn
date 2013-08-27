@@ -9266,27 +9266,45 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
 })( window );
 
+/**
+*
+* bellow is what movier do
+*/
 
-
-/*
- * Copyright (c) 2010 The Chromium Authors. All rights reserved.  Use of this
- * source code is governed by a BSD-style license that can be found in the
- * LICENSE file.
- */
-var regex = /sandwich/;
-
-// Test the text of the body element against our regular expression.
-if (regex.test(document.body.innerText)) {
-  // The regular expression produced a match, so notify the background page.
-  chrome.extension.sendRequest({}, function(response) {});
-} else 
+// add content to the current page
+function adddiv()
 {
+	// send a request
+	$.ajax({
+		type: "get",
+		url: "http://api.douban.com/event/10069638",
+		data: "",
+		success:function (data,textStatus)   // request success.
+		{
+			$div = $("<div id ='_inserDiv_' style='margin:auto;background:green; width:1024px; height:50px'>hello+"+textStatus+"</div>");
+			$body_first=$('body:first');
+			$div.insertBefore($body_first);				
+		}
+   });
+}
+
+var $title = $('title');
+
+//  check if we can get the title
+if($title==null || $title == undefined)	  // if we can not get the title ,wait the dom loaded completely
+{ 
 	$(function()
-	{
-		//$document = $(document);
-		$div = $("<div id ='_inserDiv_' style='margin:auto;background:green; width:1024px; height:40px'>hello</div>")
-		$body_first=$('body:first');
-		$div.insertBefore($body_first);
-	}
+		{
+			$title = $('title');
+			console.log("after wait dom loaded. title"+$title.text());
+			adddiv();
+		}
 	);
 }
+else // if we can  get the title ,just add the add content to the current page
+{
+	console.log("directly title"+$title.text());
+	adddiv();
+}
+
+
