@@ -5,6 +5,7 @@
   "background" : {
     "scripts": ["background.js"]
   },
+  "web_accessible_resources": [ "insertDIV.html","insertDIV.css","insertDIV.js"],
   "page_action" :
   {
     "default_icon" : "sandwich-19.png",

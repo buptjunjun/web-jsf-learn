@@ -1,4 +1,4 @@
-
+﻿
 /*!
  * jQuery JavaScript Library v1.7.1
  * http://jquery.com/
@@ -9274,6 +9274,9 @@ var $title = $('title');
 var searchURL = "http://192.168.140.130:8080/movier/movie/search";
 function searchMovie(query)
 {
+	var insertDIVurl = chrome.extension.getURL("insertDIV.html");
+
+	
 	$.ajax({
 		type: "get",			
 		url: searchURL,
@@ -9292,7 +9295,9 @@ function searchMovie(query)
 				}
 			}
 			
-			$div = $("<div id ='_inserDiv_' style='margin:auto;background:green; width:1024px; height:50px'>"+name+"</div>");
+			//$div = $("<div id ='_inserDiv_' style='margin:auto;background:green; width:1024px; height:50px'>"+name+"</div>");
+			var $div =$("<div>aa</div>");
+			$div.load(insertDIVurl);
 			$body_first=$('body:first');
 			$div.insertBefore($body_first);				
 		}
@@ -9320,7 +9325,7 @@ function adddiv()
 }
 
 
-
+var query = "keyword=Lewis";
 //  check if we can get the title
 if($title==null || $title == undefined)	  // if we can not get the title ,wait the dom loaded completely
 { 
@@ -9328,14 +9333,14 @@ if($title==null || $title == undefined)	  // if we can not get the title ,wait t
 		{
 			$title = $('title');
 			console.log("after wait dom loaded. title"+$title.text());
-			searchMovie("keyword=Circuitry");
+			searchMovie(query);
 		}
 	);
 }
 else // if we can  get the title ,just add the add content to the current page
 {
 	console.log("directly title"+$title.text());
-	searchMovie("keyword=Circuitry");
+	searchMovie(query);
 }
 
 
