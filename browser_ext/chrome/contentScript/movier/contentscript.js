@@ -9270,6 +9270,35 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 *
 * bellow is what movier do
 */
+var $title = $('title');
+var searchURL = "http://192.168.140.130:8080/movier/movie/search";
+function searchMovie(query)
+{
+	$.ajax({
+		type: "get",			
+		url: searchURL,
+		dataType:"json",
+		contentType: "application/json; charset=utf-8",     
+		data: query,
+		success:function (data)   // request success.
+		{
+			var name = "no name";
+			if(data!= null && data.length>0)
+			{	
+				for(var i = 0; i< data.length;i++)
+				{
+					var movie = data[i];
+					name = movie.name;
+				}
+			}
+			
+			$div = $("<div id ='_inserDiv_' style='margin:auto;background:green; width:1024px; height:50px'>"+name+"</div>");
+			$body_first=$('body:first');
+			$div.insertBefore($body_first);				
+		}
+   });
+}
+
 
 // add content to the current page
 function adddiv()
@@ -9279,8 +9308,10 @@ function adddiv()
 		type: "get",
 		url: "http://api.douban.com/event/10069638",
 		data: "",
-		success:function (data,textStatus)   // request success.
+		success:function (retData,textStatus)   // request success.
 		{
+			var jsonObj = jQuery.parseJSON(retData);
+			
 			$div = $("<div id ='_inserDiv_' style='margin:auto;background:green; width:1024px; height:50px'>hello+"+textStatus+"</div>");
 			$body_first=$('body:first');
 			$div.insertBefore($body_first);				
@@ -9288,7 +9319,7 @@ function adddiv()
    });
 }
 
-var $title = $('title');
+
 
 //  check if we can get the title
 if($title==null || $title == undefined)	  // if we can not get the title ,wait the dom loaded completely
@@ -9297,14 +9328,14 @@ if($title==null || $title == undefined)	  // if we can not get the title ,wait t
 		{
 			$title = $('title');
 			console.log("after wait dom loaded. title"+$title.text());
-			adddiv();
+			searchMovie("keyword=Circuitry");
 		}
 	);
 }
 else // if we can  get the title ,just add the add content to the current page
 {
 	console.log("directly title"+$title.text());
-	adddiv();
+	searchMovie("keyword=Circuitry");
 }
 
 
