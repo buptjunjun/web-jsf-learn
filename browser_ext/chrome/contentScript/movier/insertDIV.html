@@ -38,7 +38,7 @@
 	#_movier_detail_ 
 	{
 		position:absolute; 
-		z-index:888; 
+		z-index:99999999; 
 		width:99%; 
 		background: linear-gradient(white, #F7F6F5);
 		background: -moz-linear-gradient(white, #F7F6F5);
@@ -46,9 +46,10 @@
 		background: -webkit-linear-gradient(white, #F7F6F5);
 		autoflow:hidden;
 		display:none;
+		height:320px;
 	}
 
-	._movier_onemovie_ {width:80%; height:320px; float:left;margin-bottom:10px;}
+	._movier_onemovie_ {width:80%; height:159px; float:left;margin-bottom:10px;}
 	._movier_onemovie_detail_ 
 	{
 		width:98%; 
@@ -102,15 +103,6 @@ $(function()
 			data: query,
 			success:function (data)   // request success.
 			{
-				var name = "no name";
-				if(data!= null && data.length>0)
-				{	
-					for(var i = 0; i< data.length;i++)
-					{
-						var movie = data[i];
-						name = movie.name;
-					}
-				}
 				init(data);
 			}
 	  });
@@ -121,16 +113,40 @@ function init(data)
 {
 	$("#_movier_related_").text(" find "+ data.length+" movies ,click for details~");
 	$("#_movier_related_").on("mouseover",function(){$("#_movier_detail_").slideDown(200);});
-	//$("#_movier_detail_").on("mouseleave",function(event){$(this).slideUp(200);return false;});
+		$("#_movier_detail_").on("mouseleave",function(event){$(this).slideUp(200);return false;});
 	$("#_movier_close_").on("click",function(){$("#_movier_inserDiv_").slideUp(500);$("#_movier_detail_").hide();});
 	
 	// selected qvod resources and set the value of resources details
-	$("._movier_onemovie_resources_").on("click","ul li",function(){
+	$("._movier_onemovie_resources_ ul li").on("click",function(){
 											var selected= $(this).text();
 											var $_movier_onemovie_resources_ = $(this).parent().parent();
 											$_movier_onemovie_resources_.find("._movier_resources_details_").text(selected);
 											});
+	initMovie(data);										
 }
+
+function initMovie(data)
+{
+	var $moviecopy = $("._movier_onemovie_").clone(true);
+	$("._movier_onemovie_").remove();
+	if(data!= null && data.length>0)
+	{	
+		for(var i = 0; i< data.length;i++)
+		{
+			var movie = data[i];
+			$moviecopy.find("img[name='movie_img_desc_']").prop('src',"http://img5.douban.com/view/movie_poster_cover/spst/public/p1910895719.jpg");
+			$moviecopy.find("span[name='name']").text(movie.name);	
+			$moviecopy.find("span[name='director']").text(movie.director);	
+			
+			$moviecopy.insertBefore($("#_movier_note_"));
+			$moviecopy = $moviecopy.clone(true);
+		}
+	}
+	//alert($moviecopy.text());
+	
+};
+
+
 </script>
 
 <div id ='_movier_inserDiv_'>	
@@ -175,10 +191,10 @@ function init(data)
 			<div class="_movier_onemovie_detail_">
 				<div class="_movier_onemovie_description_">
 					<div name="movie_img" class="_movier_img_div_" >
-						<img alt="" src="http://img3.douban.com/mpic/s4653185.jpg">
+						<img alt="" name="movie_img_desc_" src="http://img3.douban.com/mpic/s4653185.jpg">
 					</div>
 					<div  class="_movier_description_div_">					
-						<span>name:</span><span name="name">aaaaaa Monsters University</span><br/>
+						<span>name:</span><br/><span name="name">aaaaaa Monsters University</span><br/>
 						<span>director:</span><span name="director">ting jun yang</span><br/>
 						<span>year:</span><span name="year">2013</span><br/>
 						<span>main actor:</span><span name="actors">ting jun yang</span><br/>
@@ -196,6 +212,7 @@ function init(data)
 					</div>
 				</div>
 			</div>
+		</div>
 		<div id="_movier_note_">
 			note area
 		</div>
