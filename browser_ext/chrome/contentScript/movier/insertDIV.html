@@ -1,34 +1,167 @@
 
-<div id ='_movier_inserDiv_' style='margin:auto;background:green; width:100%; height:25px; autoflow:hidden'>	
+
+<style type="text/css">
+	#_movier_inserDiv_
+	{
+		margin:auto; 
+		background: linear-gradient(white, #F7F6F5);
+		background: -moz-linear-gradient(white, #F7F6F5);
+		background: -o-linear-gradient(white, #F7F6F5);
+		background: -webkit-linear-gradient(white, #F7F6F5);
+		width:100%; 
+		height:25px; 
+		margin-left:10px;
+		autoflow:hidden; 
+	}
+
+	#_movier_top_ {width:98%; height:25px}
+	#_movier_menu_ { height:20px; float:right}
+	
+	#_movier_related_ 
+	{
+		//width:30%;
+		float:left; 
+		border-right:1px dashed red;
+		height:25px;
+		margin-left:5px;
+		margin-right:5px;
+	//	background-color:blue
+	}
+	
+	#_movier_close_ {width:30px; float:right;cursor:pointer;}
+	#_movier_share_ {width:160px; float:right; margin-left:10px;border-right:1px dashed red;}
+	#_movier_login_ {width:90px; float:right;border-right:1px dashed red;}
+	#_movier_search_ {border-right:1px dashed red; float:right;margin-right:10px;pading-right:10px;}
+	#_movier_search_ input {border:1px solid #F7F6F5;}
+
+
+	#_movier_detail_ 
+	{
+		position:absolute; 
+		z-index:888; 
+		width:99%; 
+		background: linear-gradient(white, #F7F6F5);
+		background: -moz-linear-gradient(white, #F7F6F5);
+		background: -o-linear-gradient(white, #F7F6F5);
+		background: -webkit-linear-gradient(white, #F7F6F5);
+		autoflow:hidden;
+		display:none;
+	}
+
+	._movier_onemovie_ {width:80%; height:320px; float:left;margin-bottom:10px;}
+	._movier_onemovie_detail_ 
+	{
+		width:98%; 
+		height:160px; 
+		border-bottom:dashed 1px; 
+		border-left:dashed 1px; 
+		//border-right:dashed 1px;
+		float:left;
+		margin-left:5px;
+		margin-bottom:2px;
+	}
+	
+	._movier_onemovie_description_ {float:left; height:159px; width:400px;border-right:1px dashed red;}
+	._movier_onemovie_resources_ {float:left; height:50px;}
+	._movier_resources_details_ 
+	{
+		width:100%;
+		height:100%;
+		float:left;
+		border:solid 1px;
+		margin-left:10px;
+	}
+	#_movier_note_{width:200px; height:320px; border:solid 1px; float:right; margin-left:1px;display:none}
+	
+	
+	._movier_onemovie_resources_ ul {list-style:none; display:block;}
+	._movier_onemovie_resources_ ul li 
+	{
+		margin-left:10px;
+		padding:2px;
+		border-left:1px solid black;
+		border-top:1px solid black;
+		border-right:1px solid black;
+		float:left;
+		cursor:pointer;
+	}
+	
+	._movier_img_div_ { float:left; }
+	._movier_description_div_{ margin-left:4px;float:left; }
+</style>
+<script>
+var searchURL = "http://192.168.140.130:8080/movier/movie/search";
+var query = "keyword=Lewis";
+$(function()
+{
+	$.ajax({
+			type: "get",			
+			url: searchURL,
+			dataType:"json",
+			contentType: "application/json; charset=utf-8",     
+			data: query,
+			success:function (data)   // request success.
+			{
+				var name = "no name";
+				if(data!= null && data.length>0)
+				{	
+					for(var i = 0; i< data.length;i++)
+					{
+						var movie = data[i];
+						name = movie.name;
+					}
+				}
+				init(data);
+			}
+	  });
+ }
+);
+	
+function init(data)
+{
+	$("#_movier_related_").text(" find "+ data.length+" movies ,click for details~");
+	$("#_movier_related_").on("mouseover",function(){$("#_movier_detail_").slideDown(200);});
+	//$("#_movier_detail_").on("mouseleave",function(event){$(this).slideUp(200);return false;});
+	$("#_movier_close_").on("click",function(){$("#_movier_inserDiv_").slideUp(500);$("#_movier_detail_").hide();});
+	
+	// selected qvod resources and set the value of resources details
+	$("._movier_onemovie_resources_").on("click","ul li",function(){
+											var selected= $(this).text();
+											var $_movier_onemovie_resources_ = $(this).parent().parent();
+											$_movier_onemovie_resources_.find("._movier_resources_details_").text(selected);
+											});
+}
+</script>
+
+<div id ='_movier_inserDiv_'>	
 	<!--_movier_top_ show some menu -->
-	<div id="_movier_top_" style="width:98%;border:solid 1px;height:25px">	
-		<div id="_movier_related_" style="width:30%;float:left;border:solid 1px;height:25px:;background-color:blue">	
-				find two related movie
+	<div id="_movier_top_">	
+		<div id="_movier_related_">	
 		</div>
 	
-		<div id="_movier_right_" style=" border:solid 1px; height:20px; float:right">
+		<div id="_movier_menu_">
 			<!--close -->
-			<div id="_movier_close_" style="width:30px;float:right">
-				<span  style="padding:2px">X</span>
+			<div id="_movier_close_">
+				<span style="padding:2px">X</span>
 			</div>
 			
 			<!--share to other social network-->
-			<div id="_movier_share_" style="width:160px;float:right;margin-left:10px">
-				<span  style="float:left; padding-right:2px">share</span>
-				<ul id="_movier_share_items_" style="list-style:none;">
-					<li style="float:left;margin-left:2px;">qq<li>
-					<li style="float:left;margin-left:2px;">weibo<li>
+			<div id="_movier_share_" >
+				<span style="float:left; padding-right:2px">share</span>
+				<ul id="_movier_share_items_" style="list-style:none; ">
+					<li style="float:left; margin-left:2px; ">qq</li>
+					<li style="float:left; margin-left:2px; ">weibo</li>
 				</ul>
 			</div>
 			
-			<!--login and register  -->
-			<div id="_movier_login_" style="width:90px;float:right">
-				<span style="padding:2px;" >login</span>
-				<span style="padding:2px;">register</span>
+			<!--login and register -->
+			<div id="_movier_login_" >
+				<span style="padding:2px; " >login</span>
+				<span style="padding:2px; ">register</span>
 			</div>			
 			
 			<!-- search resources manually -->
-			<div id="_movier_search_" style="width:300px;float:right">
+			<div id="_movier_search_">
 				<input type="text" size="30" style="" value="Titanic"></input>
 				<span style="">search</span>
 			</div>				
@@ -37,43 +170,34 @@
 	
 	<!--show the details of resources -->
 	<!-- set z-index to cover the orignal page-->
-	<div id="_movier_detail_" style="position:absolute;z-index:888;width:99%;border:solid 1px;background-color:red;autoflow:hidden">
-		<div  style="width:20px;height:240px;border:solid 1px;float:left;margin-left:1px">
-			up 
-			and 
-			down
-		</div>
-		
-		<div  style="width:80%;height:290px;border:solid 1px;float:left">
-			<div  style="width:98%;height:142px;border:solid 1px;float:left;margin-left:5px">
-				<div style="float:left; height:141px;width:200px;background-color:blue">
-					<span style="margin:auto">titanic</span>
+	<div id="_movier_detail_">
+		<div class="_movier_onemovie_" >
+			<div class="_movier_onemovie_detail_">
+				<div class="_movier_onemovie_description_">
+					<div name="movie_img" class="_movier_img_div_" >
+						<img alt="" src="http://img3.douban.com/mpic/s4653185.jpg">
+					</div>
+					<div  class="_movier_description_div_">					
+						<span>name:</span><span name="name">aaaaaa Monsters University</span><br/>
+						<span>director:</span><span name="director">ting jun yang</span><br/>
+						<span>year:</span><span name="year">2013</span><br/>
+						<span>main actor:</span><span name="actors">ting jun yang</span><br/>
+						<span>discription:</span><span name="description">ting jun yang Monsters Unting jun<br/> Unting jun yang Monsters Unting jun yan</span>
+					</div>
 				</div>
-				<div style="float:left; height:50px;width:55%" >
-					<ul style="float:left">
+				<div class="_movier_onemovie_resources_" >			
+					<ul>
 						<li>qvod</li>
 						<li>baidu</li>
 						<li>flash</li>
 					</ul>
+					<div class="_movier_resources_details_">
+						aaaaaaaaaaaaaaaaaaa
+					</div>
 				</div>
 			</div>
-			<div  style="width:98%;height:142px;border:solid 1px;float:left;margin-left:5px">
-				<div style="float:left; height:141px;width:200px;background-color:blue">
-					<span style="margin:auto">titanic</span>
-				</div>
-				<div style="float:left; height:50px;width:55%" >
-					<ul style="float:left">
-						<li>qvod</li>
-						<li>baidu</li>
-						<li>flash</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div  style="width:150px;height:240px;border:solid 1px;float:left;margin-left:1px">
-			up 
-			and 
-			down
+		<div id="_movier_note_">
+			note area
 		</div>
 	</div>
 </div>
