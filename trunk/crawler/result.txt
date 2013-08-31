@@ -1,0 +1,2 @@
+id = 36d6bf1780048297a12bc7ada8267466 host = www.iteye.com/blogs blogerUrl = http://gaopenghigh.iteye.com url =http://gaopenghigh.iteye.com/blog/1716658 encode = utf-8  title = vim中的django模板语法高亮 tags = [工具, 技巧, vim, django] pictures=0 visits = 77  comments = 0 postDate = Mon Nov 05 14:25:00 CST 2012 crawledDate = Tue Jan 29 14:48:41 CST 2013
+ content Size = 334
