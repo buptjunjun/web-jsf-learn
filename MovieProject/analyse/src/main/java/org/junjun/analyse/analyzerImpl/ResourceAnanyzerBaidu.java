@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 
+import org.easyGoingCrawler.docWriter.Html;
 import org.easyGoingCrawler.framwork.CrawlURI;
 import org.easyGoingCrawler.framwork.Fetcher;
 import org.easyGoingCrawler.util.Converter;
@@ -170,6 +171,12 @@ public class ResourceAnanyzerBaidu implements Analyzer<List<BResource>>
 		List<BResource> list = new ResourceAnanyzerBaidu().analyze(curl);
 		System.out.println(list);
 		
+	}
+
+	public List<BResource> analyze(Html html)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
