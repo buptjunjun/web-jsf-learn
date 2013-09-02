@@ -12,6 +12,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
+import org.easyGoingCrawler.docWriter.Html;
 import org.easyGoingCrawler.framwork.CrawlURI;
 import org.easyGoingCrawler.framwork.Fetcher;
 import org.easyGoingCrawler.util.Converter;
@@ -131,6 +132,12 @@ public class ResourceAnanyzerQvod implements Analyzer<List<BResource>>
 		String test="asdfasd¿ì²¥asdfasd";
 		System.out.println(Pattern.matches(regex, test));
 		
+	}
+
+	public List<BResource> analyze(Html html)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
