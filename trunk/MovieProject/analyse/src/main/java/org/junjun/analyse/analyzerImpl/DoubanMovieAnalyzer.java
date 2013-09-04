@@ -6,12 +6,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.easyGoingCrawler.docWriter.Html;
 import org.easyGoingCrawler.framwork.CrawlURI;
 import org.easyGoingCrawler.framwork.Fetcher;
@@ -20,6 +26,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 import org.junjun.analyse.analyzer.Analyzer;
 import org.junjun.analyse.analyzer.bean.Movie;
@@ -33,23 +40,32 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 {	
 	public static String host="movie.douban.com";
 	private SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+	private SimpleDateFormat formater1 = new SimpleDateFormat("yyyy-MM");
 	private Pattern patternInt = Pattern.compile("\\d+");
 	private Pattern patternURL = Pattern.compile("http://movie.douban.com/subject/\\d+");
 	private Pattern patternDate = Pattern.compile("\\d\\d\\d\\d-\\d\\d-\\d\\d");
+	private Pattern patternDate1 = Pattern.compile("\\d\\d\\d\\d-\\d\\d");
+	 static String director = "导演";
+	 static String actor = "主演";
+	 static String type = "类型"; 
 	 static String loc = "制片国家/地区: ";
 	 static String language = "语言:";
 	 static String date = "日期:"; 
 	 static String length = "片长:";
 	 static String aname = "又名:";
 	 static String imdb = "IMDb";
+	 static String seperator =  "/";
+	
 	 static int lengthLoc = loc.length();
 	 static int lengthDate = date.length(); 
 	 static int lengthLength = length.length();
 	 static int lengthAname = aname.length();
+	 private Logger logger = Logger.getLogger(DoubanMovieAnalyzer.class);
 	 
+	 DAOapi dao = null;
 	public DoubanMovieAnalyzer()
 	{
-		
+		 dao = new MongoDAOapi();
 	}
 	
 	public Movie analyze(String host,String encode,String content)
@@ -60,157 +76,387 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 		try
 		{				
 			Document doc = Jsoup.parse(content);
-			str = doc.text();
 			
+			Element infoElem = doc.getElementById("info");
+			str = infoElem.text();
+			
+	//		System.out.println(str);
 			//片名
 			String name = doc.title();
 			name = name.replace("(豆瓣)", "");
-			movie.setName(name);
+			movie.setName(name);			
 			
-			Elements directors = doc.getElementsMatchingOwnText("导演");
-			if(directors != null && !directors.isEmpty())
-			{
-				Element director = directors.first();
-				Element e = director.nextElementSibling();
-				if(e!=null)
-					movie.setDirector(e.text());
-				
-			}
 			
-			Elements actors = doc.getElementsMatchingOwnText("主演");
-			List<String> actorList = new ArrayList<String>();
-			if(actors != null && !actors.isEmpty())
-			{
-				Element e = actors.first();
-				e = e.nextElementSibling();
-				do
-				{
-					actorList.add(e.text());
-					e = e.nextElementSibling();
-				}
-				while(e!=null);
-				movie.setActors(actorList);
-			}
-			
-			Elements types = doc.getElementsMatchingOwnText("类型");
-			List<String> typeList = new ArrayList<String>();
-			if(types != null && !types.isEmpty())
-			{
-				Element e = types.first();
-				e = e.nextElementSibling();
-				int i= 0;
-				do
-				{
-					typeList.add(e.text());
-					e = e.nextElementSibling();
-					if(e!=null && e.tagName().equals("br") || i++ > 3) break;
-				}
-				while(e!=null);
-				movie.setType(typeList);
-			}
+			List<Node> infoNodes = infoElem.childNodes();	
 
-			//评分人数
-			Elements votes = doc.getElementsByAttributeValue("property", "v:votes");
-			if(votes!=null && !votes.isEmpty())
+			// to save the infomation of a movie 
+			Map<String,String> infos = new HashMap<String,String>();
+			
+			
+			// get the pieces of  information
+			String text = "";
+			for(Node node:infoNodes)
 			{
-				Element vote = votes.first();
-				if(vote!=null)
+				
+				if(node.toString().contains("<br />")||node.toString().contains("<br>")||node.toString().contains("<br/>"))
 				{
-					String countStr = vote.text();
-					try
-					{
-						int countInt = Integer.parseInt(countStr);
-						movie.setVoteCount(countInt);
-					}
-					catch(Exception e)
-					{
-						e.printStackTrace();
-					}
 					
-				}
-			}
-			
-			// 国家
-			int start = str.indexOf(loc);
-			int end = str.indexOf(language);
-			if(start>0)
-			{
-				String location = str.substring(start+lengthLoc, end>0?end:start+lengthLoc+5);
-				movie.setLocation(location);
-			}
-			// 日期
-			Matcher mdate = patternDate.matcher(str);
-			if(mdate.find())
-			{
-				String date = mdate.group();
-				Date d = formater.parse(date);
-				movie.setDate(d);
-			}
-			
-			// 片长
-			start = str.indexOf(length);
-			end = str.indexOf(aname);
-			if(start>0)
-			{
-				String length = str.substring(start+lengthLength,end<0?start+lengthLength+10:end);		
-				Matcher m = patternInt.matcher(length);
-				if(m.find())
-				{	length = m.group();
-					int len = Integer.parseInt(length);
-					movie.setTimespan(len);
-				}
-			}
-			// 又名
-			start = str.indexOf(aname);
-			end = str.indexOf(imdb);
-			if(start > 0 && end > 0)
-			{
-				String anotherName = str.substring(start+lengthAname,end);
-				String [] anotherNames = anotherName.split("/");
-				if (anotherNames != null)
-				{
-					movie.setAnotherName(Arrays.asList(anotherNames));
-				}
-			}
-		
-			//分数
-			Elements scoreEle = doc.getElementsByClass("rating_num");
-			if(scoreEle != null && !scoreEle.isEmpty())
-			{
-				String score = scoreEle.first().text();
-				if(!StringUtil.isBlank(score))
-				{
-					try
-					{
-						float scoref = Float.parseFloat(score);
-						movie.setScore(scoref);
-					}
-					catch(Exception e)
-					{
-						e.printStackTrace();
-					}
+					Document d = Jsoup.parse(text);
+					text = d.text();
+					if(StringUtils.isBlank(text)) 
+						continue;
+					
+					String [] splits = text.split(":");
+					if(splits!=null && splits.length >=2)
+					infos.put(splits[0].trim(), splits[1].trim());
+					text = "";
 				}
 				else
 				{
-					movie.setScore(0);
-				}
+					text+=node.toString();
+				}	
 			}
 			
-			//介绍
-			Elements des = doc.getElementsByAttributeValueContaining("property", "v:summary");
-			if(des != null && !des.isEmpty())
+			
+			for(Entry<String,String> entry:infos.entrySet())
 			{
-				String description = des.text();
-				movie.setDescription(description);
+				String key =  entry.getKey();
+				String value = entry.getValue();
+				
+				try
+				{
+					if(key.contains("导演"))
+					{
+						String []arrs = value.split(seperator);
+						movie.setDirector(Arrays.asList(arrs));
+					}
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+
+				try
+				{
+					if(key.contains("主演"))
+					{
+						String []arrs = value.split(seperator);
+						movie.setActors(Arrays.asList(arrs));
+					}
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				
+				try
+				{
+					if(key.contains("又名"))
+					{
+						String []arrs = value.split(seperator);
+						movie.setAnotherName(Arrays.asList(arrs));
+					}
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				
+				try
+				{
+					if(key.contains("类型"))
+					{
+						String []arrs = value.split(seperator);
+						movie.setType(Arrays.asList(arrs));
+					}
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				
+				try
+				{
+					if(key.contains("国家") || key.contains("地区"))
+					{
+						String []arrs = value.split(seperator);
+						movie.setLocation(Arrays.asList(arrs));
+					}
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				
+				try
+				{
+					if(key.contains("语言"))
+					{
+						String []  arrs = value.split(seperator);
+						movie.setLocation(Arrays.asList(arrs));
+					}
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				
+				try
+				{
+					if(key.contains("日期")|| key.contains("首播"))
+					{
+						Matcher mdate = patternDate.matcher(value);
+						if(mdate.find())
+						{
+							String date = mdate.group();
+							Date d = formater.parse(date);
+							movie.setDate(d);
+						}
+						
+						mdate = patternDate1.matcher(value);
+						if(mdate.find())
+						{
+							String date = mdate.group();
+							Date d = formater1.parse(date);
+							movie.setDate(d);
+						}
+					}
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				
+				try
+				{
+					if(key.contains("片长"))
+					{					
+						Matcher m = patternInt.matcher(value);
+						if(m.find())
+						{	length = m.group();
+							int len = Integer.parseInt(length);
+							movie.setTimespan(len);
+						}
+					}
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				
+				try
+				{
+					if(key.contains("季数"))
+					{					
+						Matcher m = patternInt.matcher(value);
+						if(m.find())
+						{	
+							String session = m.group();
+							int len = Integer.parseInt(session);
+							movie.setSeason(len%10);
+							movie.setKind("s");
+						}
+					}				
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				
+				try
+				{
+					if(key.contains("集数"))
+					{					
+						Matcher m = patternInt.matcher(value);
+						if(m.find())
+						{	String episode = m.group();
+							int len = Integer.parseInt(episode);
+							movie.setEpisode(len);
+							movie.setKind("s");
+						}
+					}
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
 				
 			}
 		
+			try
+			{
+				//介绍
+				Elements des = doc.getElementsByAttributeValueContaining("property", "v:summary");
+				if(des != null && !des.isEmpty())
+				{
+					String description = des.text();
+					movie.setDescription(description);
+					
+				}
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			
+			try
+			{
+				//评分人数
+				Elements votes = doc.getElementsByAttributeValue("property", "v:votes");
+				if(votes!=null && !votes.isEmpty())
+				{
+					Element vote = votes.first();
+					if(vote!=null)
+					{
+						String countStr = vote.text();
+						try
+						{
+							int countInt = Integer.parseInt(countStr);
+							movie.setVoteCount(countInt);
+						}
+						catch(Exception e)
+						{
+							e.printStackTrace();
+						}
+						
+					}
+				}
+				
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			
+			try
+			{
+				//分数
+				Elements scoreEle = doc.getElementsByClass("rating_num");
+				if(scoreEle != null && !scoreEle.isEmpty())
+				{
+					String score = scoreEle.first().text();
+					if(!StringUtil.isBlank(score))
+					{
+						try
+						{
+							float scoref = Float.parseFloat(score);
+							movie.setScore(scoref);
+						}
+						catch(Exception e)
+						{
+							e.printStackTrace();
+						}
+					}
+					else
+					{
+						movie.setScore(0);
+					}
+				}
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+
+		
+			try
+			{
+				//pictures
+				Element imgEle = doc.getElementById("mainpic");
+				String posterUrl = "";
+				if(imgEle != null )
+				{
+					try
+					{
+						Element imgsEle = imgEle.getElementsByTag("img").first();
+						posterUrl = imgsEle.attr("src");
+					}
+					catch(Exception e){e.printStackTrace();}
+				}
+				
+				System.out.println();
+				//related pictures
+				Element relatedPicEle = doc.getElementsByClass("related-pic").first();
+				List<String> pictures = new ArrayList<String>();
+				if(relatedPicEle != null )
+				{
+					try
+					{
+						Elements imgsEles = relatedPicEle.getElementsByTag("img");
+						Iterator i = imgsEles.iterator();
+						while(i.hasNext())
+						{
+							Element imgsEle = (Element) i.next();
+							String url = imgsEle.attr("src");
+							if(!StringUtils.isBlank(url))
+							{
+								pictures.add(url.trim());
+							}
+						}
+							
+					}
+					catch(Exception e){e.printStackTrace();}
+				}
+				
+				if(!StringUtils.isBlank(posterUrl))
+				{
+					pictures.add(0, posterUrl);
+				}
+				
+				movie.setPictures(pictures);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			
+			
+			
+			try
+			{
+				//tags
+				Element tagEle = doc.getElementsByClass("tags-body").first();
+				List<String> tags = new ArrayList<String>();
+				if(tagEle != null )
+				{
+					try
+					{
+						Elements tagEles = tagEle.getElementsByTag("a");
+						Iterator<Element> i = tagEles.iterator();
+						while(i.hasNext())
+						{
+							Element imgsEle =i.next();
+							String tagtext = imgsEle.text();
+							if(!StringUtils.isBlank(tagtext) )
+							{								
+								String [] splits = tagtext.split("\\(");
+								if(splits.length>1)
+									tags.add(splits[0].trim());
+							}
+							
+						}
+						movie.setTags(tags);						
+					}
+					catch(Exception e){e.printStackTrace();}
+				}
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+
+			
 		} 
 		catch (Exception e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
+			logger.error(e.toString());
+			
+			if(!StringUtils.isBlank(movie.getName()))
+				return movie;
+			else
+				return null;
 		}
 		
 		return movie;
@@ -227,25 +473,45 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 	
 	public void analyse()
 	{
-		DAOapi dao = new MongoDAOapi();
+		
 		
 		Set<String> updateFields = new HashSet<String>();
 		updateFields.add("magicNum");
-		
-		Html html = dao.getNextHtml(host);
-		while(html!=null)
+		Html initHtml = new Html();
+		initHtml.setHost("movie.douban.com");
+		Date date = new Date();
+		date.setYear(10);
+		int limit = 20;
+		initHtml.setCrawledDate(date);	
+		List<Html> htmls = dao.getNextHtmls(initHtml,limit);
+		while(htmls!=null)
 		{
-			Movie movie = this.analyze(html);
+			Html store = null;
+			for(Html html:htmls)
+			{
 			
-			dao.insertMovie(movie);
-			dao.updateHtml(html, updateFields);
-			
-			html = dao.getNextHtml(host);
+				Movie movie = this.analyze(html);			
+				dao.insertMovie(movie);
+				dao.updateHtml(html, updateFields);
+				store = html;
+			}
+					
+			htmls = dao.getNextHtmls(store,limit);
 		}
+	}
+	
+	public void test(String url)
+	{
+		String id = Converter.urlEncode(url);
+		Html html  = dao.getHtml(id);
+		Movie m = this.analyze(html);
+		System.out.println(m);
 	}
 	static public void main(String [] args)
 	{
-		new DoubanMovieAnalyzer().analyse();
+		DoubanMovieAnalyzer douban = new DoubanMovieAnalyzer();
+		douban.test("http://movie.douban.com/subject/1291832");
+		//douban.test("http://movie.douban.com/subject/23055587");
 	}
 
 }
