@@ -169,7 +169,6 @@
  		
 
  
-  
   <!-- csdn  -->
   <bean id="movieScheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
  		<constructor-arg ref="EGDAOMongo"></constructor-arg>
@@ -184,5 +183,13 @@
 		<constructor-arg value="${host_douban_movie}"></constructor-arg>
   </bean>
   <!-- csdn end -->
+  
+   <bean id="doubanProxyCrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
+		<constructor-arg ref = "fetcherProxy"></constructor-arg>
+		<constructor-arg ref = "extractor"></constructor-arg>
+		<constructor-arg ref = "movieScheduleer"></constructor-arg>
+		<constructor-arg ref ="docwriter"></constructor-arg>
+		<constructor-arg value="${host_douban_movie}"></constructor-arg>
+  </bean>
   
 </beans>
