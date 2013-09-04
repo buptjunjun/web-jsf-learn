@@ -115,12 +115,17 @@ public class RotateHostURLScheduler extends URLScheduler
 			tmpurl.setHost(curl.getHost());
 			tmpurl.setLastCrawled(new Date());	
 			tmpurl.setType(status);
+			egdao.insert(tmpurl);
+			
+			if(i++ % 5 == 0)
+			{
+				loger.info(Thread.currentThread().getName()+"-"+ "@@RotateHostURLScheduler: insert  a url:"+tmpurl);
+			}
+			
 			if(i++ % 30 == 0)
 			{
 				System.out.println(Thread.currentThread().getName()+"-"+ "@@RotateHostURLScheduler: insert  a url:"+tmpurl);
-				loger.info(Thread.currentThread().getName()+"-"+ "@@RotateHostURLScheduler: insert  a url:"+tmpurl);
 			}
-			egdao.insert(tmpurl);
 		}
 	}
 	
@@ -136,12 +141,12 @@ public class RotateHostURLScheduler extends URLScheduler
 //		tmpurl.setType(Url.URL_OTHER);
 //		this.egdao.insert(tmpurl);
 	
-		tmpurl.setUrl("http://movie.douban.com/tag/%E7%88%B1%E6%83%85");
+		tmpurl.setUrl("http://movie.douban.com/tag/%E5%86%85%E5%9C%B0");
 		tmpurl.setId(Converter.urlEncode(tmpurl.getUrl()));
 		tmpurl.setFlag(Url.UNCRAWLED);
 		tmpurl.setHost("movie.douban.com");
 		tmpurl.setLastCrawled(new Date());
-		tmpurl.setType(Url.URL_BLOG);
+		tmpurl.setType(Url.URL_OTHER);
 		this.egdao.insert(tmpurl);
 		
 //		tmpurl.setUrl("http://blog.csdn.net/web/index.html");

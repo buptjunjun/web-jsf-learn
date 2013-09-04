@@ -1,14 +1,12 @@
 package org.easyGoingCrawler.util;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.easyGoingCrawler.docWriter.Url;
 import org.easyGoingCrawler.framwork.CrawlURI;
-import javax.security.*;
 public class Converter
 {
 	public static Url CrawlURI2Url (CrawlURI uri)

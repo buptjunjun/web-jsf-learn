@@ -157,12 +157,18 @@
   		p:urAnalyzer-ref ="urlAnalyzer"
  		scope="prototype" />
  		
+   <!-- mongo html writer -->
+  <bean id="MongoHtmlWriter" class=" org.easyGoingCrawler.docWriter.MongoHtmlWriter"
+  		p:urAnalyzer-ref ="urlAnalyzer"
+ 		scope="prototype" >
+ 		<constructor-arg ref="rEGDAOMongo"></constructor-arg>
+  </bean>
 
  <!-- writer chain -->
   <bean id="docwriter" class=" org.easyGoingCrawler.docWriter.DocWriterChain" scope="prototype" >
   	<constructor-arg>
-  		<list>
-  			<ref bean = "mirrorwriter"/>	
+  		<list>	
+  			<ref bean="MongoHtmlWriter"/>
   		</list>
   	</constructor-arg>
  </bean>
@@ -177,7 +183,7 @@
  		<constructor-arg ref="urlAnalyzer"></constructor-arg>
  </bean>
   <bean id="doubanCrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
-		<constructor-arg ref = "fetcherHtmlUnit"></constructor-arg>
+		<constructor-arg ref = "fetcherProxy"></constructor-arg>
 		<constructor-arg ref = "extractor"></constructor-arg>
 		<constructor-arg ref = "movieScheduleer"></constructor-arg>
 		<constructor-arg ref ="docwriter"></constructor-arg>

@@ -7,6 +7,7 @@ import java.util.List;
 import org.easyGoingCrawler.docWriter.MirrorWriter;
 import org.easyGoingCrawler.extractor.HTMLExtractor;
 import org.easyGoingCrawler.fetcher.HttpFetcher;
+import org.easyGoingCrawler.util.Converter;
 
 /**
  * this class represent one file which has been fetched , the file can be a html or javascript file or etc.
@@ -167,7 +168,7 @@ public class CrawlURI implements Serializable
 		// TODO Auto-generated method stub
 		String ret = this.url +", httpstatus = " +this.getHttpstatus() 
 				+ " , status = " + this.status +", encode = " + this.encode
-				+ " , path = " +", lastcrawlDate = " + this.getLastCrawlDate();
+				+ " , path = " +", lastcrawlDate = " + this.getLastCrawlDate()+"id:"+Converter.urlEncode(this.url);
 		return ret;
 	}
 
