@@ -8,30 +8,46 @@ public class Movie
 	String id = null;
 	String url = null;           // url
 	String name = null;          //电影名称
-	String enName = null;        //电影英文名称
 	List<String> anotherName = null;   //又名
 	String description = null;	 //简介
-	String location = null;      //电影制片国家
-	String director = null;      //导演
-	List<String> actors = null;  //演员
-	List<String> type = null; 	 //类型
+	List<String> location = null;      //电影制片国家
+	List<String> director = null;      //导演
+	List<String> actors = null;  //演员 
+	List<String> type = null; 	 //类型 剧情 爱情
+
 	Date date = null;            //上映时间
 	int timespan = 0;	         //电影时长
-
 	float score = 0f ;           //电影评价分数
+	
 	int voteCount = 0;
-	String kind = "m";             //movie or serial 
+	String kind = "m";             //movie or serial
+	int season = 0;			     //季数 for serials
+	
+	int episode = 0;			  //集数  for serials
 
+	List<String> pictures;  // pictures
+	List<String> tags ;
+			
 	Date crawledDate = new Date();
 	int magicNum = -1;
 
-	public String getEnName()
+	public List<String> getTags()
 	{
-		return enName;
+		return tags;
 	}
-	public void setEnName(String enName)
+	public void setTags(List<String> tags)
 	{
-		this.enName = enName;
+		this.tags = tags;
+	}
+
+
+	public List<String> getPictures()
+	{
+		return pictures;
+	}
+	public void setPictures(List<String> pictures)
+	{
+		this.pictures = pictures;
 	}
 	public String getKind()
 	{
@@ -75,19 +91,19 @@ public class Movie
 	{
 		this.description = description;
 	}
-	public String getLocation()
+	public List<String> getLocation()
 	{
 		return location;
 	}
-	public void setLocation(String location)
+	public void setLocation(List<String> location)
 	{
 		this.location = location;
 	}
-	public String getDirector()
+	public List<String> getDirector()
 	{
 		return director;
 	}
-	public void setDirector(String director)
+	public void setDirector(List<String> director)
 	{
 		this.director = director;
 	}
@@ -165,6 +181,24 @@ public class Movie
 	{
 		this.magicNum = magicNum;
 	}
+	
+	public int getSeason()
+	{
+		return season;
+	}
+	public void setSeason(int season)
+	{
+		this.season = season;
+	}
+	public int getEpisode()
+	{
+		return episode;
+	}
+	public void setEpisode(int episode)
+	{
+		this.episode = episode;
+	}
+
 	
 	@Override
 	public String toString()

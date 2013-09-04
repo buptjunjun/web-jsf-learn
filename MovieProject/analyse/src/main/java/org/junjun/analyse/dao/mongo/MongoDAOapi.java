@@ -24,12 +24,9 @@ public class MongoDAOapi implements DAOapi
 		mongo = new DAOMongo("42.96.143.59", 27017, "moviedb");
 	}
 	 
-	public Html getNextHtml(String host)
+	public Html getNextHtml(Html html)
 	{
-		Map<String,Object> constrains = new HashMap<String,Object>(1);
-		constrains.put("host", host);
-		constrains.put("magicNum", MAGICNUM);
-		List<Html> rets = this.mongo.search(null, null, constrains, "crawledDate", DAOMongo.ASCENDING, 1, Html.class);
+		List<Html> rets =  getNextHtmls(html,1);
 		
 		if(rets!=null && rets.size() > 0)
 			return rets.get(0);
@@ -37,6 +34,19 @@ public class MongoDAOapi implements DAOapi
 		return null;
 	}
 
+	public List<Html> getNextHtmls(Html html, int limit)
+	{
+		if(limit < 1)
+			limit = 1;
+		
+		Map<String,Object> constrains = new HashMap<String,Object>(1);
+		constrains.put("host", html.getHost());
+		Map<String,Object> constrainGT = new HashMap<String,Object>(1);
+		constrainGT.put("crawledDate", html.getCrawledDate());
+		List<Html> rets = this.mongo.search(null, constrainGT, constrains, "crawledDate", DAOMongo.ASCENDING, limit, Html.class);		
+		return rets;
+	}
+	
 	public String insertHtml(Html html)
 	{
 		this.mongo.insert(html);
@@ -110,7 +120,7 @@ public class MongoDAOapi implements DAOapi
 		return null;
 	}
 
-	public Html getNextMovie(String host)
+	public Movie getNextMovie(String host)
 	{
 		// TODO Auto-generated method stub
 		return null;
@@ -140,6 +150,41 @@ public class MongoDAOapi implements DAOapi
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Html getHtml(String id)
+	{
+		Map<String,Object> constrains = new HashMap<String,Object>(1);
+		constrains.put("id", id.trim());
+		List<Html> rets = mongo.search(null, null, constrains, null, -1, 1, Html.class);
+		if(rets!=null && rets.size() > 0)
+			return rets.get(0);	
+		return null;
+	}
+
+	public Movie getMovie(String id)
+	{
+		// TODO Auto-generated method stub
+		Map<String,Object> constrains = new HashMap<String,Object>(1);
+		constrains.put("id", id.trim());
+		List<Movie> rets = mongo.search(null, null, constrains, null, -1, 1, Html.class);
+		if(rets!=null && rets.size() > 0)
+			return rets.get(0);	
+		return null;
+	}
+
+	public List<BResource> getResources(String Movieid)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public BResource getResource(String resourceid)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 	
 
 
