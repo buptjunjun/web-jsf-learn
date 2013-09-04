@@ -22,6 +22,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.easyGoingCrawler.util.Localizer;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * manage a bunch of Proxy
@@ -96,6 +98,22 @@ public class ProxyManager extends TimerTask
 		}
 	}
 	
+	public void update(Proxy p)
+	{
+		if(this.lp == null)
+			return;
+		for(Proxy proxy:lp)
+		{
+			if(p.equals(proxy))
+			{
+				synchronized (lp)
+				{
+					proxy.setConnectTime(-1);
+					return;
+				}
+			}
+		}
+	}
 	
 	public int getVisitLimit()
 	{
@@ -111,6 +129,8 @@ public class ProxyManager extends TimerTask
 
 	private List<Proxy>  getProxyFromFile(String file)
 	{
+		// 
+		String proxyTestSite = Localizer.getMessage("proxyTestSite");
 		List<Proxy> lp = new ArrayList<Proxy>();
 		BufferedReader bf= null;
 		try
@@ -125,7 +145,7 @@ public class ProxyManager extends TimerTask
 				String ip = split[0].trim();
 				String port = split[1].trim();
 				int portInt = Integer.parseInt(port);
-				Proxy p = new Proxy(null,ip,portInt,"http://movie.douban.com/");
+				Proxy p = new Proxy(null,ip,portInt,proxyTestSite);
 				lp.add(p);
 			}
 		} catch (Exception e)
@@ -207,9 +227,13 @@ public class ProxyManager extends TimerTask
 	
 	public static void main(String []str)
 	{
+		ApplicationContext appcontext = null;
+		appcontext = new ClassPathXmlApplicationContext("egcrawler.xml");
 		ProxyManager pm = ProxyManager.getInstance();
 		pm.testUsable();
-
+		Proxy p = new Proxy(null,"61.133.125.186", 50634, null);
+		pm.update(p);
+		System.out.println();
 	}
 	 
 	 @Override

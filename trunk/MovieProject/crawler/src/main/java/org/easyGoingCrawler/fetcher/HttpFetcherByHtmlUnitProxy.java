@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.easyGoingCrawler.framwork.CrawlURI;
 import org.easyGoingCrawler.framwork.Fetcher;
@@ -103,6 +104,10 @@ public class HttpFetcherByHtmlUnitProxy extends Fetcher
 		
 		 try
 		{
+			Proxy p =  ProxyManager.getInstance().getOneAvailableProxy();
+			this.webClient.getProxyConfig().setProxyHost(p.getIp());
+			this.webClient.getProxyConfig().setProxyPort(p.getPort());
+			
 			HtmlPage page = webClient.getPage(url);
 			//System.out.println(page.asXml());
 			WebResponse webresponse = page.getWebResponse();
@@ -116,11 +121,21 @@ public class HttpFetcherByHtmlUnitProxy extends Fetcher
 			curl.setEncode(encoding == null ? this.defaultEncode:encoding);
 			curl.setLastCrawlDate(new Date());	
 			curl.setReserve(page);
+			if(status!=200)
+			{
+				String  ip = this.webClient.getProxyConfig().getProxyHost();
+				int  port = this.webClient.getProxyConfig().getProxyPort();
+				if(!StringUtils.isBlank(ip))
+				{
+					Proxy updatedProxy = new Proxy(null, ip, port, null);
+					ProxyManager.getInstance().update(updatedProxy);
+					System.out.println(Thread.currentThread().getName()+"-"+ "## update proxy +"+p+": curl="+curl);	
+					loger.error(Thread.currentThread().getName()+"-"+ "##update proxy +"+p+": curl="+curl);
+				}
+			}
 			
-			Proxy p =  ProxyManager.getInstance().getOneAvailableProxy();
-			this.webClient.getProxyConfig().setProxyHost(p.getIp());
-			this.webClient.getProxyConfig().setProxyPort(p.getPort());
-			System.out.println(Thread.currentThread().getName()+"-"+ "##HttpFetcherByHtmlUnit+"+p+": curl="+curl);		
+			System.out.println(Thread.currentThread().getName()+"-"+ "##HttpFetcherByHtmlUnitProxy+"+p+": curl="+curl);	
+			loger.error(Thread.currentThread().getName()+"-"+ "##HttpFetcherByHtmlUnitProxy+"+p+": curl="+curl);
 		}
 		catch (Exception e)
 		{
@@ -128,6 +143,7 @@ public class HttpFetcherByHtmlUnitProxy extends Fetcher
 			curl.setContent(null);
 			curl.setReserve(null);
 			loger.error(Thread.currentThread().getName()+"-"+"##HttpFetcherByHtmlUnit:"+e.getMessage());
+			
 			return;
 		}		 
 	}
