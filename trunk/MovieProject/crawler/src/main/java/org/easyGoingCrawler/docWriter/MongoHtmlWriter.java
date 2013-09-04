@@ -38,6 +38,7 @@ public class MongoHtmlWriter extends DocWriter
 			
 			html.setId(Converter.urlEncode(curl.getUrl()));
 			egdao.insert(html);
+			System.out.println(Thread.currentThread().getName()+"-"+ "##MongoHtmlWriter write a html:curl="+curl);
 		}
 	}
 	public URLAnalyzer getUrAnalyzer()

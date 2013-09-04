@@ -44,7 +44,7 @@ public class DAOMongo<T> {
 		try
 		{
 			Mongo mongo = new Mongo("");
-			mongo.setWriteConcern(WriteConcern.NONE);
+			mongo.setWriteConcern(WriteConcern.NORMAL);
 			mongoOps = new MongoTemplate(mongo, dbName);
 		} catch (UnknownHostException e)
 		{

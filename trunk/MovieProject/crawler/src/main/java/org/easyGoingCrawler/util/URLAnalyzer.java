@@ -47,10 +47,10 @@ public class URLAnalyzer
 		//String url = "http://my.oschina.net/kzhou/blog/99360";
 		//String url = "http://my.oschina.net/u/126717";
 		//String url = "http://my.oschina.net/dourgulf";
-		String url = "http://movie.douban.com/subject/6875412/";
-
+		//String url = "http://movie.douban.com/tag/%E5%9B%BD%E4%BA%A7%E7%94%B5%E8%A7%86%E5%89%A7?start=20&type=T";
+	String url = "http://movie.douban.com/tag/%E5%9B%BD%E4%BA%A7%E7%94%B5%E8%A7%86%E5%89%A7";
 		String pattern4save = "http://movie.douban.com/subject/[0-9]+/(\\?from=subject-page)?";
-		String pattern4hold = "http://movie.douban.com/.*";
+		String pattern4hold = "(http://movie.douban.com/tag/[\\w\\%\u4e00-\u9fa5]+\\?start=\\d+&type=T)|(http://movie.douban.com/tag/[\\w\\%\u4e00-\u9fa5]+(\\?type=T)?)|(http://movie.douban.com/doulist/.*)|(http://movie.douban.com/subject/[0-9]+.*subject-page)";
 		System.out.println(Pattern.matches(pattern4save, url));
 		System.out.println(Pattern.matches(pattern4hold, url));
 			

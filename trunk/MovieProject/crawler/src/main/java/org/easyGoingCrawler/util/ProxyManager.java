@@ -20,6 +20,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
 import org.easyGoingCrawler.util.Localizer;
 
 /**
@@ -31,7 +32,7 @@ import org.easyGoingCrawler.util.Localizer;
 public class ProxyManager extends TimerTask
 {
 	 private List<Proxy> lp  = new ArrayList<Proxy>();
-	 
+	 Logger loger = Logger.getLogger(ProxyManager.class);
 	 public List<Proxy> getLp()
 	{
 		return lp;
@@ -200,6 +201,7 @@ public class ProxyManager extends TimerTask
 		for(Proxy p:lp)
 		{
 			System.out.println(p);
+			loger.info(p);
 		}
 	}
 	

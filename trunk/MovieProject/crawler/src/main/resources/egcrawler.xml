@@ -115,12 +115,6 @@
    		<constructor-arg ref="hosts">  </constructor-arg> 
    </bean>
    
-     <!-- EG DAO remote -->
-   <bean id ="rEGDAOMongo" class="org.easyGoingCrawler.DAO.EGDAOMongo" > 
-   		<constructor-arg ref="rmongo"></constructor-arg>
-   		<constructor-arg value="blogdb"></constructor-arg>
-   		<constructor-arg ref="hosts">  </constructor-arg> 
-   </bean>
    
    <!-- url analyzer to indecate wether to save to the database -->
    <bean id="urlAnalyzer" class="org.easyGoingCrawler.util.URLAnalyzer">
@@ -157,12 +151,18 @@
   		p:urAnalyzer-ref ="urlAnalyzer"
  		scope="prototype" />
  		
+   <!-- mongo html writer -->
+  <bean id="MongoHtmlWriter" class=" org.easyGoingCrawler.docWriter.MongoHtmlWriter"
+  		p:urAnalyzer-ref ="urlAnalyzer"
+ 		scope="prototype" >
+ 		<constructor-arg ref="EGDAOMongo"></constructor-arg>
+  </bean>
 
  <!-- writer chain -->
   <bean id="docwriter" class=" org.easyGoingCrawler.docWriter.DocWriterChain" scope="prototype" >
   	<constructor-arg>
-  		<list>
-  			<ref bean = "mirrorwriter"/>	
+  		<list>	
+  			<ref bean="MongoHtmlWriter"/>
   		</list>
   	</constructor-arg>
  </bean>

@@ -31,16 +31,15 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
 */
 public class Main 
 {
-	static
-	{
-		PropertyConfigurator.configure("src/main/resources/log4j.properties");
-	}
 	
 	static private Logger logger = Logger.getLogger(Main.class);
 	private ApplicationContext appcontext = null;
 	public Main()
 	{
 		appcontext = new ClassPathXmlApplicationContext("egcrawler.xml");
+		String log4jfile = Localizer.getMessage("log4jFile");
+		PropertyConfigurator.configure(log4jfile);
+		
 	}
 	
 	
