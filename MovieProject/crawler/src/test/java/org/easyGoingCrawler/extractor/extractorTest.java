@@ -12,11 +12,11 @@ public class extractorTest
 	@Test
 	public void HttpextractorTest()
 	{
-		ApplicationContext appcontext = new ClassPathXmlApplicationContext("springcofigure.xml");
-		Fetcher fetcher = appcontext.getBean("fetcherHtmlUnit",Fetcher.class);
+		ApplicationContext appcontext = new ClassPathXmlApplicationContext("egcrawler.xml");
+		Fetcher fetcher = appcontext.getBean("fetcherHtmlUnitJs",Fetcher.class);
 		
 		CrawlURI curl = new CrawlURI();
-		curl.setUrl("http://www.cnblogs.com/lhb25/");
+		curl.setUrl("http://www.funshion.com/subject/110013/#reply");
 		curl.setStatus(CrawlURI.STATUS_OK);
 		fetcher.fetch(curl);
 		System.out.println(new String (curl.getContent()));
