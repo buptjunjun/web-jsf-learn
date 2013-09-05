@@ -71,6 +71,7 @@
 			   <value>${host_oschina}</value>
 			   <value>${host_iteye}</value>
 			   <value>${host_douban_movie}</value>
+			   <value>${host_funshion_movie}</value>
 			   
 		</list>
   	</constructor-arg>
@@ -88,6 +89,8 @@
    			<entry key="${host_ibmcn}" value="${save_ibmcn}"></entry>
    			<entry key="${host_iteye}" value="${save_iteye}"></entry>
    			<entry key="${host_douban_movie}" value="${save_douban_movie}"></entry>
+   			<entry key="${host_funshion_movie}" value="${save_funshion_movie}"></entry>
+   			
    		</map>
   	</constructor-arg>
    </bean>
@@ -104,6 +107,7 @@
    			<entry key="${host_ibmcn}" value="${hold_ibmcn}"></entry>
    			<entry key="${host_iteye}" value="${hold_iteye}"></entry>
    			<entry key="${host_douban_movie}" value="${hold_douban_movie}"></entry>
+   			<entry key="${host_funshion_movie}" value="${hold_funshion_movie}"></entry>
    		</map>
   	</constructor-arg>
    </bean>
@@ -115,12 +119,6 @@
    		<constructor-arg ref="hosts">  </constructor-arg> 
    </bean>
    
-     <!-- EG DAO remote -->
-   <bean id ="rEGDAOMongo" class="org.easyGoingCrawler.DAO.EGDAOMongo" > 
-   		<constructor-arg ref="rmongo"></constructor-arg>
-   		<constructor-arg value="blogdb"></constructor-arg>
-   		<constructor-arg ref="hosts">  </constructor-arg> 
-   </bean>
    
    <!-- url analyzer to indecate wether to save to the database -->
    <bean id="urlAnalyzer" class="org.easyGoingCrawler.util.URLAnalyzer">
@@ -161,7 +159,7 @@
   <bean id="MongoHtmlWriter" class=" org.easyGoingCrawler.docWriter.MongoHtmlWriter"
   		p:urAnalyzer-ref ="urlAnalyzer"
  		scope="prototype" >
- 		<constructor-arg ref="rEGDAOMongo"></constructor-arg>
+ 		<constructor-arg ref="EGDAOMongo"></constructor-arg>
   </bean>
 
  <!-- writer chain -->
@@ -175,20 +173,52 @@
  		
 
  
-  
-  <!-- csdn  -->
+  <!-- douban  -->
   <bean id="movieScheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
  		<constructor-arg ref="EGDAOMongo"></constructor-arg>
  		<constructor-arg value="${host_douban_movie}"></constructor-arg>
  		<constructor-arg ref="urlAnalyzer"></constructor-arg>
  </bean>
   <bean id="doubanCrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
+		<constructor-arg ref = "fetcherHtmlUnit"></constructor-arg>
+		<constructor-arg ref = "extractor"></constructor-arg>
+		<constructor-arg ref = "movieScheduleer"></constructor-arg>
+		<constructor-arg ref ="docwriter"></constructor-arg>
+		<constructor-arg value="${host_douban_movie}"></constructor-arg>
+  </bean>
+  
+  
+   <bean id="doubanProxyCrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
 		<constructor-arg ref = "fetcherProxy"></constructor-arg>
 		<constructor-arg ref = "extractor"></constructor-arg>
 		<constructor-arg ref = "movieScheduleer"></constructor-arg>
 		<constructor-arg ref ="docwriter"></constructor-arg>
 		<constructor-arg value="${host_douban_movie}"></constructor-arg>
   </bean>
-  <!-- csdn end -->
+  <!-- douban -->
+  
+   <!-- funshion  -->
+  <bean id="funshionScheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
+ 		<constructor-arg ref="EGDAOMongo"></constructor-arg>
+ 		<constructor-arg value="${host_funshion_movie}"></constructor-arg>
+ 		<constructor-arg ref="urlAnalyzer"></constructor-arg>
+ </bean>
+  <bean id="funshionCrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
+		<constructor-arg ref = "fetcherHtmlUnitJs"></constructor-arg>
+		<constructor-arg ref = "extractor"></constructor-arg>
+		<constructor-arg ref = "funshionScheduleer"></constructor-arg>
+		<constructor-arg ref ="docwriter"></constructor-arg>
+		<constructor-arg value="${host_funshion_movie}"></constructor-arg>
+  </bean>
+  
+  
+   <bean id="funshionProxyCrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
+		<constructor-arg ref = "fetcherHtmlUnitJs"></constructor-arg>
+		<constructor-arg ref = "extractor"></constructor-arg>
+		<constructor-arg ref = "funshionScheduleer"></constructor-arg>
+		<constructor-arg ref ="docwriter"></constructor-arg>
+		<constructor-arg value="${host_funshion_movie}"></constructor-arg>
+  </bean>
+  <!-- funshion -->
   
 </beans>
