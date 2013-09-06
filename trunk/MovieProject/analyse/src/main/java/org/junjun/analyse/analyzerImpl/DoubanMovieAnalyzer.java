@@ -37,10 +37,13 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 	public static String host="movie.douban.com";
 	private SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
 	private SimpleDateFormat formater1 = new SimpleDateFormat("yyyy-MM");
+	private SimpleDateFormat formater2 = new SimpleDateFormat("yyyy");
 	private Pattern patternInt = Pattern.compile("\\d+");
 	private Pattern patternURL = Pattern.compile("http://movie.douban.com/subject/\\d+");
 	private Pattern patternDate = Pattern.compile("\\d\\d\\d\\d-\\d\\d-\\d\\d");
 	private Pattern patternDate1 = Pattern.compile("\\d\\d\\d\\d-\\d\\d");
+	private Pattern patternDate2 = Pattern.compile("\\d\\d\\d\\d");
+	
 	 static String director = "导演";
 	 static String actor = "主演";
 	 static String type = "类型"; 
@@ -57,7 +60,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 	 static int lengthLength = length.length();
 	 static int lengthAname = aname.length();
 	 private Logger logger = Logger.getLogger(DoubanMovieAnalyzer.class);
-	 
+	 private static final int HTMLERROR= 2; 
 	 DAOapi dao = null;
 	public DoubanMovieAnalyzer()
 	{
@@ -72,17 +75,14 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 		try
 		{				
 			Document doc = Jsoup.parse(content);
-			
-			Element infoElem = doc.getElementById("info");
-			str = infoElem.text();
-			
+					
 	//		System.out.println(str);
 			//片名
 			String name = doc.title();
 			name = name.replace("(豆瓣)", "");
-			movie.setName(name);			
+			movie.setName(name);		
 			
-			
+			Element infoElem = doc.getElementById("info");		
 			List<Node> infoNodes = infoElem.childNodes();	
 
 			// to save the infomation of a movie 
@@ -130,6 +130,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 				catch(Exception e)
 				{
 					e.printStackTrace();
+					logger.error(e.toString());
 				}
 
 				try
@@ -143,6 +144,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 				catch(Exception e)
 				{
 					e.printStackTrace();
+					logger.error(e.toString());
 				}
 				
 				try
@@ -156,6 +158,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 				catch(Exception e)
 				{
 					e.printStackTrace();
+					logger.error(e.toString());
 				}
 				
 				try
@@ -169,6 +172,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 				catch(Exception e)
 				{
 					e.printStackTrace();
+					logger.error(e.toString());
 				}
 				
 				try
@@ -182,6 +186,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 				catch(Exception e)
 				{
 					e.printStackTrace();
+					logger.error(e.toString());
 				}
 				
 				try
@@ -195,6 +200,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 				catch(Exception e)
 				{
 					e.printStackTrace();
+					logger.error(e.toString());
 				}
 				
 				try
@@ -216,11 +222,33 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 							Date d = formater1.parse(date);
 							movie.setDate(d);
 						}
+						
+						mdate = patternDate2.matcher(value);
+						if(mdate.find())
+						{
+							String date = mdate.group();
+							Date d = formater2.parse(date);
+							movie.setDate(d);
+						}
+					}
+					
+					if(movie.getDate() == null)
+					{
+						Element edate = doc.getElementsByClass("year").first();
+						String dateStr = edate.text();
+						Matcher mdate = patternDate2.matcher(dateStr);
+						if(mdate.find())
+						{
+							String date = mdate.group();
+							Date d = formater2.parse(date);
+							movie.setDate(d);
+						}
 					}
 				}
 				catch(Exception e)
 				{
 					e.printStackTrace();
+					logger.error(e.toString());
 				}
 				
 				try
@@ -238,6 +266,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 				catch(Exception e)
 				{
 					e.printStackTrace();
+					logger.error(e.toString());
 				}
 				
 				try
@@ -257,6 +286,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 				catch(Exception e)
 				{
 					e.printStackTrace();
+					logger.error(e.toString());
 				}
 				
 				try
@@ -275,6 +305,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 				catch(Exception e)
 				{
 					e.printStackTrace();
+					logger.error(e.toString());
 				}
 				
 			}
@@ -293,6 +324,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 			catch(Exception e)
 			{
 				e.printStackTrace();
+				logger.error(e.toString());
 			}
 			
 			try
@@ -313,6 +345,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 						catch(Exception e)
 						{
 							e.printStackTrace();
+							logger.error(e.toString());
 						}
 						
 					}
@@ -322,6 +355,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 			catch(Exception e)
 			{
 				e.printStackTrace();
+				logger.error(e.toString());
 			}
 			
 			try
@@ -341,6 +375,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 						catch(Exception e)
 						{
 							e.printStackTrace();
+							logger.error(e.toString());
 						}
 					}
 					else
@@ -352,6 +387,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 			catch(Exception e)
 			{
 				e.printStackTrace();
+				logger.error(e.toString());
 			}
 
 		
@@ -367,7 +403,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 						Element imgsEle = imgEle.getElementsByTag("img").first();
 						posterUrl = imgsEle.attr("src");
 					}
-					catch(Exception e){e.printStackTrace();}
+					catch(Exception e){e.printStackTrace();logger.error(e.toString());}
 				}
 				
 				System.out.println();
@@ -404,6 +440,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 			catch(Exception e)
 			{
 				e.printStackTrace();
+				logger.error(e.toString());
 			}
 			
 			
@@ -433,12 +470,13 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 						}
 						movie.setTags(tags);						
 					}
-					catch(Exception e){e.printStackTrace();}
+					catch(Exception e){e.printStackTrace();logger.error(e.toString());}
 				}
 			}
 			catch(Exception e)
 			{
 				e.printStackTrace();
+				logger.error(e.toString());
 			}
 
 			
@@ -462,6 +500,9 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 	public Movie analyze(Html html)
 	{
 		Movie movie = this.analyze(html.getHost(), html.getEncode(), html.getHtml());
+		if(movie==null)
+			return null;
+		
 		movie.setUrl(html.getUrl());
 		movie.setId(Converter.urlEncode(movie.getUrl()));
 		return movie;
@@ -475,10 +516,12 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 		initHtml.setHost("movie.douban.com");
 		Date date = new Date();
 		date.setYear(10);
-		int limit = 20;
+		int limit = 50;
 		initHtml.setCrawledDate(date);	
 		List<Html> htmls = dao.getNextHtmls(initHtml,limit);
 		int count = 0;
+		Set<String> updateField = new HashSet<String>();
+		updateField.add("magicNum");
 		while(htmls!=null)
 		{
 			Html store = null;
@@ -486,12 +529,24 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 			{
 				logger.info("html:"+(count++)+html);
 				System.out.println("html:"+(count++)+html);
-				Movie movie = this.analyze(html);					
-				dao.insertMovie(movie);
-				logger.info("movie:"+(count)+movie);
-				System.out.println("movie:"+(count)+movie);
-				dao.updateHtml(html, updateFields);
-				store = html;
+				Movie movie = this.analyze(html);	
+				
+				if(movie!=null)
+				{
+					dao.insertMovie(movie);
+					logger.info("movie:"+(count)+movie);
+					System.out.println("movie:"+(count)+movie);
+				}
+				else
+				{
+				
+					html.setMagicNum(HTMLERROR);
+					dao.updateHtml(html, updateField);
+					logger.info("html:"+(count)+"update "+html);
+				}
+				
+				if(html.getCrawledDate()!=null)
+					store = html;
 			}
 			
 			htmls = dao.getNextHtmls(store,limit);
@@ -502,6 +557,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 	{
 		String id = Converter.urlEncode(url);
 		Html html  = dao.getHtml(id);
+		System.out.println(html.getHtml());
 		Movie m = this.analyze(html);
 		System.out.println(m);
 	}
@@ -510,8 +566,13 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 		DoubanMovieAnalyzer douban = new DoubanMovieAnalyzer();
 		//douban.test("http://movie.douban.com/subject/1291832");
 		//douban.test("http://movie.douban.com/subject/23055587");
-		//douban.test("http://movie.douban.com/subject/3010104");
-		douban.analyse();
+		//douban.test("http://movie.douban.com/subject/1950253");
+		//douban.test("http://movie.douban.com/subject/20425881");
+		// test date
+		//douban.test("http://movie.douban.com/subject/21354055");
+		// test analyzer fail
+		douban.test("http://movie.douban.com/subject/1906978");
+		//douban.analyse();
 	}
 
 }
