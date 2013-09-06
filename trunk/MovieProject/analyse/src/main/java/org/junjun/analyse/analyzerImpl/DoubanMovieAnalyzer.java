@@ -1,7 +1,5 @@
 package org.junjun.analyse.analyzerImpl;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,8 +17,6 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.easyGoingCrawler.docWriter.Html;
-import org.easyGoingCrawler.framwork.CrawlURI;
-import org.easyGoingCrawler.framwork.Fetcher;
 import org.easyGoingCrawler.util.Converter;
 import org.jsoup.Jsoup;
 import org.jsoup.helper.StringUtil;
@@ -472,9 +468,7 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 	}
 	
 	public void analyse()
-	{
-		
-		
+	{		
 		Set<String> updateFields = new HashSet<String>();
 		updateFields.add("magicNum");
 		Html initHtml = new Html();
@@ -484,18 +478,22 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 		int limit = 20;
 		initHtml.setCrawledDate(date);	
 		List<Html> htmls = dao.getNextHtmls(initHtml,limit);
+		int count = 0;
 		while(htmls!=null)
 		{
 			Html store = null;
 			for(Html html:htmls)
 			{
-			
-				Movie movie = this.analyze(html);			
+				logger.info("html:"+(count++)+html);
+				System.out.println("html:"+(count++)+html);
+				Movie movie = this.analyze(html);					
 				dao.insertMovie(movie);
+				logger.info("movie:"+(count)+movie);
+				System.out.println("movie:"+(count)+movie);
 				dao.updateHtml(html, updateFields);
 				store = html;
 			}
-					
+			
 			htmls = dao.getNextHtmls(store,limit);
 		}
 	}
@@ -510,8 +508,10 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 	static public void main(String [] args)
 	{
 		DoubanMovieAnalyzer douban = new DoubanMovieAnalyzer();
-		douban.test("http://movie.douban.com/subject/1291832");
+		//douban.test("http://movie.douban.com/subject/1291832");
 		//douban.test("http://movie.douban.com/subject/23055587");
+		//douban.test("http://movie.douban.com/subject/3010104");
+		douban.analyse();
 	}
 
 }
