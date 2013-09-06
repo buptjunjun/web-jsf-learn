@@ -172,6 +172,13 @@
 			<version>6.1.14</version>
 			<type>jar</type>
 		</dependency>
+		
+		
+		<dependency>
+			 <groupId>MongoWrap</groupId>
+  			 <artifactId>MongoWrap</artifactId>
+  			 <version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 
