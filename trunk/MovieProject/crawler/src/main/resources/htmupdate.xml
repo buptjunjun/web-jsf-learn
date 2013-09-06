@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:context="http://www.springframework.org/schema/context"
+          xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+          xmlns:p="http://www.springframework.org/schema/p"
+          xsi:schemaLocation=
+          "http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context-3.0.xsd
+          http://www.springframework.org/schema/data/mongo
+          http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:egcrawler.properties</value>
+				<value>classpath:pattern.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+  <bean class="org.easyGoingCrawler.util.Localizer">
+  	<constructor-arg>
+  		<list>
+			<value>setting.properties</value>
+		</list>
+  	</constructor-arg>
+  </bean>
+  <bean id="testProps" class ="java.lang.String" >
+  	<constructor-arg value="${test}"></constructor-arg>
+  </bean>
+  
+<!-- Default bean name is 'mongo' -->
+  <bean id="DAOMongo" class="org.junjun.mongo.DAOMongo">
+  	<constructor-arg value="42.96.143.59"></constructor-arg>
+  	<constructor-arg value="27017"></constructor-arg>
+  	<constructor-arg value="moviedb"></constructor-arg>
+  </bean>
+  
+
+  <!-- host list -->
+  <bean id="hosts" class="java.util.ArrayList">
+  	<constructor-arg>
+  		<list>
+ 			<value>${host_csdn}</value> 		   
+			<value>${host_chinaunix}</value>
+			 <value>${host_cnblogs}</value> 
+			  <value>${host_51cto}</value>
+			   <value>${host_ibmcn}</value>
+			   <value>${host_oschina}</value>
+			   <value>${host_iteye}</value>
+			   <value>${host_douban_movie}</value>
+			   <value>${host_funshion_movie}</value>
+			   
+		</list>
+  	</constructor-arg>
+  </bean>
+  
+  <!-- save pattern  -->
+  <bean id="pattern_save" class="java.util.HashMap">
+  	<constructor-arg>
+  		<map>
+   			<entry key="${host_csdn}" value="${save_csdn}"></entry>
+   			<entry key="${host_cnblogs}" value="${save_cnblogs}"></entry>
+   			<entry key="${host_chinaunix}" value="${save_chinaunix}"></entry>
+   			<entry key="${host_51cto}" value="${save_51cto}"></entry>
+   			<entry key="${host_oschina}" value="${save_oschina}"></entry>
+   			<entry key="${host_ibmcn}" value="${save_ibmcn}"></entry>
+   			<entry key="${host_iteye}" value="${save_iteye}"></entry>
+   			<entry key="${host_douban_movie}" value="${save_douban_movie}"></entry>
+   			<entry key="${host_funshion_movie}" value="${save_funshion_movie}"></entry>
+   			
+   		</map>
+  	</constructor-arg>
+   </bean>
+   
+   <!-- hold pattern  -->
+  <bean id="pattern_hold" class="java.util.HashMap">
+  	<constructor-arg>
+  		<map>
+   			<entry key="${host_csdn}" value="${hold_csdn}"></entry>
+   			<entry key="${host_cnblogs}" value="${hold_cnblogs}"></entry>
+   			<entry key="${host_chinaunix}" value="${hold_chinaunix}"></entry>
+   			<entry key="${host_51cto}" value="${hold_51cto}"></entry>
+   			<entry key="${host_oschina}" value="${hold_oschina}"></entry>
+   			<entry key="${host_ibmcn}" value="${hold_ibmcn}"></entry>
+   			<entry key="${host_iteye}" value="${hold_iteye}"></entry>
+   			<entry key="${host_douban_movie}" value="${hold_douban_movie}"></entry>
+   			<entry key="${host_funshion_movie}" value="${hold_funshion_movie}"></entry>
+   		</map>
+  	</constructor-arg>
+   </bean>
+  
+   <!-- EG DAO -->
+   <bean id ="EGDAOMongoUpdater" class="org.easyGoingCrawler.DAO.EGDAOMongoUpdater" > 
+   		<constructor-arg ref="DAOMongo"></constructor-arg>
+   		<constructor-arg ref="hosts">  </constructor-arg> 
+   </bean>
+   
+   
+   <!-- url analyzer to indecate wether to save to the database -->
+   <bean id="urlAnalyzer" class="org.easyGoingCrawler.util.URLAnalyzer">
+   		<constructor-arg ref="pattern_save"> </constructor-arg>
+   		<constructor-arg ref="pattern_hold"></constructor-arg>
+   </bean>
+  
+  <!-- fetcher -->  
+  <bean id="fetcherByWebDriver" class="org.easyGoingCrawler.fetcher.HttpFetcherByWebDriver" scope="prototype" /> 
+  <bean id="fetcherHtmlUnitXML" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnitXML" scope="prototype" /> 
+  <bean id="fetcherHtmlUnit" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnit" scope="prototype" /> 
+  <bean id="fetcherHtmlUnitJs" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnit" scope="prototype" >
+  	<constructor-arg value="#{true}"></constructor-arg>
+  </bean>
+  <bean id="fetcherHtmlUnitJsLogin" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnitLogin" scope="prototype" >
+  	<constructor-arg value="#{true}"></constructor-arg>
+  	<constructor-arg value="src\\main\\resources\\loginCnblog.txt"></constructor-arg>
+  </bean>
+      <bean id="fetcherJsoup" class="org.easyGoingCrawler.fetcher.HttpFetcherByJsoup" scope="prototype" >
+  	<constructor-arg value="10"></constructor-arg>
+  	</bean>
+  
+  <bean id="fetcher" class="org.easyGoingCrawler.fetcher.HttpFetcher" scope="prototype" />
+   <bean id="fetcherBaseProxy" class="org.easyGoingCrawler.fetcher.HttpFetcherProxy" scope="prototype" />
+  <bean id="fetcherProxy" class="org.easyGoingCrawler.fetcher.HttpFetcherByHtmlUnitProxy" scope="prototype" >
+  </bean>
+  <bean id="httpsfetcher" class="org.easyGoingCrawler.fetcher.HttpsFetcher" scope="prototype" />
+  
+   <!-- extractor -->
+  <bean id="extractor" class="org.easyGoingCrawler.extractor.HTMLExtractor" scope="prototype"/>
+  
+   <!-- mirror writer -->
+  <bean id="mirrorwriter" class=" org.easyGoingCrawler.docWriter.MirrorWriter"
+  		p:urAnalyzer-ref ="urlAnalyzer"
+ 		scope="prototype" />
+ 		
+   <!-- mongo html writer -->
+  <bean id="MongoHtmlWriter" class=" org.easyGoingCrawler.docWriter.MongoHtmlWriter"
+  		p:urAnalyzer-ref ="urlAnalyzer"
+ 		scope="prototype" >
+ 		<constructor-arg ref="EGDAOMongoUpdater"></constructor-arg>
+  </bean>
+ 		
+   <!-- mongo html writer -->
+  <bean id="MongoHtmlUpdater" class=" org.easyGoingCrawler.docWriter.MongoHtmlUpdater"
+  		p:urAnalyzer-ref ="urlAnalyzer"
+ 		scope="prototype" >
+ 		<constructor-arg ref="EGDAOMongoUpdater"></constructor-arg>
+  </bean>
+  
+ <!-- writer chain -->
+  <bean id="docwriter" class=" org.easyGoingCrawler.docWriter.DocWriterChain" scope="prototype" >
+  	<constructor-arg>
+  		<list>	
+  			<ref bean="MongoHtmlUpdater"/>
+  		</list>
+  	</constructor-arg>
+ </bean>
+ 		
+
+ 
+  <!-- douban  -->
+  <bean id="MovieUpdateURLScheduler" class="org.easyGoingCrawler.urlscheduler.MovieUpdateURLScheduler"  scope="singleton" >
+ 		<constructor-arg ref="EGDAOMongoUpdater"></constructor-arg>
+ 		<constructor-arg value="${host_douban_movie}"></constructor-arg>
+ 		<constructor-arg ref="urlAnalyzer"></constructor-arg>
+ </bean>
+ 
+  <bean id="MovieUpdateCrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
+		<constructor-arg ref = "fetcherHtmlUnit"></constructor-arg>
+		<constructor-arg ><null /></constructor-arg>
+		<constructor-arg ref = "MovieUpdateURLScheduler"></constructor-arg>
+		<constructor-arg ref ="docwriter"></constructor-arg>
+		<constructor-arg value="${host_douban_movie}"></constructor-arg>
+  </bean>
+  
+  
+   <bean id="MovieUpdateProxyCrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
+		<constructor-arg ref = "fetcherProxy"></constructor-arg>
+		<constructor-arg ><null /></constructor-arg>
+		<constructor-arg ref = "MovieUpdateURLScheduler"></constructor-arg>
+		<constructor-arg ref ="docwriter"></constructor-arg>
+		<constructor-arg value="${host_douban_movie}"></constructor-arg>
+  </bean>
+  <!-- douban -->
+</beans>

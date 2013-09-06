@@ -168,7 +168,7 @@ public class CrawlURI implements Serializable
 		// TODO Auto-generated method stub
 		String ret = this.url +", httpstatus = " +this.getHttpstatus() 
 				+ " , status = " + this.status +", encode = " + this.encode
-				+ " , path = " +", lastcrawlDate = " + this.getLastCrawlDate()+"id:"+Converter.urlEncode(this.url);
+				+ " , path = " +", lastcrawlDate = " + this.getLastCrawlDate()+" id:"+Converter.urlEncode(this.url);
 		return ret;
 	}
 
