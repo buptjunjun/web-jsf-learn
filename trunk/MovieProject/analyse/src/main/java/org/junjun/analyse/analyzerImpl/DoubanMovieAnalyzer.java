@@ -75,16 +75,16 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 		try
 		{				
 			Document doc = Jsoup.parse(content);
-					
-	//		System.out.println(str);
-			//Æ¬Ãû
-			String name = doc.title();
-			name = name.replace("(¶¹°ê)", "");
-			movie.setName(name);		
-			
+
+	//		System.out.println(str);			
 			Element infoElem = doc.getElementById("info");		
 			List<Node> infoNodes = infoElem.childNodes();	
 
+			//Æ¬Ãû
+			String name = doc.title();
+			name = name.replace("(¶¹°ê)", "");
+			movie.setName(name);	
+			
 			// to save the infomation of a movie 
 			Map<String,String> infos = new HashMap<String,String>();
 			
@@ -571,8 +571,8 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 		// test date
 		//douban.test("http://movie.douban.com/subject/21354055");
 		// test analyzer fail
-		douban.test("http://movie.douban.com/subject/1906978");
-		//douban.analyse();
+		//douban.test("http://movie.douban.com/subject/5284554");
+		douban.analyse();
 	}
 
 }
