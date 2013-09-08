@@ -121,7 +121,7 @@ public class HttpFetcherByHtmlUnitProxy extends Fetcher
 			curl.setEncode(encoding == null ? this.defaultEncode:encoding);
 			curl.setLastCrawlDate(new Date());	
 			curl.setReserve(page);
-			if(status!=200)
+			/*if(status!=200)
 			{
 				String  ip = this.webClient.getProxyConfig().getProxyHost();
 				int  port = this.webClient.getProxyConfig().getProxyPort();
@@ -133,7 +133,7 @@ public class HttpFetcherByHtmlUnitProxy extends Fetcher
 					loger.error(Thread.currentThread().getName()+"-"+ "##update proxy +"+p+": curl="+curl);
 				}
 			}
-			
+			*/
 			System.out.println(Thread.currentThread().getName()+"-"+ "##HttpFetcherByHtmlUnitProxy+"+p+": curl="+curl);	
 			loger.error(Thread.currentThread().getName()+"-"+ "##HttpFetcherByHtmlUnitProxy+"+p+": curl="+curl);
 		}
