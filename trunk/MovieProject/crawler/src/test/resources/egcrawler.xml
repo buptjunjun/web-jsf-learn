@@ -52,11 +52,13 @@
      write-fsync="true" />
    </mongo:mongo>
 
-  <bean id="DAOMongo" class="org.easyGoingCrawler.DAO.DAOMongo">
+<!-- Default bean name is 'mongo' -->
+  <bean id="DAOMongo" class="org.junjun.mongo.DAOMongo">
   	<constructor-arg value="42.96.143.59"></constructor-arg>
   	<constructor-arg value="27017"></constructor-arg>
   	<constructor-arg value="moviedb"></constructor-arg>
   </bean>
+  
   
 
   <!-- host list -->

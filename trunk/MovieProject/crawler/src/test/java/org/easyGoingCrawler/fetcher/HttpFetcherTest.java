@@ -108,7 +108,8 @@ public class HttpFetcherTest
 	DocWriter docWriter = appcontext.getBean("mirrorwriter",DocWriter.class);
 	CrawlURI curl = new CrawlURI();
 	//curl.setUrl("https://www.googleapis.com/customsearch/v1element?key=AIzaSyCVAXiUzRYsML1Pv6RwSG1gunmMikTzQqY&rsz=filtered_cse&num=10&hl=zh_CN&prettyPrint=false&source=gcsc&gss=.com&sig=351077565dad05b6847b1f7d41e36949&cx=014545285319128157587:opxtjupf3yk&q=%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B&sort=&googlehost=www.google.com&oq=%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B");
-	curl.setUrl("http://www.funshion.com/search/media?rec=1&sall=&kt=&ta=oin&word=%E7%8C%8E%E6%9D%80%E6%9C%AC%C2%B7%E6%8B%89%E7%99%BB+Zero+Dark+Thirty+");
+	//curl.setUrl("http://www.funshion.com/search/media?rec=1&sall=&kt=&ta=oin&word=%E7%8C%8E%E6%9D%80%E6%9C%AC%C2%B7%E6%8B%89%E7%99%BB+Zero+Dark+Thirty+");
+	curl.setUrl("http://www.yunfan.com/s.php?q=%E6%B5%B7%E5%95%B8%E5%A5%87%E8%BF%B9");
 	curl.setStatus(CrawlURI.STATUS_OK);
 	fetcher.fetch(curl);
 	docWriter.write(curl);
