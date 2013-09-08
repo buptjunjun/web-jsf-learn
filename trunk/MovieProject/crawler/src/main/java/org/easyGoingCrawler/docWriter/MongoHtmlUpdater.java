@@ -22,10 +22,9 @@ public class MongoHtmlUpdater extends DocWriter
 	@Override
 	public void write(CrawlURI curl)
 	{
-		if(curl.getHttpstatus() != 200 || curl.getStatus() != CrawlURI.STATUS_OK)
-			return;
-		if(urAnalyzer.analyze(curl.getHost(), curl.getUrl()) == urAnalyzer.SAVE)
+		if(curl.getHttpstatus()!=-1 && urAnalyzer.analyze(curl.getHost(), curl.getUrl()) == urAnalyzer.SAVE)
 		{	
+			
 			Html html = new Html();
 			html.setUrl(curl.getUrl());
 			html.setEncode(curl.getEncode());
@@ -42,6 +41,7 @@ public class MongoHtmlUpdater extends DocWriter
 			System.out.println(Thread.currentThread().getName()+"-"+ "##MongoHtmlUpdater write a html:curl="+curl);
 			logger.info(Thread.currentThread().getName()+"-"+ "##MongoHtmlUpdater write a html:curl="+curl);
 		}
+		
 	}
 	public URLAnalyzer getUrAnalyzer()
 	{
