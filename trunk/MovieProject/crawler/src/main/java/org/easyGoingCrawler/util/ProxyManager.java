@@ -225,14 +225,21 @@ public class ProxyManager extends TimerTask
 		}
 	}
 	
-	public static void main(String []str)
+	public static void main(String []str) throws InterruptedException
 	{
 		ApplicationContext appcontext = null;
-		appcontext = new ClassPathXmlApplicationContext("egcrawler.xml");
+		appcontext = new ClassPathXmlApplicationContext("htmupdate.xml");
 		ProxyManager pm = ProxyManager.getInstance();
-		pm.testUsable();
+/*		pm.testUsable();
 		Proxy p = new Proxy(null,"61.133.125.186", 50634, null);
-		pm.update(p);
+		pm.update(p);*/
+		
+		for(int i = 0;i < 100; i++)
+		{
+			System.out.println(ProxyManager.getInstance().getOneAvailableProxy().toString());
+			TimeUnit.SECONDS.sleep(1);
+		}
+		
 		System.out.println();
 	}
 	 
