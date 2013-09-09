@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.easyGoingCrawler.docWriter.Html;
+import org.easyGoingCrawler.docWriter.Url;
 import org.junjun.analyse.analyzer.bean.BResource;
 import org.junjun.analyse.analyzer.bean.Movie;
 import org.junjun.analyse.dao.DAOapi;
@@ -166,7 +167,7 @@ public class MongoDAOapi implements DAOapi
 		// TODO Auto-generated method stub
 		Map<String,Object> constrains = new HashMap<String,Object>(1);
 		constrains.put("id", id.trim());
-		List<Movie> rets = mongo.search(null, null, constrains, null, -1, 1, Html.class);
+		List<Movie> rets = mongo.search(null, null, constrains, null, -1, 1, Movie.class);
 		if(rets!=null && rets.size() > 0)
 			return rets.get(0);	
 		return null;
@@ -179,6 +180,43 @@ public class MongoDAOapi implements DAOapi
 	}
 
 	public BResource getResource(String resourceid)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Movie> getNextMovies(Movie movie , int limit)
+	{
+		if(limit < 1)
+			limit = 1;
+		
+		Map<String,Object> constrains = new HashMap<String,Object>(1);
+		Map<String,Object> constrainGT = new HashMap<String,Object>(1);
+		constrainGT.put("crawledDate", movie.getCrawledDate());
+		List<Movie> rets = this.mongo.search(null, constrainGT, constrains, "crawledDate", DAOMongo.ASCENDING, limit, Movie.class);		
+		return rets;
+	}
+
+	public List<Url> getNextUrls(Url url, int limit)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Url getUrl(String id)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String insertUrl(Url url)
+	{
+		// TODO Auto-generated method stub
+		this.mongo.insert(url);
+		return null;
+	}
+
+	public String deleteUrl(String id)
 	{
 		// TODO Auto-generated method stub
 		return null;

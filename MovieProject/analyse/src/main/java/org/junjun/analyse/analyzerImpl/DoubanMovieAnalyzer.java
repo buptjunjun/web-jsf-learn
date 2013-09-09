@@ -555,11 +555,11 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 	
 	public void test(String url)
 	{
-		String id = Converter.urlEncode(url);
-		Html html  = dao.getHtml(id);
+		//String id = Converter.urlEncode(url);
+		Html html  = dao.getHtml("f15272324d517c614ae43e4fc43c045cyunfan");
 		System.out.println(html.getHtml());
-		Movie m = this.analyze(html);
-		System.out.println(m);
+		//Movie m = this.analyze(html);
+		//System.out.println(m);
 	}
 	static public void main(String [] args)
 	{
@@ -571,8 +571,14 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 		// test date
 		//douban.test("http://movie.douban.com/subject/21354055");
 		// test analyzer fail
-		//douban.test("http://movie.douban.com/subject/5284554");
-		douban.analyse();
+		douban.test("http://movie.douban.com/subject/5284554");
+		//douban.analyse();
+	}
+
+	public Movie analyze(Object obj)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
