@@ -36,10 +36,10 @@ public class MongoHtmlWriter extends DocWriter
 			if(html.getUrl() == null)
 				return;
 			
-			html.setId(Converter.urlEncode(curl.getUrl()));
+			html.setId((String)curl.getReserve());
 			egdao.insert(html);
-			System.out.println(Thread.currentThread().getName()+"-"+ "##MongoHtmlWriter write a html:curl="+curl);
-			logger.info(Thread.currentThread().getName()+"-"+ "##MongoHtmlWriter write a html:curl="+curl);
+			System.out.println(Thread.currentThread().getName()+"-"+ "##MongoHtmlWriter write a html:html="+html);
+			logger.info(Thread.currentThread().getName()+"-"+ "##MongoHtmlWriter write a html:html="+html);
 		}
 	}
 	public URLAnalyzer getUrAnalyzer()

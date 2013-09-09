@@ -36,7 +36,8 @@ public class MongoHtmlUpdater extends DocWriter
 			if(html.getUrl() == null)
 				return;
 			
-			html.setId(Converter.urlEncode(curl.getUrl()));
+			//html.setId(Converter.urlEncode(curl.getUrl()));
+			html.setId((String)curl.getReserve());
 			egdao.insert(html);
 			System.out.println(Thread.currentThread().getName()+"-"+ "##MongoHtmlUpdater write a html:curl="+curl);
 			logger.info(Thread.currentThread().getName()+"-"+ "##MongoHtmlUpdater write a html:curl="+curl);
