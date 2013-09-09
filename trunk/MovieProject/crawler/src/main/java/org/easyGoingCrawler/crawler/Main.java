@@ -37,9 +37,10 @@ public class Main
 	public Main()
 	{
 		//appcontext = new ClassPathXmlApplicationContext("egcrawler.xml");
-		appcontext = new ClassPathXmlApplicationContext("htmupdate.xml");
+		appcontext = new ClassPathXmlApplicationContext("egcrawler.xml");
 	
 		String log4jfile = Localizer.getMessage("log4jFile");
+		System.out.println("log4j file="+log4jfile);
 		PropertyConfigurator.configure(log4jfile);
 		
 	}

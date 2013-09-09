@@ -120,7 +120,12 @@ public class HttpFetcherByHtmlUnitProxy extends Fetcher
 			String encoding = webresponse.getContentCharsetOrNull();			
 			curl.setEncode(encoding == null ? this.defaultEncode:encoding);
 			curl.setLastCrawlDate(new Date());	
-			curl.setReserve(page);
+			//curl.setReserve(page);
+			try
+			{
+			page.cleanUp();
+			page = null;
+			}catch(Exception e){}
 			/*if(status!=200)
 			{
 				String  ip = this.webClient.getProxyConfig().getProxyHost();
