@@ -3,6 +3,8 @@ package org.junjun.analyse.analyzer.bean;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 public class Movie
 {
 	String id = null;
@@ -199,6 +201,24 @@ public class Movie
 		this.episode = episode;
 	}
 
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(!Movie.class.isInstance(obj) || obj==null)
+			return false;
+		Movie m = (Movie)obj;
+		if(!StringUtils.isBlank(this.id))
+		{
+			return this.id.equals(m.getId());
+		}
+		else if(!StringUtils.isBlank(m.getId()))
+		{
+			return  m.getId().equals(this.id);
+		}
+		
+		return false;
+		
+	}
 	
 	@Override
 	public String toString()
