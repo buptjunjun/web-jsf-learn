@@ -77,7 +77,7 @@ public class Url
 		uri.setUrl(url);
 		uri.setHost(host);
 		uri.setStatus(CrawlURI.STATUS_OK);
-		
+		uri.setReserve(this.id);
 		return uri;
 	}
 	
