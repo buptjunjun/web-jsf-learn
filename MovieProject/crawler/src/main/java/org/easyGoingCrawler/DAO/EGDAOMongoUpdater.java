@@ -63,16 +63,20 @@ public class EGDAOMongoUpdater implements EGDAO
 
 		for(String h : hosts)
 		{
-			Map<String,Object> constrains = new HashMap<String,Object>();
-			constrains.put("magicNum", HTMLERROR);
-			constrains.put("host", h);
-			List<Html> tmp  = daomongo.search(null, null, constrains, "crawledDate", DAOMongo.ASCENDING, 10, Html.class);
-			if(tmp == null || tmp.size() == 0)
-				continue;
-			for(Html html:tmp)
-				list.add(Html2CrawlURI(html));
+			if(h.equalsIgnoreCase(key.trim()))
+			{
+				Map<String,Object> constrains = new HashMap<String,Object>();
+				constrains.put("magicNum", HTMLERROR);
+				constrains.put("host", h);
+				List<Html> tmp  = daomongo.search(null, null, constrains, "crawledDate", DAOMongo.ASCENDING, 10, Html.class);
+				if(tmp == null || tmp.size() == 0)
+					continue;
+				for(Html html:tmp)
+					list.add(Html2CrawlURI(html));
+				break;
+			}
 		}
-		RandomList.random(list);
+		//RandomList.random(list);
 		return list;
 
 	}

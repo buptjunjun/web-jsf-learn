@@ -52,7 +52,9 @@
      write-fsync="true" />
    </mongo:mongo>
 
-  <bean id="DAOMongo" class="org.easyGoingCrawler.DAO.DAOMongo">
+  
+  <!-- Default bean name is 'mongo' -->
+  <bean id="DAOMongo" class="org.junjun.mongo.DAOMongo">
   	<constructor-arg value="42.96.143.59"></constructor-arg>
   	<constructor-arg value="27017"></constructor-arg>
   	<constructor-arg value="moviedb"></constructor-arg>
@@ -72,7 +74,7 @@
 			   <value>${host_iteye}</value>
 			   <value>${host_douban_movie}</value>
 			   <value>${host_funshion_movie}</value>
-			   
+			    <value>${host_yunfan}</value>
 		</list>
   	</constructor-arg>
   </bean>
@@ -90,7 +92,7 @@
    			<entry key="${host_iteye}" value="${save_iteye}"></entry>
    			<entry key="${host_douban_movie}" value="${save_douban_movie}"></entry>
    			<entry key="${host_funshion_movie}" value="${save_funshion_movie}"></entry>
-   			
+   			<entry key="${host_yunfan}" value="${save_yunfan}"></entry>
    		</map>
   	</constructor-arg>
    </bean>
@@ -108,6 +110,7 @@
    			<entry key="${host_iteye}" value="${hold_iteye}"></entry>
    			<entry key="${host_douban_movie}" value="${hold_douban_movie}"></entry>
    			<entry key="${host_funshion_movie}" value="${hold_funshion_movie}"></entry>
+   			<entry key="${host_yunfan}" value="${hold_yunfan}"></entry>
    		</map>
   	</constructor-arg>
    </bean>
@@ -220,5 +223,29 @@
 		<constructor-arg value="${host_funshion_movie}"></constructor-arg>
   </bean>
   <!-- funshion -->
+  
+  <!-- yunfan  -->
+  <bean id="yunfanScheduleer" class="org.easyGoingCrawler.urlscheduler.RotateHostURLScheduler"  scope="singleton" >
+ 		<constructor-arg ref="EGDAOMongo"></constructor-arg>
+ 		<constructor-arg value="${host_yunfan}"></constructor-arg>
+ 		<constructor-arg ref="urlAnalyzer"></constructor-arg>
+ </bean>
+  <bean id="yunfanCrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
+		<constructor-arg ref = "fetcherHtmlUnit"></constructor-arg>
+		<constructor-arg ><null /></constructor-arg>
+		<constructor-arg ref = "yunfanScheduleer"></constructor-arg>
+		<constructor-arg ref ="docwriter"></constructor-arg>
+		<constructor-arg value="${host_yunfan}"></constructor-arg>
+  </bean>
+ 
+  
+   <bean id="yunfanProxyCrawler" class="org.easyGoingCrawler.framwork.EGCrawler" scope="prototype">
+		<constructor-arg ref = "fetcherProxy"></constructor-arg>
+		<constructor-arg ><null /></constructor-arg>
+		<constructor-arg ref = "yunfanScheduleer"></constructor-arg>
+		<constructor-arg ref ="docwriter"></constructor-arg>
+		<constructor-arg value="${host_yunfan}"></constructor-arg>
+  </bean>
+   <!-- yuanfan end -->
   
 </beans>

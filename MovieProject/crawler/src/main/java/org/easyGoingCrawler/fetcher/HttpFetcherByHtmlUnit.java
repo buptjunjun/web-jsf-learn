@@ -97,9 +97,13 @@ public class HttpFetcherByHtmlUnit extends Fetcher
 			String encoding = webresponse.getContentCharsetOrNull();			
 			curl.setEncode(encoding == null ? this.defaultEncode:encoding);
 			curl.setLastCrawlDate(new Date());	
-			curl.setReserve(page);
+			//curl.setReserve(page);
 			System.out.println(Thread.currentThread().getName()+"-"+ "##HttpFetcherByHtmlUnit: curl="+curl);
-			
+			try
+			{
+			page.cleanUp();
+			page = null;
+			}catch(Exception e){}
 			
 		}
 		catch (Exception e)

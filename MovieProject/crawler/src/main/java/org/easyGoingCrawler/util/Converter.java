@@ -17,7 +17,7 @@ public class Converter
 		url.setHost(uri.getHost());
 		url.setUrl(uri.getUrl());
 		url.setLastCrawled(uri.getLastCrawlDate());
-		url.setId(Converter.urlEncode(uri.getUrl()));
+		url.setId((String)uri.getReserve());
 		url.setLastCrawled(new Date());
 		return url;
 	}
