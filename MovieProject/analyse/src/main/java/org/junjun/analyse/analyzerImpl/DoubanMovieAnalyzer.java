@@ -571,8 +571,8 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 		// test date
 		//douban.test("http://movie.douban.com/subject/21354055");
 		// test analyzer fail
-		douban.test("http://movie.douban.com/subject/5284554");
-		//douban.analyse();
+		//douban.test("http://movie.douban.com/subject/5284554");
+		douban.analyse();
 	}
 
 	public Movie analyze(Object obj)
