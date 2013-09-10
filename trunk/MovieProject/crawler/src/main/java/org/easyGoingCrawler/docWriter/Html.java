@@ -3,6 +3,8 @@ package org.easyGoingCrawler.docWriter;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 public class Html 
 {
 
@@ -73,6 +75,25 @@ public class Html
 	public void setHtml(String html)
 	{
 		this.html = html;
+	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(!Html.class.isInstance(obj) || obj==null)
+			return false;
+		Html m = (Html)obj;
+		if(!StringUtils.isBlank(this.id))
+		{
+			return this.id.equals(m.getId());
+		}
+		else if(!StringUtils.isBlank(m.getId()))
+		{
+			return  m.getId().equals(this.id);
+		}
+		
+		return false;
+		
 	}
 	@Override
 	public String toString()
