@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml>
+<!-- Copyright (c) 2007 ALICE A.I. Foundation, Inc. -->
+<!-- Last modified Seo 21, 2009, by Lichunlei -->
+
+<topic name="LOVE">
+  <category>
+    <pattern>*</pattern>
+    <template>
+      <random>
+      	<li>喜 欢 我 吗 ?</li>
+      </random>
+    </template>
+  </category>
+	<!-- 判断条件 -->
+	<category>
+	  <pattern>* 喜 欢   *</pattern>
+	  <that>喜 欢 我 吗 </that>
+	  <template>我 也 喜 欢 你</template>
+	</category>
+	<category>
+	  <pattern>* 不 喜 欢   *</pattern>
+	  <that>喜 欢 我 吗 </that>
+	  <template>我 也 不 喜 欢 你</template>
+	</category>
+</topic>
+
+<!-- 跳转到love topic -->
+<category>
+	<pattern>* love *</pattern>
+	<template>I love everybody <think><set name="topic">LOVE</set></think></template>
+</category> 
+
+
+<category>
+	<pattern>* 施 瓦 辛 格 *</pattern>
+	<template>好喜欢肌肉男啊！</template>
+</category> 
+
+
+
+
+<category>
+	<pattern>你 * 名 字 *</pattern>
+	<template>我叫沐微儿</template>
+</category>
+              
+              
+<category>
+	<pattern>* 几 点 *</pattern>
+	<template>It is <date format="h:mm a"/>.</template>
+</category> 
+
+<category>
+	<pattern> 你 好 *</pattern>
+	<template>你好.</template>
+</category> 
+
+
+  <!-- Greeting categories. -->
+  <category>
+    <pattern>WELCOME</pattern>
+    <template>
+      <think>
+        <system> <!-- Defines a method to create new categories from user input at run-time. -->
+          import bitoflife.chatterbean.AliceBot;
+          import bitoflife.chatterbean.Context;
+          import bitoflife.chatterbean.Graphmaster;
+          import bitoflife.chatterbean.aiml.Category;
+          import bitoflife.chatterbean.text.Transformations;
+          
+          void learn(String pattern, String template)
+          {
+            /* The "match" variable represents the current matching context. */
+            AliceBot bot = match.getCallback();
+            Context context = bot.getContext();
+            Transformations transformations = context.getTransformations();
+    
+            pattern = transformations.normalization(pattern);
+            Category category = new Category(pattern, new String[] {template});
+            Graphmaster brain = bot.getGraphmaster();
+            brain.append(category);
+          }
+        </system>
+      </think>
+      Hi ya! Welcome!
+    </template>
+  </category>
+
+  <!-- A category set to learn simple user-fed categories. -->
+  <category>
+    <pattern>* NOT *  GOOD ANSWER</pattern>
+    <template>
+       What would be a good answer?
+    </template>
+  </category>
+  <category>
+    <pattern>_</pattern>
+    <that>WHAT WOULD BE A GOOD ANSWER</that>
+    <template>
+      <system>learn("<input index="3"/>", "<input index="1"/>")</system>
+      Alright! You can ask me again to see if I got it.
+    </template>
+  </category>
+  
+   <!-- A category set to learn simple user-fed categories. -->
+  <category>
+    <pattern>* 不 靠 谱</pattern>
+    <template>
+       那得怎么说 你教教我
+    </template>
+  </category>
+  <category>
+    <pattern>_</pattern>
+    <that>那得怎么说 你教教我</that>
+    <template>
+      <system>learn("<input index="3"/>", "<input index="1"/>")</system>
+      嗯，我记住啦，你再问下我。看我能不能回答：）
+    </template>
+  </category>
+  
+  
+</aiml>
