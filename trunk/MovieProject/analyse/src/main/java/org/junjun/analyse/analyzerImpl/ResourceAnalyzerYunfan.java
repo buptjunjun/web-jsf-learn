@@ -1,5 +1,6 @@
 package org.junjun.analyse.analyzerImpl;
 
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,10 +65,13 @@ public class ResourceAnalyzerYunfan implements Analyzer<List<BResource>>
 	 static int lengthAname = aname.length();
 	 private Logger logger = Logger.getLogger(ResourceAnalyzerYunfan.class);
 	 private static final int HTMLERROR= 2; 
+	 private static final int UPDATE_MOVIE_RESOURCE= 1000;
+	 private Set updateMovieMagicNum=new HashSet<String>();
 	 DAOapi dao = null;
 	public ResourceAnalyzerYunfan()
 	{
 		 dao = new MongoDAOapi();
+		 updateMovieMagicNum.add("magicNum");
 	}
 	
 	public List<BResource> analyze(String movieid,String data_id,String content)
@@ -95,9 +99,20 @@ public class ResourceAnalyzerYunfan implements Analyzer<List<BResource>>
 						if (url!=null && !url.startsWith("javascript"))
 						{
 							BResource r = new BResource();
+							String host = "";
+							try
+							{
+								host = new URI(url).getHost();
+							}
+							catch(Exception ee)
+							{
+								ee.printStackTrace();
+							}
+							r.setHost(host);
 							r.setResourceType(type);
 							r.setResourceURL(url);
 							r.setMovieId(movieid);
+							rets.add(r);
 						}
 					}
 				}
@@ -120,10 +135,21 @@ public class ResourceAnalyzerYunfan implements Analyzer<List<BResource>>
 								if (url!=null && !url.startsWith("javascript"))
 								{
 									BResource r = new BResource();
+									String host = "";
+									try
+									{
+										host = new URI(url).getHost();
+									}
+									catch(Exception eee)
+									{
+										eee.printStackTrace();
+									}
+									r.setHost(host);
 									r.setResourceURL(url);
 									r.setMovieId(movieid);
 									r.setResourceType(type);
-									break;
+									
+									rets.add(r);
 								}
 							}
 						}
@@ -342,7 +368,7 @@ public class ResourceAnalyzerYunfan implements Analyzer<List<BResource>>
 		
 		Date date1 = douban.getDate();
 		Date date2 = yunfan.getDate();
-		if(date1!=null && date2!=null&& Math.abs(date1.getYear()-date2.getYear())<=1)
+		if(date1!=null && date2!=null&& Math.abs(date1.getYear()-date2.getYear())<=0)
 		{
 			yearBool=true;
 		}
@@ -407,12 +433,16 @@ public class ResourceAnalyzerYunfan implements Analyzer<List<BResource>>
 				count++;
 				String movieid = html.getId().replace("yunfan", "");
 				Movie douban = this.dao.getMovie(movieid);
+				
+				// extract movie from yunfan html.
 				List<Movie> yunfans = this.getMovies(html.getHtml());
-			
+				
 				System.out.println(count+"--douban"+douban);
 				System.out.println(count+"++html"+html);
 				logger.info(count+"--douban"+douban);
-				logger.info(count+"++html"+html);
+				logger.info(count+"++ html"+html);
+				
+				// the most similar movie .
 				Movie selected = null;
 				if (yunfans!=null && yunfans.size()>0)
 				{
@@ -433,7 +463,15 @@ public class ResourceAnalyzerYunfan implements Analyzer<List<BResource>>
 				
 				if(selected!=null)
 				{
-					
+					List<BResource> rets = analyze(douban.getId(),selected.getId(),html.getHtml());
+					if(rets!=null && rets.size() > 0)
+					{
+						selected.setMagicNum(this.UPDATE_MOVIE_RESOURCE);
+						selected.setId(douban.getId());
+						this.dao.updateMovie(selected, updateMovieMagicNum);
+						for(BResource res:rets)
+							this.dao.insertResource(res);
+					}
 				}
 				
 				if(html.getCrawledDate()!=null)
@@ -500,8 +538,8 @@ public class ResourceAnalyzerYunfan implements Analyzer<List<BResource>>
 		//test serials 
 		//yunfan.test("1001cce1a1db6d35d76bd4d7248e1369yunfan");
 		//test movies 
-		yunfan.test("3b034c7df85abbd61be7aab8725014b9yunfan");
-		//yunfan.analyse();
+		//yunfan.test("3b034c7df85abbd61be7aab8725014b9yunfan");
+		yunfan.analyse();
 	}
 
 	public List<BResource> analyze(Object obj)
