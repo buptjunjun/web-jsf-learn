@@ -412,7 +412,7 @@ public class ResourceAnalyzerYunfan implements Analyzer<List<BResource>>
 						{
 												
 							System.out.println(count+"==yunfan£ºstatistics:"+statistics+"  "+m+"\n");
-							logger.info(count+"==yunfan£ºstatistics:"+statistics+"  "+m+"\n");
+							logger.info(count+"==yunfan£ºstatistics:"+statistics+"  "+m);
 							statistics++;
 							selected=m;
 							break;
@@ -425,11 +425,17 @@ public class ResourceAnalyzerYunfan implements Analyzer<List<BResource>>
 					List<BResource> rets = analyze(douban.getId(),selected.getId(),html.getHtml());
 					if(rets!=null && rets.size() > 0)
 					{
-						selected.setMagicNum(this.UPDATE_MOVIE_RESOURCE);
-						selected.setId(douban.getId());
-						this.dao.updateMovie(selected, updateMovieMagicNum);
+						douban.setMagicNum(this.UPDATE_MOVIE_RESOURCE);
+						this.dao.updateMovie(douban, updateMovieMagicNum);
+						
+						System.out.println(count+"**yunfan:update movie"+douban);
+						logger.info(count+"**yunfan:update movie"+douban);
 						for(BResource res:rets)
-							this.dao.insertResource(res);
+						{
+							this.dao.insertResource(res);						
+							System.out.println(count+"**yunfan:insert resource"+res);
+							logger.info(count+"**yunfan:insert resource"+res);
+						}
 					}
 				}
 				
@@ -497,8 +503,8 @@ public class ResourceAnalyzerYunfan implements Analyzer<List<BResource>>
 		//test serials 
 		//yunfan.test("1001cce1a1db6d35d76bd4d7248e1369yunfan");
 		//test movies 
-		yunfan.test("3b034c7df85abbd61be7aab8725014b9yunfan");
-		//yunfan.analyse();
+		//yunfan.test("3b034c7df85abbd61be7aab8725014b9yunfan");
+		yunfan.analyse();
 	}
 
 	public List<BResource> analyze(Object obj)
