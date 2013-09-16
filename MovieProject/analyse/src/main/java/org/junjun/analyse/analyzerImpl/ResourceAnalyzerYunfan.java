@@ -83,81 +83,40 @@ public class ResourceAnalyzerYunfan implements Analyzer<List<BResource>>
 		{				
 			Document doc = Jsoup.parse(content);
 			Element e = doc.getElementsByAttributeValue("data-id", data_id).first();
-			Elements eMovies = e.getElementsByClass("lb_ly");   // movies
-			Elements eSerials = e.getElementsByClass("lb_ly1"); // serials
 			List<BResource> listResources = new ArrayList<BResource>();
-			if(eMovies!=null && eMovies.size()>0)
+			Elements linksEle = e.select("a[source]");
+			if(linksEle!=null)
 			{
-				Element linkDivEle = eMovies.first();
-				Elements linksEle = linkDivEle.select("a[href]");
-				if(linksEle!=null)
+				for(Element a:linksEle)
 				{
-					for(Element a:linksEle)
+					String url = a.attr("href");
+					String type = a.attr("source");
+					if (url!=null && !url.startsWith("javascript"))
 					{
-						String url = a.attr("href");
-						String type = a.attr("source");
-						if (url!=null && !url.startsWith("javascript"))
+						url = url.replaceFirst("\\?m=yunfan", "");
+						BResource r = new BResource();
+						String host = "";
+						try
 						{
-							BResource r = new BResource();
-							String host = "";
-							try
-							{
-								host = new URI(url).getHost();
-							}
-							catch(Exception ee)
-							{
-								ee.printStackTrace();
-							}
-							r.setHost(host);
-							r.setResourceType(type);
-							r.setResourceURL(url);
-							r.setMovieId(movieid);
-							rets.add(r);
+							host = new URI(url).getHost();
 						}
-					}
-				}
-			}
-			else if(eSerials!=null && eSerials.size()>0)
-			{
-				Element linkDivEle = eSerials.first();
-				Elements ulElements = linkDivEle.select("ul");
-				if(ulElements != null)
-				{
-					for(Element ul:ulElements)
-					{
-						Elements linksEle = ul.select("a[href]");
-						if(linksEle!=null)
+						catch(Exception eee)
 						{
-							for(Element a:linksEle)
-							{
-								String url = a.attr("href");
-								String type = a.attr("source");
-								if (url!=null && !url.startsWith("javascript"))
-								{
-									BResource r = new BResource();
-									String host = "";
-									try
-									{
-										host = new URI(url).getHost();
-									}
-									catch(Exception eee)
-									{
-										eee.printStackTrace();
-									}
-									r.setHost(host);
-									r.setResourceURL(url);
-									r.setMovieId(movieid);
-									r.setResourceType(type);
-									
-									rets.add(r);
-								}
-							}
+							eee.printStackTrace();
 						}
 						
+						r.setId(Converter.urlEncode(url.trim()));
+						r.setHost(host);
+						r.setResourceURL(url);
+						r.setMovieId(movieid);
+						r.setResourceType(type);
+						
+						rets.add(r);
 					}
 				}
 			}
 			
+				
 			
 		} 
 		catch (Exception e)
@@ -538,8 +497,8 @@ public class ResourceAnalyzerYunfan implements Analyzer<List<BResource>>
 		//test serials 
 		//yunfan.test("1001cce1a1db6d35d76bd4d7248e1369yunfan");
 		//test movies 
-		//yunfan.test("3b034c7df85abbd61be7aab8725014b9yunfan");
-		yunfan.analyse();
+		yunfan.test("3b034c7df85abbd61be7aab8725014b9yunfan");
+		//yunfan.analyse();
 	}
 
 	public List<BResource> analyze(Object obj)
