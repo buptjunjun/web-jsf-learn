@@ -37,4 +37,6 @@ public interface DAOapi
 	public Url getUrl(String id);
 	public String insertUrl(Url url);
 	public String deleteUrl(String id);
+	
+	public String insertObj(Object obj);
 }
