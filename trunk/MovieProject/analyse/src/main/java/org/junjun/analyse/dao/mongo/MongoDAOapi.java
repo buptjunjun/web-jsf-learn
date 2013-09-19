@@ -222,7 +222,13 @@ public class MongoDAOapi implements DAOapi
 		return null;
 	}
 
-	
+	public String insertObj(Object obj)
+	{
+		// TODO Auto-generated method stub
+		this.mongo.insert(obj);
+		
+		return null;
+	}
 	
 
 

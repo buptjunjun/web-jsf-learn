@@ -140,6 +140,12 @@ public class ResourceAnanyzerQvod implements Analyzer<List<BResource>>
 		return null;
 	}
 
+	public List<BResource> analyze(Object obj)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }
