@@ -511,7 +511,8 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 	public void analyse()
 	{		
 		Set<String> updateFields = new HashSet<String>();
-		updateFields.add("magicNum");
+		updateFields.add("name");
+		
 		Html initHtml = new Html();
 		initHtml.setHost("movie.douban.com");
 		Date date = new Date();
@@ -533,7 +534,8 @@ public class DoubanMovieAnalyzer implements Analyzer<Movie>
 				
 				if(movie!=null)
 				{
-					dao.insertMovie(movie);
+					//dao.insertMovie(movie);
+					dao.updateMovie(movie, updateFields);
 					logger.info("movie:"+(count)+movie);
 					System.out.println("movie:"+(count)+movie);
 				}

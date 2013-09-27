@@ -134,11 +134,6 @@ public class MongoDAOapi implements DAOapi
 		return null;
 	}
 
-	public String updateMovie(Html html, Set<String> updateFields)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	public String deleteMovie(String id)
 	{
@@ -148,7 +143,9 @@ public class MongoDAOapi implements DAOapi
 
 	public String updateMovie(Movie movie, Set<String> updateFields)
 	{
-		// TODO Auto-generated method stub
+		Map<String,Object> constrains = new HashMap<String,Object>(1);
+		constrains.put("id", movie.getId());
+		mongo.update(movie, null, null, constrains, updateFields);
 		return null;
 	}
 
