@@ -179,8 +179,14 @@
   			 <artifactId>MongoWrap</artifactId>
   			 <version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		
+		<dependency>
+			  <groupId>HTMLAnayzer</groupId>
+			  <artifactId>HTMLAnayzer</artifactId>
+			  <version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
-
+	
 
 	<build>
 		<plugins>
