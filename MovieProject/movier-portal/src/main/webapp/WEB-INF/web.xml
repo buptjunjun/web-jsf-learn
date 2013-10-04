@@ -3,15 +3,26 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
     version="2.4">
-  <servlet-mapping>
-    <servlet-name>default</servlet-name>
-    <url-pattern>/resources/*</url-pattern>
-</servlet-mapping>
-<servlet-mapping>
-    <servlet-name>default</servlet-name>
-    <url-pattern>*.css</url-pattern>
+	<servlet-mapping> 
+	<servlet-name>default</servlet-name> 
+	<url-pattern>*.css</url-pattern> 
+	</servlet-mapping> 
+	
+	<servlet-mapping> 
+	<servlet-name>default</servlet-name> 
+	<url-pattern>*.gif</url-pattern> 
+	</servlet-mapping> 
+	
+	<servlet-mapping> 
+	<servlet-name>default</servlet-name> 
+	<url-pattern>*.jpg</url-pattern> 
+	</servlet-mapping> 
+	
+	<servlet-mapping> 
+	<servlet-name>default</servlet-name> 
+	<url-pattern>*.png</url-pattern> 
+	</servlet-mapping>
 
-</servlet-mapping>
 	 <filter>
 		<filter-name>httpMethodFilter</filter-name>
 		<filter-class>

@@ -41,7 +41,7 @@
 	.tags ul li
 	{
 		float:left;
-		margin:10px;
+		margin:4px;
 		padding:4px;
 		color: #444444;
 		text-align:center;
@@ -78,7 +78,7 @@
 				<ul>
 					<li>喜剧</li> <li>喜剧</li> <li>喜剧</li> <li>喜剧</li> <li>喜剧</li>
 					<li>喜剧</li> <li>喜剧</li> <li>喜剧</li> <li>喜剧</li> <li>喜剧</li>
-					<li>喜剧</li> <li>喜剧</li> <li>喜剧</li> <li>喜剧</li> <li>喜剧</li>
+		
 				</ul>
 			</div>
 			
@@ -86,7 +86,7 @@
 				<div id="tagHead" class="tagHead">  按时间</div>
 				<ul>
 					<li>2013</li> <li>2013</li><li>2013</li><li>2013</li><li>2013</li>
-					<li>2013</li><li>2013</li><li>2013</li><li>2013</li><li>2013</li>
+					<li>2013</li>
 				</ul>
 			</div>
 			
@@ -95,7 +95,7 @@
 				<ul>
 					<li>杨幂</li> <li>杨幂</li> <li>杨幂</li> <li>杨幂</li> <li>杨幂</li>
 					<li>杨幂</li> <li>杨幂</li> <li>杨幂</li> <li>杨幂</li> <li>杨幂</li>
-					<li>杨幂</li> <li>杨幂</li> <li>杨幂</li> <li>杨幂</li> <li>杨幂</li>
+					
 				</ul>
 			</div>
 	</div>	 
