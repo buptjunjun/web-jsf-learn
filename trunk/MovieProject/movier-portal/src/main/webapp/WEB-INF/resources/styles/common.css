@@ -1,0 +1,206 @@
+	<style>
+		* { margin:0; padding:0; word-wrap:break-word; word-break:break-all; }
+		a { color:#0287CA; text-decoration:none; }
+		a:hover { text-decoration:underline; }	
+		ul, li { list-style:none; }
+		img { border:none; }
+		h1, h2, h3, h4, h5, h6 { font-size:1em; }
+		html { overflow:-moz-scrollbars-vertical; } /* 在Firefox下始终显示滚动条*/
+		
+		#middle ul li:hover { border: 1px solid #0287CA;}    /* 当有鼠标悬停在链接上 */
+		
+		.movieRight ul li:hover /* 当有鼠标悬停在链接上 */
+		{     
+			border-bottom: 1px solid #0287CA;
+			font-weight:bold;
+			cursor: pointer;
+		}  
+
+		
+		body { background: url("../resources/icon/body.png") repeat-y scroll ; font:12px/1.6em Helvetica, Arial, sans-serif;}
+
+					
+		#middle {
+			height:1500px;
+			width:1280px;
+			background:white;
+			margin:auto;
+		
+			}
+	
+		.about {padding-top:20px;height:30px; width:350px;margin:auto}
+	
+
+	
+	.searchBottomDiv
+	{
+		margin:auto;
+		width:1280px;
+		
+	}
+	.searchBottom
+	{
+		margin:auto;
+		width:500px;
+		height:50px;
+		font-size:16px;	
+	}
+	
+	.height20
+	{
+		height:30px;
+	}
+	.width400
+	{
+		width:400px;
+	}
+	
+	.login
+	{
+		float:left;
+		margin-top:40px;
+		margin-left:20px;
+		width:200px;
+		height:22px;
+	}
+	
+	.fontChinese14px
+	{
+		font-family: "Microsoft Yahei","宋体";
+		font-size:14px;
+	}
+	
+	.floatLeft
+	{
+		float:left;
+	}
+	.lg
+	{	
+	  margin-top:5px;;
+	}
+	
+	.marginLeft10px
+	{
+		margin-left:10px;
+	}
+	
+	.marginTop20px
+	{
+		margin-top:45px;
+	}
+	.movieItem
+	{
+		
+	}
+		
+	
+	
+	.movieName
+	{
+		color:red;
+		font-size:14px;
+		font-weight:bold;
+	}
+	.moviePic
+	{
+		margin-bottom:10px;
+	}
+	
+	.catName
+	{
+		margin-left:10px;
+		font-family: "Microsoft Yahei","宋体";
+		color:red;
+		font-size:18px;
+		font-weight:bold;
+	}
+	
+	.movieHead
+	{
+		margin-top:10px;		
+		margin-bottom:10px;	
+		background: url("../icon/bg.gif") repeat-x scroll;
+		height:30px;
+	}
+	
+	.moreMovie
+	{		
+		font-family: "Microsoft Yahei","宋体";
+		color:red;
+		font-size:14px;
+		font-weight:bold;
+		display:block;
+		float:right;
+		margin-right:5px;
+	}
+	
+
+	.movieFrame
+	{		
+		width:1260px;
+		height:370px;
+		float:left;
+		margin-left:10px;
+	}
+	
+	.movieLeft
+	{
+		margin-top:10px;
+		border: 1px solid #DFDFE0;
+		width:1030px;
+		height:360px;
+		float:left;
+	}
+	.movieLeft ul
+	{
+		margin-left:10px;
+	}
+	
+	.movieLeft ul li
+	{
+		list-style:none;
+		width:160px;
+		height:270px;		
+		padding:4px;
+		float:left;
+		text-align:center;
+	}
+	
+	.movieRight
+	{	
+		margin-top:10px;
+		border: 1px solid #DFDFE0;
+		float:left;
+		width:200px;
+		height:360px;
+		margin-left:20px;
+		
+	}
+	
+	.movieRight .movieItemSimple
+	{
+		list-style:none;
+		width:130px;
+		height:15px;
+		padding:6px;
+		float:left;
+		font-size:14px;
+		display:block;
+		margin-left:5px;
+	}
+	
+	.movieRight .movieItemSimpleHot
+	{
+		list-style:none;
+		width:130px;
+		height:15px;
+		padding:6px;
+		float:left;
+		
+		color:red;
+		font-size:14px;
+		font-weight:bold;
+		display:block;
+		margin-left:5px;
+	}
+	</style>
