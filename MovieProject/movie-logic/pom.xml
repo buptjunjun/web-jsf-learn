@@ -4,12 +4,7 @@
   <artifactId>movie-logic</artifactId>
   <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-	<parent>
-		  <groupId>movie-pom</groupId>
-		  <artifactId>movie-pom</artifactId>
-		  <version>0.0.1-SNAPSHOT</version>
-		
-	</parent>
+	
 	<dependencies>
 		<!-- mongo db spring -->
 		<dependency>
