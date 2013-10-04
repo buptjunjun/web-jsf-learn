@@ -30,7 +30,7 @@ public class MovieController
 			Movie movie = movieService.getMovie("");
 		 	movie.setName("Titannic");
 		    model.put("movie", movie);			
-	       return "home";         
+	       return "movieHome";         
     }
 	
 	

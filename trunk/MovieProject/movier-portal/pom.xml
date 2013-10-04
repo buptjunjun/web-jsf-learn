@@ -8,7 +8,7 @@
 	<name>movier-portal</name>
 
 	<properties>
-		<org.springframework.version>3.1.2.RELEASE</org.springframework.version>
+		<org.springframework.version>3.1.0.RELEASE</org.springframework.version>
 	</properties>
 
 	<dependencies>

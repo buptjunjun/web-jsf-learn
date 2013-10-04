@@ -19,7 +19,7 @@
             document.getElementById("Tip").style.display="inline";
         }
     </script>
-	<link type="text/css" rel="stylesheet" href="<%=path%><c:url value='/styles/common.css'/>" />   
+	<link type="text/css" rel="stylesheet" href="<%=path%><c:url value='/resources/styles/common.css'/>" />   
 
 </head>
 <body>
@@ -42,11 +42,31 @@
 				<ul >
 					
 					<li class="movieItem">	
-						<p><img src="../resources/picture/movie.jpg" class="moviePic" width="150" height="210"></img></p>
+						<p><img src="<%=path%><c:url value='/resources/picture/movie.jpg' />"  class="moviePic" width="150" height="210"></img></p>
 						<span class="movieName">低俗小说</span><br/>
 						<span>阿娇特辑衣袂飘飘舞仙境</span>
 					</li>
 					
+					<li class="movieItem">	
+						<p><img src="<%=path%><c:url value='/resources/picture/movie.jpg' />"  class="moviePic" width="150" height="210"></img></p>
+						<span class="movieName">低俗小说</span><br/>
+						<span>阿娇特辑衣袂飘飘舞仙境</span>
+					</li>
+					<li class="movieItem">	
+						<p><img src="<%=path%><c:url value='/resources/picture/movie.jpg' />"  class="moviePic" width="150" height="210"></img></p>
+						<span class="movieName">低俗小说</span><br/>
+						<span>阿娇特辑衣袂飘飘舞仙境</span>
+					</li>
+					<li class="movieItem">	
+						<p><img src="<%=path%><c:url value='/resources/picture/movie.jpg' />"  class="moviePic" width="150" height="210"></img></p>
+						<span class="movieName">低俗小说</span><br/>
+						<span>阿娇特辑衣袂飘飘舞仙境</span>
+					</li>
+					<li class="movieItem">	
+						<p><img src="<%=path%><c:url value='/resources/picture/movie.jpg' />"  class="moviePic" width="150" height="210"></img></p>
+						<span class="movieName">低俗小说</span><br/>
+						<span>阿娇特辑衣袂飘飘舞仙境</span>
+					</li>
 				</ul>
 			</div>
 			
@@ -107,303 +127,11 @@
 						<span >低俗小说</span>
 						<span>4.5</span>
 					</li>
-				<ul>
+				</ul>
 			</div>
 		</div>
 		
-		<div id="hot" class="movieFrame">			
-			<div class="movieLeft">
-				<div class="movieHead">
-					<span class="catName">
-						最新电影
-					</span>
-					<span class="moreMovie">
-						<a href="#">更多 </a>
-					</span>
-				</div>
-				<ul >
-					
-					<li class="movieItem">	
-						<p><img src="/resources/picture/movie.jpg"  class="moviePic" width="150" height="210"></img></p>
-						<span class="movieName">低俗小说</span><br/>
-						<span>阿娇特辑衣袂飘飘舞仙境</span>
-					</li>
-					
-				</ul>
-			</div>
-			
-			<div class="movieRight">
-				<div class="movieHead">
-					<span class="catName">
-						最热
-					</span>
-				</div>
-				<ul >
-					<li class="movieItemSimpleHot">	
-						<span>1</span>
-						<span class="movieName">低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimpleHot">	
-						<span>2</span>
-						<span class="movieName">低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimpleHot">	
-						<span>3</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>4</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>5</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>6</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>7</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>8</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>9</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>10</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-				<ul>
-			</div>
-		</div>
 		
-		<div id="hot" class="movieFrame">			
-			<div class="movieLeft">
-				<div class="movieHead">
-					<span class="catName">
-						最新电影
-					</span>
-					<span class="moreMovie">
-						<a href="#">更多 </a>
-					</span>
-				</div>
-				<ul >
-					
-					<li class="movieItem">	
-						<p><img src="../picture/movie.jpg" class="moviePic" width="150" height="210"></img></p>
-						<span class="movieName">低俗小说</span><br/>
-						<span>阿娇特辑衣袂飘飘舞仙境</span>
-					</li>
-					<li class="movieItem">	
-						<p><img src="../picture/movie.jpg" class="moviePic" width="150" height="210"></img></p>
-						<span class="movieName">低俗小说</span><br/>
-						<span>阿娇特辑衣袂飘飘舞仙境</span>
-					</li>
-					<li class="movieItem">	
-						<p><img src="../picture/movie.jpg" class="moviePic" width="150" height="210"></img></p>
-						<span class="movieName">低俗小说</span><br/>
-						<span>阿娇特辑衣袂飘飘舞仙境</span>
-					</li>
-					<li class="movieItem">	
-						<p><img src="../picture/movie.jpg" class="moviePic" width="150" height="210"></img></p>
-						<span class="movieName">低俗小说</span><br/>
-						<span>阿娇特辑衣袂飘飘舞仙境</span>
-					</li>
-					<li class="movieItem">	
-						<p><img src="../picture/movie.jpg" class="moviePic" width="150" height="210"></img></p>
-						<span class="movieName">低俗小说</span><br/>
-						<span>阿娇特辑衣袂飘飘舞仙境</span>
-					</li>
-					<li class="movieItem">	
-						<p><img src="../picture/movie.jpg" class="moviePic" width="150" height="210"></img></p>
-						<span class="movieName">低俗小说</span><br/>
-						<span>阿娇特辑衣袂飘飘舞仙境</span>
-					</li>
-				</ul>
-			</div>
-			
-			<div class="movieRight">
-				<div class="movieHead">
-					<span class="catName">
-						最热
-					</span>
-				</div>
-				<ul >
-					<li class="movieItemSimpleHot">	
-						<span>1</span>
-						<span class="movieName">低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimpleHot">	
-						<span>2</span>
-						<span class="movieName">低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimpleHot">	
-						<span>3</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>4</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>5</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>6</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>7</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>8</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>9</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>10</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-				<ul>
-			</div>
-		</div>
-		
-		<div id="hot" class="movieFrame">			
-			<div class="movieLeft">
-				<div class="movieHead">
-					<span class="catName">
-						最新电影
-					</span>
-					<span class="moreMovie">
-						<a href="#">更多 </a>
-					</span>
-				</div>
-				<ul >
-					
-					<li class="movieItem">	
-						<p><img src="../picture/movie.jpg" class="moviePic" width="150" height="210"></img></p>
-						<span class="movieName">低俗小说</span><br/>
-						<span>阿娇特辑衣袂飘飘舞仙境</span>
-					</li>
-					<li class="movieItem">	
-						<p><img src="../picture/movie.jpg" class="moviePic" width="150" height="210"></img></p>
-						<span class="movieName">低俗小说</span><br/>
-						<span>阿娇特辑衣袂飘飘舞仙境</span>
-					</li>
-					<li class="movieItem">	
-						<p><img src="../picture/movie.jpg" class="moviePic" width="150" height="210"></img></p>
-						<span class="movieName">低俗小说</span><br/>
-						<span>阿娇特辑衣袂飘飘舞仙境</span>
-					</li>
-					<li class="movieItem">	
-						<p><img src="../picture/movie.jpg" class="moviePic" width="150" height="210"></img></p>
-						<span class="movieName">低俗小说</span><br/>
-						<span>阿娇特辑衣袂飘飘舞仙境</span>
-					</li>
-					<li class="movieItem">	
-						<p><img src="../picture/movie.jpg" class="moviePic" width="150" height="210"></img></p>
-						<span class="movieName">低俗小说</span><br/>
-						<span>阿娇特辑衣袂飘飘舞仙境</span>
-					</li>
-					<li class="movieItem">	
-						<p><img src="../picture/movie.jpg" class="moviePic" width="150" height="210"></img></p>
-						<span class="movieName">低俗小说</span><br/>
-						<span>阿娇特辑衣袂飘飘舞仙境</span>
-					</li>
-				</ul>
-			</div>
-			
-			<div class="movieRight">
-				<div class="movieHead">
-					<span class="catName">
-						最热
-					</span>
-				</div>
-				<ul >
-					<li class="movieItemSimpleHot">	
-						<span>1</span>
-						<span class="movieName">低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimpleHot">	
-						<span>2</span>
-						<span class="movieName">低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimpleHot">	
-						<span>3</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>4</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>5</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>6</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>7</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>8</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>9</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-					<li class="movieItemSimple">	
-						<span>10</span>
-						<span >低俗小说</span>
-						<span>4.5</span>
-					</li>
-				<ul>
-			</div>
-		</div>
 	</div>
 	
 
