@@ -1,7 +1,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core"%>  
+<%@ taglib prefix="c"  uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
@@ -30,18 +30,21 @@
 			background:white;
 			margin:auto;
 			border-bottom: 1px solid #DFDFE0;
-			font-size:15px;				
+			font-size:13px;				
 			}
 			
 	.tags
 	{
 		margin-left:2px;	
 	}
-	
+	.tags ul
+	{
+		float:left;
+	}
 	.tags ul li
 	{
 		float:left;
-		margin:4px;
+		margin:2px;
 		padding:4px;
 		color: #444444;
 		text-align:center;
@@ -54,12 +57,13 @@
 	{	
 		width:300px;		
 		float:left;
-		margin-left:10px;
+		margin-left:0px;
+		border-left:1px solid #0287CA;
 	}
 	.tagHead
 	{
-		margin-top:10px;	
-		margin-left:10px;
+		margin-top:5px;	
+		margin-left:5px;
 		background: url("<%=path%><c:url value='/resources/icon/bg.gif' />") repeat-x scroll;
 		font-family: "Microsoft Yahei","宋体";
 		color:red;
@@ -93,9 +97,9 @@
 			<div id="tagPeople" class="tagKind">
 				<div id="tagHead" class="tagHead">  按人物</div>
 				<ul>
-					<li>杨幂</li> <li>杨幂</li> <li>杨幂</li> <li>杨幂</li> <li>杨幂</li>
-					<li>杨幂</li> <li>杨幂</li> <li>杨幂</li> <li>杨幂</li> <li>杨幂</li>
-					
+				<c:forEach items="${tags}" var="tag">  
+				   <li>${tag}</li> 
+				</c:forEach>  
 				</ul>
 			</div>
 	</div>	 
