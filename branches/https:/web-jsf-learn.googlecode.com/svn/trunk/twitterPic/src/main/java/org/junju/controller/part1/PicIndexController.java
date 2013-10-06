@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junjun.bean.part1.Item;
+import org.junjun.bean.part1.Rating;
+import org.junjun.bean.part1.UIItem;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +18,18 @@ public class PicIndexController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	 public String showInputPage (Model model ){		
 		
-			List<Item> items = this.getItem();
-			model.addAttribute("items", items);
+			List<Item> items = this.getItem();		
+			List<Rating> ratings = this.getRating();
+			List<UIItem> uis = new ArrayList<UIItem>();
+			
+			for(int i = 0; i < items.size(); i++)
+			{
+				UIItem u = new UIItem();
+				u.setItem(items.get(i));
+				u.setRating(ratings.get(i));
+				uis.add(u);
+			}
+			model.addAttribute("uis", uis);
 	        return "index";
     }
 	
@@ -39,6 +51,19 @@ public class PicIndexController {
 			i.setUrl(url);
 			i.setType("test");
 			ret.add(i);
+		}
+		 return ret;
+	}
+	
+	
+	private List<Rating> getRating()
+	{
+		 List<Rating> ret = new ArrayList<Rating>();
+		 
+		for(int i = 0;i < 5;i++)
+		{
+			Rating r = new Rating();
+			ret.add(r);
 		}
 		 return ret;
 	}
