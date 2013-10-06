@@ -11,6 +11,10 @@
 <title>pic galaxy</title>
 
 <style type="text/css">
+	body
+	{
+		color: #333333;
+	}
 	#nav
 	{
 		top:0px;
@@ -67,6 +71,14 @@
 		text-align:center;
 		padding:2px;	
 	}
+	
+	.comment
+	{
+		 width:100%;
+		 height:auto;
+		 text-align:left;
+		 padding:2px;
+	}
 </style>
 </head>
 <body>
@@ -82,42 +94,20 @@
 
 	<div id="content">
 		<div class="column">
-			<c:forEach items="${items}" var="item" begin="0" step="4">  
+			<c:forEach items="${uis}" var="ui" begin="0" step="4">  
 				<div class="box">
-					<img width="202" height="284" src="${item.url}">
+					<img  src="${ui.item.url}">
+					<div class="comment">
+					 <a >${ui.rating.good}</a> 
+					 <a >${ui.rating.bad}</a> 
+					 <a > ${ui.rating.collect}</a>  
+					</div>
 				</div>
-				</c:forEach>  
-			
-			
-			
+				
+				</c:forEach>  	
 		</div>
 		
-		<div class="column">		
-			
-				<c:forEach items="${items}" var="item" begin="1" step="4">  
-				<div class="box">
-					<img width="202" height="284" src="${item.url}">
-				</div>
-				</c:forEach>  
-			
-			
-		</div>
 		
-		<div class="column">
-			<c:forEach items="${items}" var="item" begin="2" step="4">  
-				<div class="box">
-					<img width="202" height="284" src="${item.url}">
-				</div>
-				</c:forEach>  
-		</div>
-		
-		<div class="column">
-			<c:forEach items="${items}" var="item" begin="3" step="4">  
-				<div class="box">
-					<img width="202" height="284" src="${item.url}">
-				</div>
-				</c:forEach>  
-		</div>
 		
 		<div clear="both"></div>
 	</div>
