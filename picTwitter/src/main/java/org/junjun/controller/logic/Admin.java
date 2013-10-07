@@ -1,9 +1,13 @@
 package org.junjun.controller.logic;
 
+import java.util.Date;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import org.junjun.bean.part1.Comment;
 import org.junjun.bean.part1.Item;
 import org.junjun.bean.part1.Tag;
+import org.junjun.bean.part1.User;
 
 public class Admin 
 {
@@ -66,20 +70,46 @@ public class Admin
 			item.setUrl(url);
 			item.setUrl1(url1);		
 			item.setType("pictures");
-			item.setId(PicUtil.urlEncode(url1));
+			item.setId(PicUtil.urlEncode(url));
 			item.setDesc(descs[i]);
 			
 			picservice.insertItem(item);
 			
-		}
+		}	
+	}
+	
+	
+	static public void insertComments()
+	{
 		
-		
+		for(int i = 0; i< urls.length; i++)
+		{
+			String url = urls[i];
+			Comment comment = new Comment();
+			comment.setCommentTo(PicUtil.urlEncode(url));
+			comment.setId(PicUtil.urlEncode(new Date().toGMTString()+new Random().nextLong()));
+			comment.setComment("it is good");
+			comment.setCommentFrom("123");
+			comment.setDate(new Date());	
+			picservice.insert(comment);
+		}	
+	}
+	
+	static public void insertUser()
+	{
+		User u = new User();
+		u.setId("123");
+		u.setName("junjun");
+		u.setPic("http://p0.pstatp.com/thumb/311/2043497367");
+		picservice.insert(u);
 	}
 	
 	public static void main(String [] args)
 	{
 		insertTag();
 		insertItems();
+		insertUser();
+		insertComments();
 	}
 
 }

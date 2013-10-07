@@ -1,9 +1,17 @@
 package org.junjun.bean.part1;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Comment 
 {
+	
+	private String id = null;
+	private String comment = null;
+	private Date   date = new Date();	
+	private String commentTo = null;   // id of what is commented;
+	private String commentFrom = null; // id of who is commenting
+	
 	public String getId() {
 		return id;
 	}
@@ -34,9 +42,14 @@ public class Comment
 	public void setCommentFrom(String commentFrom) {
 		this.commentFrom = commentFrom;
 	}
-	private String id = null;
-	private String comment = null;
-	private Date   date = new Date();	
-	private String commentTo = null;   // id of what is commented;
-	private String commentFrom = null; // id of who is commenting
+	
+	static private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+	public String getFormatDate()
+	{
+		if(this.date!=null)
+		{
+			return sdf.format(date);
+		}
+		return null;
+	}
 }
