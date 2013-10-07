@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junjun.bean.part1.Item;
-import org.junjun.bean.part1.UIItem;
+import org.junjun.bean.part1.UIComment;
 import org.junjun.controller.logic.PicBuffer;
 import org.junjun.controller.logic.PicServices;
 import org.junjun.controller.logic.PicServicesMongo;
@@ -30,6 +30,10 @@ public class PicDetailController {
 			item = picservice.getItem(id);
 		
 		model.addAttribute("item", item);
+		
+		List<UIComment> comments = picservice.getUIComments(id);
+		model.addAttribute("comments", comments);
+		
 		return "detail";
     }
 	

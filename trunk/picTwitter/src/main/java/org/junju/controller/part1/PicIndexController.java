@@ -9,7 +9,6 @@ import java.util.Map;
 
 import org.junjun.bean.part1.Item;
 import org.junjun.bean.part1.Tag;
-import org.junjun.bean.part1.UIItem;
 import org.junjun.controller.logic.PicBuffer;
 import org.junjun.controller.logic.PicServices;
 import org.junjun.controller.logic.PicServicesMongo;
@@ -37,7 +36,7 @@ public class PicIndexController {
 	@RequestMapping(value = "/{type}/{kind}", method = RequestMethod.GET)
 	 public String showInputPage (@PathVariable String type, @PathVariable String kind,Model model )
 	 {
-			model.addAttribute("PicBuffer.tags", PicBuffer.tags);
+			model.addAttribute("tags", PicBuffer.tags);
 			
 			List<Item> items = null;
 			if("newest".equals(kind))

@@ -36,7 +36,7 @@
 	{
 		top:0px;
 		width:100%;
-		height:40px;
+		height:80px;
 		z-index: 999;
 		position:fixed;
 		padding-bottom:10px;
@@ -44,24 +44,22 @@
 	}
 	#navdetail
 	{
-		padding-top:5px;
+		padding:5px;
 		width:100%;
 		margin:auto;
-		height:35px;
+		height:auto;
 		z-index: 999;
 		background-color: rgb(255,111,1111);
 	}
-	
 	#navcontent
 	{
 		width:1024px;
 		margin:auto;
-		padding-top:12px;
+		padding-top:6px;
 	}
-	
 	#logo
 	{
-	    font-size: 20px;
+	    font-size: 24px;
 	    line-height: 20px;
 	    color:white;
 	}
@@ -70,15 +68,14 @@
 	{
 
 		margin-left:20px;
-		font-size: 15px;
+		font-size: 16px;
 	    line-height: 20px;
 	    color:white;
 	    padding:5px;
 	}
 	.tag:hover
 	{
-		 background-color: white;
-		 color: rgb(202,201,196);
+		color:red;
 	}
 	
 	
@@ -147,7 +144,8 @@
     cursor: pointer;
     display: inline-block;
     float: right;
-    font-size: 14px;
+    font-size: 16px;
+    font-weight:bold;
     height: 34px;
     line-height: 18px;
     margin-bottom: 0;
@@ -162,6 +160,7 @@
 	{
 		width:680px;
 		margin:auto;
+		padding-bottom:30px;
 	
 	}
 	.oneComment
@@ -208,10 +207,11 @@
 		padding-left:2px;
 		padding-top:1px;
 		padding-bottom:1px;
+		color:white;
 	}
 	.breadItem:hover
 	{
-		color: white;
+		color:white;
 	}
 </style>
 </head>
@@ -228,9 +228,9 @@
 	</div>
 
 	<div id="bread">
-				<span>current position:</span>
-				<span class="breadItem">${item.type }></span>
-			</div>
+		<span style="font-size:16px; font-weight:bold;">current position:</span>
+		<span class="breadItem">${item.type}></span>
+	</div>
 	<div id="content">
 		<div id="left">
 			<div id="pic">
@@ -239,96 +239,35 @@
 			</div>
 			
 			<div id="comment">
-				<img  src="http://tp1.sinaimg.cn/1641153660/50/5627699277/1" />
+				<img width=50 height=50 src="http://tp1.sinaimg.cn/1641153660/50/5627699277/1" />
 				<textarea class="cmtContex" id="comment-box" placeholder="say something..." selectionstart="0" selectionend="0"></textarea>
 				<div id="submit">
 					<button id="submitBtn">submit</button>
-				</div>
-				
+				</div>		
 			</div>
 			
-			<div id="comments">
-				<div class="oneComment">
-					<div class="userPic">
-						<img  src="http://tp1.sinaimg.cn/1641153660/50/5627699277/1" />
+			<div id="comments">				
+				<c:forEach items="${comments}" var="comment" >  			
+					<div class="oneComment">
+						<div class="userPic">
+							<img width=50 height=50  src="${comment.user.pic}" />
+							<div style="clear:both"></div>
+						</div>
+						<div class="usercomment">
+							<ul>
+								<li>
+									<span>${comment.user.name}:</span> 
+									<span>${comment.comment.comment}</span>
+								</li>
+								<li>
+									<span>${comment.comment.formatDate}</span> 
+								</li>
+							</ul>
+							<div style="clear:both"></div>
+						</div>
 						<div style="clear:both"></div>
-					</div>
-					<div class="usercomment">
-						<ul>
-							<li>
-								<span>开心 :</span> 
-								<span> 鞋子高跟的更好，黑色的裙子最好有点装饰</span>
-							</li>
-							<li>
-								<span>09-13 21:26</span> 
-							</li>
-						</ul>
-						<div style="clear:both"></div>
-					</div>
-					<div style="clear:both"></div>
-				</div>
-				
-								<div class="oneComment">
-					<div class="userPic">
-						<img  src="http://tp1.sinaimg.cn/1641153660/50/5627699277/1" />
-						<div style="clear:both"></div>
-					</div>
-					<div class="usercomment">
-						<ul>
-							<li>
-								<span>开心 :</span> 
-								<span> 鞋子高跟的更好，黑色的裙子最好有点装饰</span>
-							</li>
-							<li>
-								<span>09-13 21:26</span> 
-							</li>
-						</ul>
-						<div style="clear:both"></div>
-					</div>
-					<div style="clear:both"></div>
-				</div>
-				
-				
-								<div class="oneComment">
-					<div class="userPic">
-						<img  src="http://tp1.sinaimg.cn/1641153660/50/5627699277/1" />
-						<div style="clear:both"></div>
-					</div>
-					<div class="usercomment">
-						<ul>
-							<li>
-								<span>开心 :</span> 
-								<span> 鞋子高跟的更好，黑色的裙子最好有点装饰</span>
-							</li>
-							<li>
-								<span>09-13 21:26</span> 
-							</li>
-						</ul>
-						<div style="clear:both"></div>
-					</div>
-					<div style="clear:both"></div>
-				</div>
-				
-				
-								<div class="oneComment">
-					<div class="userPic">
-						<img  src="http://tp1.sinaimg.cn/1641153660/50/5627699277/1" />
-						<div style="clear:both"></div>
-					</div>
-					<div class="usercomment">
-						<ul>
-							<li>
-								<span>开心 :</span> 
-								<span> 鞋子高跟的更好，黑色的裙子最好有点装饰</span>
-							</li>
-							<li>
-								<span>09-13 21:26</span> 
-							</li>
-						</ul>
-						<div style="clear:both"></div>
-					</div>
-					<div style="clear:both"></div>
-				</div>
+					</div>		
+			</c:forEach> 
 			</div>
 			<div style="clear:both"></div>
 		</div>

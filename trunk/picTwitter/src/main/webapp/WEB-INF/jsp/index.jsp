@@ -25,7 +25,7 @@ body
 	{
 		top:0px;
 		width:100%;
-		height:70px;
+		height:80px;
 		z-index: 999;
 		position:fixed;
 		padding-bottom:10px;
@@ -33,17 +33,24 @@ body
 	}
 	#navdetail
 	{
-		padding-top:5px;
+		padding:5px;
 		width:100%;
 		margin:auto;
-		height:35px;
+		height:auto;
 		z-index: 999;
 		background-color: rgb(255,111,1111);
 	}
 	
+	#navcontent
+	{
+		width:1024px;
+		margin:auto;
+		padding-top:6px;
+	}
+	
 	#logo
 	{
-	    font-size: 20px;
+	    font-size: 24px;
 	    line-height: 20px;
 	    color:white;
 	}
@@ -62,7 +69,7 @@ body
 	.hottag
 	{
 		vertical-align:bottom;
-		font-size: 18px;
+		font-size: 15px;
 		margin-left:10px;
 	    line-height: 20px;
 	    font-weight:bold;
@@ -113,25 +120,20 @@ body
 		 padding:2px;
 	}
 	
-	#navcontent
-	{
-		width:1024px;
-		margin:auto;
-		padding-top:12px;
-	}
+
 	
 	.tag
 	{
 
 		margin-left:20px;
-		font-size: 15px;
+		font-size: 16px;
 	    line-height: 20px;
 	    color:white;
 	    padding:5px;
 	}
 	.tag:hover
 	{
-		 background-color: rgb(202,201,196);
+		 color:red;
 	}
 	
 	.mainimg
@@ -163,7 +165,7 @@ body
 
 	<div id="content">
 		<div class="column">
-			<c:forEach items="${items}" var="item" begin="3" step="4">  
+			<c:forEach items="${items}" var="item" begin="0" step="4">  
 				<div class="box">
 					<a href="/picture/detail/${item.id}"><img class="mainimg" src="${item.url}"></a>
 					<div class="comment">
@@ -174,10 +176,10 @@ body
 				</div>				
 			</c:forEach> 
 		</div>
-				<div class="column">
-			<c:forEach items="${items}" var="item" begin="3" step="4">  
+			<div class="column">
+			<c:forEach items="${items}" var="item" begin="1" step="4">  
 				<div class="box">
-					<a href="/detail/${item.id}"><img class="mainimg" src="${item.url}"></a>
+					<a href="/picture/detail/${item.id}"><img class="mainimg" src="${item.url}"></a>
 					<div class="comment">
 					 <a >${item.good}</a> 
 					 <a >${item.bad}</a> 
@@ -186,10 +188,10 @@ body
 				</div>				
 			</c:forEach> 
 		</div>
-				<div class="column">
-			<c:forEach items="${items}" var="item" begin="3" step="4">  
+		<div class="column">
+			<c:forEach items="${items}" var="item" begin="2" step="4">  
 				<div class="box">
-					<a href="/detail/${item.id}"><img class="mainimg" src="${item.url}"></a>
+					<a href="/picture/detail/${item.id}"><img class="mainimg" src="${item.url}"></a>
 					<div class="comment">
 					 <a >${item.good}</a> 
 					 <a >${item.bad}</a> 
@@ -198,10 +200,10 @@ body
 				</div>				
 			</c:forEach> 
 		</div>
-				<div class="column">
+		<div class="column">
 			<c:forEach items="${items}" var="item" begin="3" step="4">  
 				<div class="box">
-					<a href="/detail/${item.id}"><img class="mainimg" src="${item.url}"></a>
+					<a href="/picture/detail/${item.id}"><img class="mainimg" src="${item.url}"></a>
 					<div class="comment">
 					 <a >${item.good}</a> 
 					 <a >${item.bad}</a> 

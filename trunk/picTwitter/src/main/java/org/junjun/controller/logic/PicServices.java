@@ -7,7 +7,8 @@ import java.util.Map;
 import org.junjun.bean.part1.Comment;
 import org.junjun.bean.part1.Item;
 import org.junjun.bean.part1.Tag;
-import org.junjun.bean.part1.UIItem;
+import org.junjun.bean.part1.UIComment;
+import org.junjun.bean.part1.User;
 
 public interface  PicServices 
 {
@@ -15,10 +16,14 @@ public interface  PicServices
 	
 	public List<Item> getTopItemByTime(String type,Date date, int rating, int limit);	
 	public List<Item> getNewestItems(String type,Date date,int limit);	
-	public UIItem getUIItem(String id);	
+	public List<UIComment> getUIComments(String itemId);
 	public Item getItem(String id);
-	
 	public void updateItem(Item item);
+	
+	public User getUser(String id);
+	public void updateUser(User user);
+	
+	
 	public void insertItem(Item item);
 	public void insertComment(Comment item);
 	

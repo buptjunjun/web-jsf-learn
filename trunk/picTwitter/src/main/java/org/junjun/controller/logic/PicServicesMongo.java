@@ -9,7 +9,8 @@ import java.util.Map;
 import org.junjun.bean.part1.Comment;
 import org.junjun.bean.part1.Item;
 import org.junjun.bean.part1.Tag;
-import org.junjun.bean.part1.UIItem;
+import org.junjun.bean.part1.UIComment;
+import org.junjun.bean.part1.User;
 import org.junjun.mongo.DAOMongo;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,32 +30,60 @@ public class PicServicesMongo implements PicServices{
 		// TODO Auto-generated method stub
 		return mongo.search(null, null, null, null, -1,MAXLIMT , Tag.class);
 	}
-
-
+	
 	@Override
-	public UIItem getUIItem(String id) {
-		// TODO Auto-generated method stub
+	public User getUser(String id) 
+	{
+		Map<String,String> constrainEQ = new  HashMap<String,String>();
+		constrainEQ.put("id", id);
+		List<User> items = this.mongo.search(null, null, constrainEQ, null, -1, 1, User.class);
+		
+		if(items!=null && items.size() > 0)
+		{
+			User user= items.get(0);			
+			return user;
+		}
+		
+		return null;
+	}
+	
+	@Override
+	public void updateUser(User user) {
+		if(user == null)
+			return ;
+		
+		Map<String,String> constrainEQ = new  HashMap<String,String>();
+		constrainEQ.put("id", user.getId());
+		this.mongo.update(user, constrainEQ);
+	}
+	@Override
+	public List<UIComment> getUIComments(String id) {
+		// TODO Auto-generated method stub		
+		List<UIComment> uicomments = new ArrayList<UIComment>();
 		Map<String,String> constrainEQ = null;
 		if(id !=null)
 		{
 			constrainEQ = new  HashMap<String,String>();
-			constrainEQ.put("id",id);
-			List<Item> item = this.mongo.search(null, null, constrainEQ, null, -1, 1, Item.class);
-			if(item!=null && item.size()>0)
+			constrainEQ.put("commentTo",id);
+			List<Comment> comments = this.mongo.search(null, null, constrainEQ, null, -1, 1, Comment.class);
+			if(comments!=null)
 			{
-				Item i = item.get(0);
+				for(Comment comment : comments)
+				{
+					UIComment uicomment = new UIComment();						
+					User user = this.getUser(comment.getCommentFrom());
+					if(user !=null)
+					{
+						uicomment.setComment(comment);
+						uicomment.setUser(user);
+						uicomments.add(uicomment);
+					}
+				}
 				
-				constrainEQ.clear();
-				constrainEQ.put("commentTo",id);
-				List<Comment> comments = this.mongo.search(null, null, constrainEQ, null, -1, 1, Comment.class);
-				
-				UIItem uiitem = new UIItem();
-				uiitem.setItem(i);
-				uiitem.setComments(comments);
-				
-				return uiitem;
+				return uicomments;
 			}
 		}
+		
 		return null;
 	}
 	@Override
@@ -134,7 +163,10 @@ public class PicServicesMongo implements PicServices{
 		return null;
 		
 	}
-	public void updateItem(Item item) {
+	public void updateItem(Item item) 
+	{
+		if(item == null)
+			return;
 		
 		Map<String,String> constrainEQ = new  HashMap<String,String>();
 		constrainEQ.put("id", item.getId());
