@@ -176,7 +176,12 @@ public class DAOMongo<T> {
 	public <T extends Object>  List<T> search (Map<String ,Object> constrainsLT,Map<String ,Object> constrainsGT,Map<String ,Object> constrains , String sortFiled,int sortWay, int limit, Class cls)
 	{	
 		Criteria cons =  getCriteria(constrainsLT,constrainsGT,constrains);
-		Query q = new Query(cons).limit(limit);
+		Query q = null;
+		if(cons!=null)
+		  q = new Query(cons).limit(limit);
+		else
+			q = new Query().limit(limit);
+		
 		if(sortWay == ASCENDING)
 			q.sort().on(sortFiled, Order.ASCENDING);
 		else if (sortWay == DESCENDING)
