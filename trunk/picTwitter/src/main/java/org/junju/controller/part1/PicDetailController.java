@@ -33,7 +33,6 @@ public class PicDetailController {
 		
 		List<UIComment> comments = picservice.getUIComments(id);
 		model.addAttribute("comments", comments);
-		
 		return "detail";
     }
 	
