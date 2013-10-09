@@ -76,6 +76,7 @@
 	.tag:hover
 	{
 		color:red;
+		cursor:pointer;
 	}
 	
 	
@@ -211,7 +212,8 @@
 	}
 	.breadItem:hover
 	{
-		color:white;
+		color:red;
+		cursor:pointer;
 	}
 </style>
 </head>
@@ -229,7 +231,8 @@
 
 	<div id="bread">
 		<span style="font-size:16px; font-weight:bold;">current position:</span>
-		<span class="breadItem">${item.type}></span>
+		<span class="breadItem">main ></span>
+		<span class="breadItem">${item.type} ></span>
 	</div>
 	<div id="content">
 		<div id="left">

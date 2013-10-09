@@ -1,0 +1,61 @@
+* { margin:0; padding:0; word-wrap:break-word; word-break:break-all; }
+a {text-decoration:none; }
+
+.img_background {
+	background: url("http://localhost:8080/picture/resources/img/main_icon.png.gif") no-repeat scroll 0 0
+		rgba(0, 0, 0, 0);
+}
+
+
+
+.good {
+	width: 18px;
+	height: 18px;
+	background-position: -77px -114px
+}
+.good1 {
+	width: 18px;
+	height: 18px;
+	background-position: -77px -94px
+}
+
+
+.bad {
+	width: 18px;
+	height: 18px;
+	background-position: -77px -161px
+}
+
+.bad1 {
+	width: 18px;
+	height: 18px;
+	background-position: -77px -141px
+}
+
+.collect {
+	width: 18px;
+	height: 18px;
+	background-position: -77px -17px
+}
+
+.collect1 {
+	width: 18px;
+	height: 18px;
+	background-position: -77px 1px
+}
+
+.post
+{
+		width: 18px;
+	height: 18px;
+	background-position: -102px -63px
+	
+}
+
+.post1
+{
+	width: 18px;
+	height: 18px;
+	background-position: -102px -43px
+	
+}

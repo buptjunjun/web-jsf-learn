@@ -20,12 +20,12 @@ public class Item
 	private int good = 0;
 	private int bad = 0;
 	private int collect = 0; // 
-	private int comments = 0; // how many comments are there 
+	private int comment = 0; // how many comment are there 
 	private int total = 0;
 	
 	private void caculateTotal()
 	{
-		this.total = this.good+this.bad/2+this.comments*2+this.collect*3;
+		this.total = this.good+this.bad/2+this.comment*2+this.collect*3;
 	}
 	
 	public String getUrl1() {
@@ -36,11 +36,11 @@ public class Item
 		this.url1 = url1;
 	}
 	
-	public int getComments() {
-		return comments;
+	public int getComment() {
+		return comment;
 	}
-	public void setComments(int comments) {
-		this.comments = comments;
+	public void setComment(int comment) {
+		this.comment = comment;
 		caculateTotal();
 	}	
 	
