@@ -26,7 +26,7 @@ public class PicIndexController {
 	
 	public static final int LIMIT = 30;
 	private PicServices picservice = new PicServicesMongo();
-	
+	public static String defaultType = "pictures";
 	
 	public PicIndexController() 
 	{
@@ -36,6 +36,10 @@ public class PicIndexController {
 	@RequestMapping(value = "/{type}/{kind}", method = RequestMethod.GET)
 	 public String showInputPage (@PathVariable String type, @PathVariable String kind,Model model )
 	 {
+			if(type == null)
+			{
+				type=defaultType;
+			}
 			model.addAttribute("tags", PicBuffer.tags);
 			
 			List<Item> items = null;
@@ -49,7 +53,12 @@ public class PicIndexController {
 				items = PicBuffer.itemsNewest.get(type);
 			
 			model.addAttribute("items", items);
+			if(type == null)
+			{
+				type=defaultType;
+			}
 			
+			model.addAttribute("currtype", type);
 	        return "index";
      }
 	

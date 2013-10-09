@@ -140,7 +140,7 @@ public class PicServicesMongo implements PicServices{
 		// TODO Auto-generated method stub
 		this.mongo.insert(comment);
 		Item item = this.getItem(comment.getCommentTo());
-		item.setComments(item.getComments()+1);		
+		item.setComment(item.getComment()+1);		
 		this.updateItem(item);
 	}
 	@Override

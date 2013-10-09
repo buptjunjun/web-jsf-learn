@@ -9,6 +9,80 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>pic galaxy</title>
+<link type="text/css" rel="stylesheet" href="http://localhost:8080/picture/resources/style/common.css" />  
+<script type="text/javascript" src="http://localhost:8080/picture/resources/script/jquery-1.7.1.js"></script>
+<script type="text/javascript">
+
+var querying = false;
+function resetquerying()
+{
+	querying = false;
+}
+
+
+function loadMore()
+{
+	var id = $(".hiddenid").last().text();
+	var searchURL = "http://localhost:8080/picture/api/";
+	querying = true;
+	 setTimeout("resetquerying()", 3000);
+	$(function()
+	{
+		var url =  searchURL+id;
+		$.ajax({
+				type: "get",			
+				url: url,
+				dataType:"json",
+				contentType: "application/json; charset=utf-8",  
+				success:function (data)   // request success.
+				{
+					 var $columns = $(".column");
+					
+					
+					//alert(data.length);
+					
+					if(data!= null && data.length>0)
+					{	
+						for(var i = 0; i< data.length;i++)
+						{
+							// find the shortest column
+							var shortest = 0;
+							for(var j = 0; j < $columns.length; j++)
+							{
+								if($columns[j].height > shortest)	
+									shortest = j;
+							}	
+							
+							var $copy =$(".box").first().clone(true);
+							
+							var item = data[i];
+							$copy.find(".hiddenid").text(item.id);
+							$copy.find(".mainimg_a").prop('href',"/picture/detail/"+item.id);
+							$copy.find(".mainimg").prop('src',item.url);
+							$copy.find(".good span").text(item.good);
+							$copy.find(".bad span").text(item.bad);
+							$copy.find(".collect span").text(item.collect);
+							$copy.find(".post span").text(item.comment);							
+							$("#column1").append($copy);
+						}
+					} 
+				}
+		  });
+	 }
+	);
+	
+}
+
+$(window).scroll(function(){  
+	
+	// if scrollbar is within 100px of bottom loadMore content
+	var span=$(document).height() - $(this).scrollTop() - $(this).height();
+    if (span <400 && querying == false) 
+    	loadMore();  
+
+});  
+</script>
+
 
 <style type="text/css">
 body
@@ -20,6 +94,7 @@ body
 	    line-height: 20px;
 	    margin: 0;
 	}
+	
 	
 	#nav
 	{
@@ -82,6 +157,7 @@ body
 	 {
 		 background-color: rgb(255,111,1111);
 		 color:white;
+		 cursor:pointer;
 	 }
 	
 	#content
@@ -118,6 +194,7 @@ body
 		 height:auto;
 		 text-align:left;
 		 padding:2px;
+		 margin-left:10px;
 	}
 	
 
@@ -134,11 +211,36 @@ body
 	.tag:hover
 	{
 		 color:red;
+		 cursor:pointer;
 	}
 	
 	.mainimg
 	{
 		margin-top:10px;
+	}
+	
+	.comment span
+	{
+		margin-left:18px;
+		font-size:11px;
+	}
+	.comment a:hover
+	{
+		color:red;
+		cursor:pointer;
+	}
+	
+	.hiddenid
+	{
+		display:none;
+	}
+	.mainimg_a
+	{
+	}
+	
+	.clear
+	{
+		clear:both;
 	}
 	
 </style>
@@ -150,69 +252,37 @@ body
 					<span id="logo">Picture Falls</span>				
 					
 					<c:forEach items="${tags}" var="tag">  
-						<span class="tag">${tag.type} </span>
+						<a href="http://localhost:8080/picture/pic/${tag.type}/weekly"> <span class="tag">${tag.type} </span></a>
 					</c:forEach>  	
 				</div>
 				
 			</div>
 			<div id="hot">
-				<span class="hottag">newest</span>
-				<span class="hottag">weekly</span>
-				<span class="hottag">monthly</span>
+				<a href="http://localhost:8080/picture/pic/${currtype}/newest"> <span class="hottag">newest</span></a>
+				<a href="http://localhost:8080/picture/pic/${currtype}/weekly"> <span class="hottag">weekly</span></a>
+				<a href="http://localhost:8080/picture/pic/${currtype}/monthly"> <span class="hottag">monthly</span></a>
 			</div>
 
 	</div>
 
 	<div id="content">
-		<div class="column">
-			<c:forEach items="${items}" var="item" begin="0" step="4">  
+		<div class="column" id="column0">
+			<c:forEach items="${items}" var="item" begin="0" step="1">  
 				<div class="box">
-					<a href="/picture/detail/${item.id}"><img class="mainimg" src="${item.url}"></a>
+					<span class="hiddenid">${item.id}</span>
+					<a href="/picture/detail/${item.id}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
 					<div class="comment">
-					 <a >${item.good}</a> 
-					 <a >${item.bad}</a> 
-					 <a >${item.collect}</a>  
+					  <a class="img_background good"><span>1000${item.good}  </span></a> 
+					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
+					  <a class="img_background collect"><span>100${item.collect} </span></a>  
+					  <a class="img_background post"><span>100${item.comment} </span></a> 
 					</div>
 				</div>				
 			</c:forEach> 
 		</div>
-			<div class="column">
-			<c:forEach items="${items}" var="item" begin="1" step="4">  
-				<div class="box">
-					<a href="/picture/detail/${item.id}"><img class="mainimg" src="${item.url}"></a>
-					<div class="comment">
-					 <a >${item.good}</a> 
-					 <a >${item.bad}</a> 
-					 <a >${item.collect}</a>  
-					</div>
-				</div>				
-			</c:forEach> 
+	<div class="column" id="column1">
 		</div>
-		<div class="column">
-			<c:forEach items="${items}" var="item" begin="2" step="4">  
-				<div class="box">
-					<a href="/picture/detail/${item.id}"><img class="mainimg" src="${item.url}"></a>
-					<div class="comment">
-					 <a >${item.good}</a> 
-					 <a >${item.bad}</a> 
-					 <a >${item.collect}</a>  
-					</div>
-				</div>				
-			</c:forEach> 
-		</div>
-		<div class="column">
-			<c:forEach items="${items}" var="item" begin="3" step="4">  
-				<div class="box">
-					<a href="/picture/detail/${item.id}"><img class="mainimg" src="${item.url}"></a>
-					<div class="comment">
-					 <a >${item.good}</a> 
-					 <a >${item.bad}</a> 
-					 <a >${item.collect}</a>  
-					</div>
-				</div>				
-			</c:forEach> 
-		</div>
-		<div style="clear:both"></div>
+		<div class="clear"></div>
 	</div>
 </body>
 </html>
