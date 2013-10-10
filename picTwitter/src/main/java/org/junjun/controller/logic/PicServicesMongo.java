@@ -86,6 +86,8 @@ public class PicServicesMongo implements PicServices{
 		
 		return null;
 	}
+	
+	
 	@Override
 	public List<Item> getNewestItems(String type,Date date, int limit) {
 		// TODO Auto-generated method stub
@@ -106,6 +108,7 @@ public class PicServicesMongo implements PicServices{
 			limit = MAXLIMT;
 		return  mongo.search(constrainLT,null , constrainEQ, "date", DAOMongo.DESCENDING, limit, Item.class);
 	}
+	
 	@Override
 	public List<Item> getTopItemByTime(String type, Date date, int rating, int limit) {
 		Map<String,String> constrainEQ = null;

@@ -222,6 +222,9 @@ $(document).ready(function ()
 		$("#arrayleft").click(function(){prev();});
 		
 		$("#arrayright").click(function(){next();});
+		
+		
+		$("#bigpic").click(function(){next();});
 	});
 	
 /* $(window).scroll(function(){  
@@ -240,12 +243,11 @@ $(document).ready(function ()
     } 
 
 });   */
-
 var urlpre = "http://localhost:8080/picture/detail/pre/";
 function prev()
 {
 	var id = $(".hiddenid").last().text();
-	var url = urlpre+id;
+	var url = urlpre+id+"?kind="+$("#kind").text();
 	window.open(url,"_self");
 }
 
@@ -253,13 +255,14 @@ var urlnext = "http://localhost:8080/picture/detail/next/";
 function next()
 {
 	var id = $(".hiddenid").last().text();
-	var url = urlnext+id;
+	var url = urlnext+id+"?kind="+$("#kind").text();
 	window.open(url,"_self");
 }
 
 </script>
 </head>
 <body>
+	<span id="kind" class="hiddenid">${kind}</span>
 	<div id="nav">
 			<div id="navdetail">
 				<div id="navcontent">
@@ -289,7 +292,7 @@ function next()
 					<div style="clear:both"></div>
 				</div>
 				<span class="hiddenid">${item.id}</span>
-				<img width=600  src="${item.url1 }"/>
+				<img id="bigpic" width=600  src="${item.url1 }"/>
 				<p>${item.desc }</p>
 			</div>
 			
