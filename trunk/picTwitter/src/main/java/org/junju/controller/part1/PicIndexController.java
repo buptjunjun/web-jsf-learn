@@ -24,7 +24,7 @@ import org.junjun.controller.logic.PicUtil;
 @RequestMapping("/pic")
 public class PicIndexController {
 	
-	public static final int LIMIT = 30;
+	public static final int LIMIT = 300;
 	private PicServices picservice = new PicServicesMongo();
 	public static String defaultType = "pictures";
 	
@@ -41,18 +41,25 @@ public class PicIndexController {
 				type=defaultType;
 			}
 			model.addAttribute("tags", PicBuffer.tags);
-			
+			model.addAttribute("kind", kind);  // weekly , monthly , newest
 			List<Item> items = null;
 			if("newest".equals(kind))
 				 items = PicBuffer.itemsNewest.get(type);
 			else if("weekly".equals(kind))
 				 items = PicBuffer.itemsHottestWeekly.get(type);
 			else if("monthly".equals(kind))
-				 items = PicBuffer.itemsHottestMonthly.get(type);
+			{
+				items = PicBuffer.itemsHottestMonthly.get(type);				
+			}
 			else
+			{
 				items = PicBuffer.itemsNewest.get(type);
+				model.addAttribute("kind", "newest");
+			}
 			
-			model.addAttribute("items", items);
+			int size = items.size() <= 20?items.size():20;
+			
+			model.addAttribute("items", items.subList(0, size-1));
 			if(type == null)
 			{
 				type=defaultType;

@@ -233,6 +233,7 @@ $(window).scroll(function(){
 </head>
 <body>
 	<div id="nav">
+			<span id="kind" class="hiddenid">${kind}</span>
 			<div id="navdetail">
 				<div id="navcontent">
 					<span id="logo">Picture Falls</span>				
@@ -256,7 +257,7 @@ $(window).scroll(function(){
 			<c:forEach items="${items}" var="item" begin="0" step="4">  
 				<div class="box">
 					<span class="hiddenid">${item.id}</span>
-					<a href="/picture/detail/${item.id}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
+					<a href="/picture/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
 					<div class="comment">
 					  <a class="img_background good"><span>1000${item.good}  </span></a> 
 					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
@@ -271,7 +272,7 @@ $(window).scroll(function(){
 			<c:forEach items="${items}" var="item" begin="1" step="4">  
 				<div class="box">
 					<span class="hiddenid">${item.id}</span>
-					<a href="/picture/detail/${item.id}" class="mainimg_a"><img class="mainimg" src="${item.url}"  /></a>
+					<a href="/picture/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"  /></a>
 					<div class="comment">
 					  <a class="img_background good"><span>1000${item.good}  </span></a> 
 					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
@@ -286,7 +287,7 @@ $(window).scroll(function(){
 			<c:forEach items="${items}" var="item" begin="2" step="4">  
 				<div class="box">
 					<span class="hiddenid">${item.id}</span>
-					<a href="/picture/detail/${item.id}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
+					<a href="/picture/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
 					<div class="comment">
 					  <a class="img_background good"><span>1000${item.good}  </span></a> 
 					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
@@ -301,7 +302,7 @@ $(window).scroll(function(){
 			<c:forEach items="${items}" var="item" begin="3" step="4">  
 				<div class="box">
 					<span class="hiddenid">${item.id}</span>
-					<a href="/picture/detail/${item.id}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
+					<a href="/picture/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
 					<div class="comment">
 					  <a class="img_background good"><span>1000${item.good}  </span></a> 
 					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
