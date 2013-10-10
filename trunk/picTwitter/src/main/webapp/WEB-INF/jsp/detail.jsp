@@ -7,8 +7,11 @@
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>pic galaxy</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link type="text/css" rel="stylesheet" href="http://localhost:8080/picture/resources/style/common.css" />  
+<script type="text/javascript" src="http://localhost:8080/picture/resources/script/jquery-1.7.1.js"></script>
 
 <style type="text/css">
 	ul 
@@ -32,58 +35,15 @@
 	    line-height: 20px;
 	    margin: 0;
 	}
-	#nav
-	{
-		top:0px;
-		width:100%;
-		height:80px;
-		z-index: 999;
-		position:fixed;
-		padding-bottom:10px;
-		
+	#nav {
+		height: 40px;
 	}
-	#navdetail
-	{
-		padding:5px;
-		width:100%;
-		margin:auto;
-		height:auto;
-		z-index: 999;
-		background-color: rgb(255,111,1111);
-	}
-	#navcontent
-	{
-		width:1024px;
-		margin:auto;
-		padding-top:6px;
-	}
-	#logo
-	{
-	    font-size: 24px;
-	    line-height: 20px;
-	    color:white;
-	}
-	
-	.tag
-	{
-
-		margin-left:20px;
-		font-size: 16px;
-	    line-height: 20px;
-	    color:white;
-	    padding:5px;
-	}
-	.tag:hover
-	{
-		color:red;
-		cursor:pointer;
-	}
-	
 	
 	#content
 	{
 		margin:auto;
 		width:1024px;
+		min-height:800px;
 		height:auto;
 		text-align:center;
 		padding-top:15px;
@@ -94,6 +54,7 @@
 	{
 	 width:700px;
 	 height:auto;
+	 min-height:768px;
 	 float:left;
 	 border:1px solid #D9D9D6
 	}
@@ -145,16 +106,16 @@
     cursor: pointer;
     display: inline-block;
     float: right;
-    font-size: 16px;
+    font-size: 14px;
     font-weight:bold;
     height: 34px;
-    line-height: 18px;
+    line-height: 10px;
     margin-bottom: 0;
-    padding: 4px 10px;
+    padding: 2px 5px;
     text-align: center;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
     vertical-align: middle;
-    width: 65px;
+    width: 70px;
 	}
 	
 	#comments
@@ -201,7 +162,7 @@
 		width:1024px;
 		height:30px;
 		color: rgb(255,111,1111);
-		border-bottom:1px solid #D9D9D6
+
 	}
 	.breadItem
 	{
@@ -212,31 +173,122 @@
 	}
 	.breadItem:hover
 	{
-		color:red;
+		color: red;
 		cursor:pointer;
 	}
+	
+	
+	#arrow
+	{
+		top: 300px;
+		width: 700px;
+		height: auto;
+		z-index: 999;
+		position: fixed;
+		font-size:40px;
+		color:red;
+	}
+	
+	#arrayleft
+	{
+		float:left;
+		width:32;
+		height:48;
+		margin-left:2px;
+	}
+	
+	#arrayright
+	{
+		float:right;
+		width:32;
+		height:48;
+		margin-right:2px;
+		
+	}
+	
+
 </style>
+
+
+<script type="text/javascript">
+$(document).ready(function ()
+	{ 
+		$("#arrayleft").mouseover(function(){ $(this).attr("class","img_array_background leftarrow1");});
+		$("#arrayleft").mouseleave(function(){ $(this).attr("class","img_array_background leftarrow");});
+		
+		$("#arrayright").mouseover(function(){ $(this).attr("class","img_array_background rightarrow1");});
+		$("#arrayright").mouseleave(function(){ $(this).attr("class","img_array_background rightarrow");});	
+		
+		$("#arrayleft").click(function(){prev();});
+		
+		$("#arrayright").click(function(){next();});
+	});
+	
+/* $(window).scroll(function(){  
+	
+	// if scrollbar is within 100px of bottom loadMore content
+	var scrollTop =  $(this).scrollTop();
+	var picHeight= $("#pic").height();
+	//console.log(picHeight+"   "+scrollTop );
+    if(picHeight-scrollTop < 200)
+    {
+    	$("#arrow").hide();
+    }
+    else
+    {
+    	$("#arrow").show();
+    } 
+
+});   */
+
+var urlpre = "http://localhost:8080/picture/detail/pre/";
+function prev()
+{
+	var id = $(".hiddenid").last().text();
+	var url = urlpre+id;
+	window.open(url,"_self");
+}
+
+var urlnext = "http://localhost:8080/picture/detail/next/";
+function next()
+{
+	var id = $(".hiddenid").last().text();
+	var url = urlnext+id;
+	window.open(url,"_self");
+}
+
+</script>
 </head>
 <body>
 	<div id="nav">
 			<div id="navdetail">
 				<div id="navcontent">
-					<span id="logo">Picture Falls</span>									
+					<span id="logo">Picture Falls</span>				
+					
 					<c:forEach items="${tags}" var="tag">  
-						<span class="tag">${tag.type} </span>
+						<a href="http://localhost:8080/picture/pic/${tag.type}/weekly"> <span class="tag">${tag.type} </span></a>
 					</c:forEach>  	
-				</div>			
+				</div>
+				
 			</div>
 	</div>
+	
 
+	
 	<div id="bread">
-		<span style="font-size:16px; font-weight:bold;">current position:</span>
-		<span class="breadItem">main ></span>
-		<span class="breadItem">${item.type} ></span>
+		<span style="font-size:12px; font-weight:bold;">current position:</span>
+		<a  class="breadItem"><span>main ></span></a>
+		<a  class="breadItem" href="http://localhost:8080/picture/pic/${item.type}/weekly" ><span>${item.type} ></span></a>
 	</div>
 	<div id="content">
 		<div id="left">
 			<div id="pic">
+				<div id="arrow">			
+					<div id="arrayleft" class="img_array_background leftarrow" title="previous one">	</div>
+					<div id="arrayright" class="img_array_background rightarrow" title="next one"></div>
+					<div style="clear:both"></div>
+				</div>
+				<span class="hiddenid">${item.id}</span>
 				<img width=600  src="${item.url1 }"/>
 				<p>${item.desc }</p>
 			</div>

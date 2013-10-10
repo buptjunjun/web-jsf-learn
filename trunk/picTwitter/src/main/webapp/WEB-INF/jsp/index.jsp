@@ -11,77 +11,6 @@
 <title>pic galaxy</title>
 <link type="text/css" rel="stylesheet" href="http://localhost:8080/picture/resources/style/common.css" />  
 <script type="text/javascript" src="http://localhost:8080/picture/resources/script/jquery-1.7.1.js"></script>
-<script type="text/javascript">
-
-var querying = false;
-function resetquerying()
-{
-	querying = false;
-}
-
-
-function loadMore()
-{
-	var id = $(".hiddenid").last().text();
-	var searchURL = "http://localhost:8080/picture/api/";
-	querying = true;
-	 setTimeout("resetquerying()", 3000);
-	$(function()
-	{
-		var url =  searchURL+id;
-		$.ajax({
-				type: "get",			
-				url: url,
-				dataType:"json",
-				contentType: "application/json; charset=utf-8",  
-				success:function (data)   // request success.
-				{
-					 var $columns = $(".column");
-					
-					
-					//alert(data.length);
-					
-					if(data!= null && data.length>0)
-					{	
-						for(var i = 0; i< data.length;i++)
-						{
-							// find the shortest column
-							var shortest = 0;
-							for(var j = 0; j < $columns.length; j++)
-							{
-								if($columns[j].height > shortest)	
-									shortest = j;
-							}	
-							
-							var $copy =$(".box").first().clone(true);
-							
-							var item = data[i];
-							$copy.find(".hiddenid").text(item.id);
-							$copy.find(".mainimg_a").prop('href',"/picture/detail/"+item.id);
-							$copy.find(".mainimg").prop('src',item.url);
-							$copy.find(".good span").text(item.good);
-							$copy.find(".bad span").text(item.bad);
-							$copy.find(".collect span").text(item.collect);
-							$copy.find(".post span").text(item.comment);							
-							$("#column1").append($copy);
-						}
-					} 
-				}
-		  });
-	 }
-	);
-	
-}
-
-$(window).scroll(function(){  
-	
-	// if scrollbar is within 100px of bottom loadMore content
-	var span=$(document).height() - $(this).scrollTop() - $(this).height();
-    if (span <400 && querying == false) 
-    	loadMore();  
-
-});  
-</script>
 
 
 <style type="text/css">
@@ -96,39 +25,7 @@ body
 	}
 	
 	
-	#nav
-	{
-		top:0px;
-		width:100%;
-		height:80px;
-		z-index: 999;
-		position:fixed;
-		padding-bottom:10px;
-		
-	}
-	#navdetail
-	{
-		padding:5px;
-		width:100%;
-		margin:auto;
-		height:auto;
-		z-index: 999;
-		background-color: rgb(255,111,1111);
-	}
-	
-	#navcontent
-	{
-		width:1024px;
-		margin:auto;
-		padding-top:6px;
-	}
-	
-	#logo
-	{
-	    font-size: 24px;
-	    line-height: 20px;
-	    color:white;
-	}
+
 	
 	#hot
 	{
@@ -167,12 +64,14 @@ body
 		height:auto;
 		text-align:center;
 		padding-top:100px;
+		overflow:hidden;
 	}
 	.box
 	{
 		width:220px;
 		padding:2px;
 		margin:5px;
+		margin-top:20px;
 		border: 1px solid #DFDFE0;
 		height:auto;		
 		vertical-align:center;
@@ -186,6 +85,7 @@ body
 		height:auto;
 		text-align:center;
 		padding:2px;	
+		overflow:hidden;
 	}
 	
 	.comment
@@ -230,10 +130,7 @@ body
 		cursor:pointer;
 	}
 	
-	.hiddenid
-	{
-		display:none;
-	}
+
 	.mainimg_a
 	{
 	}
@@ -244,6 +141,95 @@ body
 	}
 	
 </style>
+
+<script type="text/javascript">
+
+var querying = false;
+function resetquerying()
+{
+	querying = false;
+}
+
+
+function loadMore()
+{
+	var id = $(".hiddenid").last().text();
+	var searchURL = "http://localhost:8080/picture/api/";
+	querying = true;
+	setTimeout(resetquerying, 3000);
+	$(function()
+	{
+		var url =  searchURL+id;
+		$.ajax({
+				type: "get",			
+				url: url,
+				dataType:"json",
+				contentType: "application/json; charset=utf-8",  
+				success:function (data)   // request success.
+				{				
+					//alert(data.length);
+					
+					if(data!= null && data.length>0)
+					{	
+						for(var i = 0; i< data.length;i++)
+						{
+							// find the shortest column
+							var shortest = getShortestColum();						
+						
+							var $copy =$(".box").first().clone(true);
+							
+							var item = data[i];
+							$copy.find(".hiddenid").text(item.id);
+							$copy.find(".mainimg_a").prop('href',"/picture/detail/"+item.id);
+							$copy.find(".mainimg").prop('src',item.url);
+							$copy.find(".good span").text(item.good);
+							$copy.find(".bad span").text(item.bad);
+							$copy.find(".collect span").text(item.collect);
+							$copy.find(".post span").text(item.comment);	
+							
+							var shortestColumn = "#column"+shortest; 
+							$(shortestColumn).append($copy);
+						}
+					} 
+				}
+		  });
+	 }
+	);
+	
+}
+
+
+function getShortestColum()
+{
+	var height0 = $("#column0").height();
+	var height1 = $("#column1").height();
+	var height2 = $("#column2").height();
+	var height3 = $("#column3").height();
+	var heights = [height0,height1,height2,height3];
+	
+	var shortest = height0;
+	var hold = 0;
+	for(var i = 0;i < heights.length;i++)
+	{
+		if(heights[i]<shortest)
+		{
+			shortest = heights[i];
+			hold = i;
+		}	
+	}
+	return hold;
+}
+$(window).scroll(function(){  
+	
+	// if scrollbar is within 100px of bottom loadMore content
+	var span=$(document).height() - $(this).scrollTop() - $(this).height();
+    if (span <10 && querying == false) 
+    	loadMore();  
+
+});  
+</script>
+
+
 </head>
 <body>
 	<div id="nav">
@@ -267,7 +253,7 @@ body
 
 	<div id="content">
 		<div class="column" id="column0">
-			<c:forEach items="${items}" var="item" begin="0" step="1">  
+			<c:forEach items="${items}" var="item" begin="0" step="4">  
 				<div class="box">
 					<span class="hiddenid">${item.id}</span>
 					<a href="/picture/detail/${item.id}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
@@ -280,8 +266,52 @@ body
 				</div>				
 			</c:forEach> 
 		</div>
-	<div class="column" id="column1">
+		
+		<div class="column" id="column1">
+			<c:forEach items="${items}" var="item" begin="1" step="4">  
+				<div class="box">
+					<span class="hiddenid">${item.id}</span>
+					<a href="/picture/detail/${item.id}" class="mainimg_a"><img class="mainimg" src="${item.url}"  /></a>
+					<div class="comment">
+					  <a class="img_background good"><span>1000${item.good}  </span></a> 
+					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
+					  <a class="img_background collect"><span>100${item.collect} </span></a>  
+					  <a class="img_background post"><span>100${item.comment} </span></a> 
+					</div>
+				</div>				
+			</c:forEach> 
 		</div>
+		
+		<div class="column" id="column2">
+			<c:forEach items="${items}" var="item" begin="2" step="4">  
+				<div class="box">
+					<span class="hiddenid">${item.id}</span>
+					<a href="/picture/detail/${item.id}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
+					<div class="comment">
+					  <a class="img_background good"><span>1000${item.good}  </span></a> 
+					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
+					  <a class="img_background collect"><span>100${item.collect} </span></a>  
+					  <a class="img_background post"><span>100${item.comment} </span></a> 
+					</div>
+				</div>				
+			</c:forEach> 
+		</div>
+		
+		<div class="column" id="column3">
+			<c:forEach items="${items}" var="item" begin="3" step="4">  
+				<div class="box">
+					<span class="hiddenid">${item.id}</span>
+					<a href="/picture/detail/${item.id}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
+					<div class="comment">
+					  <a class="img_background good"><span>1000${item.good}  </span></a> 
+					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
+					  <a class="img_background collect"><span>100${item.collect} </span></a>  
+					  <a class="img_background post"><span>100${item.comment} </span></a> 
+					</div>
+				</div>				
+			</c:forEach> 
+		</div>
+		
 		<div class="clear"></div>
 	</div>
 </body>

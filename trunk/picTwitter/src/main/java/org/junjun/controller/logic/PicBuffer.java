@@ -10,6 +10,7 @@ import org.junjun.bean.part1.Tag;
 public class PicBuffer
 {
 	
+	//<type,list>
 	static public Map<String,List<Item>> itemsNewest = null;
 	static public Map<String,List<Item>> itemsHottestWeekly = null;
 	static public Map<String,List<Item>> itemsHottestMonthly= null;	
