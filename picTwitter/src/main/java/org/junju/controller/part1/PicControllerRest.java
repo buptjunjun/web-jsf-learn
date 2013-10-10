@@ -41,12 +41,12 @@ public class PicControllerRest
 	{
 		Item item = PicBuffer.itemBuffer.get(id.trim());
 		List<Item> ret = new ArrayList<Item>();
-		ret.add(item);
-		/*for(Entry entry:PicBuffer.itemBuffer.entrySet())
+		//ret.add(item);
+		for(Entry entry:PicBuffer.itemBuffer.entrySet())
 		{
 			ret.add((Item)entry.getValue());
-			break;
-		}*/
+			
+		}
 		return ret;
 	}
 	

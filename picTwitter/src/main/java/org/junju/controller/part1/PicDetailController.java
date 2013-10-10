@@ -36,5 +36,42 @@ public class PicDetailController {
 		return "detail";
     }
 	
+	
+	@RequestMapping(value = "/{arrow}/{id}", method = RequestMethod.GET)
+	public String preNext (@PathVariable String arrow, @PathVariable String id, Model model )
+	{	
+		model.addAttribute("tags", PicBuffer.tags);
+		
+		Item item = PicBuffer.itemBuffer.get(id);
+		
+		List<Item> listItem = PicBuffer.itemsNewest.get(item.getType());
+		int hold = 0;
+		int size = listItem.size();
+		for(int i = 0; i<size ; i++)
+		{
+			if(id.equals(listItem.get(i).getId()))
+			{
+				hold = i;
+				break;
+			}
+		}
+		
+		Item newItem = null;
+		if(hold<=0)
+			hold = size;
+		if("pre".equals(arrow))
+		{
+			newItem = listItem.get((hold-1)%size);
+		}
+		else
+		{
+			newItem = listItem.get((hold+1)%size);
+		}
+		model.addAttribute("item", newItem);
+		
+		List<UIComment> comments = picservice.getUIComments(id);
+		model.addAttribute("comments", comments);
+		return "redirect:/detail/"+newItem.getId();
+    }
 }
 
