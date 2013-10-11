@@ -16,7 +16,7 @@
 <style type="text/css">
 body
 	{
-		background-color: rgb(202,201,196);
+		background-color: #D1D1E8;
 	    color: #333333;
 	    font-family: "Helvetica Neue",Helvetica,STheiti,微软雅黑,宋体,Arial,Tahoma,sans-serif,serif;
 	    font-size: 14px;
@@ -35,7 +35,7 @@ body
 		height:50px;
 		z-index: 999;
 		padding-top:15px;
-		background-color: rgb(202,201,196);
+		background-color:  #D1D1E8;
 		
 	}
 	.hottag

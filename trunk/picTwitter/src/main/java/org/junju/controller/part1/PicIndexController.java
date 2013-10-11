@@ -33,7 +33,14 @@ public class PicIndexController {
 		if(PicBuffer.itemsNewest==null)
 			init();
 	}
-	@RequestMapping(value = "/{type}/{kind}", method = RequestMethod.GET)
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public String index(Model model)
+	{
+		return showInputPage(null,null,model);
+	}
+	
+	@RequestMapping(value = {"/{type}","/{type}/{kind}"}, method = RequestMethod.GET)
 	 public String showInputPage (@PathVariable String type, @PathVariable String kind,Model model )
 	 {
 			if(type == null)
