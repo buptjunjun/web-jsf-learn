@@ -14,20 +14,27 @@ import org.junjun.controller.logic.PicServices;
 import org.junjun.controller.logic.PicServicesMongo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import org.junjun.controller.logic.PicUtil;
 
 @Controller
 @RequestMapping("/pic")
+@SessionAttributes({"login","hello"})
 public class PicIndexController {
 	
 	public static final int LIMIT = 300;
 	private PicServices picservice = new PicServicesMongo();
 	public static String defaultType = "pictures";
-	
+  
+	@ModelAttribute("login")
+    public boolean login() {
+       return false; // populates form for the first time if its null
+   }
 	public PicIndexController() 
 	{
 		if(PicBuffer.itemsNewest==null)
@@ -35,8 +42,9 @@ public class PicIndexController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String index(Model model)
+	public String index(@ModelAttribute("login") Boolean login,Model model)
 	{
+		System.out.println(login);
 		return showInputPage(null,null,model);
 	}
 	
