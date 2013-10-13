@@ -6,15 +6,4 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
-	<http auto-config="true">
-		<intercept-url pattern="/**" access="ROLE_SPITTER" />
-	</http>
-	
-	<authentication-manager>
-		<authentication-provider>
-			<user-service>
-				<user name="andy" password="123456" authorities="ROLE_USER" />
-			</user-service>
-		</authentication-provider>
-	</authentication-manager>
 </beans:beans>
