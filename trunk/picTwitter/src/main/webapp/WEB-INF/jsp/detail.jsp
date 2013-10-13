@@ -10,9 +10,8 @@
 <title>pic galaxy</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<link type="text/css" rel="stylesheet" href="http://localhost:8080/picture/resources/style/common.css" />  
-<script type="text/javascript" src="http://localhost:8080/picture/resources/script/jquery-1.7.1.js"></script>
-
+<link type="text/css" rel="stylesheet" href="http://www.coderlong.com/common.css" />  
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.min.js"></script>
 <style type="text/css">
 	ul 
 	{
@@ -24,19 +23,6 @@
 	{
 		margin:0px;
 		padding:2px;
-	}
-	
-	body
-	{
-		background-color: rgb(202,201,196);
-	    color: #333333;
-	    font-family: "Helvetica Neue",Helvetica,STheiti,微软雅黑,宋体,Arial,Tahoma,sans-serif,serif;
-	    font-size: 14px;
-	    line-height: 20px;
-	    margin: 0;
-	}
-	#nav {
-		height: 40px;
 	}
 	
 	#content
@@ -263,21 +249,7 @@ function next()
 </head>
 <body>
 	<span id="kind" class="hiddenid">${kind}</span>
-	<div id="nav">
-			<div id="navdetail">
-				<div id="navcontent">
-					<span id="logo">Picture Falls</span>				
-					
-					<c:forEach items="${tags}" var="tag">  
-						<a href="http://localhost:8080/picture/pic/${tag.type}/weekly"> <span class="tag">${tag.type} </span></a>
-					</c:forEach>  	
-				</div>
-				
-			</div>
-	</div>
-	
-
-	
+	<jsp:include page="nav.jsp"></jsp:include>
 	<div id="bread">
 		<span style="font-size:12px; font-weight:bold;">current position:</span>
 		<a  class="breadItem"><span>main ></span></a>
