@@ -12,7 +12,7 @@
 						>
 	<!--注解说明 -->
 	<context:annotation-config />
-	<mvc:annotation-driven />
+	<!-- <mvc:annotation-driven /> -->
 
 	<!-- <mvc:resources mapping="/resources/**" location="/resources/" /> -->
 

@@ -72,7 +72,7 @@ public class PicIndexController {
 				model.addAttribute("kind", "newest");
 			}
 			
-			int size = items.size() <= 20?items.size():20;
+			int size = items.size() < 5?items.size():5;
 			
 			model.addAttribute("items", items.subList(0, size-1));
 			if(type == null)

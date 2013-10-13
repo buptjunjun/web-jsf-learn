@@ -9,32 +9,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>pic galaxy</title>
-<link type="text/css" rel="stylesheet" href="http://localhost:8080/picture/resources/style/common.css" />  
-<script type="text/javascript" src="http://localhost:8080/picture/resources/script/jquery-1.7.1.js"></script>
-
+<link type="text/css" rel="stylesheet" href="http://www.coderlong.com/common.css" /> 
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.min.js"></script>
 
 <style type="text/css">
-body
-	{
-		background-color: #D1D1E8;
-	    color: #333333;
-	    font-family: "Helvetica Neue",Helvetica,STheiti,微软雅黑,宋体,Arial,Tahoma,sans-serif,serif;
-	    font-size: 14px;
-	    line-height: 20px;
-	    margin: 0;
-	}
-	
-	
 
-	
 	#hot
-	{
-		
+	{		
 		margin:auto;
 		width:1024px;
-		height:50px;
+		height:10px;
 		z-index: 999;
-		padding-top:15px;
+		padding-top:60px;
 		background-color:  #D1D1E8;
 		
 	}
@@ -50,7 +36,7 @@ body
 	    border:1px white solid;
 	   
 	}
-	#hot  span:hover
+	#hot span:hover
 	 {
 		 background-color: rgb(255,111,1111);
 		 color:white;
@@ -63,7 +49,7 @@ body
 		width:1024px;
 		height:auto;
 		text-align:center;
-		padding-top:100px;
+		padding-top:10px;
 		overflow:hidden;
 	}
 	.box
@@ -232,26 +218,12 @@ $(window).scroll(function(){
 
 </head>
 <body>
-	<div id="nav">
-			<span id="kind" class="hiddenid">${kind}</span>
-			<div id="navdetail">
-				<div id="navcontent">
-					<span id="logo">Picture Falls</span>				
-					
-					<c:forEach items="${tags}" var="tag">  
-						<a href="http://localhost:8080/picture/pic/${tag.type}/weekly"> <span class="tag">${tag.type} </span></a>
-					</c:forEach>  	
-				</div>
-				
-			</div>
-			<div id="hot">
+	<jsp:include page="nav.jsp"></jsp:include>
+	<div id="hot">
 				<a href="http://localhost:8080/picture/pic/${currtype}/newest"> <span class="hottag">newest</span></a>
 				<a href="http://localhost:8080/picture/pic/${currtype}/weekly"> <span class="hottag">weekly</span></a>
 				<a href="http://localhost:8080/picture/pic/${currtype}/monthly"> <span class="hottag">monthly</span></a>
-			</div>
-
 	</div>
-
 	<div id="content">
 		<div class="column" id="column0">
 			<c:forEach items="${items}" var="item" begin="0" step="4">  
