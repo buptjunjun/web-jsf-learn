@@ -22,6 +22,8 @@ public class PicDetailController {
 	private PicServices picservice = new PicServicesMongo();
 	private static String defaultType = "pictures";
 
+	
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String showInputPage ( @RequestParam String kind, @PathVariable String id, Model model )
 	{	

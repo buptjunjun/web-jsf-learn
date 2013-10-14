@@ -74,7 +74,7 @@ public class PicLoginController {
 		
 		System.out.println(login);
 		model.addAttribute("login", login);
-		return "login";
+		return "redirect:/pic";
     }
 	
 	@RequestMapping(value="/logout",method = RequestMethod.GET)
@@ -83,7 +83,7 @@ public class PicLoginController {
 		session.setComplete();
 		System.out.println();
 		System.out.println(login);
-		return "login";
+		return "redirect:/pic";
     }
 
 

@@ -229,7 +229,8 @@ $(document).ready(function ()
     } 
 
 });   */
-var urlpre = "http://localhost:8080/picture/detail/pre/";
+var host = "http://www.coderlong.com"
+var urlpre =host+ "/picture/detail/pre/";
 function prev()
 {
 	var id = $(".hiddenid").last().text();
@@ -237,7 +238,7 @@ function prev()
 	window.open(url,"_self");
 }
 
-var urlnext = "http://localhost:8080/picture/detail/next/";
+var urlnext = host+"/picture/detail/next/";
 function next()
 {
 	var id = $(".hiddenid").last().text();

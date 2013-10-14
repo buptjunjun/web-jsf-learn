@@ -27,9 +27,15 @@
 	
 </style>
 
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.min.js"></script>
+<script type="text/javascript" src="http://www.coderlong.com/jquery-1.7.1.js"></script>
 	
 <script type="text/javascript">
+
+function trim(str)
+{
+     return str.replace(/(^\s*)|(\s*$)/g, '');
+}
+
 var FACEBOOK = "3";
 // user face book data to fill the form
 function fillFormFB(info)
@@ -47,7 +53,7 @@ function fillFormFBReal(info)
 {
 	$("#idSource").prop("value",info.id);
 	$("#source").prop("value",FACEBOOK);
-	
+	$("#name").prop("value",info.name);
 	if(info.gender == "male")		
 		$("#gender").prop("value","m");
 	else if(info.gender == "female")
@@ -55,27 +61,112 @@ function fillFormFBReal(info)
 	else
 		$("#gender").prop("value","o");
 	
-	$("#pic").prop("value","http://graph.facebook.com/100001666481139/picture" );
+	$("#pic").prop("value","http://graph.facebook.com/"+info.id+"/picture" );
 	
-	$("#url").prop("value","http://www.baidu.com");
-	$("#otherInfo").prop("value",info);
+	$("#url").prop("value",info.link);
+	$("#otherInfo").prop("value","");
 	$("#user").submit();
 }
 $(document).ready(function (){
-	$("#loginBtn").click(function(){fillFormFB();
+	$("#loginBtn").click(function(){
+		loginFB();
+		refresh();
+	});
+	$("#logoutBtn").click(function(){
+		logoutFB();
+		refresh();
+	});
 	refresh();
-	});});
+	});
+	
+function testlogin()
+{
+	if($("#userName").text() != undefined && $("#userName").text() != null && trim( $("#userName").text()) != "" )
+		return true;
+	return false;
+}
 function refresh()
 {
 	//alert($("#userName").text()); 
-	if($("#userName").text() != undefined && $("#userName").text() != null&&$("#userName").text() != "" )
-		$("#loginBtn").hide();
+	if(testlogin())
+	{	$("#loginBtn").hide();
+		$("#logoutBtn").show();
+	}
 	else
 	{
 		$("#loginBtn").show();
+		$("#logoutBtn").hide();
 	}
 }
+
+
+function loginFB()
+{
+		FB.getLoginStatus(function(response) {
+		  if (response.status === 'connected') 
+		  {
+	    	   // get the current user info and submit
+	    	   FB.api('/me', function(res) {fillFormFBReal(res);});
+		  } 
+		  else 
+		  {
+			  FB.login(function(response) 
+					  {
+						    if (response.authResponse) 
+						    {
+						       if(response.status === 'connected')
+						    	{
+						    	   // get the current user info and submit
+						    	   FB.api('/me', function(res) {fillFormFBReal(res);});
+						        }  
+						    } 
+						    else 
+						    {
+						        // The person cancelled the login dialog
+						    }
+						});	 
+		  }
+		 });
+		  
+	}
+
+function logoutFB()
+{
+	  FB.logout();
+	  window.open("http://coderlong.com/picture/logout","_self");
+}
+</script>
 	
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '726510294042746', // App ID
+    channelUrl : '//localhost:8080/picture/channel', // Channel File
+    status     : true, // check login status
+    cookie     : true, // enable cookies to allow the server to access the session
+    xfbml      : true  // parse XFBML
+  });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d){
+   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+   if (d.getElementById(id)) {return;}
+   js = d.createElement('script'); js.id = id; js.async = true;
+   js.src = "//connect.facebook.net/en_US/all.js";
+   ref.parentNode.insertBefore(js, ref);
+  }(document));
+
+  // Here we run a very simple test of the Graph API after login is successful. 
+  // This testAPI() function is only called in those cases. 
+  function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('	, ' + response.name + '.');
+    });
+  }
 </script>
 	<div id="nav">
 		<span id="kind" class="hiddenid">${kind}</span>
@@ -87,11 +178,11 @@ function refresh()
 					<a href="http://localhost:8080/picture/pic/${tag.type}/weekly"> <span class="tag">${tag.type} </span></a>
 				</c:forEach>  	
 				<div id="login">
-					<div class="userInfo">
-						<img style="" width="25" height="25" src="${user.pic}"/>
-						<span id="userName">${user.name}</span>
-					</div>				
+					
+					<img style="" width="25" height="25" src="${user.pic}"/>
+					<span id="userName">${user.name}</span>		
 					<span id="loginBtn">login</span>
+					<span id="logoutBtn">logout</span>
 				</div>
 				<div class="clear"></div>
 			</div>	
@@ -99,15 +190,12 @@ function refresh()
 	</div>
 	
 	<form name="user" id="user" class="login" style="display:none !important;" action="/picture/login" method="post">
-	<input id="idSource" name="idSource"></input><br>
-	<input id="source" name="source"></input><br>
-	<input id="name" name="name"></input><br>
-	<input id="gender" name="gender"></input><br>
-	<input id="pic" name="pic"></input><br>
-	<input id="url" name="url"></input><br>
-	<input id="otherInfo" name="otherInfo"></input><br>
-	<input type="submit" name="testSubmit" value="注册">
-</form>
-<script type="text/javascript">
-refresh();
-</script>
+		<input id="idSource" name="idSource"></input><br>
+		<input id="source" name="source"></input><br>
+		<input id="name" name="name"></input><br>
+		<input id="gender" name="gender"></input><br>
+		<input id="pic" name="pic"></input><br>
+		<input id="url" name="url"></input><br>
+		<input id="otherInfo" name="otherInfo"></input><br>
+		<input type="submit" name="testSubmit" value="submit">
+	</form>
