@@ -27,7 +27,7 @@
 	
 </style>
 
-<script type="text/javascript" src="http://www.coderlong.com/jquery-1.7.1.js"></script>
+<script type="text/javascript" src="http://localhost/resources/jquery-1.7.1.js"></script>
 	
 <script type="text/javascript">
 
@@ -99,8 +99,12 @@ function refresh()
 	}
 }
 
-
 function loginFB()
+{
+	fillFormFB();
+}
+
+/* function loginFB()
 {
 		FB.getLoginStatus(function(response) {
 		  if (response.status === 'connected') 
@@ -128,11 +132,11 @@ function loginFB()
 		  }
 		 });
 		  
-	}
+	} */
 
 function logoutFB()
 {
-	  FB.logout();
+	  //FB.logout();
 	  window.open("http://coderlong.com/picture/logout","_self");
 }
 </script>

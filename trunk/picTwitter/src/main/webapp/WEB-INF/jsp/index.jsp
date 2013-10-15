@@ -13,7 +13,10 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.min.js"></script>
 
 <style type="text/css">
-
+	div
+	{
+	border-radius: 5px 5px 5px 5px;
+	}
 	#hot
 	{		
 		margin:auto;
@@ -136,11 +139,66 @@ function resetquerying()
 	querying = false;
 }
 
+function rating(id,url1)
+{
+	$.ajax({
+			type: "post",			
+			url: url1,
+			data:id, 
+			success:function (data)   // request success.
+			{				
+			}
+	  });
+}
+
+var goodurl = "http://localhost:8080/picture/api/good";
+function good(id,item)
+{
+	
+	rating(id,goodurl);
+}
+
+var badurl = "http://localhost:8080/picture/api/bad";
+function bad(id)
+{	
+	rating(id,badurl);
+}
+
+var collecturl = "http://localhost:8080/picture/api/collect";
+function collect(id,item)
+{	
+	if(testlogin())
+	{
+		
+		alert(id);
+		$.ajax({
+				type: "post",			
+				url: collecturl,
+				data:id, 
+				success:function (data)   // request success.
+				{				
+					if(data=="true")
+					{
+						$(item).prop("class","img_background collect1");
+						$(item).off();
+					}
+					else
+					{
+						alert("fail");	
+					}
+				}
+		  });
+	}
+	else
+	{
+		alert("please login firstly!");	
+	}
+}
 
 function loadMore()
 {
 	var id = $(".hiddenid").last().text();
-	var searchURL = "http://localhost:8080/picture/api/";
+	var searchURL = "http://localhost:8080/picture/api/item/";
 	querying = true;
 	setTimeout(resetquerying, 3000);
 	$(function()
@@ -213,6 +271,31 @@ $(window).scroll(function(){
     	loadMore();  
 
 });  
+
+
+$(function(){
+	
+	$(".img_background.good").on("click",function(){
+		var id = $(this).parent().attr("itemid");
+		good(id);
+		$(this).prop("class","img_background good1");
+		$(this).off();
+	});
+
+	$(".img_background.bad").on("click",function(){
+		var id = $(this).parent().attr("itemid");
+		bad(id);
+		$(this).prop("class","img_background bad1");
+		$(this).off();
+	});
+	
+	$(".img_background.collect").on("click",function(){
+		var id = $(this).parent().attr("itemid");
+		collect(id,$(this));
+		
+	});
+	
+});
 </script>
 
 
@@ -230,7 +313,7 @@ $(window).scroll(function(){
 				<div class="box">
 					<span class="hiddenid">${item.id}</span>
 					<a href="/picture/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
-					<div class="comment">
+					<div class="comment" itemid = "${item.id}">
 					  <a class="img_background good"><span>1000${item.good}  </span></a> 
 					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
 					  <a class="img_background collect"><span>100${item.collect} </span></a>  
@@ -245,8 +328,8 @@ $(window).scroll(function(){
 				<div class="box">
 					<span class="hiddenid">${item.id}</span>
 					<a href="/picture/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"  /></a>
-					<div class="comment">
-					  <a class="img_background good"><span>1000${item.good}  </span></a> 
+					<div class="comment"  itemid = "${item.id}">
+					  <a class="img_background good""><span>1000${item.good}  </span></a> 
 					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
 					  <a class="img_background collect"><span>100${item.collect} </span></a>  
 					  <a class="img_background post"><span>100${item.comment} </span></a> 
@@ -260,7 +343,7 @@ $(window).scroll(function(){
 				<div class="box">
 					<span class="hiddenid">${item.id}</span>
 					<a href="/picture/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
-					<div class="comment">
+					<div class="comment"  itemid = "${item.id}">
 					  <a class="img_background good"><span>1000${item.good}  </span></a> 
 					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
 					  <a class="img_background collect"><span>100${item.collect} </span></a>  
@@ -275,7 +358,7 @@ $(window).scroll(function(){
 				<div class="box">
 					<span class="hiddenid">${item.id}</span>
 					<a href="/picture/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
-					<div class="comment">
+					<div class="comment"  itemid = "${item.id}">
 					  <a class="img_background good"><span>1000${item.good}  </span></a> 
 					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
 					  <a class="img_background collect"><span>100${item.collect} </span></a>  
