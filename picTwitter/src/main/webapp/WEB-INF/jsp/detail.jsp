@@ -17,10 +17,8 @@ var host = "<%=path%>"; //http://localhost:8080/picture/
 <title>pic galaxy</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<link type="text/css" rel="stylesheet"
-	href="http://www.coderlong.com/common.css" />
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-1.7.min.js"></script>
+<link type="text/css" rel="stylesheet" href="<%=path %>/resources/style/common.css" /> 
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.min.js"></script>
 <style type="text/css">
 
 div
@@ -54,7 +52,7 @@ ul li {
 	height: auto;
 	min-height: 768px;
 	float: left;
-	border: 1px solid #D9D9D6
+	border: solid 1px #F5F5F5;
 }
 
 #right {
@@ -67,6 +65,7 @@ ul li {
 #comment {
 	width: 680px;
 	margin: auto;
+	border-bottom:solid 1px #F5F5F5;
 }
 
 .cmtContex {
@@ -109,6 +108,7 @@ ul li {
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 	vertical-align: middle;
 	width: 70px;
+	margin-top: 5px;
 }
 #submitBtn:hover
 {
@@ -159,7 +159,7 @@ ul li {
 	padding-left: 2px;
 	padding-top: 1px;
 	padding-bottom: 1px;
-	color: white;
+	color: rgb(255, 111, 1111);
 }
 
 .breadItem:hover {
@@ -288,8 +288,7 @@ function next()
 		<span style="font-size: 12px; font-weight: bold;">current
 			position:</span> <a class="breadItem"><span>main ></span></a> <a
 			class="breadItem"
-			href=host+"/pic/${item.type}/weekly"><span>${item.type}
-				></span></a>
+			href="<%=path %>/pic/"><span>${item.type}></span></a>
 	</div>
 	<div id="content">
 		<div id="left">
