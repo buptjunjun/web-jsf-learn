@@ -4,6 +4,13 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+	String path =  "http://" + request.getServerName() + ":" + request.getServerPort()+""+request.getContextPath()+"/";
+	System.out.println("path="+path);
+%>
+<script type="text/javascript">
+var host = "<%=path%>"; //http://localhost:8080/picture/
+</script>
 
 <html>
 <head>
@@ -190,7 +197,7 @@ ul li {
 
 function comment()
 {
-	var url1 = "http://localhost:8080/picture/api/comment";
+	var url1 = host+"/api/comment";
 	
 	
 	$(function()
@@ -256,8 +263,7 @@ $(document).ready(function ()
     } 
 
 });   */
-var host = "http://loacalhost:8080";//"http://www.coderlong.com"
-var urlpre =host+ "/picture/detail/pre/";
+var urlpre =host+ "/detail/pre/";
 function prev()
 {
 	var id = $(".hiddenid").last().text();
@@ -265,7 +271,7 @@ function prev()
 	window.open(url,"_self");
 }
 
-var urlnext = host+"/picture/detail/next/";
+var urlnext = host+"/detail/next/";
 function next()
 {
 	var id = $(".hiddenid").last().text();
@@ -282,7 +288,7 @@ function next()
 		<span style="font-size: 12px; font-weight: bold;">current
 			position:</span> <a class="breadItem"><span>main ></span></a> <a
 			class="breadItem"
-			href="http://localhost:8080/picture/pic/${item.type}/weekly"><span>${item.type}
+			href=host+"/pic/${item.type}/weekly"><span>${item.type}
 				></span></a>
 	</div>
 	<div id="content">

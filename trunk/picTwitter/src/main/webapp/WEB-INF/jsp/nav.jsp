@@ -4,6 +4,15 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<%
+	String path =  "http://" + request.getServerName() + ":" + request.getServerPort()+""+request.getContextPath();
+	System.out.println("path="+path);
+%>
+<script type="text/javascript">
+var host = "<%=path%>"; //http://localhost:8080/picture/
+</script>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -47,8 +56,71 @@ function fillFormFB(info)
 	$("#pic").prop("value","http://tp1.sinaimg.cn/1641153660/50/5627699277/1" );
 	$("#url").prop("value","http://www.baidu.com");
 	$("#otherInfo").prop("value",info);
+	
 	$("#user").submit();
 }
+
+//user face book data to fill the form
+function fillFormFBjson(info)
+{
+	var url1 = host+"/api/login";
+	var mydata = '{"idSource":"' + "1000016664811391"
+				+ '","source":"' + FACEBOOK
+				+ '","name":"' + "Andy Yang"
+				+ '","gender":"' + "m"
+				+ '","pic":"' + "http://tp1.sinaimg.cn/1641153660/50/5627699277/1"
+				+ '","url":"' + "http://www.baidu.com"
+				+ '"}'; 
+	$.ajax({
+		type: "post",			
+		url: url1,
+		dataType:"json",
+		data: mydata, 
+		contentType: "application/json; charset=utf-8",  
+		complete: function (data) 
+		{				
+			if(data!=null && data!=undefined && "ok"==data.responseText)
+				loginJsonSuccess();
+			
+		}
+  		});
+	
+	return false;
+}
+
+function loginJsonSuccess()
+{
+	$("#userhead").prop("src","http://tp1.sinaimg.cn/1641153660/50/5627699277/1");
+	$("#userName").text("Andy Yang");
+	
+}
+
+function fillFormFBRealJson(info)
+{
+	var url1 = path+"/api/login";
+	var mydata = '{"idSource":"' + info.id
+				+ '","source":"' + FACEBOOK
+				+ '","name":"' + info.name
+				+ '","gender":"' + gender
+				+ '","pic":"' + "http://graph.facebook.com/"+info.id+"/picture"
+				+ '","url":"' + info.link
+				+ '"}'; 
+	$.ajax({
+		type: "post",			
+		url: url1,
+		dataType:"json",
+		data: mydata, 
+		contentType: "application/json; charset=utf-8",  
+		complete: function (data) 
+		{				
+			if(data!=null && data!=undefined && "ok"==data.responseText)
+				loginJsonSuccess();		
+		}
+  		});
+	
+	return false;
+}
+
 function fillFormFBReal(info)
 {
 	$("#idSource").prop("value",info.id);
@@ -101,7 +173,7 @@ function refresh()
 
 function loginFB()
 {
-	fillFormFB();
+	fillFormFBjson();
 }
 
 /* function loginFB()
@@ -137,7 +209,7 @@ function loginFB()
 function logoutFB()
 {
 	  //FB.logout();
-	  window.open("http://coderlong.com/picture/logout","_self");
+	  window.open(host+"/logout","_self");
 }
 </script>
 	
@@ -179,11 +251,11 @@ function logoutFB()
 				<span id="logo">Picture Falls</span>				
 				
 				<c:forEach items="${tags}" var="tag">  
-					<a href="http://localhost:8080/picture/pic/${tag.type}/weekly"> <span class="tag">${tag.type} </span></a>
+					<a href="<%=path%>/pic/${tag.type}/weekly"> <span class="tag">${tag.type} </span></a>
 				</c:forEach>  	
 				<div id="login">
 					
-					<img style="" width="25" height="25" src="${user.pic}"/>
+					<img id="userhead" style="" width="25" height="25" src="${user.pic}"/>
 					<span id="userName">${user.name}</span>		
 					<span id="loginBtn">login</span>
 					<span id="logoutBtn">logout</span>
@@ -203,3 +275,6 @@ function logoutFB()
 		<input id="otherInfo" name="otherInfo"></input><br>
 		<input type="submit" name="testSubmit" value="submit">
 	</form>
+<script type="text/javascript">
+refresh();
+</script>

@@ -4,7 +4,10 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+<%
+	String path =  "http://" + request.getServerName() + ":" + request.getServerPort()+""+request.getContextPath()+"/";
+	System.out.println("path="+path);
+%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -132,6 +135,7 @@
 </style>
 
 <script type="text/javascript">
+var host = "<%=path%>"; //http://localhost:8080<%=path%>/
 
 var querying = false;
 function resetquerying()
@@ -151,20 +155,20 @@ function rating(id,url1)
 	  });
 }
 
-var goodurl = "http://localhost:8080/picture/api/good";
+var goodurl = host+"/api/good";
 function good(id,item)
 {
 	
 	rating(id,goodurl);
 }
 
-var badurl = "http://localhost:8080/picture/api/bad";
+var badurl = host+"/api/bad";
 function bad(id)
 {	
 	rating(id,badurl);
 }
 
-var collecturl = "http://localhost:8080/picture/api/collect";
+var collecturl = host+"/api/collect";
 function collect(id,item)
 {	
 	if(testlogin())
@@ -198,7 +202,7 @@ function collect(id,item)
 function loadMore()
 {
 	var id = $(".hiddenid").last().text();
-	var searchURL = "http://localhost:8080/picture/api/item/";
+	var searchURL = host+"/api/item/";
 	querying = true;
 	setTimeout(resetquerying, 3000);
 	$(function()
@@ -224,7 +228,7 @@ function loadMore()
 							
 							var item = data[i];
 							$copy.find(".hiddenid").text(item.id);
-							$copy.find(".mainimg_a").prop('href',"/picture/detail/"+item.id);
+							$copy.find(".mainimg_a").prop('href',"<%=path%>/detail/"+item.id);
 							$copy.find(".mainimg").prop('src',item.url);
 							$copy.find(".good span").text(item.good);
 							$copy.find(".bad span").text(item.bad);
@@ -303,16 +307,16 @@ $(function(){
 <body>
 	<jsp:include page="nav.jsp"></jsp:include>
 	<div id="hot">
-				<a href="http://localhost:8080/picture/pic/${currtype}/newest"> <span class="hottag">newest</span></a>
-				<a href="http://localhost:8080/picture/pic/${currtype}/weekly"> <span class="hottag">weekly</span></a>
-				<a href="http://localhost:8080/picture/pic/${currtype}/monthly"> <span class="hottag">monthly</span></a>
+				<a href=host+"/pic/${currtype}/newest"> <span class="hottag">newest</span></a>
+				<a href=host+"/pic/${currtype}/weekly"> <span class="hottag">weekly</span></a>
+				<a href=host+"/pic/${currtype}/monthly"> <span class="hottag">monthly</span></a>
 	</div>
 	<div id="content">
 		<div class="column" id="column0">
 			<c:forEach items="${items}" var="item" begin="0" step="4">  
 				<div class="box">
 					<span class="hiddenid">${item.id}</span>
-					<a href="/picture/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
+					<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
 					<div class="comment" itemid = "${item.id}">
 					  <a class="img_background good"><span>1000${item.good}  </span></a> 
 					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
@@ -327,7 +331,7 @@ $(function(){
 			<c:forEach items="${items}" var="item" begin="1" step="4">  
 				<div class="box">
 					<span class="hiddenid">${item.id}</span>
-					<a href="/picture/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"  /></a>
+					<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"  /></a>
 					<div class="comment"  itemid = "${item.id}">
 					  <a class="img_background good""><span>1000${item.good}  </span></a> 
 					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
@@ -342,7 +346,7 @@ $(function(){
 			<c:forEach items="${items}" var="item" begin="2" step="4">  
 				<div class="box">
 					<span class="hiddenid">${item.id}</span>
-					<a href="/picture/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
+					<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
 					<div class="comment"  itemid = "${item.id}">
 					  <a class="img_background good"><span>1000${item.good}  </span></a> 
 					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
@@ -357,7 +361,7 @@ $(function(){
 			<c:forEach items="${items}" var="item" begin="3" step="4">  
 				<div class="box">
 					<span class="hiddenid">${item.id}</span>
-					<a href="/picture/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
+					<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
 					<div class="comment"  itemid = "${item.id}">
 					  <a class="img_background good"><span>1000${item.good}  </span></a> 
 					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
