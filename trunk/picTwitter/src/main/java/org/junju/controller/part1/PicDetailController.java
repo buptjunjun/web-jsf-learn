@@ -106,8 +106,8 @@ public class PicDetailController {
 		}
 		model.addAttribute("item", newItem);
 		
-		List<UIComment> comments = picservice.getUIComments(id);
-		model.addAttribute("comments", comments);
+	/*	List<UIComment> comments = picservice.getUIComments(id);
+		model.addAttribute("comments", comments);*/
 		return "redirect:/detail/"+newItem.getId();
     }
 }

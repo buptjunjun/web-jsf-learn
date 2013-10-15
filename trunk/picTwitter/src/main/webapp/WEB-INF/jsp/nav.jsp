@@ -26,12 +26,44 @@ var host = "<%=path%>"; //http://localhost:8080/picture/
 		line-height: 20px;
 		color: white;
 		margin:0px;
-		padding:0px;
+		padding:2px;
+		
 	}
 
-	#login:hover {
+	#login span:hover {
 		color: red;
 		cursor: pointer;
+	}
+	
+	#about
+	{
+		float:right;
+		width:auto;
+		height:auto;
+		font-size: 14px;
+		line-height: 20px;
+		color: white;
+		margin:0px;
+		padding:2px;	
+	}
+	
+	#about:hover {
+		color: red;
+		cursor: pointer;
+	}
+	
+	.seperateLien
+	{
+		float:right;
+		color: white;
+		margin:0px;
+		padding:2px;	
+	}
+	
+	#userName
+	{
+		font-size:12px;
+		margin-right:5px;
 	}
 	
 </style>
@@ -81,8 +113,10 @@ function fillFormFBjson(info)
 		{				
 			if(data!=null && data!=undefined && "ok"==data.responseText)
 				loginJsonSuccess();
-			
+			refresh();
 		}
+		
+		
   		});
 	
 	return false;
@@ -114,7 +148,11 @@ function fillFormFBRealJson(info)
 		complete: function (data) 
 		{				
 			if(data!=null && data!=undefined && "ok"==data.responseText)
-				loginJsonSuccess();		
+			{
+				loginJsonSuccess();
+			}
+			
+			refresh();
 		}
   		});
 	
@@ -251,15 +289,24 @@ function logoutFB()
 				<span id="logo">Picture Falls</span>				
 				
 				<c:forEach items="${tags}" var="tag">  
-					<a href="<%=path%>/pic/${tag.type}/weekly"> <span class="tag">${tag.type} </span></a>
+					<a href="<%=path%>/pic/"> <span class="tag">${tag.type} </span></a>
 				</c:forEach>  	
-				<div id="login">
-					
-					<img id="userhead" style="" width="25" height="25" src="${user.pic}"/>
-					<span id="userName">${user.name}</span>		
-					<span id="loginBtn">login</span>
-					<span id="logoutBtn">logout</span>
+				
+				<div id="about">
+					<span id="aboutTxt">ABOUT US</span>
 				</div>
+				<div class="seperateLien"><span>|</span></div>
+				<div id="login">
+					<div style="float:left">
+						<img id="userhead" style="" width="20" height="20" src="${user.pic}" onerror="$(this).hide();return false;"/>
+					</div>
+					<div style="float:left">
+						<span id="userName">${user.name}</span>		
+						<span id="loginBtn">LOGIN</span>
+						<span id="logoutBtn">LOGOUT</span>
+					</div>
+				</div>
+			
 				<div class="clear"></div>
 			</div>	
 		</div>			

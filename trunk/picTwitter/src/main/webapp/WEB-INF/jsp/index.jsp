@@ -12,7 +12,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>pic galaxy</title>
-<link type="text/css" rel="stylesheet" href="http://www.coderlong.com/common.css" /> 
+<link type="text/css" rel="stylesheet" href="<%=path %>/resources/style/common.css" /> 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.min.js"></script>
 
 <style type="text/css">
@@ -20,6 +20,7 @@
 	{
 	border-radius: 5px 5px 5px 5px;
 	}
+	
 	#hot
 	{		
 		margin:auto;
@@ -27,7 +28,6 @@
 		height:10px;
 		z-index: 999;
 		padding-top:60px;
-		background-color:  #D1D1E8;
 		
 	}
 	.hottag
@@ -40,6 +40,7 @@
 	    color:#9A9D9F;
 	    padding:5px;
 	    border:1px white solid;
+	    border:1px solid;
 	   
 	}
 	#hot span:hover
@@ -67,8 +68,9 @@
 		border: 1px solid #DFDFE0;
 		height:auto;		
 		vertical-align:center;
-		text-align:center;
-		background-color: white;
+		text-align:center;		
+		background:white;
+   		box-shadow: 0 1px 1px #9C9C9C;
 	}
 	.column
 	{
@@ -156,7 +158,7 @@ function rating(id,url1)
 }
 
 var goodurl = host+"/api/good";
-function good(id,item)
+function good(id)
 {
 	
 	rating(id,goodurl);
@@ -185,6 +187,7 @@ function collect(id,item)
 					{
 						$(item).prop("class","img_background collect1");
 						$(item).off();
+						add(item);
 					}
 					else
 					{
@@ -224,8 +227,9 @@ function loadMore()
 							// find the shortest column
 							var shortest = getShortestColum();						
 						
-							var $copy =$(".box").first().clone(true);
-							
+							var $copy =$("#hiddenbox").clone(true);
+							$copy.css("display","block");
+							$copy.removeAttr("id");
 							var item = data[i];
 							$copy.find(".hiddenid").text(item.id);
 							$copy.find(".mainimg_a").prop('href',"<%=path%>/detail/"+item.id);
@@ -277,26 +281,53 @@ $(window).scroll(function(){
 });  
 
 
+function add(item)
+{
+	var $span = $(item).children()[0];
+	var current = $($span).text();
+	$($span).text(parseInt(current)+1);	
+}
+
+
 $(function(){
 	
 	$(".img_background.good").on("click",function(){
 		var id = $(this).parent().attr("itemid");
 		good(id);
+		add(this);
 		$(this).prop("class","img_background good1");
 		$(this).off();
+	}).on("mouseover",function()
+			{
+			$(this).prop("class","img_background good1");
+	}).on("mouseleave",function()
+			{
+		$(this).prop("class","img_background good");
 	});
 
 	$(".img_background.bad").on("click",function(){
 		var id = $(this).parent().attr("itemid");
 		bad(id);
+		add(this);
 		$(this).prop("class","img_background bad1");
 		$(this).off();
+	}).on("mouseover",function()
+			{
+		$(this).prop("class","img_background bad1");
+	}).on("mouseleave",function()
+			{
+		$(this).prop("class","img_background bad");
 	});
 	
 	$(".img_background.collect").on("click",function(){
 		var id = $(this).parent().attr("itemid");
 		collect(id,$(this));
-		
+	}).on("mouseover",function()
+			{
+			$(this).prop("class","img_background collect1");
+	}).on("mouseleave",function()
+			{
+		$(this).prop("class","img_background collect");
 	});
 	
 });
@@ -312,6 +343,17 @@ $(function(){
 				<a href=host+"/pic/${currtype}/monthly"> <span class="hottag">monthly</span></a>
 	</div>
 	<div id="content">
+	<div class="box" id="hiddenbox" style="display:none">
+		<span class="hiddenid">${item.id}</span>
+		<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"  /></a>
+		<div class="comment"  itemid = "${item.id}">
+		  <a class="img_background good""><span>1000${item.good}  </span></a> 
+		  <a class="img_background bad"><span>1000${item.bad} </span></a>  
+		  <a class="img_background collect"><span>100${item.collect} </span></a>  
+		  <a class="img_background post"><span>100${item.comment} </span></a> 
+	</div>
+	
+	</div>			
 		<div class="column" id="column0">
 			<c:forEach items="${items}" var="item" begin="0" step="4">  
 				<div class="box">
