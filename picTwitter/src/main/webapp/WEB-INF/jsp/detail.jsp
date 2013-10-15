@@ -5,7 +5,7 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
-	String path =  "http://" + request.getServerName() + ":" + request.getServerPort()+""+request.getContextPath()+"/";
+	String path =  "http://" + request.getServerName() + ":" + request.getServerPort()+""+request.getContextPath();
 	System.out.println("path="+path);
 %>
 <script type="text/javascript">
