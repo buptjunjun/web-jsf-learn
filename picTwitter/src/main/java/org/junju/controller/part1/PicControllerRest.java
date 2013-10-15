@@ -35,7 +35,7 @@ public class PicControllerRest
 	 * get resource
 	 * @return
 	 */
-	@RequestMapping(value="/{itemID}",method=RequestMethod.GET,headers="Accept=application/json")
+	@RequestMapping(value="/item/{itemID}",method=RequestMethod.GET,headers="Accept=application/json")
 	@ResponseBody
 	public Object getform(@PathVariable("itemID") String id)
 	{
@@ -51,5 +51,16 @@ public class PicControllerRest
 		return ret;
 	}
 	
+	/**
+	 * get resource
+	 * @return
+	 */
+	@RequestMapping(value="/comment",method=RequestMethod.GET,headers="Accept=application/json")
+	@ResponseBody
+	public Object comment(@PathVariable("itemID") String id)
+	{
+		
+		return "ok";
+	}
 	
 }

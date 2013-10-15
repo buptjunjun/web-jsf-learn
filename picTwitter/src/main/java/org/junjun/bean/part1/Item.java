@@ -7,7 +7,8 @@ public class Item
 
 	// item
 	private String id="";
-	private String type=""; // pic
+	private String type=""; // pic,animal , cute or ....
+	private String cata = ""; //vedio or pic or text;
 	
 	private String url="";
 	private String url1 = null;
@@ -23,6 +24,13 @@ public class Item
 	private int comment = 0; // how many comment are there 
 	private int total = 0;
 	
+	public String getCata() {
+		return cata;
+	}
+
+	public void setCata(String cata) {
+		this.cata = cata;
+	}
 	private void caculateTotal()
 	{
 		this.total = this.good+this.bad/2+this.comment*2+this.collect*3;

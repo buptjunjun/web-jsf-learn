@@ -38,7 +38,7 @@ public class PicCommentController {
 	 public User user() {
 	     return new User(); // populates form for the first time if its null
 	 }
-	@RequestMapping(value="/comment",method = RequestMethod.GET)
+	@RequestMapping(value="/comment12313",method = RequestMethod.POST)
 	public String login (Comment comment, Model model,@ModelAttribute("login") Boolean login,@ModelAttribute("user") User user)
 	{	
 		if(login == false || user == null || StringUtils.isEmpty(user.getIdSource())||StringUtils.isEmpty(user.getId()))
@@ -47,15 +47,8 @@ public class PicCommentController {
 		comment.setCommentFrom(user.getId());
 		comment.setId(user.getId()+comment.getCommentTo());
 		comment.setDate(new Date());		
-		this.picservice.insertComment(comment);
+		//this.picservice.insertComment(comment);
 		return  "login";
-    }
-	
-	
-	@RequestMapping("/channel")
-	public String loginFB ( Model model  )
-	{	
-		return "channel";
     }
 	
 }
