@@ -1,14 +1,20 @@
 package org.junju.controller.part1;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
+import org.junjun.bean.part1.Constant;
 import org.junjun.bean.part1.Item;
 import org.junjun.bean.part1.Tag;
+import org.junjun.controller.logic.Buffer;
 import org.junjun.controller.logic.PicBuffer;
 import org.junjun.controller.logic.PicServices;
 import org.junjun.controller.logic.PicServicesMongo;
@@ -35,113 +41,120 @@ public class PicIndexController {
     public boolean login() {
        return false; // populates form for the first time if its null
    }
+	
 	public PicIndexController() 
 	{
-		if(PicBuffer.itemsNewest==null)
-			init();
+		
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String index(@ModelAttribute("login") Boolean login,Model model)
+	public String index(Model model)
 	{
-		System.out.println(login);
-		return showInputPage(null,null,model);
+		if(Buffer.getNewestItem() == null)
+			init();
+		
+		model.addAttribute("tags", Buffer.getTags());		
+		model.addAttribute("kind", null);  // weekly , monthly , newest
+		model.addAttribute("currtype", null);	
+		model.addAttribute("kinds", Constant.kinds);
+		
+		model.addAttribute("tags", Buffer.getTags());	
+		
+		List<Item> items = this.picservice.getItemsWhenLoadIndx();
+		model.addAttribute("items", items);
+		return "index";
 	}
 	
-	@RequestMapping(value = {"/{type}","/{type}/{kind}"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/{type}/{kind}"}, method = RequestMethod.GET)
 	 public String showInputPage (@PathVariable String type, @PathVariable String kind,Model model )
 	 {
+			if(Buffer.getNewestItem() == null)
+				init();
+		
+			if(kind == null || !Constant.kinds.contains(kind))
+				return this.showInputPage(type, model);
+			
 			if(type == null)
 			{
 				type=defaultType;
 			}
-			model.addAttribute("tags", PicBuffer.tags);
+			
+			model.addAttribute("tags", Buffer.getTags());		
 			model.addAttribute("kind", kind);  // weekly , monthly , newest
-			List<Item> items = null;
-			if("newest".equals(kind))
-				 items = PicBuffer.itemsNewest.get(type);
-			else if("weekly".equals(kind))
-				 items = PicBuffer.itemsHottestWeekly.get(type);
-			else if("monthly".equals(kind))
-			{
-				items = PicBuffer.itemsHottestMonthly.get(type);				
-			}
-			else
-			{
-				items = PicBuffer.itemsNewest.get(type);
-				model.addAttribute("kind", "newest");
-			}
-			
-			int size = items.size() < 5?items.size():5;
-			
-			model.addAttribute("items", items.subList(0, size-1));
-			if(type == null)
-			{
-				type=defaultType;
-			}
-			
 			model.addAttribute("currtype", type);
+			model.addAttribute("kinds", Constant.kinds);
+			List<Item> items = this.picservice.getItemsWhenLoad(type, kind);
+			model.addAttribute("items", items);
+			
 	        return "index";
      }
 	
-	synchronized public void init()
+	@RequestMapping(value = {"/{type}"}, method = RequestMethod.GET)
+	 public String showInputPage (@PathVariable String type,Model model )
+	 {
+		if(Buffer.getNewestItem() == null)
+			init();
+			if(!Buffer.containTag(type))
+				return this.index(model);
+		
+			
+			model.addAttribute("tags", Buffer.getTags());		
+			model.addAttribute("kind", null);  // weekly , monthly , newest
+			model.addAttribute("currtype", type);	
+			model.addAttribute("kinds", Constant.kinds);
+			
+			List<Item> items = this.picservice.getItemsWhenLoad(type, Constant.daily);
+			
+			model.addAttribute("items", items);
+	        return "index";
+    }
+	
+	 public void init()
 	{
-		if(PicBuffer.itemsNewest != null)
-			return;
-		
-		PicBuffer.itemsNewest = new  HashMap<String,List<Item>>();
-		if(PicBuffer.tags == null)
-			 PicBuffer.tags = picservice.getTag();
-		
-		Date now = new Date();
-		for(Tag tag:PicBuffer.tags)
+		if(Buffer.getNewestItem() == null)
 		{
-			List<Item> items = picservice.getNewestItems(tag.getType(), new Date() , LIMIT);
-			if(items!=null)
-			{
-				for(Item item:items)
-					PicBuffer.itemBuffer.put(item.getId(), item);
-			}
-			PicBuffer.itemsNewest.put(tag.getType(), items);
+			List<Item> items = this.picservice.getNewestItems(null, new Date(), 1);
+			if(items != null && items.size() > 0)
+				Buffer.setNewestItem(items.get(0));
 		}
 		
 		
-		// weekly 
-		Calendar c = Calendar.getInstance();     
-        c.setTime(now);  
-        int day = c.get(Calendar.DATE);  
-        c.set(Calendar.DATE, day - 7);  
-        
-        Date weekBefor = c.getTime();
-        PicBuffer.itemsHottestWeekly = new  HashMap<String,List<Item>>();
-		for(Tag tag:PicBuffer.tags)
+		// init tags
+		String [] types = "pictures,animals".split(",");
+		
+		for(String type:types)
 		{
-			List<Item> items = picservice.getTopItemByTime(tag.getType(), weekBefor, Integer.MAX_VALUE, LIMIT);
-			if(items!=null)
-			{
-				for(Item item:items)
-					PicBuffer.itemBuffer.put(item.getId(), item);
-			}
-			PicBuffer.itemsHottestWeekly.put(tag.getType(), items);
+			Tag tag = new Tag();
+			tag.setType(type);
+			Buffer.getTags().add(tag);
 		}
 		
-		// monthly 
-	    c = Calendar.getInstance();     
-        c.setTime(now);  
-        day = c.get(Calendar.DATE);  
-        c.set(Calendar.DATE, day - 30);  
-        
-        Date monthlyBefore = c.getTime();
-        PicBuffer.itemsHottestMonthly = new  HashMap<String,List<Item>>();
-		for(Tag tag:PicBuffer.tags)
+		// initial index page 
+		if(Buffer.getTags()!=null)
 		{
-			List<Item> items = picservice.getTopItemByTime(tag.getType(), monthlyBefore, Integer.MAX_VALUE, LIMIT);
-			if(items!=null)
+			int count = 0;
+			List<Queue<Item>> listItemQueue = new ArrayList<Queue<Item>>();
+			for(Tag tag:Buffer.getTags())
 			{
-				for(Item item:items)
-					PicBuffer.itemBuffer.put(item.getId(), item);
+				List<Item> items = picservice.getItemsWhenLoad(tag.getType(), Constant.daily);
+				
+				Queue<Item> queue = new LinkedList<Item>();
+				queue.addAll(items);
+				if(items!=null)
+				{	
+					listItemQueue.add(queue);
+					count+=items.size();
+				}
 			}
-			PicBuffer.itemsHottestMonthly.put(tag.getType(), items);
+			
+			while(count >= 0)
+			{
+				Queue queue = listItemQueue.get(count%listItemQueue.size());
+				if(queue!=null&&queue.size()>0)
+					Buffer.getIndexitem().add((Item) queue.poll());
+				count--;
+			}
+			
 		}
 
 	}

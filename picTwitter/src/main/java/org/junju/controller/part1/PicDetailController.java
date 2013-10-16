@@ -3,8 +3,10 @@ package org.junju.controller.part1;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junjun.bean.part1.Constant;
 import org.junjun.bean.part1.Item;
 import org.junjun.bean.part1.UIComment;
+import org.junjun.controller.logic.Buffer;
 import org.junjun.controller.logic.PicBuffer;
 import org.junjun.controller.logic.PicServices;
 import org.junjun.controller.logic.PicServicesMongo;
@@ -27,8 +29,9 @@ public class PicDetailController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String showInputPage ( @RequestParam String kind, @PathVariable String id, Model model )
 	{	
-		model.addAttribute("kind", kind);
-		model.addAttribute("tags", PicBuffer.tags);
+		model.addAttribute("tags", Buffer.getTags());		
+		model.addAttribute("kind", null);  // weekly , monthly , newest
+
 		
 		Item item = PicBuffer.itemBuffer.get(id);
 		
@@ -55,8 +58,8 @@ public class PicDetailController {
 	@RequestMapping(value = "/{arrow}/{id}", method = RequestMethod.GET)
 	public String preNext (@RequestParam String kind, @PathVariable String arrow, @PathVariable String id, Model model )
 	{	
-		model.addAttribute("tags", PicBuffer.tags);
-		
+
+		model.addAttribute("tags", Buffer.getTags());	
 			
 		Item item = PicBuffer.itemBuffer.get(id);
 		

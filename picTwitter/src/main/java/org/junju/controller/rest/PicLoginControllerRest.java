@@ -1,4 +1,4 @@
-package org.junju.controller.part1;
+package org.junju.controller.rest;
 
 import java.util.ArrayList;
 import java.util.List;

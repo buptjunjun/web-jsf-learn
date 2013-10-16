@@ -1,4 +1,4 @@
-package org.junju.controller.part1;
+package org.junju.controller.rest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,8 +8,12 @@ import java.util.Map.Entry;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.StringUtils;
+import org.junjun.bean.part1.Constant;
 import org.junjun.bean.part1.Form1;
 import org.junjun.bean.part1.Item;
+import org.junjun.bean.part1.TypeKind;
+import org.junjun.controller.logic.Buffer;
 import org.junjun.controller.logic.PicBuffer;
 import org.junjun.controller.logic.PicServices;
 import org.junjun.controller.logic.PicServicesMongo;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -29,26 +34,34 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class PicControllerRest 
 {
 	
+	private String fail = "fail";
 	private PicServices picservice = new PicServicesMongo();
-	
+	private Buffer buffer = new Buffer();
 	/**
 	 * get resource
 	 * @return
 	 */
-	@RequestMapping(value="/item/{itemID}",method=RequestMethod.GET,headers="Accept=application/json")
+	@RequestMapping(value="/loadmore",method=RequestMethod.POST,headers="Accept=application/json")
 	@ResponseBody
-	public Object getform(@PathVariable("itemID") String id)
+	public Object loadMore( @RequestBody TypeKind typekind)
 	{
-		Item item = PicBuffer.itemBuffer.get(id.trim());
-		List<Item> ret = new ArrayList<Item>();
-		//ret.add(item);
-		for(Entry entry:PicBuffer.itemBuffer.entrySet())
+		List<Item> ret = null;
+		if(typekind == null || StringUtils.isEmpty(typekind.getId()))
+			return fail;
+		
+		if(StringUtils.isEmpty(typekind.getKind()))
+				typekind.setKind(Constant.monthly);
+		// main page
+		if( StringUtils.isEmpty(typekind.getType()) && StringUtils.isEmpty(typekind.getKind()))
+			ret = this.picservice.getItemsWhenIndexRest(typekind.getId());
+		else //other types
 		{
-			ret.add((Item)entry.getValue());
-			
+			ret = this.picservice.getItemsWhenRest(typekind.getId(), typekind.getKind());
 		}
 		
-		return ret;
+		if(ret!=null ) return ret;
+		
+		return fail;
 	}
 	
 	/**

@@ -5,14 +5,15 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
-	String path =  "http://" + request.getServerName() + ":" + request.getServerPort()+""+request.getContextPath();
-	System.out.println("path="+path);
+	String path = "http://" + request.getServerName() + ":"
+			+ request.getServerPort() + "" + request.getContextPath();
+	System.out.println("path=" + path);
 %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>pic galaxy</title>
-<link type="text/css" rel="stylesheet" href="<%=path %>/resources/style/common.css" /> 
+<link type="text/css" rel="stylesheet" href="<%=path%>/resources/style/common.css" /> 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.min.js"></script>
 
 <style type="text/css">
@@ -49,6 +50,12 @@
 		 color:white;
 		 cursor:pointer;
 	 }
+	.hottagSelect
+	{
+		
+		 background-color: rgb(255,111,1111);
+		 color:white;
+	}
 	
 	#content
 	{
@@ -205,16 +212,24 @@ function collect(id,item)
 function loadMore()
 {
 	var id = $(".hiddenid").last().text();
-	var searchURL = host+"/api/item/";
+	var searchURL = host+"/api/loadmore";
+	var kindtxt = $("#kind").text();
+	var typetxt = $("#currtype").text();
+	
+	var mydata = '{"type":"' + typetxt
+	+ '","kind":"' + kindtxt
+	+ '","id":"' + id
+	+ '"}'; 
 	querying = true;
 	setTimeout(resetquerying, 3000);
 	$(function()
 	{
-		var url =  searchURL+id;
+		var url =  searchURL;
 		$.ajax({
-				type: "get",			
+				type: "post",			
 				url: url,
 				dataType:"json",
+				data:mydata,
 				contentType: "application/json; charset=utf-8",  
 				success:function (data)   // request success.
 				{				
@@ -336,11 +351,20 @@ $(function(){
 
 </head>
 <body>
+	<span id="kind" class="hiddenid">${kind}</span>
+	<span id="currtype" class="hiddenid">${currtype}</span>
 	<jsp:include page="nav.jsp"></jsp:include>
 	<div id="hot">
-				<a href=host+"/pic/${currtype}/newest"> <span class="hottag">newest</span></a>
-				<a href=host+"/pic/${currtype}/weekly"> <span class="hottag">weekly</span></a>
-				<a href=host+"/pic/${currtype}/monthly"> <span class="hottag">monthly</span></a>
+		<c:forEach items="${kinds}" var="item">
+			<c:choose>
+				<c:when test="${item == kind}">
+					<a href="<%=path %>/pic/${currtype}/${item}"> <span class="hottag hottagSelect">${item}</span></a>
+				</c:when>
+				<c:otherwise>
+					<a href="<%=path %>/pic/${currtype}/${item}"> <span class="hottag">${item}</span></a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
 	</div>
 	<div id="content">
 	<div class="box" id="hiddenbox" style="display:none">

@@ -17,6 +17,9 @@ var host = "<%=path%>"; //http://localhost:8080/picture/
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style type="text/css">
+	.tagselect {
+	color: red;
+	}
 	#login
 	{
 		float:right;
@@ -282,14 +285,20 @@ function logoutFB()
     });
   }
 </script>
-	<div id="nav">
-		<span id="kind" class="hiddenid">${kind}</span>
+	<div id="nav">		
 		<div id="navdetail">
 			<div id="navcontent">
 				<span id="logo">Picture Falls</span>				
 				
 				<c:forEach items="${tags}" var="tag">  
-					<a href="<%=path%>/pic/"> <span class="tag">${tag.type} </span></a>
+					<c:choose>
+						<c:when test="${tag.type == currtype}">
+							<a href="<%=path%>/pic/${tag.type}"> <span class="tag tagselect">${tag.type} </span></a>
+						</c:when>
+						<c:otherwise>
+							<a href="<%=path%>/pic/${tag.type}"> <span class="tag">${tag.type} </span></a>
+						</c:otherwise>
+					</c:choose>
 				</c:forEach>  	
 				
 				<div id="about">
