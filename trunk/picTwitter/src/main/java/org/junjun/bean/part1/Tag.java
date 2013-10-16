@@ -7,7 +7,7 @@ public class Tag
 
 	private String name;  //picture
 	private String desc;   // grils  animals 
-	private String type;  // picture
+	private String type;  // picture anlimal cute
 	
 	public String getName() {
 		return name;

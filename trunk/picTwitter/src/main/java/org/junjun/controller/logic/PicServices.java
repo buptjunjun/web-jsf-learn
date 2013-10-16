@@ -1,10 +1,12 @@
 package org.junjun.controller.logic;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.junjun.bean.part1.Comment;
+import org.junjun.bean.part1.Constant;
 import org.junjun.bean.part1.Item;
 import org.junjun.bean.part1.Tag;
 import org.junjun.bean.part1.UIComment;
@@ -28,5 +30,23 @@ public interface  PicServices
 	public void insertComment(Comment item);
 	
 	public void insert(Object obj);
+	
+	/**
+	 * type : animal 
+	 * kind : weekly monthly
+	 * @param type
+	 * @param kind
+	 * @return
+	 */
+	public List<Item> getItemsWhenLoad(String type, String kind);
+	public List<Item> getItemsWhenRest(String id, String kind ) ;
+	
+	public List<Item> getItemsWhenLoadIndx();
+	public List<Item> getItemsWhenIndexRest(String id) ;
+	
+	public Item getNextItem(String id,String type,String kind);	
+	public Item getPreItem(String id,String type,String kind);
+	
+	public List<Item> getTopItemByTime(String type, Date dategt,Date datelt, int rating, int limit) ;
 
 }

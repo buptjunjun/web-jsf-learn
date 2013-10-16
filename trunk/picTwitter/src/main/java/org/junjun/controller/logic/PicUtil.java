@@ -1,6 +1,8 @@
 package org.junjun.controller.logic;
 
 import java.security.MessageDigest;
+import java.util.Calendar;
+import java.util.Date;
 
 public class PicUtil 
 {
@@ -29,5 +31,23 @@ public class PicUtil
 			e.printStackTrace();
 			return null;
 		} 
+	}
+	
+	
+	/**
+	 * get the date whic is count day before "date",if count < 0 it change to  "getDateAfter".
+	 * @param date
+	 * @param days
+	 */
+	public static Date getDateBefore(Date date,int count)
+	{
+		// weekly 
+		Calendar c = Calendar.getInstance();     
+        c.setTime(date);  
+        int day = c.get(Calendar.DATE);  
+        c.set(Calendar.DATE, day - count);  
+        
+        Date newdate = c.getTime();
+        return newdate;
 	}
 }

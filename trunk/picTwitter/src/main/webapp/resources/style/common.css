@@ -68,6 +68,10 @@ a {
 	padding: 5px;
 }
 
+.tagselect {
+	color: red;
+}
+
 .tag:hover {
 	color: red;
 	cursor: pointer;

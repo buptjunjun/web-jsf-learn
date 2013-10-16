@@ -110,4 +110,34 @@ public class Item
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
+	
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		if(type!=null)
+			return type.hashCode();
+		else 
+			return 100;
+		
+	}
+	
+	@Override
+	public boolean equals(Object arg0) {
+		// TODO Auto-generated method stub
+		if(arg0 == null)
+			return false;
+		
+		if(!Item.class.isInstance(arg0))
+			return false;
+		Item item = (Item)arg0;
+		
+		if(this.id==null && item.id==null)
+			return true;
+		
+		if(this.id!=null)
+			return this.id.equals(item.getId());
+		else 
+			return  item.getId().equals(this.id);
+			
+	}
 }
