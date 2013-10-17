@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junjun.bean.part1.Comment;
 import org.junjun.bean.part1.Form1;
 import org.junjun.bean.part1.Item;
+import org.junjun.bean.part1.UIComment;
 import org.junjun.bean.part1.User;
 import org.junjun.controller.logic.PicBuffer;
 import org.junjun.controller.logic.PicServices;
@@ -67,6 +68,18 @@ public class PicCommentControllerRest
 		this.picservice.insertComment(comment);
 		
 		return "true";
+	}
+	/**
+	 * get resource
+	 * @return
+	 */
+	@RequestMapping(value="/comment/{itemid}",method=RequestMethod.GET,headers="Accept=application/json")
+	@ResponseBody
+	public Object comment(@PathVariable String itemid)
+	{
+
+		List<UIComment> ret = this.picservice.getUIComments(itemid);
+		return ret;
 	}
 	
 }

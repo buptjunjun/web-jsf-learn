@@ -33,7 +33,7 @@ public class PicDetailController {
 		model.addAttribute("kind", null);  // weekly , monthly , newest
 
 		
-		Item item = PicBuffer.itemBuffer.get(id);
+		Item item = Buffer.getItemBuffer().get(id);
 		
 		// if item is not in the buffer , set it to a buffered item;
 		if(item == null)
@@ -49,8 +49,8 @@ public class PicDetailController {
 			
 		model.addAttribute("item", item);
 		
-		List<UIComment> comments = picservice.getUIComments(id);
-		model.addAttribute("comments", comments);
+/*		List<UIComment> comments = picservice.getUIComments(id);
+		model.addAttribute("comments", comments);*/
 		return "detail";
     }
 	
@@ -61,57 +61,46 @@ public class PicDetailController {
 
 		model.addAttribute("tags", Buffer.getTags());	
 			
-		Item item = PicBuffer.itemBuffer.get(id);
+		Item item = Buffer.getItemBuffer().get(id);
 		
-		model.addAttribute("kind", kind);  // weekly , monthly , newest			
-		List<Item> items = null;
-		String type = item.getType();
-		if("newest".equals(kind))
-			 items = PicBuffer.itemsNewest.get(type);
-		else if("weekly".equals(kind))
-			 items = PicBuffer.itemsHottestWeekly.get(type);
-		else if("monthly".equals(kind))
-		{
-			items = PicBuffer.itemsHottestMonthly.get(type);				
-		}
-		else
-		{
-			items = PicBuffer.itemsNewest.get(type);
-			model.addAttribute("kind", "newest");
-		}
 		
-		// if item is not in the buffer , set it to a buffered item;
-
+		// if item is not in the buffer , set it to a buffered item;	
 		if (item == null)
-			item = items.get(0);
+		{
+			item = this.picservice.getItem(id);
+		}
+		
+		if(item == null)
+		{
+			item = Buffer.getIndexitem().get(0);
+		}
+		
+		if(!Constant.kinds.contains(kind))
+			kind = Constant.daily;
 		
 		int hold = 0;
-		int size = items.size();
-		for(int i = 0; i<size ; i++)
-		{
-			if(id.equals(items.get(i).getId()))
-			{
-				hold = i;
-				break;
-			}
-		}
-		
+		List<Item> items = Buffer.getTypeKind(item.getType(), kind);		
 		Item newItem = null;
-		if(hold<=0)
-			hold = size;
+		
+		int position = items.indexOf(item);
+		int size = items.size();
+		
+		if(position < 0)
+			hold = 0;
+		
 		if("pre".equals(arrow))
 		{
-			newItem = items.get((hold-1)%size);
+			newItem = items.get((hold-1 + size)%size);
 		}
 		else
 		{
-			newItem = items.get((hold+1)%size);
+			newItem = items.get((hold+1+size)%size);
 		}
 		model.addAttribute("item", newItem);
 		
 	/*	List<UIComment> comments = picservice.getUIComments(id);
 		model.addAttribute("comments", comments);*/
-		return "redirect:/detail/"+newItem.getId();
+		return "redirect:/detail/"+newItem.getId()+"?kind="+kind;
     }
 }
 

@@ -106,7 +106,7 @@ public class Buffer extends Thread
 		this.flag = flag;
 	}
 
-	public List<Item> getTypeKind(String type,String kind)
+	public static List<Item> getTypeKind(String type,String kind)
 	 {
 		 String key = type+kind; 
 		 return typekindbuffer.get(key);
