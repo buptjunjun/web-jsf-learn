@@ -11,6 +11,18 @@
 %>
 <script type="text/javascript">
 var host = "<%=path%>"; //http://localhost:8080/picture/
+$(document).ready(function (){
+	$("#loginBtn").click(function(){
+		if(testlogin())
+			return;
+		showLoginDiv();
+	});
+	$("#logoutBtn").click(function(){
+		logoutFB();
+		refresh();
+	});
+	refresh();
+	});
 </script>
 
 <html>
@@ -70,221 +82,7 @@ var host = "<%=path%>"; //http://localhost:8080/picture/
 	}
 	
 </style>
-
-<script type="text/javascript" src="http://localhost/resources/jquery-1.7.1.js"></script>
-	
-<script type="text/javascript">
-
-function trim(str)
-{
-     return str.replace(/(^\s*)|(\s*$)/g, '');
-}
-
-var FACEBOOK = "3";
-// user face book data to fill the form
-function fillFormFB(info)
-{
-	$("#idSource").prop("value","1000016664811391");
-	$("#source").prop("value",FACEBOOK);
-	$("#name").prop("value","Andy Yang");
-	$("#gender").prop("value","m");
-	$("#pic").prop("value","http://tp1.sinaimg.cn/1641153660/50/5627699277/1" );
-	$("#url").prop("value","http://www.baidu.com");
-	$("#otherInfo").prop("value",info);
-	
-	$("#user").submit();
-}
-
-//user face book data to fill the form
-function fillFormFBjson(info)
-{
-	var url1 = host+"/api/login";
-	var mydata = '{"idSource":"' + "1000016664811391"
-				+ '","source":"' + FACEBOOK
-				+ '","name":"' + "Andy Yang"
-				+ '","gender":"' + "m"
-				+ '","pic":"' + "http://tp1.sinaimg.cn/1641153660/50/5627699277/1"
-				+ '","url":"' + "http://www.baidu.com"
-				+ '"}'; 
-	$.ajax({
-		type: "post",			
-		url: url1,
-		dataType:"json",
-		data: mydata, 
-		contentType: "application/json; charset=utf-8",  
-		complete: function (data) 
-		{				
-			if(data!=null && data!=undefined && "ok"==data.responseText)
-				loginJsonSuccess();
-			refresh();
-		}
-		
-		
-  		});
-	
-	return false;
-}
-
-function loginJsonSuccess()
-{
-	$("#userhead").prop("src","http://tp1.sinaimg.cn/1641153660/50/5627699277/1");
-	$("#userName").text("Andy Yang");
-	
-}
-
-function fillFormFBRealJson(info)
-{
-	var url1 = path+"/api/login";
-	var mydata = '{"idSource":"' + info.id
-				+ '","source":"' + FACEBOOK
-				+ '","name":"' + info.name
-				+ '","gender":"' + gender
-				+ '","pic":"' + "http://graph.facebook.com/"+info.id+"/picture"
-				+ '","url":"' + info.link
-				+ '"}'; 
-	$.ajax({
-		type: "post",			
-		url: url1,
-		dataType:"json",
-		data: mydata, 
-		contentType: "application/json; charset=utf-8",  
-		complete: function (data) 
-		{				
-			if(data!=null && data!=undefined && "ok"==data.responseText)
-			{
-				loginJsonSuccess();
-			}
-			
-			refresh();
-		}
-  		});
-	
-	return false;
-}
-
-function fillFormFBReal(info)
-{
-	$("#idSource").prop("value",info.id);
-	$("#source").prop("value",FACEBOOK);
-	$("#name").prop("value",info.name);
-	if(info.gender == "male")		
-		$("#gender").prop("value","m");
-	else if(info.gender == "female")
-		$("#gender").prop("value","f");
-	else
-		$("#gender").prop("value","o");
-	
-	$("#pic").prop("value","http://graph.facebook.com/"+info.id+"/picture" );
-	
-	$("#url").prop("value",info.link);
-	$("#otherInfo").prop("value","");
-	$("#user").submit();
-}
-$(document).ready(function (){
-	$("#loginBtn").click(function(){
-		loginFB();
-		refresh();
-	});
-	$("#logoutBtn").click(function(){
-		logoutFB();
-		refresh();
-	});
-	refresh();
-	});
-	
-function testlogin()
-{
-	if($("#userName").text() != undefined && $("#userName").text() != null && trim( $("#userName").text()) != "" )
-		return true;
-	return false;
-}
-function refresh()
-{
-	//alert($("#userName").text()); 
-	if(testlogin())
-	{	$("#loginBtn").hide();
-		$("#logoutBtn").show();
-	}
-	else
-	{
-		$("#loginBtn").show();
-		$("#logoutBtn").hide();
-	}
-}
-
-function loginFB()
-{
-	fillFormFBjson();
-}
-
-/* function loginFB()
-{
-		FB.getLoginStatus(function(response) {
-		  if (response.status === 'connected') 
-		  {
-	    	   // get the current user info and submit
-	    	   FB.api('/me', function(res) {fillFormFBReal(res);});
-		  } 
-		  else 
-		  {
-			  FB.login(function(response) 
-					  {
-						    if (response.authResponse) 
-						    {
-						       if(response.status === 'connected')
-						    	{
-						    	   // get the current user info and submit
-						    	   FB.api('/me', function(res) {fillFormFBReal(res);});
-						        }  
-						    } 
-						    else 
-						    {
-						        // The person cancelled the login dialog
-						    }
-						});	 
-		  }
-		 });
-		  
-	} */
-
-function logoutFB()
-{
-	  //FB.logout();
-	  window.open(host+"/logout","_self");
-}
-</script>
-	
-<div id="fb-root"></div>
-<script>
-  window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '726510294042746', // App ID
-    channelUrl : '//localhost:8080/picture/channel', // Channel File
-    status     : true, // check login status
-    cookie     : true, // enable cookies to allow the server to access the session
-    xfbml      : true  // parse XFBML
-  });
-
-  };
-
-  // Load the SDK asynchronously
-  (function(d){
-   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-   if (d.getElementById(id)) {return;}
-   js = d.createElement('script'); js.id = id; js.async = true;
-   js.src = "//connect.facebook.net/en_US/all.js";
-   ref.parentNode.insertBefore(js, ref);
-  }(document));
-
-  // Here we run a very simple test of the Graph API after login is successful. 
-  // This testAPI() function is only called in those cases. 
-  function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('	, ' + response.name + '.');
-    });
-  }
-</script>
+	<jsp:include page="login.jsp"></jsp:include>
 	<div id="nav">		
 		<div id="navdetail">
 			<div id="navcontent">
@@ -321,16 +119,7 @@ function logoutFB()
 		</div>			
 	</div>
 	
-	<form name="user" id="user" class="login" style="display:none !important;" action="/picture/login" method="post">
-		<input id="idSource" name="idSource"></input><br>
-		<input id="source" name="source"></input><br>
-		<input id="name" name="name"></input><br>
-		<input id="gender" name="gender"></input><br>
-		<input id="pic" name="pic"></input><br>
-		<input id="url" name="url"></input><br>
-		<input id="otherInfo" name="otherInfo"></input><br>
-		<input type="submit" name="testSubmit" value="submit">
-	</form>
+
 <script type="text/javascript">
 refresh();
 </script>

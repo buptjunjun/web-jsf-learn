@@ -14,7 +14,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>pic galaxy</title>
 <link type="text/css" rel="stylesheet" href="<%=path%>/resources/style/common.css" /> 
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.min.js"></script>
+<script type="text/javascript" src="<%=path%>/resources/script/jquery-1.8.3.js"></script>
 
 <style type="text/css">
 	div

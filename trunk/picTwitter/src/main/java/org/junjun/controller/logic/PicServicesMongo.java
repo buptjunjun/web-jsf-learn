@@ -20,6 +20,7 @@ public class PicServicesMongo implements PicServices{
 
 	private static final  String dbname = "picdb";
 	public static final int  MAXLIMT = 20;
+	public static final int COMMENTLIMIT = 10;
 	private Buffer buffer = null;
 	@Autowired
 	private DAOMongo mongo;
@@ -68,19 +69,24 @@ public class PicServicesMongo implements PicServices{
 		{
 			constrainEQ = new  HashMap<String,String>();
 			constrainEQ.put("commentTo",id);
-			List<Comment> comments = this.mongo.search(null, null, constrainEQ, null, -1, 1, Comment.class);
+			List<Comment> comments = this.mongo.search(null, null, constrainEQ, "date",DAOMongo.DESCENDING, COMMENTLIMIT, Comment.class);
 			if(comments!=null)
 			{
 				for(Comment comment : comments)
 				{
 					UIComment uicomment = new UIComment();						
 					User user = this.getUser(comment.getCommentFrom());
+					uicomment.setComment(comment);
 					if(user !=null)
 					{
-						uicomment.setComment(comment);
-						uicomment.setUser(user);
-						uicomments.add(uicomment);
+						uicomment.setUser(user);	
+						user.setId(null);
+						user.setOtherInfo(null);
+						user.setPassword(null);
+						user.setIdSource(null);
+						user.setIdSource(null);
 					}
+					uicomments.add(uicomment);
 				}
 				
 				return uicomments;
