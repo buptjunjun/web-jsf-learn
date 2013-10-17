@@ -280,7 +280,6 @@ Date.prototype.format = function(mask) {
   
 };  
 
-
 function comment()
 {
 	var url1 = host+"/api/comment";
@@ -301,7 +300,7 @@ function comment()
 				contentType: "application/json; charset=utf-8",  
 				success:function (data)   // request success.
 				{				
-					if(data==null || data == "false")
+					if(data==null || data != "ok")
 						return;
 					
 					var $copy =$("#commenthidden").clone(true);
