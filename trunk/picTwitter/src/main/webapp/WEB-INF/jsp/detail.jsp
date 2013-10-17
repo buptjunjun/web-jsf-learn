@@ -300,18 +300,19 @@ function comment()
 				contentType: "application/json; charset=utf-8",  
 				success:function (data)   // request success.
 				{				
-					if(data==null || data != "ok")
-						return;
+					if(data!=null && data.result == "ok");
+					{
+						var $copy =$("#commenthidden").clone(true);
+						$copy.css("display","block");
+						$copy.removeAttr("id");
+										
+						$copy.find("img").prop('src',$("#userhead").prop("src"));
+						$copy.find(".commentUserName").text($("#userName").text());  
+						$copy.find(".commentConetent").text(commentdata);
+						$copy.find(".commentDate").text(new Date().format("yyyy-mm-dd hh:mm:ss"));		
+						$("#comments:first").before($copy);
+					}
 					
-					var $copy =$("#commenthidden").clone(true);
-					$copy.css("display","block");
-					$copy.removeAttr("id");
-									
-					$copy.find("img").prop('src',$("#userhead").prop("src"));
-					$copy.find(".commentUserName").text($("#userName").text());  
-					$copy.find(".commentConetent").text(commentdata);
-					$copy.find(".commentDate").text(new Date().format("yyyy-mm-dd hh:mm:ss"));		
-					$("#comments:first").before($copy);
 				}
 		  });
 	 }

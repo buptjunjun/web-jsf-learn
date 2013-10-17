@@ -37,7 +37,15 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes({"login","user"})
 public class PicCommentControllerRest
 {
-	
+	public class Result
+	{
+		public Result(String str) {
+			// TODO Auto-generated constructor stub
+			this.result = str;
+		}
+		public String result="ok";
+		
+	}
 	private PicServices picservice = new PicServicesMongo();
 		
 	 @ModelAttribute("login")
@@ -60,14 +68,14 @@ public class PicCommentControllerRest
 	{
 		// if it is not login
 		if(user == null || StringUtils.isEmpty(user.getId()) || StringUtils.isEmpty(comment.getComment())|| StringUtils.isEmpty(comment.getCommentTo()))
-				return "false";
+				return new Result("fail");
 		
 		comment.setCommentFrom(user.getId());
 		comment.setDate(new Date());
 		comment.setId(comment.getCommentFrom()+comment.getCommentTo());
 		this.picservice.insertComment(comment);
 		
-		return "true";
+		return new Result("ok");
 	}
 	/**
 	 * get resource

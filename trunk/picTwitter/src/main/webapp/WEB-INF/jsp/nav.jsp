@@ -105,7 +105,7 @@ $(document).ready(function (){
 				<div class="seperateLien"><span>|</span></div>
 				<div id="login">
 					<div style="float:left">
-						<img id="userhead" style="" width="20" height="20" src="${user.pic}" onerror="$(this).hide();return false;"/>
+						<img id="userhead" style="" width="20" height="20" src="${user.pic}" onerror="$(this).prop('src','<%=path%>/resources/img/user_head.png');"/>
 					</div>
 					<div style="float:left">
 						<span id="userName">${user.name}</span>		

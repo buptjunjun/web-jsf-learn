@@ -97,6 +97,7 @@ function refresh()
 		$("#loginBtn").show();
 		$("#logoutBtn").hide();
 	}
+	
 }
 var FACEBOOK = "3";
 // user face book data to fill the form
@@ -174,6 +175,7 @@ function fillFormFBRealJson(info)
 			}
 			
 			refresh();
+			 self.opener.location.reload();
 		}
   		});
 	
