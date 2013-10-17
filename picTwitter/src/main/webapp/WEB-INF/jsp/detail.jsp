@@ -389,8 +389,10 @@ $(document).ready(function ()
 		
 				
 		$("#submitBtn").click(function(){
-			 comment();
-			return false;
+			if(!testlogin())
+				showLoginDiv();
+			else
+			    comment();
 		});
 		
 		loadComments();
@@ -467,7 +469,7 @@ function next()
 			</div>
 			<div class="oneComment" id="commenthidden" style="display:none">
 				<div class="userPic">
-					<img width=50 height=50 src="${comment.user.pic}" />
+					<img width=50 height=50 src="<%=path%>/resources/img/user_head.png" onerror="$(this).prop('src','<%=path%>/resources/img/user_head.png');"/>
 					<div style="clear: both"></div>
 				</div>
 				<div class="usercomment">
