@@ -19,9 +19,9 @@ public class main {
 
 	static public void main(String [] args) throws MalformedURLException, IOException
 	{
-		List<Tag2User> lt = new ArrayList<Tag2User>();
-		lt = TwitterUtils.init("D:\\\\movie\\\\twitterBee\\\\taguser.json");		 
-		 System.out.println();
+		 List<Tag2User> lt = new ArrayList<Tag2User>();
+		 lt = TwitterUtils.init("taguser.json");		 
+		 System.out.println(lt);
 		 
 		 File file = new File("C:\\Users\\andyWebsense\\Desktop\\aaa.png");
 		 FileUtils.copyURLToFile(new URL("https://pbs.twimg.com/media/BW1BAQaIUAAbejD.jpg"), file);

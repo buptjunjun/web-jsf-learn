@@ -30,7 +30,7 @@ public class TwitterUtils {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		List<Tag2User> ltu =  gson.fromJson(reader, new ArrayList<Tag2User>().getClass());
+		List<Tag2User> ltu =  gson.fromJson(reader, List.class);
 		return ltu;
 	}
 	
