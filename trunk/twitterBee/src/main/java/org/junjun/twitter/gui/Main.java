@@ -1,13 +1,23 @@
 package org.junjun.twitter.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -22,6 +32,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 
 import org.junjun.twitter.TwitterUtils;
 import org.junjun.twitter.bean.*;
@@ -34,9 +45,31 @@ public class Main extends JFrame
 	private JPanel left = new JPanel();
 	private JPanel right = new JPanel();
 	private JPanel tagpanel=new JPanel();
-	private JPanel namepanel=new JPanel();
+	private JScrollPane namepanel=new JScrollPane();
+	private JPanel jpanel = new JPanel();//user name
 	private JPanel actionpanel=new JPanel();
 	
+	private Map<String,Tag2User> tags= new HashMap<String,Tag2User>();
+	private List<JCheckBox> listtags=new ArrayList<JCheckBox>();
+	
+	private Map<String,TwitUser> users = new HashMap<String,TwitUser>();
+	private List<JCheckBox> listusers =new ArrayList<JCheckBox>();
+	
+	private List<TwitResources>  currentResource = new ArrayList<TwitResources> ();  // resources
+	private int currentResPosition=0;  // current resources;
+
+	private List<TwitResources>  choosenResource = new ArrayList<TwitResources> ();  // resources I selected
+	
+	private JButton toggleTag = new JButton("toggle");
+	private JButton toggleUser = new JButton("toggle");
+	private JButton ObtainResTag = new JButton("GetResByTag");
+	private JButton ObtainResUser = new JButton("GetResByUser");
+	private JButton nextRes = new JButton("next");
+	private JButton preRes = new JButton("previous");
+	private JCheckBox select = new JCheckBox("select it");
+	
+	private DateChooser dc1 = new DateChooser("yyyy-MM-dd");
+	private DateChooser dc2 =new DateChooser("yyyy-MM-dd");
 	public Main() {
 		// TODO Auto-generated constructor stub
 		
@@ -49,11 +82,11 @@ public class Main extends JFrame
 		right.setSize(width-leftsize-10,height);
 		right.setBackground(Color.gray);
 		
-		left.setLayout(new BoxLayout(left, BoxLayout.Y_AXIS)); 
+		left.setLayout(new GridLayout(3,1)); 
 		right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS)); 
 		
 		addTag();
-		addTwitName();
+		addName();
 		addAction();
 		
 		this.addTxt();
@@ -68,62 +101,61 @@ public class Main extends JFrame
 	}
 	
 	private void addTag()
-	{
+	{	
+		tagpanel.setLayout(new FlowLayout());		
 		
+		List<Tag2User> lt = new ArrayList<Tag2User>();
+		lt = TwitterUtils.init("taguser.json");
+		toggleTag.addActionListener(new TagToggleListener());	
+		tagpanel.add(toggleTag);
 		
-		tagpanel.setSize(tagpanel.getPreferredSize());
-		tagpanel.setLayout(new FlowLayout());
-		JButton jbtn = new JButton("toggle");
-		tagpanel.add(jbtn);
-		for(int i = 0; i<16;i++)
+		for(Tag2User tu:lt)
+		{		
+			tags.put(tu.getTag(), tu);
+		}
+		
+		for(Entry entry:this.tags.entrySet())
 		{
-			
-			JCheckBox jbox = new JCheckBox("111"); 
+			JCheckBox jbox = new JCheckBox((String)entry.getKey()); 
+			jbox.addActionListener(new TagListener());
+			jbox.setSelected(false);
+			this.listtags.add(jbox);
 			tagpanel.add(jbox);
 		}
+		
 		
 		this.left.add(tagpanel);
 		
 		
 	}
-	
-	private void addTwitName()
-	{
-		
-		namepanel.setSize(namepanel.getPreferredSize());
-		namepanel.setLayout(new FlowLayout());
-		
-		JButton jbtn = new JButton("toggle");
-		namepanel.add(jbtn);
-		for(int i = 0; i<26;i++)
-		{
-			
-			JCheckBox jbox = new JCheckBox("111"); 
-			jbox.setSelected(true);
-			namepanel.add(jbox);
-		}
-		
-		this.left.add(namepanel);
 
+	private void addName()
+	{
+		namepanel.setViewportView(jpanel);
+		this.left.add(namepanel);
 	}
-	
 	private void addAction()
 	{
+		this.actionpanel.add(dc1);
+		this.actionpanel.add(dc2);
+		
 		actionpanel.setSize(actionpanel.getPreferredSize());
 		actionpanel.setLayout(new FlowLayout());
-		for(int i = 0; i<6;i++)
-		{
-			
-			JButton jbutton = new JButton("111"); 
-			actionpanel.add(jbutton);
-		}
+		
+	
+		actionpanel.add(this.ObtainResTag);
+		actionpanel.add(this.ObtainResUser);
+		actionpanel.add(this.preRes);
+		actionpanel.add(this.nextRes);
+		actionpanel.add(this.select);
+	
 		this.left.add(actionpanel);
 	}	
 	
 	private void addTxt()
 	{
 	
-		JTextArea jta = new JTextArea("dddddddddddddddddd");
+		JTextArea jta = new JTextArea("dddddddddddddddddd\nsdfsdf");
 		this.right.add(jta);
 		
 	}
@@ -146,4 +178,88 @@ public class Main extends JFrame
 	{
 		new Main();
 	}
+	
+	// action listener for Tag toggle
+	class TagToggleListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent event) 
+		{
+			Set<TwitUser> ltu = new HashSet<TwitUser>();
+			jpanel.removeAll();
+			for(JCheckBox jcb:listtags)
+			{
+				if(!jcb.isSelected())
+					continue;
+				
+				Tag2User tu= tags.get(jcb.getText());
+				Set<TwitUser> l = tu.getTwuser();
+				ltu.addAll(ltu);
+			}
+			int size=ltu.size();
+			
+			int rows = size/4+1;
+			jpanel.setLayout(new GridLayout(rows,5));
+			jpanel.add(toggleUser);
+			
+			for(TwitUser twiu:ltu)
+			{		
+				JCheckBox jbox = new JCheckBox(twiu.getName()); 
+				jbox.setSelected(true);
+				jpanel.add(jbox);
+			}
+			namepanel.setViewportView(jpanel);
+			left.add(namepanel);
+			
+		}
+	}
+	
+	// action listener for Tag toggle
+	class TagListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent event) 
+		{
+			jpanel.removeAll();
+		
+			Set<TwitUser> ltu = new HashSet<TwitUser>();
+			jpanel.removeAll();
+			for(JCheckBox jcb:listtags)
+			{
+				if(!jcb.isSelected())
+					continue;
+				
+				Tag2User tu= tags.get(jcb.getText());
+				Set<TwitUser> l = tu.getTwuser();
+				ltu.addAll(l);
+			}
+			int size=ltu.size();
+			
+			int rows = size/4+1;
+			jpanel.setLayout(new GridLayout(rows,5));
+			jpanel.add(toggleUser);
+			
+			for(TwitUser twiu:ltu)
+			{		
+				JCheckBox jbox = new JCheckBox(twiu.getName()); 
+				jbox.setSelected(true);
+				jpanel.add(jbox);
+			}
+			
+			left.validate();
+		}
+	}
+
+	
+	// action listener for User toggle
+	class UserToggleListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent event) 
+		{
+			
+			System.out.println(event);
+			addTag();
+
+		}
+	}
+
+
 }

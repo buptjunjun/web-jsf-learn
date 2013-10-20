@@ -15,6 +15,7 @@ import org.junjun.twitter.bean.Tag2User;
 import org.junjun.twitter.bean.TwitStatus;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class TwitterUtils {
 
@@ -30,7 +31,8 @@ public class TwitterUtils {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		List<Tag2User> ltu =  gson.fromJson(reader, List.class);
+		ArrayList<Tag2User> ltu =  gson.fromJson(reader,new TypeToken<List<Tag2User>>() {  
+        }.getType());
 		return ltu;
 	}
 	
