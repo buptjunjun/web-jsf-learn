@@ -6,17 +6,11 @@ import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 
 
-public class Tag2User 
+public class Tag 
 {
 	public String id= null;
-	
 	private String tag = null;
-	private Set<TwitUser> twuser = new HashSet<TwitUser>();
 	
-	public void addUser(TwitUser user)
-	{
-		this.twuser.add(user);
-	}
 	
 	public String getId() {
 		return id;
@@ -34,21 +28,14 @@ public class Tag2User
 		this.tag = tag;
 	}
 
-	public Set<TwitUser> getTwuser() {
-		return twuser;
-	}
-
-	public void setTwuser(Set<TwitUser> twuser) {
-		this.twuser = twuser;
-	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		
-		if(!Tag2User.class.isInstance(obj))
+		if(!Tag.class.isInstance(obj))
 			return false;		
 		
-		Tag2User tu=(Tag2User)obj;
+		Tag tu=(Tag)obj;
 		if(!StringUtils.isEmpty(this.tag))
 			return this.tag.equals(tu.getTag());
 		else if(!StringUtils.isEmpty(tu.getTag()))
