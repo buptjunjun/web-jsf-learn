@@ -16,7 +16,7 @@ import org.junjun.bean.part1.Tag;
 public class Buffer extends Thread
 {
 
-	 public static final int BUFFERLIMIT = 300;
+	 public static final int BUFFERLIMIT = 20;
 	 private static Item newestItem = null; 
 	 private static List<Item> indexitem =  new ArrayList<Item>();	 
 	 private  static List<Tag> tags = new ArrayList<Tag>();	

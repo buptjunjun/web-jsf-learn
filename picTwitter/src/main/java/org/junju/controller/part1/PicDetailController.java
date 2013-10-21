@@ -1,6 +1,7 @@
 package org.junju.controller.part1;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junjun.bean.part1.Constant;
@@ -29,15 +30,12 @@ public class PicDetailController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String showInputPage ( @RequestParam String kind, @PathVariable String id, Model model )
 	{	
-		model.addAttribute("tags", Buffer.getTags());		
-		model.addAttribute("kind", null);  // weekly , monthly , newest
-
-		
-		Item item = Buffer.getItemBuffer().get(id);
-		
 		// if item is not in the buffer , set it to a buffered item;
-		if(item == null)
-			item = picservice.getItem(id);
+		Item item = picservice.getItem(id);
+		model.addAttribute("tags", Buffer.getTags());		
+		model.addAttribute("kind", kind);  // weekly , monthly , newest
+		model.addAttribute("currtype", item.getType());	
+		model.addAttribute("kinds", Constant.kinds);
 		
 		// if the id is not correct ,give it a random one;
 		List<Item> items = null;
@@ -61,42 +59,41 @@ public class PicDetailController {
 
 		model.addAttribute("tags", Buffer.getTags());	
 			
-		Item item = Buffer.getItemBuffer().get(id);
+		Item item = this.picservice.getItem(id);
+		Item newItem = null;
 		
-		
-		// if item is not in the buffer , set it to a buffered item;	
-		if (item == null)
-		{
-			item = this.picservice.getItem(id);
-		}
-		
-		if(item == null)
-		{
-			item = Buffer.getIndexitem().get(0);
-		}
-		
+		// if item is not in the buffer , set it to a buffered item;			
 		if(!Constant.kinds.contains(kind))
 			kind = Constant.daily;
 		
-		int hold = 0;
-		List<Item> items = Buffer.getTypeKind(item.getType(), kind);		
-		Item newItem = null;
 		
-		int position = items.indexOf(item);
-		int size = items.size();
 		
-		if(position < 0)
-			hold = 0;
-		
-		if("pre".equals(arrow))
+		if("next".equals(arrow))
 		{
-			newItem = items.get((hold-1 + size)%size);
+			 List<Item> ret = this.picservice.getTopItemByTime(item.getType(),null, item.getDate(), -1, 1);
+			 if(ret != null && ret.size() ==1)
+				 newItem =  ret.get(0);	
+			 else 
+			 {
+				 Date date = Buffer.getNewestItem().getDate();
+				 ret = this.picservice.getTopItemByTime(item.getType(), date,null, -1, 1);
+				 if(ret != null && ret.size() ==1)
+						 newItem =  ret.get(0);
+				  else
+					  newItem = item;
+				 
+			 }
 		}
 		else
 		{
-			newItem = items.get((hold+1+size)%size);
+			 List<Item> ret = this.picservice.getTopItemByTimeAsend(item.getType(), item.getDate(),null, -1, 1);
+			 if(ret != null && ret.size() ==1)
+				 newItem =  ret.get(0);
+			 else
+				newItem = item;
 		}
 		model.addAttribute("item", newItem);
+		
 		
 	/*	List<UIComment> comments = picservice.getUIComments(id);
 		model.addAttribute("comments", comments);*/

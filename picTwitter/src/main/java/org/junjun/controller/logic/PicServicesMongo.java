@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class PicServicesMongo implements PicServices{
 
-	private static final  String dbname = "picdb";
+	public static final  String dbname = "picdb";
 	public static final int  MAXLIMT = 20;
 	public static final int COMMENTLIMIT = 10;
 	private Buffer buffer = null;
@@ -151,7 +151,7 @@ public class PicServicesMongo implements PicServices{
 			constrainLT.put("date", datelt);
 		}
 		
-		if(rating >= 0)
+		if(rating > 0)
 		{
 			constrainLT = new  HashMap<String,Object>();
 			constrainLT.put("total", rating);
@@ -162,6 +162,46 @@ public class PicServicesMongo implements PicServices{
 			limit = MAXLIMT;
 		
 		return  mongo.search(constrainLT,constrainGT , constrainEQ, "date", DAOMongo.DESCENDING, limit, Item.class);
+	}
+	
+	public List<Item> getTopItemByTimeAsend(String type, Date dategt,Date datelt, int rating, int limit) {
+		Map<String,String> constrainEQ = null;
+		if(type !=null)
+		{
+			constrainEQ = new  HashMap<String,String>();
+			constrainEQ.put("type", type);
+		}
+		
+		
+		Map<String,Object> constrainGT = null;
+		Map<String,Object> constrainLT = null;
+		
+		if(dategt!=null)
+		{
+			if(constrainGT == null)
+				constrainGT = new  HashMap<String,Object>();
+			constrainGT.put("date", dategt);
+		}
+		
+		if(datelt!=null)
+		{
+			if(constrainLT == null)
+				constrainLT = new  HashMap<String,Object>();
+			
+			constrainLT.put("date", datelt);
+		}
+		
+		if(rating > 0)
+		{
+			constrainLT = new  HashMap<String,Object>();
+			constrainLT.put("total", rating);
+		}
+	
+		
+		if(limit < 0 )
+			limit = MAXLIMT;
+		
+		return  mongo.search(constrainLT,constrainGT , constrainEQ, "date", DAOMongo.ASCENDING, limit, Item.class);
 	}
 	
 	@Override
@@ -214,57 +254,48 @@ public class PicServicesMongo implements PicServices{
 	{
 		int rating = Integer.MAX_VALUE;
 		// TODO Auto-generated method stub
-		List<Item> ret = buffer.getTypeKind(type, kind);
+		List<Item> ret = null;
 		
-		if(ret == null)
-		{ 
-			Tag tag = null;
-			if(!buffer.containTag(type))
-				type = buffer.getTags().get(0).getType();
-			
-			if(!Constant.kinds.contains(kind))
-				kind=Constant.daily;
 
-			// newest item
-			if(kind.contains(Constant.newest))
-			{
-				ret = this.getNewestItems(type, new Date(), Buffer.BUFFERLIMIT);
-			}
-			else if(kind.contains(Constant.daily))
-			{
-				// the date of newest Item
-				Date newest = Buffer.getNewestItem().getDate();
-				Date datebefore = PicUtil.getDateBefore(newest, 1);
-				ret = this.getTopItemByTime(type, datebefore, newest, rating, Buffer.BUFFERLIMIT);
-			}
-			else if(kind.contains(Constant.weekly))
-			{
-				Date newest = Buffer.getNewestItem().getDate();
-				Date datebefore = PicUtil.getDateBefore(newest, 7);
-				ret = this.getTopItemByTime(type, datebefore, newest, rating,  Buffer.BUFFERLIMIT);
-			}
-			else if(kind.contains(Constant.monthly))
-			{
-				Date newest = Buffer.getNewestItem().getDate();
-				Date datebefore = PicUtil.getDateBefore(newest, 30);
-				ret = this.getTopItemByTime(type, datebefore, newest, rating,  Buffer.BUFFERLIMIT);
-			}
-			
-			buffer.addTypeKind(type, kind, ret);
-			
+		Tag tag = null;
+		if(!buffer.containTag(type))
+			type = buffer.getTags().get(0).getType();
+		
+		if(!Constant.kinds.contains(kind))
+			kind=Constant.daily;
+
+		// newest item
+		if(kind.contains(Constant.newest))
+		{
+			ret = this.getNewestItems(type, new Date(), Buffer.BUFFERLIMIT);
+		}
+		else if(kind.contains(Constant.daily))
+		{
+			// the date of newest Item
+			Date newest = Buffer.getNewestItem().getDate();
+			Date datebefore = PicUtil.getDateBefore(newest, 1);
+			ret = this.getTopItemByTime(type, datebefore, null, -1, Buffer.BUFFERLIMIT);
+		}
+		else if(kind.contains(Constant.weekly))
+		{
+			Date newest = Buffer.getNewestItem().getDate();
+			Date datebefore = PicUtil.getDateBefore(newest, 7);
+			ret = this.getTopItemByTime(type, datebefore, null, -1,  Buffer.BUFFERLIMIT);
+		}
+		else if(kind.contains(Constant.monthly))
+		{
+			Date newest = Buffer.getNewestItem().getDate();
+			Date datebefore = PicUtil.getDateBefore(newest, 30);
+			ret = this.getTopItemByTime(type, datebefore, null, -1,  Buffer.BUFFERLIMIT);
 		}
 		
-		if (ret == null)
-			return ret;
-		int num = ret.size()<this.MAXLIMT?ret.size():this.MAXLIMT;
-		
-		return ret.subList(0, num);
+		return ret;
 	}
 	
 	@Override
 	public List<Item> getItemsWhenRest(String id, String kind ) 
 	{
-		Item item = Buffer.getItemBuffer().get(id);
+		Item item = this.getItem(id);
 		
 		if(item == null)
 		{
@@ -276,46 +307,34 @@ public class PicServicesMongo implements PicServices{
 		String type = item.getType();
 		Date date = item.getDate();
 		
-		List<Item> ret = buffer.getTypeKind(type, kind);
-		if(ret == null)
-		{
-			Tag tag = new Tag();
-			tag.setType(type);
-			if(!buffer.getTags().contains(tag)||!Constant.kinds.contains(kind))
-				return null;
+		List<Item> ret = null;
+		
+		Tag tag = new Tag();
+		tag.setType(type);
+		if(!buffer.getTags().contains(tag)||!Constant.kinds.contains(kind))
+			return null;
 			
-			ret = getItemsWhenLoad(type, kind) ;
-			return ret;
-		}
-		else
-		{
-			int position = ret.indexOf(item);
-			if(position<0) 
-				return null;
-			
-			int size = ret.size();
-			int count = size-position>this.MAXLIMT?this.MAXLIMT:size-position;
-			
-			return ret.subList(position, count);
-		}
+		ret = this.getTopItemByTime(type,null,date, item.getTotal(), Buffer.BUFFERLIMIT);
+		
+		return ret;
 		
 	}
 	
 	
 	@Override
 	public List<Item> getItemsWhenIndexRest(String id) {
-		List<Item> items = Buffer.getIndexitem();
-		if(items==null || items.size() == 0)
+		Item item = this.getItem(id);
+		
+		if(item == null)
+		{
+			System.out.println("getItemsWhenIndexRest: item == null");
 			return null;
-		Item item = new Item();
-		item.setId(id);
-		int index = items.indexOf(item);
-	    if(index < 0 )
-	    	return null;
-	    
-	    int remains =  items.size()- index;
-	    int count =remains>this.MAXLIMT?this.MAXLIMT:remains;		
-		return items.subList(0, count);
+		}
+		
+		// TODO Auto-generated method stub
+		List<Item> items  =null;
+		items = this.getTopItemByTime(item.getType(),null,new Date (), item.getTotal(), Buffer.BUFFERLIMIT);
+		return items;
 
 	}
 	
@@ -323,13 +342,9 @@ public class PicServicesMongo implements PicServices{
 	@Override
 	public List<Item> getItemsWhenLoadIndx() {
 		// TODO Auto-generated method stub
-		List<Item> items = Buffer.getIndexitem();
-		if(items==null || items.size() == 0)
-			return null;
-		
-		int count = this.MAXLIMT>items.size()?items.size():this.MAXLIMT;
-		
-		return items.subList(0, count);
+		List<Item> items  =null;
+		items = this.getTopItemByTime(null,null,new Date (), -1, Buffer.BUFFERLIMIT);
+		return items;
 	}
 	
 	@Override

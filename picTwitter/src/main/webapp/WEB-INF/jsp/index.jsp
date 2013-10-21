@@ -14,9 +14,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>pic galaxy</title>
 <link type="text/css" rel="stylesheet" href="<%=path%>/resources/style/common.css" /> 
-<script type="text/javascript" src="<%=path%>/resources/script/jquery-1.8.3.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 
 <style type="text/css">
+	
 	div
 	{
 	border-radius: 5px 5px 5px 5px;
@@ -211,7 +212,10 @@ function collect(id,item)
 
 function loadMore()
 {
-	var id = $(".hiddenid").last().text();
+	if(window.lastID == null || window.lastID == undefined)
+		window.lastID = $(".hiddenid").last().text();
+	id = window.lastID;
+	
 	var searchURL = host+"/api/loadmore";
 	var kindtxt = $("#kind").text();
 	var typetxt = $("#currtype").text();
@@ -256,6 +260,7 @@ function loadMore()
 							
 							var shortestColumn = "#column"+shortest; 
 							$(shortestColumn).append($copy);
+							window.lastID = item.id; 
 						}
 					} 
 				}
@@ -369,7 +374,7 @@ $(function(){
 	<div id="content">
 	<div class="box" id="hiddenbox" style="display:none">
 		<span class="hiddenid">${item.id}</span>
-		<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"  /></a>
+		<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img width=200  class="mainimg" src="${item.url}"  /></a>
 		<div class="comment"  itemid = "${item.id}">
 		  <a class="img_background good""><span>1000${item.good}  </span></a> 
 		  <a class="img_background bad"><span>1000${item.bad} </span></a>  
@@ -382,7 +387,7 @@ $(function(){
 			<c:forEach items="${items}" var="item" begin="0" step="4">  
 				<div class="box">
 					<span class="hiddenid">${item.id}</span>
-					<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
+					<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img  width=200 class="mainimg" src="${item.url}"></a>
 					<div class="comment" itemid = "${item.id}">
 					  <a class="img_background good"><span>1000${item.good}  </span></a> 
 					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
@@ -397,7 +402,7 @@ $(function(){
 			<c:forEach items="${items}" var="item" begin="1" step="4">  
 				<div class="box">
 					<span class="hiddenid">${item.id}</span>
-					<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"  /></a>
+					<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img  width=200 class="mainimg" src="${item.url}"  /></a>
 					<div class="comment"  itemid = "${item.id}">
 					  <a class="img_background good""><span>1000${item.good}  </span></a> 
 					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
@@ -412,7 +417,7 @@ $(function(){
 			<c:forEach items="${items}" var="item" begin="2" step="4">  
 				<div class="box">
 					<span class="hiddenid">${item.id}</span>
-					<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
+					<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img  width=200 class="mainimg" src="${item.url}"></a>
 					<div class="comment"  itemid = "${item.id}">
 					  <a class="img_background good"><span>1000${item.good}  </span></a> 
 					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
@@ -427,7 +432,7 @@ $(function(){
 			<c:forEach items="${items}" var="item" begin="3" step="4">  
 				<div class="box">
 					<span class="hiddenid">${item.id}</span>
-					<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img class="mainimg" src="${item.url}"></a>
+					<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img width=200 class="mainimg" src="${item.url}"></a>
 					<div class="comment"  itemid = "${item.id}">
 					  <a class="img_background good"><span>1000${item.good}  </span></a> 
 					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
