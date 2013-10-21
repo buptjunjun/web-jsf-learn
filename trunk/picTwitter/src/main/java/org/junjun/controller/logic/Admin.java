@@ -13,7 +13,7 @@ public class Admin
 {
 	
 	static PicServices  picservice = new PicServicesMongo(); 
-	static String types [] = {"pictures","animals"};
+	static String types [] = {"cute","photo","animals"};
 	
 	static String urls [] =
 		{"http://p0.pstatp.com/medium/320/6704568639",
@@ -106,9 +106,9 @@ public class Admin
 	
 	public static void main(String [] args)
 	{
-		//insertTag();
+		insertTag();
 		//insertItems();
-		insertUser();
+		//insertUser();
 		//insertComments();
 	}
 

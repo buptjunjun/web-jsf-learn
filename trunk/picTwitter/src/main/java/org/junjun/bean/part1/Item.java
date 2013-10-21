@@ -140,4 +140,9 @@ public class Item
 			return  item.getId().equals(this.id);
 			
 	}
+	
+	@Override
+	public String toString() {
+		return this.id +", "+this.getType()+", "+this.getCata()+","+this.getDate()+", "+this.getUrl()+", "+this.getDesc();
+	}
 }

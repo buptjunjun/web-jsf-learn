@@ -48,5 +48,6 @@ public interface  PicServices
 	public Item getPreItem(String id,String type,String kind);
 	
 	public List<Item> getTopItemByTime(String type, Date dategt,Date datelt, int rating, int limit) ;
+	public List<Item> getTopItemByTimeAsend(String type, Date dategt,Date datelt, int rating, int limit) ;
 
 }

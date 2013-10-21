@@ -120,43 +120,8 @@ public class PicIndexController {
 		
 		
 		// init tags
-		String [] types = "pictures,animals".split(",");
-		
-		for(String type:types)
-		{
-			Tag tag = new Tag();
-			tag.setType(type);
-			Buffer.getTags().add(tag);
-		}
-		
-		// initial index page 
-		if(Buffer.getTags()!=null)
-		{
-			int count = 0;
-			List<Queue<Item>> listItemQueue = new ArrayList<Queue<Item>>();
-			for(Tag tag:Buffer.getTags())
-			{
-				List<Item> items = picservice.getItemsWhenLoad(tag.getType(), Constant.daily);
-				
-				Queue<Item> queue = new LinkedList<Item>();
-				queue.addAll(items);
-				if(items!=null)
-				{	
-					listItemQueue.add(queue);
-					count+=items.size();
-				}
-			}
-			
-			while(count >= 0)
-			{
-				Queue queue = listItemQueue.get(count%listItemQueue.size());
-				if(queue!=null&&queue.size()>0)
-					Buffer.getIndexitem().add((Item) queue.poll());
-				count--;
-			}
-			
-		}
-
+		List<Tag>  types =  this.picservice.getTag();
+		Buffer.getTags().addAll(types);
 	}
 	
 	

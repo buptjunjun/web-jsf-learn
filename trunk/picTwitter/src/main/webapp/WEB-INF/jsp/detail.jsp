@@ -18,7 +18,7 @@ var host = "<%=path%>"; //http://localhost:8080/picture/
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <link type="text/css" rel="stylesheet" href="<%=path %>/resources/style/common.css" /> 
-<script type="text/javascript" src="<%=path%>/resources/script/jquery-1.8.3.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 <style type="text/css">
 
 div
