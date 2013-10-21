@@ -4,44 +4,54 @@
         "twuser": [
             {
                 "id": -1,
-                "name": "FUNNYPlX"
+                "name": "FUNNYPlX",
+                "tag": "funny"
+                
             },
             {
                 "id": -1,
-                "name": "FunnyPicsOnly"
+                "name": "FunnyPicsOnly",
+                 "tag": "funny"
             }
             ,
             {
                 "id": -1,
-                "name": "MadFunnyPics"
+                "name": "MadFunnyPics",
+                 "tag": "funny"
             }
             ,
             {
                 "id": -1,
-                "name": "funnyhumour"
+                "name": "funnyhumour",
+                 "tag": "funny"
             },
             {
                 "id": -1,
                 "name": "FunnyPicsDepot"
+                , "tag": "funny"
             }
              ,
             {
                 "id": -1,
-                "name": "TheWeirdPics"
+                "name": "TheWeirdPics",
+                 "tag": "funny"
             }
             ,
             {
                 "id": -1,
-                "name": "FunnySportsZone"
+                "name": "FunnySportsZone",
+                 "tag": "funny"
             },
             {
                 "id": -1,
-                "name": "funnyordie"
+                "name": "funnyordie",
+                 "tag": "funny"
             }
             ,
             {
                 "id": -1,
-                "name": "9GAG"
+                "name": "9GAG",
+                 "tag": "funny"
             }
             
         ]
@@ -52,11 +62,13 @@
         "twuser": [
             {
                 "id": -1,
-                "name": "EmrgncyNewborns"
+                "name": "EmrgncyNewborns",
+                 "tag": "cute"
             },
             {
                 "id": -1,
-                "name": "CuteEmergency"
+                "name": "CuteEmergency",
+                 "tag": "cute"
             }
         ]
     }
