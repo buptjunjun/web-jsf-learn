@@ -10,9 +10,8 @@
 %>
 <html>
 <head>
- <link rel="stylesheet" href="<%=path%>/resources/style/themes/base/jquery.ui.all.css">
- 
-<script src="<%=path%>/resources/script/external/jquery.bgiframe-2.1.2.js"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" media="all" />
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js" type="text/javascript"></script>
 <%--
 <script src="<%=path%>/resources/script/ui/jquery.ui.core.js"></script>
 <script src="<%=path%>/resources/script/ui/jquery.ui.widget.js"></script>
@@ -21,7 +20,7 @@
 <script src="<%=path%>/resources/script/ui/jquery.ui.position.js"></script>
 <script src="<%=path%>/resources/script/ui/jquery.ui.resizable.js"></script>
 <script src="<%=path%>/resources/script/ui/jquery.ui.dialog.js"></script>  --%>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+
 
 <style>
 	.demo-description {
