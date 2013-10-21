@@ -15,7 +15,21 @@ public class TwitResources
 	private String path = null;
 	private Date date = null;
 	private Date processDate = new Date();
+	private int score = 0;
+	private int magicNum = TwiConstant.Undownloaded;
 	
+	public int getMagicNum() {
+		return magicNum;
+	}
+	public void setMagicNum(int magicNum) {
+		this.magicNum = magicNum;
+	}
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
 	public long getStatusID() {
 		return statusID;
 	}

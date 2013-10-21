@@ -3,6 +3,7 @@ package org.junjun.twitter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junjun.twitter.bean.TwiConstant;
 import org.junjun.twitter.bean.TwitStatus;
 import org.junjun.twitter.bean.TwitUser;
 
@@ -23,7 +24,7 @@ public class StatusFetcher extends Thread
 		 System.out.println("fetching :"+tu.getId()+"("+tu.getName()+")...");
 		 Paging paging = new Paging(1);
 		 paging.setCount(100);
-		 ResponseList<Status> ret = twitter.getUserTimeline(id,paging );
+		 ResponseList<Status> ret = twitter.getUserTimeline(tu.getName(),paging);
 		 
 		 List<TwitStatus> lt = new ArrayList<TwitStatus>();
 		 if(ret != null)
@@ -36,7 +37,7 @@ public class StatusFetcher extends Thread
 				 tws.setStatus(status);
 				 tws.setTag(tu.getTag());
 				 tws.setUserid(tu.getId());
-				 tws.setType(status.getMediaEntities()[0].getType());
+				 tws.setType((status.getMediaEntities() !=null && status.getMediaEntities().length  > 1)? status.getMediaEntities()[0].getType():TwiConstant.TypeText);
 				 tws.setScore(status.getRetweetCount()+status.getFavoriteCount());
 				 lt.add(tws);
 			 }

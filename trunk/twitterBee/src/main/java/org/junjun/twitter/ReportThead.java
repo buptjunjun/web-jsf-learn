@@ -16,7 +16,7 @@ public class ReportThead
 	private int success = 0;
 	private int fail = 0;
 	
-	private List<Report> reports= (List<Report>) Collections.synchronizedCollection(new ArrayList<Report>());
+	private List<Report> reports= new ArrayList<Report>();
 	private static ReportThead reportObj = new ReportThead();
 	public void addReport(Report report)
 	{

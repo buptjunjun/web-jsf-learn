@@ -39,7 +39,8 @@ public class TwitterUtils {
 
 	static public void downloadFile(String url,String path) throws MalformedURLException, IOException
 	{
-		 FileUtils.copyURLToFile(new URL("url"), new File(path));
+		 FileUtils.copyURLToFile(new URL(url), new File(path));
+		
 	}
 	
 	/**

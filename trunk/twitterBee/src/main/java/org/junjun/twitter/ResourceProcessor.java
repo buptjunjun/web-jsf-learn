@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junjun.twitter.bean.TwiConstant;
 import org.junjun.twitter.bean.TwitResources;
 import org.junjun.twitter.bean.TwitStatus;
 import org.junjun.twitter.bean.TwitUser;
@@ -34,7 +35,7 @@ public class ResourceProcessor extends Thread
 		 Date createDat = ts.getStatus().getCreatedAt();
 		 MediaEntity []mes = ts.getStatus().getMediaEntities();
 		 
-		 if(mes != null)
+		 if(mes != null&& mes.length>0)
 		 {
 			 for(MediaEntity me:mes)
 			 {
@@ -50,9 +51,10 @@ public class ResourceProcessor extends Thread
 				} catch (MalformedURLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					path = tag+"/"+username+"/"+id+".jpg";
+					continue;
 				}
 			 TwitResources tr = new TwitResources();
+			 tr.setTag(ts.getTag());
 			 tr.setId(id);
 			 tr.setUrl(urlstr);
 			 tr.setTxt(txt);
@@ -62,21 +64,24 @@ public class ResourceProcessor extends Thread
 			 tr.setDate(new Date());
 			 tr.setPath(path);
 			 tr.setStatusID(ts.getId());
+			 tr.setScore(ts.getScore());
 			 ret.add(tr);	
 			 }
 		 }
 		 else
 		 {
 			 TwitResources tr = new TwitResources();
+			 tr.setTag(ts.getTag());
 			 tr.setId(ts.getId());
 			 tr.setUrl(null);
 			 tr.setTxt(txt);
-			 tr.setType("text");
+			 tr.setType(TwiConstant.TypeText);
 			 tr.setUserName(username);
 			 tr.setDate(createDat);
 			 tr.setDate(new Date());
 			 tr.setPath(null);
 			 tr.setStatusID(ts.getId());
+			 tr.setScore(ts.getScore());
 			 ret.add(tr);			
 		 }
 		 

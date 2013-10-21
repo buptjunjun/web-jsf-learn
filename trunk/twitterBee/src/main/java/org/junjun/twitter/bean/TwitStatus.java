@@ -13,6 +13,8 @@ public class TwitStatus
 	private Date date = null;
 	private Status status;
 	private String type = "pic";//pic txt video
+	private int score = 0;
+	
 	public String getType() {
 		return type;
 	}
@@ -25,7 +27,6 @@ public class TwitStatus
 	public void setScore(int score) {
 		this.score = score;
 	}
-	private int score = 0;
 	
 	public long getId() {
 		return id;
