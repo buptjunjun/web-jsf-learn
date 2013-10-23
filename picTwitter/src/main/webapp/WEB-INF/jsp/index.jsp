@@ -92,7 +92,7 @@
 	
 	.comment
 	{
-		 width:100%;
+		 width:%;
 		 height:auto;
 		 text-align:left;
 		 padding:2px;
@@ -156,7 +156,8 @@ function resetquerying()
 function rating(id,url1)
 {
 	$.ajax({
-			type: "post",			
+			type: "post",	
+			contentType: "text/plain; charset=utf-8",  
 			url: url1,
 			data:id, 
 			success:function (data)   // request success.
@@ -186,7 +187,8 @@ function collect(id,item)
 		
 		alert(id);
 		$.ajax({
-				type: "post",			
+				type: "post",		
+				contentType: "text/plain; charset=utf-8",  
 				url: collecturl,
 				data:id, 
 				success:function (data)   // request success.
@@ -293,7 +295,7 @@ function getShortestColum()
 }
 $(window).scroll(function(){  
 	
-	// if scrollbar is within 100px of bottom loadMore content
+	// if scrollbar is within px of bottom loadMore content
 	var span=$(document).height() - $(this).scrollTop() - $(this).height();
     if (span <10 && querying == false) 
     	loadMore();  
@@ -376,10 +378,10 @@ $(function(){
 		<span class="hiddenid">${item.id}</span>
 		<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img width=200  class="mainimg" src="${item.url}"  /></a>
 		<div class="comment"  itemid = "${item.id}">
-		  <a class="img_background good""><span>1000${item.good}  </span></a> 
-		  <a class="img_background bad"><span>1000${item.bad} </span></a>  
-		  <a class="img_background collect"><span>100${item.collect} </span></a>  
-		  <a class="img_background post"><span>100${item.comment} </span></a> 
+		  <a class="img_background good""><span>${item.good}  </span></a> 
+		  <a class="img_background bad"><span>${item.bad} </span></a>  
+		  <a class="img_background collect"><span>${item.collect} </span></a>  
+		  <a class="img_background post"><span>${item.comment} </span></a> 
 	</div>
 	
 	</div>			
@@ -389,10 +391,10 @@ $(function(){
 					<span class="hiddenid">${item.id}</span>
 					<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img  width=200 class="mainimg" src="${item.url}"></a>
 					<div class="comment" itemid = "${item.id}">
-					  <a class="img_background good"><span>1000${item.good}  </span></a> 
-					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
-					  <a class="img_background collect"><span>100${item.collect} </span></a>  
-					  <a class="img_background post"><span>100${item.comment} </span></a> 
+					  <a class="img_background good"><span>${item.good}  </span></a> 
+					  <a class="img_background bad"><span>${item.bad} </span></a>  
+					 <%--  <a class="img_background collect"><span>${item.collect} </span></a>   --%>
+					  <a class="img_background post"><span>${item.comment} </span></a> 
 					</div>
 				</div>				
 			</c:forEach> 
@@ -404,10 +406,10 @@ $(function(){
 					<span class="hiddenid">${item.id}</span>
 					<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img  width=200 class="mainimg" src="${item.url}"  /></a>
 					<div class="comment"  itemid = "${item.id}">
-					  <a class="img_background good""><span>1000${item.good}  </span></a> 
-					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
-					  <a class="img_background collect"><span>100${item.collect} </span></a>  
-					  <a class="img_background post"><span>100${item.comment} </span></a> 
+					  <a class="img_background good""><span>${item.good}  </span></a> 
+					  <a class="img_background bad"><span>${item.bad} </span></a>  
+					 <%--  <a class="img_background collect"><span>${item.collect} </span></a>   --%>
+					  <a class="img_background post"><span>${item.comment} </span></a> 
 					</div>
 				</div>				
 			</c:forEach> 
@@ -419,10 +421,10 @@ $(function(){
 					<span class="hiddenid">${item.id}</span>
 					<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img  width=200 class="mainimg" src="${item.url}"></a>
 					<div class="comment"  itemid = "${item.id}">
-					  <a class="img_background good"><span>1000${item.good}  </span></a> 
-					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
-					  <a class="img_background collect"><span>100${item.collect} </span></a>  
-					  <a class="img_background post"><span>100${item.comment} </span></a> 
+					  <a class="img_background good"><span>${item.good}  </span></a> 
+					  <a class="img_background bad"><span>${item.bad} </span></a>  
+					 <%--  <a class="img_background collect"><span>${item.collect} </span></a>   --%>
+					  <a class="img_background post"><span>${item.comment} </span></a> 
 					</div>
 				</div>				
 			</c:forEach> 
@@ -434,10 +436,10 @@ $(function(){
 					<span class="hiddenid">${item.id}</span>
 					<a href="<%=path%>/detail/${item.id}?kind=${kind}" class="mainimg_a"><img width=200 class="mainimg" src="${item.url}"></a>
 					<div class="comment"  itemid = "${item.id}">
-					  <a class="img_background good"><span>1000${item.good}  </span></a> 
-					  <a class="img_background bad"><span>1000${item.bad} </span></a>  
-					  <a class="img_background collect"><span>100${item.collect} </span></a>  
-					  <a class="img_background post"><span>100${item.comment} </span></a> 
+					  <a class="img_background good"><span>${item.good}  </span></a> 
+					  <a class="img_background bad"><span>${item.bad} </span></a>  
+					<%--   <a class="img_background collect"><span>${item.collect} </span></a>   --%>
+					  <a class="img_background post"><span>${item.comment} </span></a> 
 					</div>
 				</div>				
 			</c:forEach> 

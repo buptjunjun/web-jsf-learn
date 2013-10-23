@@ -49,18 +49,8 @@ public class PicControllerRest
 		if(typekind == null || StringUtils.isEmpty(typekind.getId()))
 			return fail;
 		
-		if(StringUtils.isEmpty(typekind.getKind()))
-				typekind.setKind(Constant.monthly);
-		// main page
-		if( StringUtils.isEmpty(typekind.getType()) && StringUtils.isEmpty(typekind.getKind()))
-			ret = this.picservice.getItemsWhenIndexRest(typekind.getId());
-		else //other types
-		{
-			ret = this.picservice.getItemsWhenRest(typekind.getId(), typekind.getKind());
-		}
-		
+		ret = this.picservice.getItemByTagRest(typekind.getType(),typekind.getId());	
 		if(ret!=null ) return ret;
-		
 		return fail;
 	}
 	

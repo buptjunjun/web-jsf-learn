@@ -15,21 +15,16 @@ import org.junjun.bean.part1.User;
 public interface  PicServices 
 {
 	public List<Tag> getTag();
-	
-	public List<Item> getTopItemByTime(String type,Date date, int rating, int limit);	
-	public List<Item> getNewestItems(String type,Date date,int limit);	
-	public List<UIComment> getUIComments(String itemId);
 	public Item getItem(String id);
-	public void updateItem(Item item);
-	
+	public List<UIComment> getUIComments(String itemId);
 	public User getUser(String id);
-	public void updateUser(User user);
-	
-	
+
 	public void insertItem(Item item);
-	public void insertComment(Comment item);
-	
+	public void insertComment(Comment item);	
 	public void insert(Object obj);
+	
+	public void updateUser(User user);
+	public void updateItem(Item item);
 	
 	/**
 	 * type : animal 
@@ -38,16 +33,44 @@ public interface  PicServices
 	 * @param kind
 	 * @return
 	 */
-	public List<Item> getItemsWhenLoad(String type, String kind);
-	public List<Item> getItemsWhenRest(String id, String kind ) ;
 	
-	public List<Item> getItemsWhenLoadIndx();
-	public List<Item> getItemsWhenIndexRest(String id) ;
+	/**
+	 * tag: cute, funny
+	 * if tag == null return all kinds of tag
+	 * sort by time desen
+	 * @return
+	 */
+	public List<Item> getItemByTag(String tag);
 	
-	public Item getNextItem(String id,String type,String kind);	
-	public Item getPreItem(String id,String type,String kind);
+	/**
+	 * tag: cute, funny
+	 * if tag == null return all kinds of tag
+	 * sort by time desen
+	 * @return
+	 */
+	public List<Item> getItemByTagRest(String type,String id);
 	
-	public List<Item> getTopItemByTime(String type, Date dategt,Date datelt, int rating, int limit) ;
-	public List<Item> getTopItemByTimeAsend(String type, Date dategt,Date datelt, int rating, int limit) ;
+	/**
+	 * tag: cute, funny
+	 * kind:daily , mothly, weekly
+	 * sort by score desending
+	 * @return
+	 */
+	public List<Item> getItemByTagAndKind(String tag, String kind) ;
+	
+	/** 
+	 * 
+	 * next and pre are sort by time
+	 * @param id id of current Item
+	 * @param type
+	 * @param kind
+	 * @return
+	 */
+	public Item getNextItem(String id);	
+	public Item getPreItem(String id);
+	
+	
+	
+	
 
 }
