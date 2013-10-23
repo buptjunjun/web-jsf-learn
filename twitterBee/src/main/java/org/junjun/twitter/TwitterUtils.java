@@ -38,13 +38,12 @@ public class TwitterUtils {
 	
 
 	static public void downloadFile(String url,String path) throws MalformedURLException, IOException
-	{
-/*		 public static void copyURLToFile(URL source,
-                 File destination,
-                 int connectionTimeout,
-                 int readTimeout)
-          throws IOException*/
-		 FileUtils.copyURLToFile(new URL(url), new File(path),3000,1000*30);
+	{/*
+		source - the URL to copy bytes from, must not be null
+		destination - the non-directory File to write bytes to (possibly overwriting), must not be null
+		connectionTimeout - the number of milliseconds until this method will timeout if no connection could be established to the source
+		readTimeout - the number of milliseconds until this method will timeout if no data could be read from the source*/
+		 FileUtils.copyURLToFile(new URL(url), new File(path),1000*3,1000*5);
 		
 	}
 	
