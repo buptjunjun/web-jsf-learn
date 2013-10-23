@@ -70,7 +70,7 @@ public class PicRatingControllerRest
 	 */
 	@RequestMapping(value="/good",method=RequestMethod.POST)
 	@ResponseBody
-	public Object good(@RequestBody String id, @ModelAttribute("good") List<String> good)
+	public Object good(@RequestBody String id, @ModelAttribute("good") List<String> good,HttpSession sesson)
 	{
 		// if it is not login
 		if(StringUtils.isEmpty(id) || good.contains(id))
@@ -82,7 +82,7 @@ public class PicRatingControllerRest
 		if(item!=null)
 		{
 			item.setGood(item.getGood()+1);
-			//picservice.updateItem(item);
+			picservice.updateItem(item);
 		}
 		return "true";
 	}

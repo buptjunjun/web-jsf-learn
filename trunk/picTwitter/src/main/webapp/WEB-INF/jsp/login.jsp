@@ -38,37 +38,48 @@
 		{
 			border-radius:	0px;
 			border:1px solid #F5F5F5;
-			
+			background:none repeat scroll 0 0 #F5F5F5;
 		}
 		
 		.loginItem
 		{
-			border-radius:10px;
+			border-radius:5px;
 			margin:auto;
 			width:260px;
-			height:28px;
-			border:1px solid;
-			padding:2px;
-			margin-top:6px;
+			height:40px;
+			border:1px solid black;
+			background:#3B5998;
+			padding:2px;		
 			text-align:center;
-			font-size:22px;
-			color:white;	
-			margin-top:30px;		
-		}
-		.loginItem:hover
+			font-size:16px;	
+			margin-top:25px;	
+		}	
+
+		.loginItemLeft
 		{
-			cursor:pointer;
-			color:red;
+			float:left;
 		}
+		
+		.loginItemRight
+		{
+			float:left;
+			color:white;
+			margin-top:8px;
+		}
+		
 		.colorFB
 		{
 			background:#3B5998;
 		}
 		
+		.loginItem:hover
+		{
+			cursor:pointer;
+		}
+		
 		.ui-dialog-titlebar {height:20px;}
 		.ui-widget-header { background: rgb(255, 111, 1111); box-shadow: 0 0 4px rgba(250,0,0,0.5); color:white;}
 		
-		#loginItemFB:hover {crusor:pointer;}
 	</style>
 	
 	
@@ -250,6 +261,7 @@ function logoutFB()
 function showLoginDiv()
 {		
 	$( "#dialogLogin" ).dialog({
+		width:300,
 		height:150,
 		modal: true
 	});
@@ -273,7 +285,10 @@ $(document).ready(function (){
 	
 <div id="dialogLogin" style="display:none" title="Signin">
 	<%-- <div class="loginItem" id="loginItemFB"><img width=160 height=40 src="<%=path %>/resources/img/btn-login-facebook.png"/></div>	 --%>
-	<div class="loginItem colorFB" id="loginItemFB">Sign in With Facebook</div>
+	<div class="loginItem" id="loginItemFB">
+		<div class="loginItemLeft"><img width=40 height=40 src="<%=path%>/resources/img/FaceBook_256x256.png"></img></div>
+		<div class="loginItemRight"><span>SIGN IN WITH FACEBOOK</span></div>
+	</div>
 </div>
 
 	

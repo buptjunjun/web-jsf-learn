@@ -35,7 +35,7 @@ public class PicIndexController {
 	
 	public static final int LIMIT = 300;
 	private PicServices picservice = new PicServicesMongo();
-	public static String defaultType = "pictures";
+	public static String defaultType = "photo";
   
 	@ModelAttribute("login")
     public boolean login() {
@@ -60,7 +60,7 @@ public class PicIndexController {
 		
 		model.addAttribute("tags", Buffer.getTags());	
 		
-		List<Item> items = this.picservice.getItemsWhenLoadIndx();
+		List<Item> items = this.picservice.getItemByTag(null);
 		model.addAttribute("items", items);
 		return "index";
 	}
@@ -83,7 +83,7 @@ public class PicIndexController {
 			model.addAttribute("kind", kind);  // weekly , monthly , newest
 			model.addAttribute("currtype", type);
 			model.addAttribute("kinds", Constant.kinds);
-			List<Item> items = this.picservice.getItemsWhenLoad(type, kind);
+			List<Item> items = this.picservice.getItemByTagAndKind(type, kind);
 			model.addAttribute("items", items);
 			
 	        return "index";
@@ -94,26 +94,26 @@ public class PicIndexController {
 	 {
 		if(Buffer.getNewestItem() == null)
 			init();
-			if(!Buffer.containTag(type))
-				return this.index(model);
+		if(!Buffer.containTag(type))
+			return this.index(model);
 		
 			
-			model.addAttribute("tags", Buffer.getTags());		
-			model.addAttribute("kind", null);  // weekly , monthly , newest
-			model.addAttribute("currtype", type);	
-			model.addAttribute("kinds", Constant.kinds);
-			
-			List<Item> items = this.picservice.getItemsWhenLoad(type, Constant.daily);
-			
-			model.addAttribute("items", items);
-	        return "index";
+		model.addAttribute("tags", Buffer.getTags());		
+		model.addAttribute("kind", Constant.defaultKind);  // weekly , monthly , newest
+		model.addAttribute("currtype", type);	
+		model.addAttribute("kinds", Constant.kinds);
+		
+		List<Item> items = this.picservice.getItemByTag(type);
+		
+		model.addAttribute("items", items);
+        return "index";
     }
 	
 	 public void init()
 	{
 		if(Buffer.getNewestItem() == null)
 		{
-			List<Item> items = this.picservice.getNewestItems(null, new Date(), 1);
+			List<Item> items = this.picservice.getItemByTag(null);
 			if(items != null && items.size() > 0)
 				Buffer.setNewestItem(items.get(0));
 		}

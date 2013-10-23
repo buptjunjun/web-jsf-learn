@@ -96,35 +96,20 @@ public class PicServicesMongo implements PicServices{
 		return null;
 	}
 	
+
+
 	/**
-	 * items whosetype is "type",time before date;
+	 * 
+	 * @param type   cute  funny or ....s
+	 * @param dategt  date > dategt
+	 * @param datelt  date < datelt
+	 * @param rating  rating is the score of a item
+	 * @param sortField  sort by sortField
+	 * @param sortWay
+	 * @param limit
+	 * @return
 	 */
-	@Override
-	public List<Item> getNewestItems(String type,Date date, int limit) {
-		// TODO Auto-generated method stub
-		Map<String,String> constrainEQ = null;
-		if(type !=null)
-		{
-			constrainEQ = new  HashMap<String,String>();
-			constrainEQ.put("type",type);
-		}
-		Map<String,Date> constrainLT = null;
-		if(date!=null)
-		{
-			constrainLT = new  HashMap<String,Date>();
-			constrainLT.put("date", date);
-		}
-		
-		if(limit < 0 )
-			limit = MAXLIMT;
-		return  mongo.search(constrainLT,null , constrainEQ, "date", DAOMongo.DESCENDING, limit, Item.class);
-	}
-	
-	/**
-	 * items whosetype is "type",time brefore date, rating lower than "rating";
-	 */
-	@Override
-	public List<Item> getTopItemByTime(String type, Date dategt,Date datelt, int rating, int limit) {
+	public List<Item> getItem(String type, Date dategt,Date datelt, int rating, String sortField, int sortWay,int limit) {
 		Map<String,String> constrainEQ = null;
 		if(type !=null)
 		{
@@ -161,47 +146,7 @@ public class PicServicesMongo implements PicServices{
 		if(limit < 0 )
 			limit = MAXLIMT;
 		
-		return  mongo.search(constrainLT,constrainGT , constrainEQ, "date", DAOMongo.DESCENDING, limit, Item.class);
-	}
-	
-	public List<Item> getTopItemByTimeAsend(String type, Date dategt,Date datelt, int rating, int limit) {
-		Map<String,String> constrainEQ = null;
-		if(type !=null)
-		{
-			constrainEQ = new  HashMap<String,String>();
-			constrainEQ.put("type", type);
-		}
-		
-		
-		Map<String,Object> constrainGT = null;
-		Map<String,Object> constrainLT = null;
-		
-		if(dategt!=null)
-		{
-			if(constrainGT == null)
-				constrainGT = new  HashMap<String,Object>();
-			constrainGT.put("date", dategt);
-		}
-		
-		if(datelt!=null)
-		{
-			if(constrainLT == null)
-				constrainLT = new  HashMap<String,Object>();
-			
-			constrainLT.put("date", datelt);
-		}
-		
-		if(rating > 0)
-		{
-			constrainLT = new  HashMap<String,Object>();
-			constrainLT.put("total", rating);
-		}
-	
-		
-		if(limit < 0 )
-			limit = MAXLIMT;
-		
-		return  mongo.search(constrainLT,constrainGT , constrainEQ, "date", DAOMongo.ASCENDING, limit, Item.class);
+		return  mongo.search(constrainLT,constrainGT , constrainEQ, sortField, sortWay, limit, Item.class);
 	}
 	
 	@Override
@@ -212,6 +157,7 @@ public class PicServicesMongo implements PicServices{
 		item.setComment(item.getComment()+1);		
 		this.updateItem(item);
 	}
+	
 	@Override
 	public void insertItem(Item item) {
 		this.mongo.insert(item);
@@ -248,123 +194,91 @@ public class PicServicesMongo implements PicServices{
 		this.mongo.insert(obj);
 	}
 	
+
+
+	
+
+	@Override
+	public List<Item> getItemByTag(String tag) {
+		if(!Buffer.containTag(tag))
+			tag = null;		
+		List<Item> ret = this.getItem(tag, null, null, -1, "date", this.mongo.DESCENDING, Buffer.BUFFERLIMIT*3);
+		return ret;
+	}
 	
 	@Override
-	public List<Item> getItemsWhenLoad(String type, String kind) 
-	{
-		int rating = Integer.MAX_VALUE;
-		// TODO Auto-generated method stub
-		List<Item> ret = null;
+	public List<Item> getItemByTagRest(String tag, String id) {
+		Item item = this.getItem(id);
+		if(id == null)
+			return null;
 		
-
-		Tag tag = null;
-		if(!buffer.containTag(type))
-			type = buffer.getTags().get(0).getType();
-		
+		if(tag != null)
+			tag = item.getType();
+		List<Item> ret = this.getItem(tag,null, item.getDate(), -1, "date", this.mongo.DESCENDING, Buffer.BUFFERLIMIT);
+	    return ret;
+	}
+	
+	@Override
+	public List<Item> getItemByTagAndKind(String tag, String kind) {
+		if(!Buffer.containTag(tag))
+			tag = null;		
 		if(!Constant.kinds.contains(kind))
-			kind=Constant.daily;
-
-		// newest item
-		if(kind.contains(Constant.newest))
+			kind = Constant.defaultKind;
+		
+		Date newestDate = Buffer.getNewestItem().getDate();
+		int dayBefore = 1;
+		if(Constant.daily.equals(kind))
 		{
-			ret = this.getNewestItems(type, new Date(), Buffer.BUFFERLIMIT);
+			dayBefore = 1;
 		}
-		else if(kind.contains(Constant.daily))
+		else if (Constant.weekly.equals(kind))
 		{
-			// the date of newest Item
-			Date newest = Buffer.getNewestItem().getDate();
-			Date datebefore = PicUtil.getDateBefore(newest, 1);
-			ret = this.getTopItemByTime(type, datebefore, null, -1, Buffer.BUFFERLIMIT);
+			dayBefore = 7;
 		}
-		else if(kind.contains(Constant.weekly))
+		else if (Constant.monthly.equals(kind))
 		{
-			Date newest = Buffer.getNewestItem().getDate();
-			Date datebefore = PicUtil.getDateBefore(newest, 7);
-			ret = this.getTopItemByTime(type, datebefore, null, -1,  Buffer.BUFFERLIMIT);
-		}
-		else if(kind.contains(Constant.monthly))
-		{
-			Date newest = Buffer.getNewestItem().getDate();
-			Date datebefore = PicUtil.getDateBefore(newest, 30);
-			ret = this.getTopItemByTime(type, datebefore, null, -1,  Buffer.BUFFERLIMIT);
+			dayBefore = 30;
 		}
 		
+		Date date = PicUtil.getDateBefore(newestDate, dayBefore);
+		List<Item> ret = this.getItem(tag, date, null, -1, "total", this.mongo.DESCENDING, Buffer.BUFFERLIMIT*3);
 		return ret;
 	}
-	
+
 	@Override
-	public List<Item> getItemsWhenRest(String id, String kind ) 
+	public Item getNextItem(String id) 
 	{
 		Item item = this.getItem(id);
-		
-		if(item == null)
-		{
-			System.out.println("getItemsWhenRest: item == null");
+		if(id == null)
 			return null;
+		
+		List<Item> ret = this.getItem(item.getType(),null, item.getDate(), -1, "date", this.mongo.DESCENDING, 1);
+		if(ret == null || ret.size() == 0)
+		{
+			ret = this.getItem(item.getType(), null,new Date(), -1, "date", this.mongo.DESCENDING, 1);
 		}
 		
-		// TODO Auto-generated method stub
-		String type = item.getType();
-		Date date = item.getDate();
-		
-		List<Item> ret = null;
-		
-		Tag tag = new Tag();
-		tag.setType(type);
-		if(!buffer.getTags().contains(tag)||!Constant.kinds.contains(kind))
+		if(ret == null || ret.size() != 1)
 			return null;
-			
-		ret = this.getTopItemByTime(type,null,date, item.getTotal(), Buffer.BUFFERLIMIT);
 		
-		return ret;
+		return ret.get(0);
 		
 	}
-	
-	
 	@Override
-	public List<Item> getItemsWhenIndexRest(String id) {
-		Item item = this.getItem(id);
-		
-		if(item == null)
-		{
-			System.out.println("getItemsWhenIndexRest: item == null");
-			return null;
-		}
-		
-		// TODO Auto-generated method stub
-		List<Item> items  =null;
-		items = this.getTopItemByTime(item.getType(),null,new Date (), item.getTotal(), Buffer.BUFFERLIMIT);
-		return items;
+	public Item getPreItem(String id) {
 
+		Item item = this.getItem(id);
+		if(id == null)
+			return null;
+		
+		List<Item> ret = this.getItem(item.getType(),item.getDate(),null,  -1, "date", this.mongo.ASCENDING, 1);
+		
+		if(ret == null || ret.size() != 1)
+			return null;
+		
+		return ret.get(0);
 	}
 	
-	
-	@Override
-	public List<Item> getItemsWhenLoadIndx() {
-		// TODO Auto-generated method stub
-		List<Item> items  =null;
-		items = this.getTopItemByTime(null,null,new Date (), -1, Buffer.BUFFERLIMIT);
-		return items;
-	}
-	
-	@Override
-	public Item getNextItem(String id, String type, String kind) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public Item getPreItem(String id, String type, String kind) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
-	@Override
-	public List<Item> getTopItemByTime(String type, Date date, int rating,
-			int limit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	
 }

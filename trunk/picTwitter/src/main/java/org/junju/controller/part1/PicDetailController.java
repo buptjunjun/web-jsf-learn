@@ -36,14 +36,6 @@ public class PicDetailController {
 		model.addAttribute("kind", kind);  // weekly , monthly , newest
 		model.addAttribute("currtype", item.getType());	
 		model.addAttribute("kinds", Constant.kinds);
-		
-		// if the id is not correct ,give it a random one;
-		List<Item> items = null;
-		if(item == null)
-		{
-			items = PicBuffer.itemsNewest.get(defaultType);
-			item = items.get(0);
-		}
 			
 		model.addAttribute("item", item);
 		
@@ -64,40 +56,22 @@ public class PicDetailController {
 		
 		// if item is not in the buffer , set it to a buffered item;			
 		if(!Constant.kinds.contains(kind))
-			kind = Constant.daily;
+			kind = Constant.defaultKind;
 		
 		
 		
 		if("next".equals(arrow))
 		{
-			 List<Item> ret = this.picservice.getTopItemByTime(item.getType(),null, item.getDate(), -1, 1);
-			 if(ret != null && ret.size() ==1)
-				 newItem =  ret.get(0);	
-			 else 
-			 {
-				 Date date = Buffer.getNewestItem().getDate();
-				 ret = this.picservice.getTopItemByTime(item.getType(), date,null, -1, 1);
-				 if(ret != null && ret.size() ==1)
-						 newItem =  ret.get(0);
-				  else
-					  newItem = item;
-				 
-			 }
+			newItem = this.picservice.getNextItem(id);
 		}
 		else
 		{
-			 List<Item> ret = this.picservice.getTopItemByTimeAsend(item.getType(), item.getDate(),null, -1, 1);
-			 if(ret != null && ret.size() ==1)
-				 newItem =  ret.get(0);
-			 else
-				newItem = item;
+			newItem = this.picservice.getPreItem(id);
 		}
-		model.addAttribute("item", newItem);
-		
+		return "redirect:/detail/"+newItem.getId()+"?kind="+kind;
 		
 	/*	List<UIComment> comments = picservice.getUIComments(id);
 		model.addAttribute("comments", comments);*/
-		return "redirect:/detail/"+newItem.getId()+"?kind="+kind;
     }
 }
 
