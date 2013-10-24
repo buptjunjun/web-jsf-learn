@@ -130,6 +130,8 @@ ul li {
 
 #pic {
 	padding-top: 10px;
+	margin-bottom:20px;
+	border-bottom:solid 1px #F5F5F5;
 }
 
 .userPic {
@@ -189,6 +191,19 @@ ul li {
 	width: 32;
 	height: 48;
 	margin-right: 2px;
+}
+
+.detail_addthis
+{
+	width:300px;
+	float:left;
+	margin-top:10px;
+	margin-left:50px;
+}
+
+#desc
+{
+	font-size:18px;
 }
 </style>
 
@@ -453,7 +468,7 @@ function next()
 				</div>
 				<span class="hiddenid">${item.id}</span> <img id="bigpic" width=600
 					src="${item.url1 }" />
-				<p>${item.desc }</p>
+				<p id="desc">${item.desc }</p>
 			</div>
 
 			<div id="comment">
@@ -462,9 +477,33 @@ function next()
 				
 					<textarea class="cmtContex" id="comment-box" name="comment"
 						placeholder="say something..." selectionstart="0" selectionend="0"></textarea>
-					<div id="submit">
+
+					<div class="detail_addthis">
+					<!-- AddThis Button BEGIN -->
+						<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+						<a class="addthis_button_preferred_1"></a>
+						<a class="addthis_button_preferred_2"></a>
+						<a class="addthis_button_preferred_3"></a>
+						<a class="addthis_button_preferred_4"></a>
+						<a class="addthis_button_compact"></a>
+						<a class="addthis_counter addthis_bubble_style"></a>
+						</div>
+						<script type="text/javascript">
+							var addthis_config = {"data_track_addressbar":true};
+							var addthis_share =
+							{
+									url:'<%=path%>/detail/{item.id}',
+									title:'${item.desc} (from picfalls)',
+							};
+						</script>
+						<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5258fdaa3b761a84"></script>
+						<!-- AddThis Button END -->
+					</div>
+					
+					<div id="submit">					
 						<button id="submitBtn" type="submit">submit</button>
 					</div>
+					
 				
 			</div>
 			<div class="oneComment" id="commenthidden" style="display:none">
