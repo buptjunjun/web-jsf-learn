@@ -62,6 +62,9 @@ public class PicIndexController {
 		
 		List<Item> items = this.picservice.getItemByTag(null);
 		model.addAttribute("items", items);
+		
+		// show error page
+		//int i = 1/0;
 		return "index";
 	}
 	

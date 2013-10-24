@@ -86,7 +86,7 @@ $(document).ready(function (){
 	<div id="nav">		
 		<div id="navdetail">
 			<div id="navcontent">
-				<span id="logo">Picture Falls</span>				
+				<a href="<%=path%>/pic"><span id="logo">Picture Falls</span></a>		
 				
 				<c:forEach items="${tags}" var="tag">  
 					<c:choose>
