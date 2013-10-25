@@ -28,6 +28,7 @@ public class PicServicesJPA implements PicServices {
 	public static final int MAXLIMT = 20;
 	public static final int COMMENTLIMIT = 10;
 	private Buffer buffer = null;
+	private EntityManager em;
 	public  final static int ASCENDING = 0;
 	public  final static int DESCENDING = 1;
 	
@@ -61,7 +62,7 @@ public class PicServicesJPA implements PicServices {
 		try
 		{
 		  em = EMF.get().createEntityManager();     
-		  List<Tag> tags = em.createQuery("select item form Tag item").getResultList();
+		  List<Tag> tags = em.createQuery("select item from Tag item").getResultList();
 		  return tags;
 		}
 		catch(Exception e)
@@ -130,7 +131,7 @@ public class PicServicesJPA implements PicServices {
 			List<Comment> comments = null;
 			EntityManager em = EMF.get().createEntityManager();
 			
-			Query query =  em.createQuery("select item form Comment item where item.id=:id");
+			Query query =  em.createQuery("select item from Comment item where item.id=:id");
 			query.setParameter("id", id);
 			comments = query.setMaxResults(COMMENTLIMIT).getResultList();
 			
@@ -176,10 +177,15 @@ public class PicServicesJPA implements PicServices {
 	public List<Item> getItem(String type, Date dategt, Date datelt,int rating, String sortField, int sortWay, int limit) 
 	{
 		EntityManager em = EMF.get().createEntityManager();
-		String jqpl = "select item form Item item " ;
+		String jqpl = "select item from Item item " ;
 		if(limit < 0 )
 			limit = Buffer.BUFFERLIMIT;
 		boolean flag = false;
+		
+		sortField = "date";
+		/*if(rating < 0)
+			rating = Integer.MAX_VALUE;*/
+		
 		
 		if(type != null)
 		{
@@ -192,39 +198,78 @@ public class PicServicesJPA implements PicServices {
 				jqpl += " and  item.type= :type";
 		}
 		
+		String sqldate= "";
+		String sqltotal ="";
 		if(dategt != null)
 		{
 			if(flag == false)
 			{
-				jqpl += " where item.date> :dategt";
+				sqldate += " where item.date> :dategt";
 				flag = true;
 			}
 			else
-				jqpl += " and  item.date> :dategt";
+				sqldate += " and  item.date> :dategt";
 		}
 		
 		if(datelt != null)
 		{
 			if(flag == false)
 			{
-				jqpl += " where item.date < :datelt ";
+				sqldate += " where item.date < :datelt ";
 				flag = true;
 			}
 			else
-				jqpl += " and item.date < :datelt ";
+				sqldate += " and item.date < :datelt ";
 		}
 		
+		if(dategt == null && datelt ==null)
+		{
+			if(flag == false)
+			{
+				sqldate += " where item.date < :yearlater ";
+				flag = true;
+			}
+			else
+				sqldate += " and item.date < :yearlater ";
+		}
+	/*	
+		if(flag == false)
+		{
+			sqltotal += " where item.total< :rating ";
+			flag = true;
+		}
+		else
+			sqltotal += " and item.total< :rating ";
+		*/
 		if(sortField != null)
 		{
+			if("date".equals(sortField))
+			{ 
+				jqpl+=sqldate;
+				//jqpl+=sqltotal;
+				
+			}
+			else
+			{
+				
+			//	jqpl+=sqltotal;
+				jqpl+=sqldate;
+						
+			}
+				
 			jqpl+=" order by item."+sortField; 
-			if(sortWay == ASCENDING)
+			if(sortWay == DESCENDING)
 				jqpl+=" desc ";
-			else if(sortWay == DESCENDING)
+			else if(sortWay == ASCENDING)
 				jqpl+=" asc ";
 				
 		}
 		
-		Query query =  em.createNamedQuery(jqpl, Item.class);
+			
+		
+		
+		System.out.println(jqpl);
+		Query query =  em.createQuery(jqpl);
 		
 		if(type != null)
 			query.setParameter("type", type);
@@ -235,7 +280,21 @@ public class PicServicesJPA implements PicServices {
 		if(datelt != null)
 			query.setParameter("datelt", datelt,TemporalType.DATE);
 		
+		if(dategt == null && datelt == null)
+		{
+			Date date = new Date();
+			date = PicUtil.getDateBefore(date, -1);
+			query.setParameter("yearlater", date,TemporalType.DATE);
+			
+		}
+			
+			
+	/*	if(rating <=0)
+			query.setParameter("rating", Integer.MAX_VALUE);
+		else
+			query.setParameter("rating",rating);*/
 		
+		System.out.println(query.toString());
 		List<Item> litems = query.setMaxResults(limit).getResultList();
 		
 		return litems;
@@ -244,7 +303,7 @@ public class PicServicesJPA implements PicServices {
 	@Override
 	public void insertComment(Comment comment) {
 		// TODO Auto-generated method stub
-		// insert(comment);
+		 insert(comment);
 		Item item = this.getItem(comment.getCommentTo());
 		item.setComment(item.getComment() + 1);
 		this.updateItem(item);
