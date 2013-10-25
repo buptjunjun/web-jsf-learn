@@ -76,10 +76,12 @@ public class Main extends JFrame
 	private JButton preRes = new JButton("previous");
 	private JButton getDownloadedRes = new JButton("getDownloadedRes");
 	private JButton getSelectedRes = new JButton("getSelectedRes");
+	private JButton getResByTag = new JButton("getResByTag");
 	private JCheckBox select = new JCheckBox("select it");
 	private JButton selectBtn = new JButton("selectButton");
 	private JButton stop = new JButton("stop");
 	private JButton save2webbtn = new JButton("save2webbtn");
+	private JTextArea status = new JTextArea("status:-------------------------------------------------------------------------------------------------------------------------------------");
 	
 	private DateChooser dc1 = new DateChooser("yyyy-MM-dd");
 	private DateChooser dc2 =new DateChooser("yyyy-MM-dd");	
@@ -99,18 +101,17 @@ public class Main extends JFrame
 		this.setVisible(true);
 		this.setLayout(new GridLayout(1, 2)); 
 		left.setSize(leftsize,height);
-		left.setBackground(Color.red);
-		
+	
 		right.setSize(width-leftsize-10,height);
 		right.setBackground(Color.gray);
 		
-		left.setLayout(new GridLayout(3,1)); 
+		left.setLayout(new GridLayout(4,1)); 
 		right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS)); 
 		
 		addTag();
 		addName();
 		addAction();
-		
+		addStatus();
 
 		
 		this.add(left);
@@ -151,11 +152,22 @@ public class Main extends JFrame
 		
 	}
 
+	private void addStatus()
+	{
+		JScrollPane jsp = new JScrollPane();
+		JPanel jpanel = new JPanel();
+		jpanel.add(status);
+		status.setSize(leftsize-10, height/4-10);
+		jsp.setViewportView(jpanel);
+		
+		this.left.add(jsp);
+	}
 	private void addName()
 	{
 		namepanel.setViewportView(jpanel);
 		this.left.add(namepanel);
 	}
+	
 	private void addAction()
 	{
 		actionpanel.setLayout(new GridLayout(10,2));
@@ -169,6 +181,7 @@ public class Main extends JFrame
 		actionpanel.add(this.ObtainResUser);
 		actionpanel.add(downloadResUser);
 		actionpanel.add(getDownloadedRes);
+		actionpanel.add(getResByTag);
 		actionpanel.add(getSelectedRes);
 		actionpanel.add(this.preRes);
 		actionpanel.add(this.nextRes);
@@ -186,7 +199,7 @@ public class Main extends JFrame
 		this.nextRes.addActionListener(new NextListener());
 		this.preRes.addActionListener(new PreListener());
 		this.stop.addActionListener(new StopListener());
-		
+		this.getResByTag.addActionListener(new GetResByTag());
 		this.left.add(actionpanel);
 	}	
 	
@@ -326,7 +339,10 @@ public class Main extends JFrame
 						try
 						{
 							System.out.println("start Fetching at "+new Date().toLocaleString());
+							status.append("\n"+"start Fetching at "+new Date().toLocaleString());
 							List<TwitStatus> lts = sf.fetch(twu);
+							System.out.println("Fetched  "+ (lts == null ? 0:lts.size())+" TwitStatus from "+twu.getName()+"("+twu.getTag()+") "+new Date().toLocaleString());
+							status.append("\n"+"Fetched  "+ (lts == null ? 0:lts.size())+" TwitStatus from "+twu.getName()+"("+twu.getTag()+") "+new Date().toLocaleString());
 							if(lts!=null)
 							{
 								for(TwitStatus ts:lts)
@@ -352,6 +368,7 @@ public class Main extends JFrame
 					}
 					
 					System.out.println("end Fetching at "+new Date().toLocaleString());
+					status.append("\n"+"end Fetching at "+new Date().toLocaleString());
 				}
 				
 			});
@@ -400,20 +417,23 @@ public class Main extends JFrame
 									TwitterUtils.downloadFile(url, path);
 									report.setSucess(true);
 									tres.setMagicNum(TwiConstant.Downloaded);
-									report.setDescription("success to download "+ url);
+									report.setDescription("success to download "+ url+ " from "+tres.getUserName());
 									System.out.println("success to download "+ url +" from "+tres.getUserName());
+									status.append("\n"+"success to download "+ url +" from "+tres.getUserName());
 								} catch (Exception e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 									report.setSucess(false);
-									report.setDescription("fail to download "+ url+"  error:"+e.getMessage());
+									report.setDescription("fail to download "+ url+" from "+tres.getUserName()+"  error:"+e.getMessage());
 									System.out.println("fail to download "+ url+" from "+tres.getUserName()+"  error:"+e.getMessage());
+									status.append("\n"+"fail to download "+ url+" from "+tres.getUserName()+"  error:"+e.getMessage());
 								}
 								ReportThead.getInstance().addReport(report);
 								update(tres,daomongo);
 							}
 						}
 						System.out.println(" donwnload finished");
+						status.append("\n"+" donwnload finished");
 						// get the report answer;
 						ReportThead.getInstance().report();
 					}
@@ -433,7 +453,7 @@ public class Main extends JFrame
 		
 				currPosition++;
 				System.out.println("currPosition  = "+currPosition);
-				
+				status.append("\n"+" currPosition  = "+currPosition);
 				TwitResources tr = lres.get(currPosition);
 				String txt = "score:"+tr.getScore() +"\ntext:"+ tr.getTxt();
 				String path = TwiConstant.base+tr.getPath();
@@ -450,6 +470,7 @@ public class Main extends JFrame
 
 				currPosition--;
 				System.out.println("currPosition  = "+currPosition);
+				status.append("\n"+" currPosition  = "+currPosition);
 				if(currPosition<0)
 				{
 					currPosition = -1;
@@ -481,6 +502,7 @@ public class Main extends JFrame
 				{
 					tr.setMagicNum(TwiConstant.Selected);
 					System.out.println("select "+tr.getUserName() +" > "+tr.getPath());
+					status.append("\n"+"select "+tr.getUserName() +" > "+tr.getPath());
 				}
 				
 				update(tr,daomongo);	
@@ -521,6 +543,32 @@ public class Main extends JFrame
 			}
 		}
 		
+		
+		// only deal with one tag
+		class GetResByTag implements ActionListener
+		{
+			public void actionPerformed(ActionEvent e) {
+				
+				String tag = null;
+				
+				for(JCheckBox jcb:listtags)
+				{
+					if(jcb.isSelected())
+					{
+						tag = jcb.getText();
+						break;
+					}					
+				}
+				
+				if(tag == null) return;
+				
+				List reses = getResourceFromDB(TwiConstant.Selected,tag);
+				lres.clear();
+				lres.addAll(reses);
+				currentResPosition = -1;
+			}
+		}
+		
 		class GetSelectedResListener implements ActionListener
 		{
 			public void actionPerformed(ActionEvent event) 
@@ -534,6 +582,7 @@ public class Main extends JFrame
 						List reses = getResourceFromDB(TwiConstant.Selected);
 						lres.clear();
 						lres.addAll(reses);
+						currentResPosition = -1;
 					}
 					
 				});
@@ -581,8 +630,8 @@ public class Main extends JFrame
 			Date date2 = dc2.getDate();
 			date1.setHours(0);
 			date2.setHours(0);
-			System.out.println("time span from - to:"+ date1.toLocaleString()+"-"+date2.toLocaleString());
-			
+			System.out.println("time span from - to: "+ date1.toLocaleString()+"  -  "+date2.toLocaleString());
+			status.append("\n"+ " time span from - to: "+ date1.toLocaleString()+"  -  "+date2.toLocaleString());
 			HashMap<String,Object> constrainEQ = new HashMap<String ,Object>();
 			HashMap<String,Object> constrainGT = new HashMap<String ,Object>();
 			HashMap<String,Object> constrainLT = new HashMap<String ,Object>();
@@ -594,6 +643,31 @@ public class Main extends JFrame
 			
 			List<TwitResources> reses = daomongo.search(constrainLT, constrainGT, constrainEQ, "score", DAOMongo.DESCENDING, Integer.MAX_VALUE, TwitResources.class);
 			System.out.println("get "+reses.size() +" resources");
+			status.append("\n"+"get "+reses.size() +" resources");
+			return reses;
+		}
+		
+		public List<TwitResources> getResourceFromDB(int maginNum,String tag)
+		{
+			Date date1 = dc1.getDate();
+			Date date2 = dc2.getDate();
+			date1.setHours(0);
+			date2.setHours(0);
+			System.out.println("time span from - to: "+ date1.toLocaleString()+"  -  "+date2.toLocaleString());
+			status.append("\n"+ " time span from - to: "+ date1.toLocaleString()+"  -  "+date2.toLocaleString());
+			HashMap<String,Object> constrainEQ = new HashMap<String ,Object>();
+			HashMap<String,Object> constrainGT = new HashMap<String ,Object>();
+			HashMap<String,Object> constrainLT = new HashMap<String ,Object>();
+			
+			// date between date1 and date2
+			constrainGT.put("processDate", date1);		
+			
+			constrainEQ.put("magicNum",maginNum);
+			constrainEQ.put("tag",tag);
+			
+			List<TwitResources> reses = daomongo.search(constrainLT, constrainGT, constrainEQ, "score", DAOMongo.DESCENDING, Integer.MAX_VALUE, TwitResources.class);
+			System.out.println("get "+reses.size() +" resources for "+ tag);
+			status.append("\n"+"get "+reses.size() +" resources for " + tag);
 			return reses;
 		}
 		
@@ -612,6 +686,7 @@ public class Main extends JFrame
 			 {
 				 Item item = TwitResources2Item(tr);
 				 System.out.println(item);
+				 status.append("\n save:"+item);
 				 daoweb.insert(item);
 			 }
 		}

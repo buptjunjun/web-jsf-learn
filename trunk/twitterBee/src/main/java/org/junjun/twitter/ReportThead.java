@@ -42,12 +42,12 @@ public class ReportThead
 	public void report()
 	{
 		Date name = new Date();
-		SimpleDateFormat sdf= new SimpleDateFormat("yyyyMMdd-hhmmss");
+		SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
 		String reportFileName=sdf.format(name);
 		
 		try {
 			PrintWriter print = new PrintWriter(new FileWriter(reportFileName));
-			print.println("total report£º"+(this.fail+this.success)+":success:"+this.success+",fail:"+this.fail);
+			print.println("total report:"+(this.fail+this.success)+":success:"+this.success+",fail:"+this.fail);
 			for(Report r:this.reports)
 			{
 				if(!r.isSucess())
