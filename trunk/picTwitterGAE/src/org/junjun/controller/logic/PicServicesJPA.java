@@ -125,13 +125,13 @@ public class PicServicesJPA implements PicServices {
 	{
 		// TODO Auto-generated method stub
 		List<UIComment> uicomments = new ArrayList<UIComment>();
-		Map<String, String> constrainEQ = null;
+		
 		if (id != null) 
 		{
 			List<Comment> comments = null;
 			EntityManager em = EMF.get().createEntityManager();
 			
-			Query query =  em.createQuery("select item from Comment item where item.id=:id");
+			Query query =  em.createQuery("select item from Comment item where item.commentTo=:id");
 			query.setParameter("id", id);
 			comments = query.setMaxResults(COMMENTLIMIT).getResultList();
 			
