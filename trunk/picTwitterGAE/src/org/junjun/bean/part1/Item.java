@@ -2,10 +2,17 @@ package org.junjun.bean.part1;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+@Entity
 public class Item
 {
 
 	// item
+	@Id
 	private String id="";
 	private String type=""; // pic,animal , cute or ....
 	private String cata = ""; //vedio or pic or text;
@@ -13,8 +20,10 @@ public class Item
 	private String url="";
 	private String url1 = null;
 	
-	
+	@Lob
 	private String desc="";
+	
+	@Temporal(TemporalType.DATE)
 	private  Date  date = new Date();
 	
 	// rating

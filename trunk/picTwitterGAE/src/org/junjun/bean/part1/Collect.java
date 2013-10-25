@@ -3,12 +3,22 @@ package org.junjun.bean.part1;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
 public class Collect 
 {
-	
+	@Id
 	private String id = null;
+	
 	private String collect = null;
+	
+	@Temporal(TemporalType.DATE)
 	private Date   date = new Date();	
+	
 	private String collectTo = null;   // id of what is collected;
 	private String collectFrom = null; // id of who is collecting
 	

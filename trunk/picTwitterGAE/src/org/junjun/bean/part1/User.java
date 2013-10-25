@@ -1,5 +1,14 @@
 package org.junjun.bean.part1;
 
+import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
 public class User 
 {
 	public static final String GOOGLE = "1";
@@ -7,7 +16,9 @@ public class User
 	public static final String FACEBOOK = "3";
 	public static final String THIS = "0";
 	
+	@Id
 	private String id =null;
+	
 	private String name = null;
 	private String password  = null;
 	private String gender = null; //"m","f","o"
@@ -15,6 +26,12 @@ public class User
 	private String url = null;	
 	private String source = "";  // google facebook or twitter.
 	private String idSource = null; // the id of the source website.
+	
+	@Temporal(TemporalType.DATE)
+	private Date date = new Date();
+	
+	
+	@Lob
 	private Object otherInfo = null;   // other useful info 
 	
 	public Object getOtherInfo() {
@@ -79,5 +96,12 @@ public class User
 	}
 	public void setPic(String pic) {
 		this.pic = pic;
+	}
+	
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
 	}
 }
