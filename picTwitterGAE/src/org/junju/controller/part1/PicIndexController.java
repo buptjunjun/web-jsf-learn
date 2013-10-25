@@ -65,7 +65,8 @@ public class PicIndexController {
 		model.addAttribute("kinds", Constant.kinds);
 		
 		model.addAttribute("tags", Buffer.getTags());	
-		Admin.insert();
+		List<Item> items = this.picservice.getItemByTag(null);
+		model.addAttribute("items", items);
 		return "index";
 	}
 	
@@ -115,7 +116,7 @@ public class PicIndexController {
 	
 	 public void init()
 	{
-	
+		 Admin.insert();
 		if(Buffer.getNewestItem() == null)
 		{
 			List<Item> items = this.picservice.getItemByTag(null);

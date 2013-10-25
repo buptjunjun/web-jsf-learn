@@ -13,7 +13,7 @@ public class Admin
 {
 	
 	static PicServices  picservice = new PicServicesJPA(); 
-	static String types [] = {"cute","photo","animals"};
+	static String types [] = {"cute","photo","animals","pictures"};
 	
 	static String urls [] =
 		{"http://p0.pstatp.com/medium/320/6704568639",
@@ -73,6 +73,9 @@ public class Admin
 			item.setId(PicUtil.urlEncode(url));
 			item.setDesc(descs[i]);
 			
+			int span = Math.abs((new Random().nextInt(10)));
+			Date date = PicUtil.getDateBefore(new Date(),span );
+			item.setDate(date);
 			picservice.insertItem(item);
 			
 		}	

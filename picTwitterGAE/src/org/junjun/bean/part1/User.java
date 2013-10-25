@@ -1,5 +1,6 @@
 package org.junjun.bean.part1;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -9,7 +10,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class User 
+public class User implements Serializable
 {
 	public static final String GOOGLE = "1";
 	public static final String TWITTER = "2";
