@@ -3,11 +3,18 @@ package org.junjun.bean.part1;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+@Entity
 public class Comment 
 {
-	
+	@Id
 	private String id = null;
 	private String comment = null;
+	
+	@Temporal(TemporalType.DATE)
 	private Date   date = new Date();	
 	private String commentTo = null;   // id of what is commented;
 	private String commentFrom = null; // id of who is commenting

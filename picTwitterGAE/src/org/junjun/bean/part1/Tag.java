@@ -1,7 +1,12 @@
 package org.junjun.bean.part1;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Tag 
 {
+	@Id
 	private String id =null;  // id = type;
 
 
