@@ -18,12 +18,12 @@ import org.junjun.bean.part1.Constant;
 import org.junjun.bean.part1.Item;
 import org.junjun.bean.part1.Tag;
 import org.junjun.controller.logic.Buffer;
-import org.junjun.controller.logic.EMF;
-import org.junjun.controller.logic.GAEJPA;
+
+
+import org.junjun.controller.logic.Admin;
 import org.junjun.controller.logic.PicBuffer;
 import org.junjun.controller.logic.PicServices;
 import org.junjun.controller.logic.PicServicesJPA;
-import org.junjun.controller.logic.Test;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -66,19 +66,6 @@ public class PicIndexController {
 		
 		model.addAttribute("tags", Buffer.getTags());	
 		
-	
-		Test test =new  Test();
-		test.setId(123);
-		test.setName("junjun modified");
-		
-		new GAEJPA().update(test, null);
-		List<Test> ret = new GAEJPA().search(null, null, null, null, GAEJPA.ASCENDING, 2, Test.class);
-		
-		if(ret!=null)
-			for(Test t:ret)
-			{
-				System.out.println(t);
-			}
 		return "index";
 	}
 	
@@ -128,6 +115,7 @@ public class PicIndexController {
 	
 	 public void init()
 	{
+		Admin.insert();
 		if(Buffer.getNewestItem() == null)
 		{
 			List<Item> items = this.picservice.getItemByTag(null);

@@ -106,10 +106,15 @@ public class Admin
 	
 	public static void main(String [] args)
 	{
+		
+	}
+	
+	public static void insert()
+	{
 		insertTag();
-		//insertItems();
-		//insertUser();
-		//insertComments();
+		insertItems();
+		insertUser();
+		insertComments();
 	}
 
 }
