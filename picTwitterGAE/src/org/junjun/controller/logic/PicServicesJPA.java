@@ -21,19 +21,7 @@ import org.junjun.bean.part1.Tag;
 import org.junjun.bean.part1.UIComment;
 import org.junjun.bean.part1.User;
 
-class EMFService {
-	private static final EntityManagerFactory emfInstance = Persistence.createEntityManagerFactory("transactions-optional");
 
-	private EMFService() 
-	{
-		
-	}
-
-	public static EntityManagerFactory get()
-	{
-		return emfInstance;
-	}
-}
 
 public class PicServicesJPA implements PicServices {
 
@@ -53,7 +41,7 @@ public class PicServicesJPA implements PicServices {
 		EntityManager em = null;
 		try
 		{
-		  em = EMFService.get().createEntityManager();     
+		  em = EMF.get().createEntityManager();     
 		  return em.find(cls,id);
 		}
 		catch(Exception e)
@@ -72,7 +60,7 @@ public class PicServicesJPA implements PicServices {
 		EntityManager em = null;
 		try
 		{
-		  em = EMFService.get().createEntityManager();     
+		  em = EMF.get().createEntityManager();     
 		  List<Tag> tags = em.createQuery("select item form Tag item").getResultList();
 		  return tags;
 		}
@@ -104,7 +92,7 @@ public class PicServicesJPA implements PicServices {
 		EntityManager em = null;
 		try
 		{
-		  em = EMFService.get().createEntityManager();     
+		  em = EMF.get().createEntityManager();     
 		  em.getTransaction().begin();
 		  User u = em.find(User.class,user.getId());
 		  u.setDate(user.getDate());
@@ -140,7 +128,7 @@ public class PicServicesJPA implements PicServices {
 		if (id != null) 
 		{
 			List<Comment> comments = null;
-			EntityManager em = EMFService.get().createEntityManager();
+			EntityManager em = EMF.get().createEntityManager();
 			
 			Query query =  em.createQuery("select item form Comment item where item.id=:id");
 			query.setParameter("id", id);
@@ -187,7 +175,7 @@ public class PicServicesJPA implements PicServices {
 	 */
 	public List<Item> getItem(String type, Date dategt, Date datelt,int rating, String sortField, int sortWay, int limit) 
 	{
-		EntityManager em = EMFService.get().createEntityManager();
+		EntityManager em = EMF.get().createEntityManager();
 		String jqpl = "select item form Item item " ;
 		if(limit < 0 )
 			limit = Buffer.BUFFERLIMIT;
@@ -273,7 +261,7 @@ public class PicServicesJPA implements PicServices {
 		EntityManager em = null;
 		try
 		{
-		  em = EMFService.get().createEntityManager();     
+		  em = EMF.get().createEntityManager();     
 		  em.persist(obj);
 		}
 		catch(Exception e)
@@ -303,7 +291,7 @@ public class PicServicesJPA implements PicServices {
 		EntityManager em = null;
 		try
 		{
-		  em = EMFService.get().createEntityManager();     
+		  em = EMF.get().createEntityManager();     
 		  em.getTransaction().begin();
 		  Item i = em.find(Item.class,item.getId());
 		  
