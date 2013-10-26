@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junjun.bean.part1.Item;
+import org.junjun.bean.part1.Tag;
 import org.junjun.bean.part1.UIComment;
 import org.junjun.bean.part1.User;
 import org.junjun.controller.logic.PicBuffer;
@@ -118,5 +119,32 @@ public class PicLoginControllerRest {
     }
 	
 
+	@RequestMapping(value="/addTags",method = RequestMethod.POST,headers="Accept=application/json")
+	@ResponseBody
+	public Object addTags (@RequestBody String content ,SessionStatus session, Model model)
+	{	
+		List<Tag> tags = null;		
+		if(content == null)
+			return "fail";
+		
+		String ret = "ok\n";
+		try
+		{
+			tags = new Gson().fromJson(content, new TypeToken<List<Tag>>(){}.getType());
+			
+			for(Tag tag: tags)
+			{
+				ret += (tag+"\n");
+				this.picservice.insert(tag);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			ret = "fail";
+		}
+		return ret;
+    }
+	
 }
 
