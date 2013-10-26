@@ -409,9 +409,9 @@ public class PicServicesJPA implements PicServices {
 			kind = Constant.defaultKind;
 
 		Date newestDate = Buffer.getNewestItem().getDate();
-		int dayBefore = 1;
+		int dayBefore = 3;
 		if (Constant.daily.equals(kind)) {
-			dayBefore = 1;
+			dayBefore = 3;
 		} else if (Constant.weekly.equals(kind)) {
 			dayBefore = 7;
 		} else if (Constant.monthly.equals(kind)) {
