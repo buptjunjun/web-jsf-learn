@@ -8,7 +8,7 @@ import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 @Entity
-public class Item
+public class Item implements Comparable 
 {
 
 	// item
@@ -154,4 +154,19 @@ public class Item
 	public String toString() {
 		return this.id +", "+this.getType()+", "+this.getCata()+","+this.getDate()+", "+this.getUrl()+", "+this.getDesc();
 	}
+
+	@Override
+	public int compareTo(Object o) {
+		if(o == null || !Item.class.isInstance(o))
+			return 1;
+		Item item = (Item)o;
+		
+		if(this.total > item.getTotal())
+			return 1;
+		else if(this.total == item.getTotal())
+			return 0;
+		else return -1;
+	}
+	
+	
 }

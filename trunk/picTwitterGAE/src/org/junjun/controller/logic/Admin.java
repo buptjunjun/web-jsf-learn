@@ -1,6 +1,9 @@
 package org.junjun.controller.logic;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -61,6 +64,7 @@ public class Admin
 	static public void insertItems()
 	{
 		
+		List<Item> li = new ArrayList<Item>();
 		for(int i = 0; i< urls.length; i++)
 		{
 			String url = urls[i];
@@ -72,13 +76,20 @@ public class Admin
 			item.setType("pictures");
 			item.setId(PicUtil.urlEncode(url));
 			item.setDesc(descs[i]);
+			item.setTotal((i*i+1)%4);
 			
 			int span = Math.abs((new Random().nextInt(10)));
 			Date date = PicUtil.getDateBefore(new Date(),span );
 			item.setDate(date);
-			picservice.insertItem(item);
+			li.add(item);
+			//picservice.insertItem(item);
 			
 		}	
+		
+		Collections.sort(li);
+		for(Item item:li)
+			System.out.println(item);
+		
 	}
 	
 	
@@ -109,15 +120,15 @@ public class Admin
 	
 	public static void main(String [] args)
 	{
-		
+		insert();
 	}
 	
 	public static void insert()
 	{
-		insertTag();
+		//insertTag();
 		insertItems();
-		insertUser();
-		insertComments();
+		//insertUser();
+		//insertComments();
 	}
 
 }

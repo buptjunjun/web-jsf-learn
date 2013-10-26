@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.junjun.controller.logic.PicUtil;
 
 @Controller
-@RequestMapping("/pic")
+@RequestMapping("/")
 @SessionAttributes({"login","hello"})
 public class PicIndexController {
 	
@@ -53,7 +53,7 @@ public class PicIndexController {
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value="/",method = RequestMethod.GET)
 	public String index(Model model)
 	{
 		if(Buffer.getNewestItem() == null)
@@ -87,8 +87,9 @@ public class PicIndexController {
 			model.addAttribute("tags", Buffer.getTags());		
 			model.addAttribute("kind", kind);  // weekly , monthly , newest
 			model.addAttribute("currtype", type);
-			model.addAttribute("kinds", Constant.kinds);
+			model.addAttribute("kinds", Constant.kinds);		
 			List<Item> items = this.picservice.getItemByTagAndKind(type, kind);
+			//Collections.sort(items);
 			model.addAttribute("items", items);
 			
 	        return "index";
