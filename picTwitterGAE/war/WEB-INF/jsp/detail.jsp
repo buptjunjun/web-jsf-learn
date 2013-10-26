@@ -9,7 +9,7 @@
 	System.out.println("path="+path);
 %>
 <script type="text/javascript">
-var host = "<%=path%>"; //http://localhost:8080/picture/
+var host = "<%=path%>"; //http://localhost:8080ture/
 </script>
 
 <html>
@@ -454,7 +454,7 @@ function next()
 		<span style="font-size: 12px; font-weight: bold;">current
 			position:</span> <a class="breadItem"><span>main ></span></a> <a
 			class="breadItem"
-			href="<%=path %>/pic/"><span>${item.type}></span></a>
+			href="<%=path %>/"><span>${item.type}></span></a>
 	</div>
 	<div id="content">
 		<div id="left">

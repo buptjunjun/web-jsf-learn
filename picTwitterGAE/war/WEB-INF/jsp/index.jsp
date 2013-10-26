@@ -365,10 +365,10 @@ $(function(){
 		<c:forEach items="${kinds}" var="item">
 			<c:choose>
 				<c:when test="${item == kind}">
-					<a href="<%=path %>/pic/${currtype}/${item}"> <span class="hottag hottagSelect">${item}</span></a>
+					<a href="<%=path %>/${currtype}/${item}"> <span class="hottag hottagSelect">${item}</span></a>
 				</c:when>
 				<c:otherwise>
-					<a href="<%=path %>/pic/${currtype}/${item}"> <span class="hottag">${item}</span></a>
+					<a href="<%=path %>/${currtype}/${item}"> <span class="hottag">${item}</span></a>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
