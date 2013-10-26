@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.apache.commons.lang3.*;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 @Controller
 @SessionAttributes({"login","user"})
 @RequestMapping(value="/api")
@@ -88,7 +91,32 @@ public class PicLoginControllerRest {
 		System.out.println(login);
 		return "ok";
     }
-
+	@RequestMapping(value="/addResources",method = RequestMethod.POST,headers="Accept=application/json")
+	@ResponseBody
+	public Object addResources (  @RequestBody String content ,SessionStatus session, Model model)
+	{	
+		List<Item> items = null;		
+		if(content == null)
+			return "fail";
+		String ret = "ok\n";
+		try
+		{
+			items = new Gson().fromJson(content, new TypeToken<List<Item>>(){}.getType());
+						
+			for(Item item: items)
+			{
+				ret += (item+"\n");
+				this.picservice.insertItem(item);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			ret = "fail";
+		}
+		return ret;
+    }
+	
 
 }
 
