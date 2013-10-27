@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/input")
 public class InputController {
 	 
+	
+	public InputController() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	 public String showInputPage (Model model ){		
 		

@@ -32,7 +32,13 @@ public class PicLoginControllerRest {
 	
 	private PicServices picservice = new PicServicesJPA();
 	
+	
+	
 	private static String defaultType = "pictures";
+	
+	public PicLoginControllerRest() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	 @ModelAttribute("login")
 	   public boolean login() {

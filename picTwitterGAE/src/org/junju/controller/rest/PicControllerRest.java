@@ -37,6 +37,10 @@ public class PicControllerRest
 	private String fail = "fail";
 	private PicServices picservice = new PicServicesJPA();
 	private Buffer buffer = new Buffer();
+	
+	public PicControllerRest() {
+		// TODO Auto-generated constructor stub
+	}
 	/**
 	 * get resource
 	 * @return

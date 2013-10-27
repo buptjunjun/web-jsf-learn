@@ -16,7 +16,7 @@ public class Admin
 {
 	
 	static PicServices  picservice = new PicServicesJPA(); 
-	static String types [] = {"cute","photo","animals","pictures"};
+	static String types [] = {"cute"};
 	
 	static String urls [] =
 		{"http://p0.pstatp.com/medium/320/6704568639",
@@ -51,13 +51,14 @@ public class Admin
 	
 	static public void insertTag()
 	{
+		List<Tag> lt=new ArrayList<Tag>();
 		for(String type:types)
 		{
 			Tag tag = new Tag();
 			tag.setId(type);
 			tag.setType(type);
 			tag.setName(type);
-			picservice.insert(tag);
+			//picservice.insert(tag);
 		}
 	}
 	

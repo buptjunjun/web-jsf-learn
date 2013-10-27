@@ -27,14 +27,11 @@ public class PicServicesJPA implements PicServices {
 
 	public static final int MAXLIMT = 20;
 	public static final int COMMENTLIMIT = 10;
-	private Buffer buffer = null;
-	private EntityManager em;
 	public  final static int ASCENDING = 0;
 	public  final static int DESCENDING = 1;
 	
 	public PicServicesJPA() {
 
-		buffer = new Buffer();
 	}
 
 	public Object getById (Class cls,String id)

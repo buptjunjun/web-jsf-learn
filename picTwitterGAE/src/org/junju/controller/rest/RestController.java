@@ -21,6 +21,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RequestMapping(value="/rest")
 public class RestController 
 {
+	
+	public RestController() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	/**
 	 * get resource
 	 * @return
