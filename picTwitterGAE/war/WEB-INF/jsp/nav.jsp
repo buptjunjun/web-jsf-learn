@@ -86,7 +86,7 @@ $(document).ready(function (){
 	<div id="nav">		
 		<div id="navdetail">
 			<div id="navcontent">
-				<a href="<%=path%>"><span id="logo">qinterests</span></a>		
+				<a href="<%=path%>"><span id="logo">Picfalls</span></a>		
 				
 				<c:forEach items="${tags}" var="tag">  
 					<c:choose>
@@ -103,7 +103,7 @@ $(document).ready(function (){
 					<span id="aboutTxt">ABOUT US</span>
 				</div>
 				<div class="seperateLien"><span>|</span></div>
-				<div id="login" style="display:none">
+				<div id="login" >
 					<div style="float:left">
 						<img id="userhead" style="" width="20" height="20" src="${user.pic}" onerror="$(this).prop('src','<%=path%>/resources/img/user_head.png');"/>
 					</div>
