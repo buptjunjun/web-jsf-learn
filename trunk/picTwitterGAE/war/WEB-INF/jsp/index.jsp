@@ -146,6 +146,7 @@
 
 <script type="text/javascript">
 var host = "<%=path%>"; //http://localhost:8080<%=path%>/
+var enableloadmore= "${loadmore}";
 
 var querying = false;
 function resetquerying()
@@ -293,11 +294,13 @@ function getShortestColum()
 	}
 	return hold;
 }
+
 $(window).scroll(function(){  
+	
 	
 	// if scrollbar is within px of bottom loadMore content
 	var span=$(document).height() - $(this).scrollTop() - $(this).height();
-    if (span <10 && querying == false) 
+    if (span <10 && querying == false && (enableloadmore=="true"|| enableloadmore==true)) 
     	loadMore();  
 
 });  
