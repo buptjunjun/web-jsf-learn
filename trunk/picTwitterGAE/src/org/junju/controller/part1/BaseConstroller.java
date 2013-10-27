@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes({"login","user"})
 public class BaseConstroller {
 	
+	
+	public BaseConstroller() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	 @ModelAttribute("login")
 	   public boolean login() {
 	       return false; // populates form for the first time if its null

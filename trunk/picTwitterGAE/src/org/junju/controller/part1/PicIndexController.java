@@ -35,14 +35,13 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.junjun.controller.logic.PicUtil;
 
 @Controller
-@RequestMapping("/")
 @SessionAttributes({"login","hello"})
 public class PicIndexController {
 	
 	public static final int LIMIT = 300;
 	private PicServices picservice = new PicServicesJPA();
 	public static String defaultType = "photo";
-  
+    
 	@ModelAttribute("login")
     public boolean login() {
        return false; // populates form for the first time if its null
@@ -53,7 +52,7 @@ public class PicIndexController {
 		
 	}
 	
-	@RequestMapping(value="/",method = RequestMethod.GET)
+	@RequestMapping(value={"/",""},method = RequestMethod.GET)
 	public String index(Model model)
 	{
 		if(Buffer.getNewestItem() == null)
@@ -63,8 +62,11 @@ public class PicIndexController {
 		model.addAttribute("kind", null);  // weekly , monthly , newest
 		model.addAttribute("currtype", null);	
 		model.addAttribute("kinds", Constant.kinds);
+		boolean loadmore = true;
+		model.addAttribute("loadmore", loadmore);//enable water fall 
 		
 		model.addAttribute("tags", Buffer.getTags());	
+		
 		List<Item> items = this.picservice.getItemByTag(null);
 		model.addAttribute("items", items);
 		return "index";
@@ -83,6 +85,9 @@ public class PicIndexController {
 			{
 				type=defaultType;
 			}
+			
+			boolean loadmore = false;
+			model.addAttribute("loadmore", loadmore);//enable water fall 
 			
 			model.addAttribute("tags", Buffer.getTags());		
 			model.addAttribute("kind", kind);  // weekly , monthly , newest
@@ -105,9 +110,12 @@ public class PicIndexController {
 		
 			
 		model.addAttribute("tags", Buffer.getTags());		
-		model.addAttribute("kind", Constant.defaultKind);  // weekly , monthly , newest
+		//model.addAttribute("kind", Constant.defaultKind);  // weekly , monthly , newest
 		model.addAttribute("currtype", type);	
 		model.addAttribute("kinds", Constant.kinds);
+		
+		boolean loadmore = true;
+		model.addAttribute("loadmore", loadmore);//enable water fall 
 		
 		List<Item> items = this.picservice.getItemByTag(type);
 		
@@ -117,7 +125,7 @@ public class PicIndexController {
 	
 	 public void init()
 	{
-		 Admin.insert();
+		/* Admin.insert();*/
 		if(Buffer.getNewestItem() == null)
 		{
 			List<Item> items = this.picservice.getItemByTag(null);

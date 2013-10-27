@@ -38,6 +38,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 public class PicRatingControllerRest
 {
 	
+	public PicRatingControllerRest() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public class ID
 	{
 		public String id = "";

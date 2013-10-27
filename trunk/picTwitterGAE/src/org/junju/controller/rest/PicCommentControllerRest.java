@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junjun.bean.part1.Comment;
 import org.junjun.bean.part1.Form1;
 import org.junjun.bean.part1.Item;
+import org.junjun.bean.part1.Result;
 import org.junjun.bean.part1.UIComment;
 import org.junjun.bean.part1.User;
 import org.junjun.controller.logic.PicBuffer;
@@ -37,17 +38,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes({"login","user"})
 public class PicCommentControllerRest
 {
-	public class Result
-	{
-		public Result(String str) {
-			// TODO Auto-generated constructor stub
-			this.result = str;
-		}
-		public String result="ok";
-		
-	}
+
 	private PicServices picservice = new PicServicesJPA();
 		
+	public PicCommentControllerRest() {
+		// TODO Auto-generated constructor stub
+	}
 	 @ModelAttribute("login")
 	   public boolean login() {
 	       return false; // populates form for the first time if its null
