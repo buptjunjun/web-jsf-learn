@@ -62,7 +62,7 @@ public class TwitterUtils {
 	}
 	
 	
-	public static  String postItems2Server(String url,List<Item> li)
+	public static  String postItems2Server(String url,List li)
 	{
 		try
 		{
