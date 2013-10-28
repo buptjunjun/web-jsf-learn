@@ -167,7 +167,7 @@ function loginJsonSuccess()
 
 function fillFormFBRealJson(info)
 {
-	var url1 = path+"/api/login";
+	var url1 = host+"/api/login";
 	var mydata = '{"idSource":"' + info.id
 				+ '","source":"' + FACEBOOK
 				+ '","name":"' + info.name
