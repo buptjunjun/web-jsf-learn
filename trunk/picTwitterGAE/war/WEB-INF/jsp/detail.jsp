@@ -16,7 +16,7 @@ var host = "<%=path%>"; //http://localhost:8080ture/
 <head>
 <title>pic galaxy</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<meta name="google-site-verification" content="ZwuzOT3g0hU4kLoQRpG1faoXlOQ_Jtw5ut28Lu3bPxA" />
 <link type="text/css" rel="stylesheet" href="<%=path %>/resources/style/common.css" /> 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 <style type="text/css">
