@@ -11,10 +11,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+
 import org.junjun.bean.part1.Constant;
 import org.junjun.bean.part1.Item;
 import org.junjun.bean.part1.Tag;
 import org.junjun.controller.logic.Buffer;
+
+
+import org.junjun.controller.logic.Admin;
 import org.junjun.controller.logic.PicBuffer;
 import org.junjun.controller.logic.PicServices;
 import org.junjun.controller.logic.PicServicesMongo;
@@ -29,14 +33,13 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.junjun.controller.logic.PicUtil;
 
 @Controller
-@RequestMapping("/pic")
 @SessionAttributes({"login","hello"})
 public class PicIndexController {
 	
 	public static final int LIMIT = 300;
 	private PicServices picservice = new PicServicesMongo();
 	public static String defaultType = "photo";
-  
+    
 	@ModelAttribute("login")
     public boolean login() {
        return false; // populates form for the first time if its null
@@ -47,7 +50,7 @@ public class PicIndexController {
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value={"/",""},method = RequestMethod.GET)
 	public String index(Model model)
 	{
 		if(Buffer.getNewestItem() == null)
@@ -57,14 +60,13 @@ public class PicIndexController {
 		model.addAttribute("kind", null);  // weekly , monthly , newest
 		model.addAttribute("currtype", null);	
 		model.addAttribute("kinds", Constant.kinds);
+		boolean loadmore = true;
+		model.addAttribute("loadmore", loadmore);//enable water fall 
 		
 		model.addAttribute("tags", Buffer.getTags());	
 		
 		List<Item> items = this.picservice.getItemByTag(null);
 		model.addAttribute("items", items);
-		
-		// show error page
-		//int i = 1/0;
 		return "index";
 	}
 	
@@ -82,11 +84,15 @@ public class PicIndexController {
 				type=defaultType;
 			}
 			
+			boolean loadmore = false;
+			model.addAttribute("loadmore", loadmore);//enable water fall 
+			
 			model.addAttribute("tags", Buffer.getTags());		
 			model.addAttribute("kind", kind);  // weekly , monthly , newest
 			model.addAttribute("currtype", type);
-			model.addAttribute("kinds", Constant.kinds);
+			model.addAttribute("kinds", Constant.kinds);		
 			List<Item> items = this.picservice.getItemByTagAndKind(type, kind);
+			//Collections.sort(items);
 			model.addAttribute("items", items);
 			
 	        return "index";
@@ -102,9 +108,12 @@ public class PicIndexController {
 		
 			
 		model.addAttribute("tags", Buffer.getTags());		
-		model.addAttribute("kind", Constant.defaultKind);  // weekly , monthly , newest
+		//model.addAttribute("kind", Constant.defaultKind);  // weekly , monthly , newest
 		model.addAttribute("currtype", type);	
 		model.addAttribute("kinds", Constant.kinds);
+		
+		boolean loadmore = true;
+		model.addAttribute("loadmore", loadmore);//enable water fall 
 		
 		List<Item> items = this.picservice.getItemByTag(type);
 		
@@ -114,6 +123,7 @@ public class PicIndexController {
 	
 	 public void init()
 	{
+		/* Admin.insert();*/
 		if(Buffer.getNewestItem() == null)
 		{
 			List<Item> items = this.picservice.getItemByTag(null);
@@ -124,7 +134,8 @@ public class PicIndexController {
 		
 		// init tags
 		List<Tag>  types =  this.picservice.getTag();
-		Buffer.getTags().addAll(types);
+		if(types!=null)
+			Buffer.getTags().addAll(types);
 	}
 	
 	

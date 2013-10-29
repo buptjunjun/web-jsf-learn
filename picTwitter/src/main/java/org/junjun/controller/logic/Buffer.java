@@ -13,7 +13,7 @@ import org.junjun.bean.part1.Constant;
 import org.junjun.bean.part1.Item;
 import org.junjun.bean.part1.Tag;
 
-public class Buffer extends Thread
+public class Buffer
 {
 
 	 public static final int BUFFERLIMIT = 20;
@@ -34,7 +34,7 @@ public class Buffer extends Thread
 	 public Buffer() 
  	 {
 		flag = true;
-		this.start();
+	
 	 }
 	
 	 public void addTypeKind(String type, String kind,List<Item> items)
@@ -133,22 +133,5 @@ public class Buffer extends Thread
 			public static void setIndexitem(List<Item> indexitem) {
 				Buffer.indexitem = indexitem;
 			}
-	 @Override
-	public void run() {
-		
-		 // update clear and update the buffer every 24 hours
-		 while(flag)
-		 {
-			 this.clearAll();		 
-			 try 
-			 {
-				TimeUnit.HOURS.sleep(24);
-			 } 
-			 catch (InterruptedException e) 
-			 {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		 }
-	}
+
 }
