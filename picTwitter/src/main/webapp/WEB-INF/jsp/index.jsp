@@ -12,6 +12,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="google-site-verification" content="ZwuzOT3g0hU4kLoQRpG1faoXlOQ_Jtw5ut28Lu3bPxA" />
 <title>pic galaxy</title>
 <link type="text/css" rel="stylesheet" href="<%=path%>/resources/style/common.css" /> 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
@@ -146,6 +147,7 @@
 
 <script type="text/javascript">
 var host = "<%=path%>"; //http://localhost:8080<%=path%>/
+var enableloadmore= "${loadmore}";
 
 var querying = false;
 function resetquerying()
@@ -293,11 +295,13 @@ function getShortestColum()
 	}
 	return hold;
 }
+
 $(window).scroll(function(){  
+	
 	
 	// if scrollbar is within px of bottom loadMore content
 	var span=$(document).height() - $(this).scrollTop() - $(this).height();
-    if (span <10 && querying == false) 
+    if (span <10 && querying == false && (enableloadmore=="true"|| enableloadmore==true)) 
     	loadMore();  
 
 });  
@@ -365,10 +369,10 @@ $(function(){
 		<c:forEach items="${kinds}" var="item">
 			<c:choose>
 				<c:when test="${item == kind}">
-					<a href="<%=path %>/pic/${currtype}/${item}"> <span class="hottag hottagSelect">${item}</span></a>
+					<a href="<%=path %>/${currtype}/${item}"> <span class="hottag hottagSelect">${item}</span></a>
 				</c:when>
 				<c:otherwise>
-					<a href="<%=path %>/pic/${currtype}/${item}"> <span class="hottag">${item}</span></a>
+					<a href="<%=path %>/${currtype}/${item}"> <span class="hottag">${item}</span></a>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>

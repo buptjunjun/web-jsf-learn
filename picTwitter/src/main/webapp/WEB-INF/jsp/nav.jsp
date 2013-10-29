@@ -86,15 +86,15 @@ $(document).ready(function (){
 	<div id="nav">		
 		<div id="navdetail">
 			<div id="navcontent">
-				<a href="<%=path%>/pic"><span id="logo">Picture Falls</span></a>		
+				<a href="<%=path%>"><span id="logo">Picfalls</span></a>		
 				
 				<c:forEach items="${tags}" var="tag">  
 					<c:choose>
 						<c:when test="${tag.type == currtype}">
-							<a href="<%=path%>/pic/${tag.type}"> <span class="tag tagselect">${tag.type} </span></a>
+							<a href="<%=path%>/${tag.type}"> <span class="tag tagselect">${tag.type} </span></a>
 						</c:when>
 						<c:otherwise>
-							<a href="<%=path%>/pic/${tag.type}"> <span class="tag">${tag.type} </span></a>
+							<a href="<%=path%>/${tag.type}"> <span class="tag">${tag.type} </span></a>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>  	
@@ -103,7 +103,7 @@ $(document).ready(function (){
 					<span id="aboutTxt">ABOUT US</span>
 				</div>
 				<div class="seperateLien"><span>|</span></div>
-				<div id="login">
+				<div id="login" >
 					<div style="float:left">
 						<img id="userhead" style="" width="20" height="20" src="${user.pic}" onerror="$(this).prop('src','<%=path%>/resources/img/user_head.png');"/>
 					</div>
