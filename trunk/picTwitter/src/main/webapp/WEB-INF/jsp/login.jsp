@@ -167,7 +167,7 @@ function loginJsonSuccess()
 
 function fillFormFBRealJson(info)
 {
-	var url1 = path+"/api/login";
+	var url1 = host+"/api/login";
 	var mydata = '{"idSource":"' + info.id
 				+ '","source":"' + FACEBOOK
 				+ '","name":"' + info.name
@@ -216,18 +216,19 @@ function fillFormFBReal(info)
 }
 
 
-function loginFB()
-{
-	fillFormFBjson();
-}
-
 /* function loginFB()
+{
+	//fillFormFBjson(); //for test
+	fillFormFBRealJson();
+} */
+
+ function loginFB()
 {
 		FB.getLoginStatus(function(response) {
 		  if (response.status === 'connected') 
 		  {
 	    	   // get the current user info and submit
-	    	   FB.api('/me', function(res) {fillFormFBReal(res);});
+	    	   FB.api('/me', function(res) {fillFormFBRealJson(res);});
 		  } 
 		  else 
 		  {
@@ -238,7 +239,7 @@ function loginFB()
 						       if(response.status === 'connected')
 						    	{
 						    	   // get the current user info and submit
-						    	   FB.api('/me', function(res) {fillFormFBReal(res);});
+						    	   FB.api('/me', function(res) {fillFormFBRealJson(res);});
 						        }  
 						    } 
 						    else 
@@ -249,7 +250,7 @@ function loginFB()
 		  }
 		 });
 		  
-	} */
+	} 
 
 function logoutFB()
 {
