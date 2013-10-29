@@ -29,13 +29,13 @@ public class PicServicesMongo implements PicServices{
 		buffer = new Buffer();
 	}
 	  
-	@Override
+	
 	public List<Tag> getTag() {
 		// TODO Auto-generated method stub
 		return mongo.search(null, null, null, null, -1,MAXLIMT , Tag.class);
 	}
 	
-	@Override
+	
 	public User getUser(String id) 
 	{
 		Map<String,String> constrainEQ = new  HashMap<String,String>();
@@ -51,7 +51,7 @@ public class PicServicesMongo implements PicServices{
 		return null;
 	}
 	
-	@Override
+	
 	public void updateUser(User user) {
 		if(user == null)
 			return ;
@@ -60,7 +60,7 @@ public class PicServicesMongo implements PicServices{
 		constrainEQ.put("id", user.getId());
 		this.mongo.update(user, constrainEQ);
 	}
-	@Override
+	
 	public List<UIComment> getUIComments(String id) {
 		// TODO Auto-generated method stub		
 		List<UIComment> uicomments = new ArrayList<UIComment>();
@@ -149,7 +149,7 @@ public class PicServicesMongo implements PicServices{
 		return  mongo.search(constrainLT,constrainGT , constrainEQ, sortField, sortWay, limit, Item.class);
 	}
 	
-	@Override
+	
 	public void insertComment(Comment comment) {
 		// TODO Auto-generated method stub
 		this.mongo.insert(comment);
@@ -158,12 +158,12 @@ public class PicServicesMongo implements PicServices{
 		this.updateItem(item);
 	}
 	
-	@Override
+	
 	public void insertItem(Item item) {
 		this.mongo.insert(item);
 	}
 	
-	@Override
+	
 	public Item getItem(String id) {
 		Map<String,String> constrainEQ = new  HashMap<String,String>();
 		constrainEQ.put("id", id);
@@ -188,7 +188,7 @@ public class PicServicesMongo implements PicServices{
 		this.mongo.update(item, constrainEQ);
 	}
 	
-	@Override
+	
 	public void insert(Object obj) {
 		// TODO Auto-generated method stub
 		this.mongo.insert(obj);
@@ -198,7 +198,7 @@ public class PicServicesMongo implements PicServices{
 
 	
 
-	@Override
+	
 	public List<Item> getItemByTag(String tag) {
 		if(!Buffer.containTag(tag))
 			tag = null;		
@@ -206,7 +206,7 @@ public class PicServicesMongo implements PicServices{
 		return ret;
 	}
 	
-	@Override
+	
 	public List<Item> getItemByTagRest(String tag, String id) {
 		Item item = this.getItem(id);
 		if(id == null)
@@ -218,7 +218,7 @@ public class PicServicesMongo implements PicServices{
 	    return ret;
 	}
 	
-	@Override
+	
 	public List<Item> getItemByTagAndKind(String tag, String kind) {
 		if(!Buffer.containTag(tag))
 			tag = null;		
@@ -245,7 +245,7 @@ public class PicServicesMongo implements PicServices{
 		return ret;
 	}
 
-	@Override
+	
 	public Item getNextItem(String id) 
 	{
 		Item item = this.getItem(id);
@@ -264,7 +264,7 @@ public class PicServicesMongo implements PicServices{
 		return ret.get(0);
 		
 	}
-	@Override
+	
 	public Item getPreItem(String id) {
 
 		Item item = this.getItem(id);

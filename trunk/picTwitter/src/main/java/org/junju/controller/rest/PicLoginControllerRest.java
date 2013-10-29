@@ -32,7 +32,13 @@ public class PicLoginControllerRest {
 	
 	private PicServices picservice = new PicServicesMongo();
 	
+	
+	
 	private static String defaultType = "pictures";
+	
+	public PicLoginControllerRest() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	 @ModelAttribute("login")
 	   public boolean login() {
@@ -92,6 +98,7 @@ public class PicLoginControllerRest {
 		System.out.println(login);
 		return "ok";
     }
+	
 	@RequestMapping(value="/addResources",method = RequestMethod.POST,headers="Accept=application/json")
 	@ResponseBody
 	public Object addResources (  @RequestBody String content ,SessionStatus session, Model model)
@@ -118,7 +125,7 @@ public class PicLoginControllerRest {
 		return ret;
     }
 	
-
+	
 	@RequestMapping(value="/addTags",method = RequestMethod.POST,headers="Accept=application/json")
 	@ResponseBody
 	public Object addTags (@RequestBody String content ,SessionStatus session, Model model)
@@ -145,6 +152,6 @@ public class PicLoginControllerRest {
 		}
 		return ret;
     }
-	
+
 }
 

@@ -29,6 +29,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class FormController {
 	 
 	
+	
+	public FormController() {
+		// TODO Auto-generated constructor stub
+	}
 	@RequestMapping( method = RequestMethod.GET)
 	 public String editForm (Model model ){		
 				Form1 form = new Form1();
