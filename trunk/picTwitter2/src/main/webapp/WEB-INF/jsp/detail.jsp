@@ -636,7 +636,7 @@ function next()
 				</div>
 			
 			<div id="detailComment">
-				<div style="float:left;margin-left:20px"><img width=50 height=50 src="http://tp1.sinaimg.cn/1641153660/50/5627699277/1" /></div>
+				<div style="float:left;margin-left:20px"><img width=50 height=50 src="<%=path%>/resources/img/user_head.png" /></div>
 				<div style="float:left"> <textarea class="cmtContex" id="comment-box" name="comment" placeholder="say something..." selectionstart="0" selectionend="0"></textarea></div>
 					<div class="detail_addthis">
 					<!-- AddThis Button BEGIN -->
