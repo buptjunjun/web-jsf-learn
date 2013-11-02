@@ -73,11 +73,14 @@ ul li {
 	width: 680px;
 	margin: auto;
 	border-bottom:solid 1px #F5F5F5;
+	float:left;
+	
 }
 
 .cmtContex {
 	height: 50px;
-	width: 500px;
+	width: 550px;
+	margin-left:10px;
 }
 
 #submit {
@@ -139,8 +142,12 @@ ul li {
 	padding-top: 10px;
 	margin-bottom:20px;
 	border-bottom:solid 1px #F5F5F5;
+	float:left;
 }
-
+#bigpic
+{
+	padding-left:40px;
+}
 .userPic {
 	display: inline;
 	width: 60px;
@@ -177,8 +184,8 @@ ul li {
 }
 
 #arrow {
-	top: 300px;
-	width: 700px;
+	top: 260px;
+	width: 600px;
 	height: auto;
 	z-index: 999;
 	position: fixed;
@@ -217,6 +224,40 @@ ul li {
 	text-align:left;
 	color:black;
 	
+}
+
+#rating
+{
+	padding-top:10px;
+	margin-left:40px;
+	margin-right:40px;
+	padding-bottom:10px;
+	position:fixed;
+	top:150px;
+	left:700px;
+	float:right;
+	z-index: 999;
+}
+.ratingItem
+{
+	border:1px  rgb(255, 111, 1111) solid;
+	border-radius:8px 8px 8px 8px;
+	width:100px;
+	height:16px;
+	padding:3px;
+	padding-top:0px;
+	padding-bottom:5px;
+	margin-bottom:5px;
+	margin-left:10px;
+	font-size:20px;
+	text-align:left;
+	cursor:pointer;
+	color:red;
+}
+
+.ratingItem span
+{
+	padding-left:20px;
 }
 </style>
 
@@ -425,7 +466,7 @@ $(document).ready(function ()
 			    comment();
 		});
 		
-		$(".img_background.good").on("click",function(){
+		$("#right .img_background.good").on("click",function(){
 			var id = $(this).parent().attr("itemid");
 			good(id);
 			add(this);
@@ -439,7 +480,7 @@ $(document).ready(function ()
 			$(this).prop("class","img_background good");
 		});
 
-		$(".img_background.bad").on("click",function(){
+		$("#right .img_background.bad").on("click",function(){
 			var id = $(this).parent().attr("itemid");
 			bad(id);
 			add(this);
@@ -453,7 +494,7 @@ $(document).ready(function ()
 			$(this).prop("class","img_background bad");
 		});
 		
-		$(".img_background.collect").on("click",function(){
+		$("#right .img_background.collect").on("click",function(){
 			var id = $(this).parent().attr("itemid");
 			collect(id,$(this));
 		}).on("mouseover",function()
@@ -464,25 +505,70 @@ $(document).ready(function ()
 			$(this).prop("class","img_background collect");
 		});
 		
+		
 		loadComments();
+		
+		
+		$("#rating .ratingItem.img_background.good").on("click",function(){
+			var id = $("#itemID").last().text();
+			good(id);
+			add(this);
+			$(this).prop("class","ratingItem img_background good1");
+			$(this).off();
+		}).on("mouseover",function()
+				{
+				$(this).prop("class"," ratingItem img_background good1");
+		}).on("mouseleave",function()
+				{
+			$(this).prop("class","ratingItem img_background good");
+		});
+
+		$("#rating .img_background.bad").on("click",function(){
+			var id = $("#itemID").last().text();
+			bad(id);
+			add(this);
+			$(this).prop("class"," ratingItem img_background bad1");
+			$(this).off();
+		}).on("mouseover",function()
+				{
+			$(this).prop("class","ratingItem img_background bad1");
+		}).on("mouseleave",function()
+				{
+			$(this).prop("class","ratingItem img_background bad");
+		});
+		
+		$("#rating .img_background.collect").on("click",function(){
+			var id = $("#itemID").last().text();
+			collect(id,$(this));
+		}).on("mouseover",function()
+				{
+				$(this).prop("class","ratingItem img_background collect1");
+		}).on("mouseleave",function()
+				{
+			$(this).prop("class","ratingItem img_background collect");
+		});
+		
 	});
 	
-/* $(window).scroll(function(){  
+ /* $(window).scroll(function(){  
 	
 	// if scrollbar is within 100px of bottom loadMore content
 	var scrollTop =  $(this).scrollTop();
 	var picHeight= $("#pic").height();
-	//console.log(picHeight+"   "+scrollTop );
-    if(picHeight-scrollTop < 200)
+	console.log(picHeight+"   "+scrollTop );
+	var span=$(document).height() - $(this).scrollTop() - $(this).height();
+    if(span < 10)
     {
     	$("#arrow").hide();
+    	$("#rating").hide();
     }
     else
     {
     	$("#arrow").show();
+    	$("#rating").show();
     } 
 
-});   */
+});    */
 var urlpre =host+ "/pre/";
 function prev()
 {
@@ -525,6 +611,13 @@ function next()
 	</div>
 	<div id="content">
 		<div id="left">
+			<div id="rating">
+					<div class="ratingItem img_background good"><span>${item.good}</span></div>
+					<div class="ratingItem img_background bad"><span>${item.bad}</span></div>
+					<div class="ratingItem img_background post"><span>${item.comment}</span></div>
+					<div style="clear: both"></div>
+			</div>
+				
 			<div id="pic">
 				<div id="arrow">
 					<div id="arrayleft" class="img_array_background leftarrow"
@@ -533,18 +626,18 @@ function next()
 						title="next one"></div>
 					<div style="clear: both"></div>
 				</div>
-				<span class="hiddenid">${item.id}</span> <img id="bigpic" width=600
-					src="${item.url1 }" />
-				<p id="desc">${item.desc }</p>
-			</div>
-
+				<span class="hiddenid">${item.id}</span> 
+				<img  id="bigpic" width=500 src="${item.url1 }" />
+			
+				<div id="desc">
+						<span>${item.desc }</span>	
+					</div>	
+					<div style="clear: both"></div>
+				</div>
+			
 			<div id="detailComment">
-				<img width=50 height=50
-					src="http://tp1.sinaimg.cn/1641153660/50/5627699277/1" />
-				
-					<textarea class="cmtContex" id="comment-box" name="comment"
-						placeholder="say something..." selectionstart="0" selectionend="0"></textarea>
-
+				<div style="float:left;margin-left:20px"><img width=50 height=50 src="http://tp1.sinaimg.cn/1641153660/50/5627699277/1" /></div>
+				<div style="float:left"> <textarea class="cmtContex" id="comment-box" name="comment" placeholder="say something..." selectionstart="0" selectionend="0"></textarea></div>
 					<div class="detail_addthis">
 					<!-- AddThis Button BEGIN -->
 						<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
@@ -559,7 +652,7 @@ function next()
 							var addthis_config = {"data_track_addressbar":true};
 							var addthis_share =
 							{
-									url:'<%=path%>/detail/{item.id}',
+									url:'<%=path%>/item.tag/{item.id}',
 									title:'${item.desc} (from picfalls)',
 							};
 						</script>
@@ -571,7 +664,7 @@ function next()
 						<button id="submitBtn" type="submit">submit</button>
 					</div>
 					
-				
+				<div style="clear: both"></div>
 			</div>
 			<div class="oneComment" id="commenthidden" style="display:none">
 				<div class="userPic">
@@ -629,7 +722,8 @@ function next()
 						</div>
 					</div>				
 			</c:forEach>
-			
+			<br/>
+			<br/>
 			<div class="clear"></div> 
 			</div>
 		</div>
