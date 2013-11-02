@@ -13,7 +13,6 @@ import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.junjun.bean.part1.Collect;
 import org.junjun.bean.part1.Comment;
-import org.junjun.bean.part1.Form1;
 import org.junjun.bean.part1.Item;
 import org.junjun.bean.part1.User;
 import org.junjun.controller.logic.PicServices;

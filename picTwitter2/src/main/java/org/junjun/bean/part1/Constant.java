@@ -12,7 +12,7 @@ public class Constant {
 	static public final String hottest = "hottest"; 
 	
 	static public final List<String> sortby = Arrays.asList(new String [] {newest ,weekly,monthly,hottest});
-	static public final String default_sort = weekly;
+	static public final String default_sort = monthly;
 	static public final int LIMIT = 20;
 	public static final int REST_LIMIT = 20;
 	public static final int COMMENT_LIMIT = 10;

@@ -10,11 +10,9 @@ import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junjun.bean.part1.Constant;
-import org.junjun.bean.part1.Form1;
 import org.junjun.bean.part1.Item;
 import org.junjun.bean.part1.RequestParams;
 import org.junjun.bean.part1.ResponseData;
-import org.junjun.bean.part1.TypeKind;
 import org.junjun.controller.logic.PicServices;
 import org.junjun.controller.logic.PicServicesMongo;
 import org.springframework.http.HttpStatus;
