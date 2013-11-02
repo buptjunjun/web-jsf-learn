@@ -43,6 +43,8 @@ public class PicDetailController {
 		model.addAttribute("currtag", tag);	
 		model.addAttribute("item", item);
 		
+		List<Item> recommends = this.picservice.getItemByTag(tag, 0, Constant.weekly, 3);
+		model.addAttribute("recommends", recommends);
 /*		List<UIComment> comments = picservice.getUIComments(id);
 		model.addAttribute("comments", comments);*/
 		return "detail";
