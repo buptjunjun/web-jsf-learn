@@ -100,7 +100,7 @@ public class PicLoginControllerRest {
 	
 	@RequestMapping(value="/addResources",method = RequestMethod.POST,headers="Accept=application/json")
 	@ResponseBody
-	public Object addResources (  @RequestBody String content ,SessionStatus session, Model model)
+	public Object addResources (  @RequestBody String content , Model model)
 	{	
 		List<Item> items = null;		
 		if(content == null)
@@ -127,7 +127,7 @@ public class PicLoginControllerRest {
 	
 	@RequestMapping(value="/addTags",method = RequestMethod.POST,headers="Accept=application/json")
 	@ResponseBody
-	public Object addTags (@RequestBody String content ,SessionStatus session, Model model)
+	public Object addTags (@RequestBody String content , Model model)
 	{	
 		List<Tag> tags = null;		
 		if(content == null)

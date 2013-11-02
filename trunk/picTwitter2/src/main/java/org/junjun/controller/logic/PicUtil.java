@@ -3,9 +3,11 @@ package org.junjun.controller.logic;
 import java.security.MessageDigest;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 public class PicUtil 
 {
+	private static Pattern pattern = Pattern.compile("http://t.co/[a-zA-z0-9]+");
 	
 	public static String urlEncode(String url)
 	{
@@ -49,5 +51,10 @@ public class PicUtil
         
         Date newdate = c.getTime();
         return newdate;
+	}
+	
+	public static String trimTwitterDes(String str)
+	{
+		return str.replaceAll("http://t.co/[a-zA-z0-9]+", " ");
 	}
 }

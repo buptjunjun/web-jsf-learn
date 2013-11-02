@@ -47,8 +47,10 @@ public class PicIndexController {
 		model.addAttribute("currtag", "");	
 		boolean loadmore = true;
 		model.addAttribute("loadmore", loadmore);//enable water fall 
+		if(!Constant.sortby.contains(sort))
+			sort = Constant.default_sort;
 		
-		List<Item> items = this.picservice.getItemByTag(null, 0, Constant.default_sort, Constant.LIMIT);
+		List<Item> items = this.picservice.getItemByTag(null, 0,sort, Constant.LIMIT);
 		
 		model.addAttribute("items", items);
         return "index";

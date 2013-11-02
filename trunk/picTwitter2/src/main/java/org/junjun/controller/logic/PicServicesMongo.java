@@ -203,11 +203,11 @@ public class PicServicesMongo implements PicServices{
 			limit = Constant.REST_LIMIT;
 		
 		int skip = Constant.REST_LIMIT*page;
-		Criteria c = new Criteria();
+		Criteria c =null;
 		
 		// if tag is not  null or not empty 
-		if(StringUtils.isEmpty(tag))
-			 c.where("tag").is(tag);
+		if(!StringUtils.isEmpty(tag))
+			c= Criteria.where("tag").is(tag);
 					
 		// check the sort is within the sort types
 		if(!Constant.sortby.contains(sort))
@@ -217,6 +217,10 @@ public class PicServicesMongo implements PicServices{
 		if(sort.equals(Constant.newest))
 		{
 			sortBy = "date";
+			if(c== null)
+				c = Criteria.where("date").lte(new Date());
+			else
+				c.where("date").lte(new Date());
 		}
 		else
 		{
@@ -236,7 +240,10 @@ public class PicServicesMongo implements PicServices{
 				date1 = PicUtil.getDateBefore(now, 30*12*10); //ten year ago
 			}
 			
-			c.where("date").gte(date1);
+			if(c== null)
+				c = Criteria.where("date").gte(date1);
+			else
+				c.where("date").gte(date1);
 		}
 		
 		Query query = new Query(c);

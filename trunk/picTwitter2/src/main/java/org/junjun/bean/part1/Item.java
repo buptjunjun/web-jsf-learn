@@ -2,6 +2,8 @@ package org.junjun.bean.part1;
 
 import java.util.Date;
 
+import org.junjun.controller.logic.PicUtil;
+
 public class Item
 {
 
@@ -110,7 +112,7 @@ public class Item
 		this.url = url;
 	}
 	public String getDesc() {
-		return desc;
+		return PicUtil.trimTwitterDes(desc);
 	}
 	public void setDesc(String desc) {
 		this.desc = desc;

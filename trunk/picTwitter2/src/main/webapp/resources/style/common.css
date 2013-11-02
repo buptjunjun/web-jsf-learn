@@ -2,7 +2,7 @@
 	margin: 0;
 	padding: 0;
 	word-wrap: break-word;
-	word-break: break-all;
+	//word-break: break-all;
 }
 body
 	{
@@ -172,3 +172,130 @@ a {
 	{
 		display:none;
 	}
+	
+		.mainimg
+	{
+		margin-top:10px;
+	}
+	
+	.comment span
+	{
+		margin-left:18px;
+		font-size:11px;
+	}
+	.comment a:hover
+	{
+		color:red;
+		cursor:pointer;
+	}
+	
+
+	.mainimg_a
+	{
+	}
+	
+	.description
+	{
+		text-align:left;
+		font-weight:200;
+		font-size:12px;
+		padding-left:8px;
+		padding-right:8px;
+	}
+	.clear
+	{
+		clear:both;
+	}
+	.box
+	{
+		width:220px;
+		padding:2px;
+		margin:auto;
+		margin-top:20px;
+		border: 1px solid #DFDFE0;
+		height:auto;		
+		vertical-align:center;
+		text-align:center;		
+		background:white;
+   		box-shadow: 0 1px 1px #9C9C9C;
+	}
+	.column
+	{
+		width:250px;
+		float:left;
+		height:auto;
+		text-align:center;
+		padding:2px;	
+		overflow:hidden;
+	}
+	
+	.comment
+	{
+		 width:%;
+		 height:auto;
+		 text-align:left;
+		 padding:2px;
+		 margin-left:10px;
+	}
+	
+		#hot
+	{		
+		margin:auto;
+		width:1024px;
+		height:10px;
+		z-index: 999;
+		padding-top:60px;
+		
+	}
+	.hottag
+	{
+		vertical-align:bottom;
+		font-size: 15px;
+		margin-left:10px;
+	    line-height: 20px;
+	    font-weight:bold;
+	    color:#9A9D9F;
+	    padding:5px;
+	    border:1px white solid;
+	    border:1px solid;
+	   
+	}
+	#hot span:hover
+	 {
+		 background-color: rgb(255,111,1111);
+		 color:white;
+		 cursor:pointer;
+	 }
+	.hottagSelect
+	{
+		
+		 background-color: rgb(255,111,1111);
+		 color:white;
+	}
+	
+	#content
+	{
+		margin:auto;
+		width:1024px;
+		height:auto;
+		text-align:center;
+		padding-top:10px;
+		overflow:hidden;
+	}
+	
+	.tag
+	{
+
+		margin-left:20px;
+		font-size: 16px;
+	    line-height: 20px;
+	    color:white;
+	    padding:5px;
+	}
+	.tag:hover
+	{
+		 color:red;
+		 cursor:pointer;
+	}
+	
+	

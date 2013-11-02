@@ -3,7 +3,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>picTwitter</groupId>
 	<artifactId>picTwitter</artifactId>
-	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>myspringMVC Maven Webapp</name>
 	<url>http://maven.apache.org</url>
@@ -137,4 +136,5 @@
 			</plugin> </plugins> </pluginManagement> -->
 		<finalName>picTwitter</finalName>
 	</build>
+	<packaging>war</packaging>
 </project>

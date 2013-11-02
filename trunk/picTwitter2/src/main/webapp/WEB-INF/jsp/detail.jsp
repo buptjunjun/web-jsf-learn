@@ -19,7 +19,10 @@ var host = "<%=path%>"; //http://localhost:8080ture/
 <meta name="google-site-verification" content="ZwuzOT3g0hU4kLoQRpG1faoXlOQ_Jtw5ut28Lu3bPxA" />
 <link type="text/css" rel="stylesheet" href="<%=path %>/resources/style/common.css" /> 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script src="<%=path%>/resources/script/common.js" type="text/javascript"></script>
+
 <style type="text/css">
+
 
 div
 {
@@ -55,14 +58,18 @@ ul li {
 	border: solid 1px #F5F5F5;
 }
 
+
+
 #right {
+	margin-left:10px;
 	width: 300px;
 	height: auto;
 	float: left;
 	border: 1px black;
+	border: solid 1px #F5F5F5;
 }
 
-#comment {
+#detailComment {
 	width: 680px;
 	margin: auto;
 	border-bottom:solid 1px #F5F5F5;
@@ -203,7 +210,13 @@ ul li {
 
 #desc
 {
-	font-size:18px;
+	font-size:16px;
+	margin-left:45px;
+	margin-right:45px;
+	margin-top:20px;
+	text-align:left;
+	color:black;
+	
 }
 </style>
 
@@ -294,6 +307,8 @@ Date.prototype.format = function(mask) {
     });  
   
 };  
+
+
 
 function comment()
 {
@@ -410,6 +425,45 @@ $(document).ready(function ()
 			    comment();
 		});
 		
+		$(".img_background.good").on("click",function(){
+			var id = $(this).parent().attr("itemid");
+			good(id);
+			add(this);
+			$(this).prop("class","img_background good1");
+			$(this).off();
+		}).on("mouseover",function()
+				{
+				$(this).prop("class","img_background good1");
+		}).on("mouseleave",function()
+				{
+			$(this).prop("class","img_background good");
+		});
+
+		$(".img_background.bad").on("click",function(){
+			var id = $(this).parent().attr("itemid");
+			bad(id);
+			add(this);
+			$(this).prop("class","img_background bad1");
+			$(this).off();
+		}).on("mouseover",function()
+				{
+			$(this).prop("class","img_background bad1");
+		}).on("mouseleave",function()
+				{
+			$(this).prop("class","img_background bad");
+		});
+		
+		$(".img_background.collect").on("click",function(){
+			var id = $(this).parent().attr("itemid");
+			collect(id,$(this));
+		}).on("mouseover",function()
+				{
+				$(this).prop("class","img_background collect1");
+		}).on("mouseleave",function()
+				{
+			$(this).prop("class","img_background collect");
+		});
+		
 		loadComments();
 	});
 	
@@ -454,6 +508,8 @@ function next()
 }
 
 </script>
+
+
 </head>
 <body>
 	<span id="sort" class="hiddenid">${sort}</span>
@@ -482,7 +538,7 @@ function next()
 				<p id="desc">${item.desc }</p>
 			</div>
 
-			<div id="comment">
+			<div id="detailComment">
 				<img width=50 height=50
 					src="http://tp1.sinaimg.cn/1641153660/50/5627699277/1" />
 				
@@ -555,7 +611,28 @@ function next()
 			<div style="clear: both"></div>
 		</div>
 
-		<div id="right"></div>
+		
+		<div id="right">
+			<div id="recommend" style="margin:auto">
+				<c:forEach items="${recommends}" varStatus="vs" var="item">  
+					<div class="box">
+						<span class="hiddenid">${item.id}</span>
+						<a href="<%=path%>/${item.tag}/${item.id}?sort=${sort}&skip=${3+(vs.count-1)*4}" class="mainimg_a"><img width=200 class="mainimg" src="${item.url}"></a>
+						<div class="description">
+							<span>${item.desc}</span>
+						</div>
+						<div class="comment"  itemid = "${item.id}">
+						  <a class="img_background good"><span>${item.good}  </span></a> 
+						  <a class="img_background bad"><span>${item.bad} </span></a>  
+						<%--   <a class="img_background collect"><span>${item.collect} </span></a>   --%>
+						  <a class="img_background post"><span>${item.comment} </span></a> 
+						</div>
+					</div>				
+			</c:forEach>
+			
+			<div class="clear"></div> 
+			</div>
+		</div>
 
 		<div style="clear: both"></div>
 	</div>
