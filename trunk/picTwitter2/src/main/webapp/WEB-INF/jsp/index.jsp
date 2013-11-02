@@ -134,7 +134,7 @@ $(window).scroll(function(){
 	
 	// if scrollbar is within px of bottom loadMore content
 	var span=$(document).height() - $(this).scrollTop() - $(this).height();
-    if (span <10 && querying == false) 
+    if (span <100 && querying == false) 
     	loadMore();  
 
 });  
