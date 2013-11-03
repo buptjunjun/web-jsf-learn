@@ -3,7 +3,7 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC>
 <%
 	String path = "http://" + request.getServerName() + ":"
 			+ request.getServerPort() + "" + request.getContextPath();
@@ -11,20 +11,16 @@
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="google-site-verification" content="ZwuzOT3g0hU4kLoQRpG1faoXlOQ_Jtw5ut28Lu3bPxA" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>pic galaxy</title>
 <link type="text/css" rel="stylesheet" href="<%=path%>/resources/style/common.css" /> 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 <style type="text/css">
 	
-	div
-	{
+div
+{
 	border-radius: 5px 5px 5px 5px;
-	}
-	
-
-	
+}	
 </style>
 
 <script type="text/javascript">
