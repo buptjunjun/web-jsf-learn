@@ -638,7 +638,7 @@ function next()
 			<div id="rating">
 					<div class="ratingItem img_background good"><span>${item.good}</span></div>
 					<div class="ratingItem img_background bad"><span>${item.bad}</span></div>
-					<div class="ratingItem img_background post"><span>${item.comment}</span></div>
+					<%-- <div class="ratingItem img_background post"><span>${item.comment}</span></div> --%>
 					<div style="clear: both"></div>
 			</div>
 				
