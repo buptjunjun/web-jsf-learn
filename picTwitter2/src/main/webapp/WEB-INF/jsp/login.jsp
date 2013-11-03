@@ -300,8 +300,9 @@ $(document).ready(function (){
     appId      : '726510294042746', // App ID
     channelUrl : '//localhost:8080/picture/channel', // Channel File
     status     : true, // check login status
-    cookie     : true, // enable cookies to allow the server to access the session
-    xfbml      : true  // parse XFBML
+    cookie     : false, // enable cookies to allow the server to access the session
+    xfbml      : true,  // parse XFBML
+    oauth      : true
   });
 
   };
@@ -321,8 +322,9 @@ $(document).ready(function (){
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
       console.log('	, ' + response.name + '.');
-    });
+    }); 
   }
+  
 </script>
 
 
