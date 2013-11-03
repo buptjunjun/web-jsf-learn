@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
 	String path =  "http://" + request.getServerName() + ":" + request.getServerPort()+""+request.getContextPath();
-	System.out.println("path="+path);
+	//System.out.println("path="+path);
 %>
 <jsp:include page="common.jsp"></jsp:include>
 <script type="text/javascript">
