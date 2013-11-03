@@ -3,7 +3,7 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC>
 <%
 	String path = "http://" + request.getServerName() + ":"
 			+ request.getServerPort() + "" + request.getContextPath();
@@ -171,7 +171,7 @@ function fillFormFBRealJson(info)
 	var mydata = '{"idSource":"' + info.id
 				+ '","source":"' + FACEBOOK
 				+ '","name":"' + info.name
-				+ '","gender":"' + gender
+				+ '","gender":"' + info.gender
 				+ '","pic":"' + "http://graph.facebook.com/"+info.id+"/picture"
 				+ '","url":"' + info.link
 				+ '"}'; 
@@ -189,7 +189,7 @@ function fillFormFBRealJson(info)
 			}
 			
 			refresh();
-			 self.opener.location.reload();
+			
 		}
   		});
 	

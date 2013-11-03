@@ -3,21 +3,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC>
 <%
 	String path =  "http://" + request.getServerName() + ":" + request.getServerPort()+""+request.getContextPath();
 	System.out.println("path="+path);
 %>
-<script type="text/javascript">
-var host = "<%=path%>"; //http://localhost:8080ture/
-</script>
 
 <html>
 <head>
 <title>pic galaxy</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="google-site-verification" content="ZwuzOT3g0hU4kLoQRpG1faoXlOQ_Jtw5ut28Lu3bPxA" />
-<link type="text/css" rel="stylesheet" href="<%=path %>/resources/style/common.css" /> 
+<link type="text/css" rel="stylesheet" href="<%=path %>/resources/style/common.css" />
+<script>
+	var host = "<%=path%>"; //http://localhost:8080ture/
+</script>
+ 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 <script src="<%=path%>/resources/script/common.js" type="text/javascript"></script>
 
@@ -660,7 +660,7 @@ function next()
 				</div>
 			
 			<div id="detailComment">
-				<div style="float:left;margin-left:20px"><img width=50 height=50 src="<%=path%>/resources/img/user_head.png" /></div>
+				<div style="float:left;margin-left:20px"><img width=50 height=50 src="${user.pic}"  onerror="$(this).prop('src','<%=path%>/resources/img/user_head.png');" /></div>
 				<div style="float:left"> <textarea class="cmtContex" id="comment-box" name="comment" placeholder="say something..." selectionstart="0" selectionend="0"></textarea></div>
 					<div class="detail_addthis">
 					<!-- AddThis Button BEGIN -->
