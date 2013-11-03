@@ -210,7 +210,7 @@ $(function(){
 		<div class="comment"  itemid = "${item.id}">
 		  <a class="img_background good""><span>${item.good}  </span></a> 
 		  <a class="img_background bad"><span>${item.bad} </span></a>  
-		  <a class="img_background collect"><span>${item.collect} </span></a>  
+		 <%--  <a class="img_background collect"><span>${item.collect} </span></a>   --%>
 		  <a class="img_background post"><span>${item.comment} </span></a> 
 	</div>
 	

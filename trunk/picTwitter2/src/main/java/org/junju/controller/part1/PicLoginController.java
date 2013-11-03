@@ -82,7 +82,7 @@ public class PicLoginController {
 		session.setComplete();
 		System.out.println();
 		System.out.println(login);
-		return "redirect:/pic";
+		return "redirect:/";
     }
 
 
