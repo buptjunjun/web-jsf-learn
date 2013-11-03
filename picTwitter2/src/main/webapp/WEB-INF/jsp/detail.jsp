@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC>
 <%
 	String path =  "http://" + request.getServerName() + ":" + request.getServerPort()+""+request.getContextPath();
-	System.out.println("path="+path);
+	//System.out.println("path="+path);
 %>
 <jsp:include page="common.jsp"></jsp:include>
 <html>

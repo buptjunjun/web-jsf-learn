@@ -7,7 +7,7 @@
 
 <%
 	String path =  "http://" + request.getServerName() + ":" + request.getServerPort()+""+request.getContextPath();
-	System.out.println("path="+path);
+	//System.out.println("path="+path);
 %>
 <script type="text/javascript">
 var host = "<%=path%>"; //http://localhost:8080/picture/
