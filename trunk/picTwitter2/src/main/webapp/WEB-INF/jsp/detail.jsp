@@ -74,6 +74,7 @@ ul li {
 	margin: auto;
 	border-bottom:solid 1px #F5F5F5;
 	float:left;
+	padding-bottom:20px;
 	
 }
 
@@ -350,50 +351,71 @@ Date.prototype.format = function(mask) {
 };  
 
 
+function comment2FB()
+{
+	var description1 = $("#itemDesc").text();
+	var caption1=$("#itemDesc").text();
+	var picture1=$("#itemUrl").text();
+	var link1=window.location.href;
+	var name1 = "share from picfalls"
+	
+	FB.ui(
+	  {
+	    method: 'feed',
+	    name: name1,
+	    link: link1,
+	    picture: picture1,
+	    caption: caption1,
+	    description: description1
+	  },
+	  function(response) {
+	    if (response && response.post_id) {
+	      alert('Post was published.');
+	    } else {
+	      alert('Post was not published.');
+	    }
+	  }
+	);
+}
 
 function comment()
 {
 	var url1 = host+"/api/comment";
-	
-	
-	$(function()
-	{
-		var id = $(".hiddenid").last().text();
-		var commentdata = $("#comment-box").val();
-		var mydata = '{"comment":"' + commentdata + '","commentTo":"'  
-	    + id + '"}'; 
-	    
-		$.ajax({
-				type: "post",			
-				url: url1,
-				dataType:"json",
-				data: mydata, 
-				contentType: "application/json; charset=utf-8",  
-				success:function (data)   // request success.
-				{				
-					if(data!=null && data.result == "ok");
-					{
-						var $copy =$("#commenthidden").clone(true);
-						$copy.css("display","block");
-						$copy.removeAttr("id");
-										
-						$copy.find("img").prop('src',$("#userhead").prop("src"));
-						$copy.find(".commentUserName").text($("#userName").text());  
-						$copy.find(".commentConetent").text(commentdata);
-						$copy.find(".commentDate").text(new Date().format("yyyy-mm-dd hh:mm:ss"));		
-						$("#comments:first").before($copy);
-					}
-					
+	var id = $("#itemID").text();
+	var commentdata = $("#comment-box").val();
+	var mydata = '{"comment":"' + commentdata + '","commentTo":"'  
+    + id + '"}';     
+	$.ajax({
+			type: "post",			
+			url: url1,
+			dataType:"json",
+			data: mydata, 
+			contentType: "application/json; charset=utf-8",  
+			success:function (data)   // request success.
+			{				
+				if(data!=null && data.result == "ok");
+				{
+					var $copy =$("#commenthidden").clone(true);
+					$copy.css("display","block");
+					$copy.removeAttr("id");
+									
+					$copy.find("img").prop('src',$("#userhead").prop("src"));
+					$copy.find(".commentUserName").text($("#userName").text());  
+					$copy.find(".commentConetent").text(commentdata);
+					$copy.find(".commentDate").text(new Date().format("yyyy-mm-dd hh:mm:ss"));		
+					$("#comments:first").before($copy);
 				}
-		  });
-	 }
-	);	
+				
+				comment2FB();
+				
+			}
+	  });
 }
 
 
 function loadComments()
 {
-	var id = $(".hiddenid").last().text();
+	var id = $("#itemID").text();
 	var searchURL = host+"/api/comment/"+trim(id);
 	$(function()
 	{
@@ -602,6 +624,8 @@ function next()
 	<span id="currtag" class="hiddenid">${currtag}</span>
 	<span id="skip" class="hiddenid">${skip}</span>
 	<span id="itemID" class="hiddenid">${item.id}</span>
+	<span id="itemDesc" class="hiddenid">${item.desc}</span>
+	<span id="itemUrl" class="hiddenid">${item.url}</span>
 	<jsp:include page="nav.jsp"></jsp:include>
 	<div id="bread">
 		<span style="font-size: 12px; font-weight: bold;">current
@@ -652,8 +676,8 @@ function next()
 							var addthis_config = {"data_track_addressbar":true};
 							var addthis_share =
 							{
-									url:'<%=path%>/item.tag/{item.id}',
-									title:'${item.desc} (from picfalls)',
+									url:'<%=path%>/${item.tag}/${item.id}',
+									title:'${item.desc} (from picfalls)'
 							};
 						</script>
 						<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5258fdaa3b761a84"></script>
