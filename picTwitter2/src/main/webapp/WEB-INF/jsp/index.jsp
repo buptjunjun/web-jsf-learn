@@ -9,6 +9,7 @@
 			+ request.getServerPort() + "" + request.getContextPath();
 	System.out.println("path=" + path);
 %>
+<jsp:include page="common.jsp"></jsp:include>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

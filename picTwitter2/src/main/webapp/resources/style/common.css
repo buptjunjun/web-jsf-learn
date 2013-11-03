@@ -2,7 +2,6 @@
 	margin: 0;
 	padding: 0;
 	word-wrap: break-word;
-	//word-break: break-all;
 }
 body
 	{
@@ -77,11 +76,6 @@ a {
 	cursor: pointer;
 }
 
-.img_background {
-	background:
-		url("http://www.coderlong.com/img/main_icon.png.gif")
-		no-repeat scroll 0 0 rgba(0, 0, 0, 0);
-}
 
 .good {
 	width: 18px;
@@ -132,9 +126,7 @@ a {
 }
 
 
-.img_array_background {
-	background: url("http://coderlong.com/img/page_button.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
-}
+
 
 .leftarrow
 {

@@ -5,8 +5,7 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC>
 <%
-	String path = "http://" + request.getServerName() + ":"
-			+ request.getServerPort() + "" + request.getContextPath();
+	String path = "http://" + request.getServerName() + ":"+ request.getServerPort() + "" + request.getContextPath();
 %>
 <html>
 <head>
@@ -215,7 +214,6 @@ function fillFormFBReal(info)
 	$("#user").submit();
 }
 
-
 /* function loginFB()
 {
 	//fillFormFBjson(); //for test
@@ -287,7 +285,7 @@ $(document).ready(function (){
 <div id="dialogLogin" style="display:none" title="Signin">
 	<%-- <div class="loginItem" id="loginItemFB"><img width=160 height=40 src="<%=path %>/resources/img/btn-login-facebook.png"/></div>	 --%>
 	<div class="loginItem" id="loginItemFB">
-		<div class="loginItemLeft"><img width=40 height=40 src="<%=path%>/resources/img/FaceBook_256x256.png"></img></div>
+		<div class="loginItemLeft"><img width=40 height=40  src="${user.pic}"  onerror="$(this).prop('src','<%=path%>/resources/img/user_head.png');"></img></div>
 		<div class="loginItemRight"><span>SIGN IN WITH FACEBOOK</span></div>
 	</div>
 </div>
@@ -326,7 +324,7 @@ $(document).ready(function (){
   }
   
 </script>
-
+</head>
 
 	<form name="user" id="user" class="login" style="display:none !important;" action="/picture/login" method="post">
 		<input id="idSource" name="idSource"></input><br>
@@ -338,3 +336,4 @@ $(document).ready(function (){
 		<input id="otherInfo" name="otherInfo"></input><br>
 		<input type="submit" name="testSubmit" value="submit">
 	</form>
+</html>

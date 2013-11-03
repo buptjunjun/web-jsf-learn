@@ -8,6 +8,7 @@
 	String path =  "http://" + request.getServerName() + ":" + request.getServerPort()+""+request.getContextPath();
 	System.out.println("path="+path);
 %>
+<jsp:include page="common.jsp"></jsp:include>
 <script type="text/javascript">
 var host = "<%=path%>"; //http://localhost:8080/picture/
 </script>
