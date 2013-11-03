@@ -99,7 +99,7 @@ $(document).ready(function (){
 					</c:choose>
 				</c:forEach>  	
 				
-				<div id="about">
+				<div id="about" onclick="window.open('<%=path%>/about','_blank')">
 					<span id="aboutTxt">ABOUT US</span>
 				</div>
 				<div class="seperateLien"><span>|</span></div>
