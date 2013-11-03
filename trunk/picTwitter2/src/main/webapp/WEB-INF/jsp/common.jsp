@@ -14,11 +14,13 @@
 <head>
 <style type="text/css">
 .img_background {
-	background: url("<%=path%>/resources/img/main_icon.png.gif") no-repeat 	scroll 0 0 rgba(0, 0, 0, 0);
+	background-image: url("<%=path%>/resources/img/main_icon.png.gif");	
+	background: url("<%=path%>/resources/img/main_icon.png.gif")  no-repeat 	scroll 0 0 rgba(0, 0, 0, 0);
 }
 
 .img_array_background {
-	background: url("<%=path%>/resources/img/page_button.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+	background-image: url("<%=path%>/resources/img/page_button.gif");
+	background: url("<%=path%>/resources/img/page_button.gif")  no-repeat scroll 0 0 rgba(0, 0, 0, 0);
 }
 </style>
 </head>

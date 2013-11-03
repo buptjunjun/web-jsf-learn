@@ -285,8 +285,8 @@ $(document).ready(function (){
 <div id="dialogLogin" style="display:none" title="Signin">
 	<%-- <div class="loginItem" id="loginItemFB"><img width=160 height=40 src="<%=path %>/resources/img/btn-login-facebook.png"/></div>	 --%>
 	<div class="loginItem" id="loginItemFB">
-		<div class="loginItemLeft"><img width=40 height=40  src="${user.pic}"  onerror="$(this).prop('src','<%=path%>/resources/img/user_head.png');"></img></div>
-		<div class="loginItemRight"><span>SIGN IN WITH FACEBOOK</span></div>
+			<div class="loginItemLeft"><img width=40 height=40  src="<%=path%>/resources/img/FaceBook_256x256.png"  onerror="$(this).prop('src','<%=path%>/resources/img/user_head.png');"></img></div>		
+			<div class="loginItemRight"><span>SIGN IN WITH FACEBOOK</span></div>
 	</div>
 </div>
 
