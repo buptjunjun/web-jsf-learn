@@ -186,7 +186,7 @@ ul li {
 
 #arrow {
 	top: 260px;
-	width: 600px;
+	width: 700px;
 	height: auto;
 	z-index: 999;
 	position: fixed;
@@ -229,15 +229,8 @@ ul li {
 
 #rating
 {
-	padding-top:10px;
-	margin-left:40px;
-	margin-right:40px;
-	padding-bottom:10px;
-	position:fixed;
-	top:150px;
-	left:700px;
 	float:right;
-	z-index: 999;
+	cursor:pointer;
 }
 .ratingItem
 {
@@ -635,19 +628,24 @@ function next()
 	</div>
 	<div id="content">
 		<div id="left">
-			<div id="rating">
-					<div class="ratingItem img_background good"><span>${item.good}</span></div>
-					<div class="ratingItem img_background bad"><span>${item.bad}</span></div>
-					<%-- <div class="ratingItem img_background post"><span>${item.comment}</span></div> --%>
-					<div style="clear: both"></div>
-			</div>
 				
 			<div id="pic">
 				<div id="arrow">
 					<div id="arrayleft" class="img_array_background leftarrow"
-						title="previous one"></div>
+						title="previous one">
+					</div>
+					
+					<div id="rating">
+							<div class="ratingItem img_background good"><span>${item.good}</span></div>
+							<div class="ratingItem img_background bad"><span>${item.bad}</span></div>
+							<%-- <div class="ratingItem img_background post"><span>${item.comment}</span></div> --%>
+							<div style="clear: both"></div>
+					</div>
+					
 					<div id="arrayright" class="img_array_background rightarrow"
-						title="next one"></div>
+						title="next one">
+					</div>
+						
 					<div style="clear: both"></div>
 				</div>
 				<span class="hiddenid">${item.id}</span> 

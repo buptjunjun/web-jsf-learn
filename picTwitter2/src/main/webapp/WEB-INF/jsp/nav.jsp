@@ -9,6 +9,9 @@
 	String path =  "http://" + request.getServerName() + ":" + request.getServerPort()+""+request.getContextPath();
 	//System.out.println("path="+path);
 %>
+
+<html>
+<head>
 <script type="text/javascript">
 var host = "<%=path%>"; //http://localhost:8080/picture/
 $(document).ready(function (){
@@ -25,8 +28,7 @@ $(document).ready(function (){
 	});
 </script>
 
-<html>
-<head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style type="text/css">
 	.tagselect {
@@ -79,9 +81,12 @@ $(document).ready(function (){
 	{
 		font-size:12px;
 		margin-right:5px;
+		margin-left:5px;
 	}
 	
 </style>
+</head>
+
 	<jsp:include page="login.jsp"></jsp:include>
 	<div id="nav">		
 		<div id="navdetail">
@@ -104,9 +109,18 @@ $(document).ready(function (){
 				</div>
 				<div class="seperateLien"><span>|</span></div>
 				<div id="login" >
-					<div style="float:left">
-						<img id="userhead" style="" width="20" height="20" src="${user.pic}" onerror="$(this).prop('src','<%=path%>/resources/img/user_head.png');"/>
-					</div>
+					<c:choose>		
+					   <c:when test="${user!=null && user.id!=null }"> 
+					   		<div style="float:left">
+								<img id="userhead" style="" width="20" height="20" src="${user.pic}" onerror="$(this).prop('src','<%=path%>/resources/img/user_head.png');"/>
+							</div>
+					   </c:when>
+					   <c:otherwise>
+					   		<div style="float:left">
+								<img id="userhead" style="" width="20" height="20" src='<%=path%>/resources/img/user_head.png' onerror="$(this).prop('src','<%=path%>/resources/img/user_head.png');"/>
+							</div>
+					   </c:otherwise>				  
+					</c:choose>
 					<div style="float:left">
 						<span id="userName">${user.name}</span>		
 						<span id="loginBtn">LOGIN</span>
@@ -119,7 +133,7 @@ $(document).ready(function (){
 		</div>			
 	</div>
 	
-
 <script type="text/javascript">
 refresh();
 </script>
+</html>
