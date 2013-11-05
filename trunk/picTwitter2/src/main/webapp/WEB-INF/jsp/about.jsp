@@ -33,6 +33,7 @@ div
 	padding-top:200px;
 	margin:auto;
 	width:800px;
+	text-align:left;
 	
 }
 
@@ -45,6 +46,9 @@ div
 
 	<div id="content">
 		<div id="aboutDetail">
+		<span style="color:red; font-size:16px;">All the content of Picfalls are from Internet, if we infringe your<br/>interests and you can prove it ,please contact us.</span>
+		<br/>
+		<br/>
 		<span style="color:black; font-size:20px;">Email:</span>
 		<span style="color:red; font-size:18px;">buptjunjun#gmail.com </span>
 		<span style="color:black;font-size:	16px;">(please replace '#' with '@')</span>
