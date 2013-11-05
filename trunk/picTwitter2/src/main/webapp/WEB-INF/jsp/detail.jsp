@@ -207,14 +207,13 @@ ul li {
 	height: 48;
 	margin-right: 2px;
 }
-
 .detail_addthis
 {
 	width:300px;
 	float:left;
 	margin-top:10px;
 	margin-left:50px;
-}
+} 
 
 #desc
 {
@@ -638,6 +637,26 @@ function next()
 					<div id="rating">
 							<div class="ratingItem img_background good"><span>${item.good}</span></div>
 							<div class="ratingItem img_background bad"><span>${item.bad}</span></div>
+							<div>
+								<!-- AddThis Button BEGIN -->
+								<div class="addthis_toolbox addthis_default_style addthis_16x16_style">
+									<a class="addthis_button_preferred_1"></a>
+									<a class="addthis_button_preferred_2"></a>
+									<a class="addthis_button_preferred_3"></a>
+									<a class="addthis_button_compact"></a>
+									<a class="addthis_counter addthis_bubble_style"></a>
+									</div>
+									<script type="text/javascript">
+										var addthis_config = {"data_track_addressbar":true};
+										var addthis_share =
+										{
+												url:'<%=path%>/${item.tag}/${item.id}',
+												title:'${item.desc} (from picfalls)'
+										};
+									</script>
+									<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5258fdaa3b761a84"></script>
+									<!-- AddThis Button END -->
+							</div>
 							<%-- <div class="ratingItem img_background post"><span>${item.comment}</span></div> --%>
 							<div style="clear: both"></div>
 					</div>
@@ -668,28 +687,27 @@ function next()
 				</c:choose>			
 				
 				<div style="float:left"> <textarea class="cmtContex" id="comment-box" name="comment" placeholder="say something..." selectionstart="0" selectionend="0"></textarea></div>
-					<div class="detail_addthis">
-					<!-- AddThis Button BEGIN -->
-						<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
-						<a class="addthis_button_preferred_1"></a>
-						<a class="addthis_button_preferred_2"></a>
-						<a class="addthis_button_preferred_3"></a>
-						<a class="addthis_button_preferred_4"></a>
-						<a class="addthis_button_compact"></a>
-						<a class="addthis_counter addthis_bubble_style"></a>
-						</div>
-						<script type="text/javascript">
-							var addthis_config = {"data_track_addressbar":true};
-							var addthis_share =
-							{
-									url:'<%=path%>/${item.tag}/${item.id}',
-									title:'${item.desc} (from picfalls)'
-							};
-						</script>
-						<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5258fdaa3b761a84"></script>
-						<!-- AddThis Button END -->
-					</div>
 					
+					<div class="detail_addthis">
+								<!-- AddThis Button BEGIN -->
+								<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+									<a class="addthis_button_preferred_1"></a>
+									<a class="addthis_button_preferred_2"></a>
+									<a class="addthis_button_preferred_3"></a>
+									<a class="addthis_button_compact"></a>
+									<a class="addthis_counter addthis_bubble_style"></a>
+									</div>
+									<script type="text/javascript">
+										var addthis_config = {"data_track_addressbar":true};
+										var addthis_share =
+										{
+												url:'<%=path%>/${item.tag}/${item.id}',
+												title:'${item.desc} (from picfalls)'
+										};
+									</script>
+									<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5258fdaa3b761a84"></script>
+									<!-- AddThis Button END -->
+						</div>
 					<div id="submit">					
 						<button id="submitBtn" type="submit">submit</button>
 					</div>
