@@ -531,7 +531,7 @@ function next()
 				<c:forEach items="${comments}" var="comment">
 					<div class="oneComment">
 						<div class="userPic">
-							<img width=50 height=50 src="${comment.user.pic}" />
+							<img width=50 height=50 src="${comment.user.pic}" onerror="$(this).prop('src','<%=path%>/resources/img/user_head.png');" />
 							<div style="clear: both"></div>
 						</div>
 						<div class="usercomment">
