@@ -472,9 +472,14 @@ function next()
 			</div>
 
 			<div id="comment">
-				<img width=50 height=50
-					src="http://tp1.sinaimg.cn/1641153660/50/5627699277/1" />
-				
+				<c:choose>
+					<c:if test="${user!=null && user.id !=null &&  user.id !='' }">
+						<img width=50 height=50 src="${user.pic}" />
+					</c:if>
+					<c:otherwise>
+						<img width=50 height=50 src="<%=path%>/resources/img/user_head.png" onerror="$(this).prop('src','<%=path%>/resources/img/user_head.png');" />
+					</c:otherwise>
+				</c:choose>
 					<textarea class="cmtContex" id="comment-box" name="comment"
 						placeholder="say something..." selectionstart="0" selectionend="0"></textarea>
 
