@@ -17,8 +17,11 @@ import org.junjun.bean.part1.UIComment;
 import org.junjun.bean.part1.User;
 import org.junjun.mongo.DAOMongo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.authentication.UserCredentials;
+import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Order;
 import org.springframework.data.mongodb.core.query.Query;
@@ -32,12 +35,19 @@ public class PicServicesMongo implements PicServices{
 
 	public static final  String dbname = "picdb";
 	MongoOperations mongoOps = null;
+	public static String host = "localhost";
+	public static int port = 27017;
+	public static String name = "picfalls";
+	public static String password="1234abcd1";
+	
 	public PicServicesMongo() {
 		try
 		{
-			Mongo mongo = new Mongo("42.96.143.59",27017);
+			Mongo mongo = new Mongo(host,port);
 			mongo.setWriteConcern(WriteConcern.NONE);
-			mongoOps = new MongoTemplate(mongo, dbname);
+			UserCredentials userCredentials = new UserCredentials(name, password);
+			MongoDbFactory factory = new  SimpleMongoDbFactory(mongo,dbname, userCredentials);
+			mongoOps = new MongoTemplate(factory);
 		} catch (UnknownHostException e)
 		{
 			// TODO Auto-generated catch block
