@@ -658,7 +658,15 @@ function next()
 				</div>
 			
 			<div id="detailComment">
-				<div style="float:left;margin-left:20px"><img width=50 height=50 src="${user.pic}"  onerror="$(this).prop('src','<%=path%>/resources/img/user_head.png');" /></div>
+				<c:choose>		
+					  <c:when test="${user!=null && user.id!=null }"> 
+					   		<div style="float:left;margin-left:20px"><img width=50 height=50 src="${user.pic}"  onerror="$(this).prop('src','<%=path%>/resources/img/user_head.png');" /></div>
+					  </c:when>
+					   <c:otherwise>
+					   		<div style="float:left;margin-left:20px"><img width=50 height=50 src="<%=path%>/resources/img/user_head.png" /></div>
+					  </c:otherwise>	
+				</c:choose>			
+				
 				<div style="float:left"> <textarea class="cmtContex" id="comment-box" name="comment" placeholder="say something..." selectionstart="0" selectionend="0"></textarea></div>
 					<div class="detail_addthis">
 					<!-- AddThis Button BEGIN -->

@@ -117,7 +117,7 @@ $(document).ready(function (){
 					   </c:when>
 					   <c:otherwise>
 					   		<div style="float:left">
-								<img id="userhead" style="" width="20" height="20" src='<%=path%>/resources/img/user_head.png' onerror="$(this).prop('src','<%=path%>/resources/img/user_head.png');"/>
+								<img id="userhead" style="" width="20" height="20" src='<%=path%>/resources/img/user_head.png'/>
 							</div>
 					   </c:otherwise>				  
 					</c:choose>
