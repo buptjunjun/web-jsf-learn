@@ -45,7 +45,7 @@ public class Item
 	}
 	private void caculateTotal()
 	{
-		this.total = this.good+this.bad/2+this.comment*2+this.collect*3;
+		this.total = this.good+this.bad+this.comment*2+this.collect*3;
 	}
 	
 	public String getUrl1() {
