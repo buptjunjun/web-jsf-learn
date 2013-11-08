@@ -11,7 +11,7 @@
 <jsp:include page="common.jsp"></jsp:include>
 <html>
 <head>
-<title>pic galaxy</title>
+<title>${item.tag} - ${item.desc} - picture falls</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link type="text/css" rel="stylesheet" href="<%=path %>/resources/style/common.css" />
 <script>
