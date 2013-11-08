@@ -13,7 +13,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>pic galaxy</title>
+<title>${currtag} - picture falls</title>
 <link type="text/css" rel="stylesheet" href="<%=path%>/resources/style/common.css" /> 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 <style type="text/css">
