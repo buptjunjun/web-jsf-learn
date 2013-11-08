@@ -90,7 +90,7 @@ function loadMore()
 							$copy.find(".bad span").text(item.bad);
 							$copy.find(".collect span").text(item.collect);
 							$copy.find(".post span").text(item.comment);	
-							$copy.find(".comment").prop("itemid",item.id);
+							$copy.find(".comment").attr("itemid",item.id);
 							var shortestColumn = "#column"+shortest; 
 							$(shortestColumn).append($copy);							
 						}
