@@ -35,7 +35,7 @@ public class PicServicesMongo implements PicServices{
 
 	public static final  String dbname = "picdb";
 	MongoOperations mongoOps = null;
-	public static String host = "localhost";
+	public static String host = "42.96.143.59";
 	public static int port = 27017;
 	public static String name = "picfalls";
 	public static String password="1234abcd1";
@@ -58,6 +58,20 @@ public class PicServicesMongo implements PicServices{
 			e.printStackTrace();
 		}
 		
+		/*try
+		{
+			Mongo mongo = new Mongo(host,port);
+			mongo.setWriteConcern(WriteConcern.NONE);
+			mongoOps = new MongoTemplate(mongo, dbname);
+		} catch (UnknownHostException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MongoException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 	}
 	  
 	
@@ -230,7 +244,7 @@ public class PicServicesMongo implements PicServices{
 			if(c== null)
 				c = Criteria.where("date").lte(new Date());
 			else
-				c.where("date").lte(new Date());
+				c.and("date").lte(new Date());
 		}
 		else
 		{
@@ -253,7 +267,7 @@ public class PicServicesMongo implements PicServices{
 			if(c== null)
 				c = Criteria.where("date").gte(date1);
 			else
-				c.where("date").gte(date1);
+				c.and("date").gte(date1);
 		}
 		
 		Query query = new Query(c);
@@ -268,7 +282,7 @@ public class PicServicesMongo implements PicServices{
 	
 	public Item getNextItem(String tag, String id,String sort,int skip) 
 	{
-		Criteria c =  Criteria.where("tag").is(tag).where("id").ne(id);	
+		
 		if(skip > Constant.MAX_SKIP*Constant.REST_LIMIT || skip < 0)
 			skip = 0;
 		
@@ -277,6 +291,7 @@ public class PicServicesMongo implements PicServices{
 			sort = Constant.default_sort;
 		
 		String sortBy = "date";
+		Date date1 = PicUtil.getDateBefore(new Date(), 30*12*10);
 		if(sort.equals(Constant.newest))
 		{
 			sortBy = "date";
@@ -285,7 +300,6 @@ public class PicServicesMongo implements PicServices{
 		{
 			sortBy = "total";
 			Date now = new Date();
-			Date date1 = null;
 			if(Constant.weekly.equals(sort))
 			{
 				date1 = PicUtil.getDateBefore(now, 7); // one week ago
@@ -299,9 +313,9 @@ public class PicServicesMongo implements PicServices{
 				date1 = PicUtil.getDateBefore(now, 30*12*10); //ten year ago
 			}
 			
-			c.where("date").gte(date1);
+			
 		}
-		
+		Criteria c =  Criteria.where("tag").is(tag).and("id").ne(id).and("date").gte(date1);
 		Query query = new Query(c);
 		query.sort().on(sortBy, Order.DESCENDING);
 		query.skip(skip);
@@ -311,45 +325,7 @@ public class PicServicesMongo implements PicServices{
 	
 	public Item getPreItem(String tag, String id,String sort,int skip) 
 	{
-
-		Criteria c =  Criteria.where("tag").is(tag).where("id").ne(id);	
-		if(skip > Constant.MAX_SKIP * Constant.REST_LIMIT || skip < 0)
-			skip = 0;
-		
-		// check the sort is within the sort types
-		if(!Constant.sortby.contains(sort))
-			sort = Constant.default_sort;
-		
-		String sortBy = "date";
-		if(sort.equals(Constant.newest))
-		{
-			sortBy = "date";
-		}
-		else
-		{
-			sortBy = "total";
-			Date now = new Date();
-			Date date1 = null;
-			if(Constant.weekly.equals(sort))
-			{
-				date1 = PicUtil.getDateBefore(now, 7); // one week ago
-			}
-			else if(Constant.monthly.equals(sort))    
-			{
-				date1 = PicUtil.getDateBefore(now, 30); // one month ago
-			}
-			else if(Constant.hottest.equals(sort))
-			{
-				date1 = PicUtil.getDateBefore(now, 30*12*10); //ten year ago
-			}
-			
-			c.where("date").gte(date1);
-		}
-		
-		Query query = new Query(c);
-		query.sort().on(sortBy, Order.ASCENDING);
-		query.skip(skip);
-		return this.mongoOps.findOne(query, Item.class);
+		return this.getNextItem(tag, id, sort, skip);
 	}
 
 
