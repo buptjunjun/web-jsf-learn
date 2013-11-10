@@ -7,25 +7,30 @@ import java.util.List;
 import org.junjun.bean.part1.Constant;
 import org.junjun.bean.part1.Item;
 import org.junjun.bean.part1.UIComment;
+import org.junjun.bean.part1.User;
 import org.junjun.controller.logic.PicServices;
 import org.junjun.controller.logic.PicServicesMongo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
+@SessionAttributes("user")
 public class PicDetailController {
 	
 	private PicServices picservice = new PicServicesMongo();
 	private static String defaultType = "pictures";
-
-	
-	
+	@ModelAttribute("user")
+    public User user() {
+       return new User(); // populates form for the first time if its null
+   }
 	@RequestMapping(value = "/{tag}/{id}", method = RequestMethod.GET)
-	public String showInputPage ( @RequestParam(required=false) String sort,@RequestParam(required=false) Integer skip, @PathVariable String tag, @PathVariable String id, Model model )
+	public String showInputPage ( @RequestParam(required=false) String sort,@RequestParam(required=false) Integer skip, @PathVariable String tag, @PathVariable String id, @ModelAttribute User user, Model model )
 	{	
 		// if item is not in the buffer , set it to a buffered item;
 		Item item = picservice.getItem(id);
@@ -43,7 +48,7 @@ public class PicDetailController {
 		model.addAttribute("currtag", tag);	
 		model.addAttribute("item", item);
 		
-		List<Item> recommends = this.picservice.getItemByTag(tag, 0, Constant.weekly, 3);
+		List<Item> recommends = this.picservice.getItemByTag(tag, 0, Constant.newest, 3);
 		model.addAttribute("recommends", recommends);
 /*		List<UIComment> comments = picservice.getUIComments(id);
 		model.addAttribute("comments", comments);*/
