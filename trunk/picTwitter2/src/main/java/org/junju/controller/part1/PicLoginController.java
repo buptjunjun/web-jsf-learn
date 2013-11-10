@@ -42,7 +42,7 @@ public class PicLoginController {
 			return "login";
 	}
 	@RequestMapping(value="/login",method = RequestMethod.POST)
-	public String login ( @ModelAttribute("login") Boolean login, User user,Model model)
+	public String login ( @ModelAttribute("login") Boolean login, @ModelAttribute User user,Model model)
 	{	
 		if(user == null || StringUtils.isBlank( user.getSource()) ||StringUtils.isBlank( user.getIdSource()))
 		{
@@ -77,11 +77,9 @@ public class PicLoginController {
     }
 	
 	@RequestMapping(value="/logout",method = RequestMethod.GET)
-	public String logout ( @ModelAttribute(value="login") Boolean login, Model model,SessionStatus session)
+	public String logout ( Model model,SessionStatus session)
 	{	
 		session.setComplete();
-		System.out.println();
-		System.out.println(login);
 		return "redirect:/";
     }
 

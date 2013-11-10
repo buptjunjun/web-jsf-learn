@@ -4,6 +4,7 @@ package org.junju.controller.part1;
 import java.util.List;
 import org.junjun.bean.part1.Constant;
 import org.junjun.bean.part1.Item;
+import org.junjun.bean.part1.User;
 import org.junjun.controller.logic.PicServices;
 import org.junjun.controller.logic.PicServicesMongo;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-@SessionAttributes({"login","hello"})
+@SessionAttributes({"login","user"})
 public class PicIndexController {
 	
 	public static final int LIMIT = 300;
@@ -28,13 +29,18 @@ public class PicIndexController {
        return false; // populates form for the first time if its null
    }
 	
+	@ModelAttribute("user")
+    public User user() {
+       return new User(); // populates form for the first time if its null
+   }
+	
 	public PicIndexController() 
 	{
 		
 	}
 	
 	@RequestMapping(value={"/",""},method = RequestMethod.GET)
-	public String index(@RequestParam(value="sort",required=false) String sort,Model model)
+	public String index(@RequestParam(value="sort",required=false) String sort, @ModelAttribute User user,Model model)
 	{
 		model.addAttribute("tags", this.picservice.getTag());		
 		model.addAttribute("sorts", Constant.sortby);	
