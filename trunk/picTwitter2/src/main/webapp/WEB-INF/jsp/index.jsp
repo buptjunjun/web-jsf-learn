@@ -39,7 +39,7 @@ function resetquerying()
 function loadMore()
 {
 	if(window.page == null || window.page == undefined)
-		window.page = 1;
+		window.page = 3;
 	page = window.page;
 	
 	var searchURL = host+"/api/loadmore";
@@ -51,7 +51,7 @@ function loadMore()
 				+ '","param3":"' + page
 				+ '"}'; 
 	querying = true;
-	setTimeout(resetquerying, 3000);
+	setTimeout(resetquerying, 2000);
 	$(function()
 	{
 		var url =  searchURL;
@@ -131,7 +131,7 @@ $(window).scroll(function(){
 	
 	// if scrollbar is within px of bottom loadMore content
 	var span=$(document).height() - $(this).scrollTop() - $(this).height();
-    if (span <100 && querying == false) 
+    if (span <500 && querying == false) 
     	loadMore();  
 
 });  

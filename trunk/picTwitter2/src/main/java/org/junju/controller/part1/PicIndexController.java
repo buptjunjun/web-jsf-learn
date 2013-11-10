@@ -56,7 +56,7 @@ public class PicIndexController {
 		if(!Constant.sortby.contains(sort))
 			sort = Constant.default_sort;
 		
-		List<Item> items = this.picservice.getItemByTag(null, 0,sort, Constant.LIMIT);
+		List<Item> items = this.picservice.getItemByTag(null, 0,sort, Constant.LIMIT*3);
 		
 		model.addAttribute("items", items);
         return "index";
@@ -84,7 +84,7 @@ public class PicIndexController {
 		if(!Constant.sortby.contains(sort))
 			sort = Constant.default_sort;
 		
-		List<Item> items = this.picservice.getItemByTag(tag, 0, sort, Constant.LIMIT);
+		List<Item> items = this.picservice.getItemByTag(tag, 0, sort, Constant.LIMIT*3);
 		
 		model.addAttribute("items", items);
         return "index";
