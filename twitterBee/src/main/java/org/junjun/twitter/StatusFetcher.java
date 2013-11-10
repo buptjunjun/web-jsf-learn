@@ -13,6 +13,7 @@ import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.User;
 
 public class StatusFetcher extends Thread 
 {
@@ -24,6 +25,7 @@ public class StatusFetcher extends Thread
 		 System.out.println("fetching :"+tu.getId()+"("+tu.getName()+")...");
 		 Paging paging = new Paging(1);
 		 paging.setCount(100);
+		 
 		 ResponseList<Status> ret = twitter.getUserTimeline(tu.getName(),paging);
 		 
 		 List<TwitStatus> lt = new ArrayList<TwitStatus>();
@@ -36,7 +38,7 @@ public class StatusFetcher extends Thread
 				 tws.setDate(status.getCreatedAt());
 				 tws.setStatus(status);
 				 tws.setTag(tu.getTag());
-				 tws.setUserid(tu.getId());
+				 tws.setUserid(status.getUser().getId());
 				 tws.setType((status.getMediaEntities() !=null && status.getMediaEntities().length  > 1)? status.getMediaEntities()[0].getType():TwiConstant.TypeText);
 				 tws.setScore(status.getRetweetCount()+status.getFavoriteCount());
 				 lt.add(tws);
@@ -44,8 +46,55 @@ public class StatusFetcher extends Thread
 		 }
 		 
 		 return lt;
+		 
 	 }
 	 
+	 
+	 public List<TwitStatus> fetchOlderThan(TwitUser tu, long maxid) throws TwitterException
+	 {
+		 long id = tu.getId();
+		 System.out.println("fetching :"+tu.getId()+"("+tu.getName()+")...");
+		 
+		 Paging paging = new Paging(1);
+		 paging.setCount(100);
+		 paging.setMaxId(maxid);
+		 
+		 ResponseList<Status> ret = twitter.getUserTimeline(tu.getName(),paging);
+		 
+		 List<TwitStatus> lt = new ArrayList<TwitStatus>();
+		 if(ret != null)
+		 {
+			 for(Status status:ret)
+			 {
+				 TwitStatus tws = new TwitStatus();
+				 tws.setId(status.getId());
+				 tws.setDate(status.getCreatedAt());
+				 tws.setStatus(status);
+				 tws.setTag(tu.getTag());
+				 tws.setUserid(status.getUser().getId());
+				 tws.setType((status.getMediaEntities() !=null && status.getMediaEntities().length  > 1)? status.getMediaEntities()[0].getType():TwiConstant.TypeText);
+				 tws.setScore(status.getRetweetCount()+status.getFavoriteCount());
+				 lt.add(tws);
+			 }
+		 }
+		 
+		 return lt;
+		 
+	 }
+	 
+	  public long getUserId(String userName)
+	  {
+		  try {
+			User user = twitter.showUser(userName);
+			return user.getId();
+			
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  
+		  return -1l;
+	  }
 	  public static void main(String[] args) {
 		  
 		  
