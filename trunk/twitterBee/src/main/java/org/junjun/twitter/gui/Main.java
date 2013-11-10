@@ -86,6 +86,9 @@ public class Main extends JFrame
 	private JButton selectBtn = new JButton("selectButton");
 	private JButton stop = new JButton("stop");
 	private JButton save2webbtn = new JButton("save2webbtn");
+	
+	private JButton autoSelectBtn = new JButton("AutoSelectBtn");
+	
 	JTextArea jhost = new JTextArea("host");
 	private JTextArea status = new JTextArea("status:-------------------------------------------------------------------------------------------------------------------------------------");
 	private DateChooser dc1 = new DateChooser("yyyy-MM-dd");
@@ -98,6 +101,7 @@ public class Main extends JFrame
 	static int currPosition = -1;
 	private  boolean flag = false;
 	Thread currentThread = null;
+	
 	
 	public Main() {
 		// TODO Auto-generated constructor stub
@@ -194,6 +198,7 @@ public class Main extends JFrame
 		actionpanel.add(this.selectBtn);
 		actionpanel.add(stop);
 		actionpanel.add(save2webbtn);
+		actionpanel.add(this.autoSelectBtn);
 		
 		this.save2webbtn.addActionListener(new Save2WebListener());
 		this.selectBtn.addActionListener(new SelectListener());
@@ -205,6 +210,8 @@ public class Main extends JFrame
 		this.preRes.addActionListener(new PreListener());
 		this.stop.addActionListener(new StopListener());
 		this.getResByTag.addActionListener(new GetResByTag());
+		this.autoSelectBtn.addActionListener(new AutoSelectByNameListener());
+		
 		this.left.add(actionpanel);
 	}	
 	
@@ -595,6 +602,50 @@ public class Main extends JFrame
 			}
 		}
 		
+		// only deal with one tag
+		class AutoSelectByNameListener implements ActionListener
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				currentResPosition = -1;
+				String name = null;
+				Set<String> names = new HashSet<String>();
+				for(JCheckBox jcb:listusers)
+				{
+					if(jcb.isSelected())
+					{
+						name = jcb.getText();
+						names.add(name);
+					}					
+				}
+				
+				
+				Date date = dc1.getDate();
+				String filename = TwitterUtils.fileNameFromDate(date);
+				
+				List<TwitStatus> lts = TwitterUtils.getTwitStatusFromJson(filename);
+				List<TwitResources> tmp = new ArrayList<TwitResources>();
+				for(TwitStatus ts:lts)
+				{
+					List<TwitResources> tmpTrs = rp.process(ts);
+					if(tmpTrs!=null)
+						tmp.addAll(tmpTrs);
+				}
+				
+				lres.clear();
+				for(TwitResources tr:tmp)
+				{
+					if(names.contains(tr.getUserName()))
+						lres.add(tr);
+						
+				}
+				tmp.clear();
+				tmp = null;
+				currentResPosition = -1;
+			}
+		}
+		
+		
 		class GetSelectedResListener implements ActionListener
 		{
 			public void actionPerformed(ActionEvent event) 
@@ -677,6 +728,9 @@ public class Main extends JFrame
 		}
 		
 		
+		
+		
+		
 		public void save2web(List<TwitResources> ltr)
 		{
 			 if(ltr == null)
@@ -710,7 +764,7 @@ public class Main extends JFrame
 			item.setUrl1(tr.getUrl());
 		
 			item.setDesc(tr.getTxt());
-			item.setType(tr.getTag());
+			item.setTag(tr.getTag());
 			item.setCata(tr.getType());
 			
 			Date date = tr.getProcessDate();
