@@ -55,13 +55,9 @@ public class Main {
 				
 				// per user
 				for(TwitUser tu:lus)
-				{
-					long id = sf.getUserId(tu.getName());
-					if(id<0)
-						continue;
-					
+				{					
 					String userName = tu.getName();
-					List<TwitStatus> ltr = TwitterUtils.getTwitStatus(id+"", date, 100);
+					List<TwitStatus> ltr = TwitterUtils.getTwitStatus(tu.getId()+"", date, 100);
 					List<ImprovedStatus>  lis = update.compareOldStatus(ltr); 	
 					Collections.sort(lis);					
 					int size = lis.size()<this.limitPerUser?lis.size():this.limitPerUser;
