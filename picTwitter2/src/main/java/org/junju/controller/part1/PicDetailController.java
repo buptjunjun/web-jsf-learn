@@ -77,6 +77,9 @@ public class PicDetailController {
 			skip--;
 		}
 		
+		if(newItem == null)
+			return "redirect:/"+tag+"/"+id+"?sort="+sort+"&skip="+2;
+		
 		return "redirect:/"+tag+"/"+newItem.getId()+"?sort="+sort+"&skip="+skip;
 		
 	/*	List<UIComment> comments = picservice.getUIComments(id);

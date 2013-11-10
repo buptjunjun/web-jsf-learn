@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @RequestMapping(value="/api")
-@SessionAttributes({"login","user","good","bad","collect"})
+/*@SessionAttributes({"login","user","good","bad","collect"})*/
 public class PicRatingControllerRest
 {
 	
@@ -47,7 +47,7 @@ public class PicRatingControllerRest
 	
 	private PicServices picservice = new PicServicesMongo();
 		
-	 @ModelAttribute("user")
+/*	 @ModelAttribute("user")
 	 public User user() {
 	     return new User(); // populates form for the first time if its null
 	 }
@@ -65,20 +65,20 @@ public class PicRatingControllerRest
 	 public  List<Collect> collect() {
 	     return new ArrayList<Collect>(); // populates form for the first time if its null
 	 }
-	 
+	 */
 	/**
 	 * get resource
 	 * @return
 	 */
 	@RequestMapping(value="/good",method=RequestMethod.POST)
 	@ResponseBody
-	public Object good(@RequestBody String id, @ModelAttribute("good") List<String> good,HttpSession sesson)
+	public Object good(@RequestBody String id/*, @ModelAttribute("good") List<String> good*/)
 	{
 		// if it is not login
-		if(StringUtils.isEmpty(id) || good.contains(id))
+		if(StringUtils.isEmpty(id) /*|| good.contains(id)*/)
 				return "false";
 		
-		good.add(id);	
+		/*good.add(id);*/	
 		
 		Item item = picservice.getItem(id);
 		if(item!=null)
@@ -95,13 +95,13 @@ public class PicRatingControllerRest
 	 */
 	@RequestMapping(value="/bad",method=RequestMethod.POST)
 	@ResponseBody
-	public Object bad(@RequestBody String id, @ModelAttribute("bad") List<String> bad)
+	public Object bad(@RequestBody String id/*, @ModelAttribute("bad") List<String> bad*/)
 	{
 		// if it is not login
-		if(StringUtils.isEmpty(id) || bad.contains(id))
+		if(StringUtils.isEmpty(id) /*|| bad.contains(id)*/)
 				return "false";
 		
-		bad.add(id);	
+		/*bad.add(id);*/	
 		
 		Item item = picservice.getItem(id);
 		if(item!=null)
@@ -117,7 +117,7 @@ public class PicRatingControllerRest
 	 * get resource
 	 * @return
 	 */
-	@RequestMapping(value="/collect",method=RequestMethod.POST)
+/*	@RequestMapping(value="/collect",method=RequestMethod.POST)
 	@ResponseBody
 	public Object collect(@RequestBody String id, @ModelAttribute("collect") List<Collect> collect, @ModelAttribute("user") User user)
 	{
@@ -141,5 +141,5 @@ public class PicRatingControllerRest
 			//picservice.updateItem(item);
 		}
 		return "true";
-	}
+	}*/
 }

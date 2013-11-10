@@ -41,7 +41,7 @@ public class PicServicesMongo implements PicServices{
 	public static String password="1234abcd1";
 	
 	public PicServicesMongo() {
-		try
+/*		try
 		{
 			Mongo mongo = new Mongo(host,port);
 			mongo.setWriteConcern(WriteConcern.NONE);
@@ -56,9 +56,9 @@ public class PicServicesMongo implements PicServices{
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
-		/*try
+		try
 		{
 			Mongo mongo = new Mongo(host,port);
 			mongo.setWriteConcern(WriteConcern.NONE);
@@ -71,7 +71,7 @@ public class PicServicesMongo implements PicServices{
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 	}
 	  
 	
@@ -253,7 +253,7 @@ public class PicServicesMongo implements PicServices{
 			Date date1 = null;
 			if(Constant.weekly.equals(sort))
 			{
-				date1 = PicUtil.getDateBefore(now, 7); // one week ago
+				date1 = PicUtil.getDateBefore(now, 15); // one week ago
 			}
 			else if(Constant.monthly.equals(sort))    
 			{
