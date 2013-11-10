@@ -110,7 +110,7 @@ $(document).ready(function (){
 				<div class="seperateLien"><span>|</span></div>
 				<div id="login" >
 					<c:choose>		
-					   <c:when test="${user!=null && user.id!=null }"> 
+					   <c:when test="${user!=null && user.id!=null  && user.name!=null}"> 
 					   		<div style="float:left">
 								<img id="userhead" style="" width="20" height="20" src="${user.pic}" onerror="$(this).prop('src','<%=path%>/resources/img/user_head.png');"/>
 							</div>
@@ -122,7 +122,15 @@ $(document).ready(function (){
 					   </c:otherwise>				  
 					</c:choose>
 					<div style="float:left">
-						<span id="userName">${user.name}</span>		
+						<c:choose>		
+						   <c:when test="${user!=null && user.id!=null && user.name!=null}"> 
+						   		<span id="userName">${user.name}</span>		
+						   </c:when>
+						   <c:otherwise>
+						   		<span id="userName"></span>		
+						   </c:otherwise>				  
+						</c:choose>					
+						
 						<span id="loginBtn">LOGIN</span>
 						<span id="logoutBtn">LOGOUT</span>
 					</div>
