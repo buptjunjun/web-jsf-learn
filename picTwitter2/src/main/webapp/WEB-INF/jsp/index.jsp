@@ -95,7 +95,7 @@ function loadMore()
 							$(shortestColumn).append($copy);							
 						}
 						
-						window.page = page+1;
+						
 					} 
 				}
 		  });
