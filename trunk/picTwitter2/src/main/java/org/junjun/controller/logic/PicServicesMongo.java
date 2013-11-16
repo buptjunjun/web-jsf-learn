@@ -35,13 +35,13 @@ public class PicServicesMongo implements PicServices{
 
 	public static final  String dbname = "picdb";
 	MongoOperations mongoOps = null;
-	public static String host = "42.96.143.59";
+	public static String host = "199.38.181.47";
 	public static int port = 27017;
 	public static String name = "picfalls";
 	public static String password="1234abcd1";
 	
 	public PicServicesMongo() {
-/*		try
+		try
 		{
 			Mongo mongo = new Mongo(host,port);
 			mongo.setWriteConcern(WriteConcern.NONE);
@@ -56,9 +56,9 @@ public class PicServicesMongo implements PicServices{
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 		
-		try
+	/*	try
 		{
 			Mongo mongo = new Mongo(host,port);
 			mongo.setWriteConcern(WriteConcern.NONE);
@@ -71,7 +71,7 @@ public class PicServicesMongo implements PicServices{
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 	  
 	
@@ -253,7 +253,7 @@ public class PicServicesMongo implements PicServices{
 			Date date1 = null;
 			if(Constant.weekly.equals(sort))
 			{
-				date1 = PicUtil.getDateBefore(now, 15); // one week ago
+				date1 = PicUtil.getDateBefore(now, 30); // one week ago
 			}
 			else if(Constant.monthly.equals(sort))    
 			{
@@ -302,7 +302,7 @@ public class PicServicesMongo implements PicServices{
 			Date now = new Date();
 			if(Constant.weekly.equals(sort))
 			{
-				date1 = PicUtil.getDateBefore(now, 7); // one week ago
+				date1 = PicUtil.getDateBefore(now, 30); // one week ago
 			}
 			else if(Constant.monthly.equals(sort))    
 			{
