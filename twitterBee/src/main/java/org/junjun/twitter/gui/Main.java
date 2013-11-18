@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
 import java.util.Random;
 import java.util.Set;
 
@@ -372,11 +373,14 @@ public class Main extends JFrame
 									}
 								}
 							}
+							TimeUnit.SECONDS.sleep(2);
 						}
 						catch(Exception e)
 						{
 							e.printStackTrace();
 						}
+						
+						
 					}
 					
 					System.out.println("end Fetching at "+new Date().toLocaleString());
@@ -389,7 +393,7 @@ public class Main extends JFrame
 		}
 	}
 
-		
+
 	class StopListener  implements ActionListener
 	{
 		public void actionPerformed(ActionEvent event) 
@@ -768,7 +772,6 @@ public class Main extends JFrame
 			item.setCata(tr.getType());
 			
 			Date date = tr.getProcessDate();
-			date.setTime(date.getTime()-Math.abs(new Random(1000000).nextInt()));
 			item.setDate(date);
 			
 			return item;
