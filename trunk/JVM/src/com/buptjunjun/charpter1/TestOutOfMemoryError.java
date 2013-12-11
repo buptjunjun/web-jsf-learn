@@ -17,9 +17,12 @@ public class TestOutOfMemoryError {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		List<TestOutOfMemoryError> list = new ArrayList<TestOutOfMemoryError>();
+
+
 		while(true)
 		{
 			list.add(new TestOutOfMemoryError());
+            System.out.println("");
 		}
 	}
 
