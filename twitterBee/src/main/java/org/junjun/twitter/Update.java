@@ -7,6 +7,7 @@ import java.util.List;
 import org.junjun.controller.logic.PicServicesMongo;
 import org.junjun.mongo.DAOMongo;
 import org.junjun.twitter.bean.ImprovedStatus;
+import org.junjun.twitter.bean.TwitResources;
 import org.junjun.twitter.bean.TwitStatus;
 
 public class Update 
@@ -41,6 +42,31 @@ public class Update
 			is.caculateRate();
 			
 			ret.add(is);
+			
+		}
+		return ret;
+	}
+	
+	public List<TwitResources> compareOldResources(List<TwitResources> ltnew)
+	{
+		List<TwitResources> ret = new ArrayList<TwitResources>();
+				
+		for(TwitResources newts :ltnew)
+		{
+			TwitResources old = (TwitResources) TwitterUtils.get(newts.getId(), TwitResources.class);
+			
+			if(old == null)
+				continue;
+			
+			long timespan = (new Date().getTime() - old.getDate().getTime())/1000; //seconds
+			
+			
+			float scoreIncreasePercent = ((float)(newts.getScore() - old.getScore()))/old.getScore();
+			
+			int scoreNow = (int) (scoreIncreasePercent*100);
+			newts.setScore(scoreNow);
+			
+			ret.add(newts);
 			
 		}
 		return ret;

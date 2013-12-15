@@ -50,16 +50,15 @@ public class StatusFetcher extends Thread
 	 }
 	 
 	 
-	 public List<TwitStatus> fetchOlderThan(TwitUser tu, long maxid) throws TwitterException
+	 public List<TwitStatus> fetchOlderThan(String tag, String name, long maxid) throws TwitterException
 	 {
-		 long id = tu.getId();
-		 System.out.println("fetching :"+tu.getId()+"("+tu.getName()+")...");
+		 System.out.println("fetching :"+name+"...");
 		 
 		 Paging paging = new Paging(1);
 		 paging.setCount(100);
 		 paging.setMaxId(maxid);
 		 
-		 ResponseList<Status> ret = twitter.getUserTimeline(tu.getName(),paging);
+		 ResponseList<Status> ret = twitter.getUserTimeline(name,paging);
 		 
 		 List<TwitStatus> lt = new ArrayList<TwitStatus>();
 		 if(ret != null)
@@ -70,7 +69,7 @@ public class StatusFetcher extends Thread
 				 tws.setId(status.getId());
 				 tws.setDate(status.getCreatedAt());
 				 tws.setStatus(status);
-				 tws.setTag(tu.getTag());
+				 tws.setTag(tag);
 				 tws.setUserid(status.getUser().getId());
 				 tws.setType((status.getMediaEntities() !=null && status.getMediaEntities().length  > 1)? status.getMediaEntities()[0].getType():TwiConstant.TypeText);
 				 tws.setScore(status.getRetweetCount()+status.getFavoriteCount());

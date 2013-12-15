@@ -1,6 +1,5 @@
 package org.junjun.twitter;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -11,16 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.junjun.twitter.bean.TwiConstant;
 import org.junjun.twitter.bean.TwitResources;
 import org.junjun.twitter.bean.TwitStatus;
-import org.junjun.twitter.bean.TwitUser;
-
 import twitter4j.MediaEntity;
-import twitter4j.Paging;
-import twitter4j.ResponseList;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.User;
+
 
 public class ResourceProcessor extends Thread 
 {
@@ -61,7 +52,7 @@ public class ResourceProcessor extends Thread
 			 tr.setType(type);
 			 tr.setUserName(username);
 			 tr.setDate(createDat);
-			 tr.setDate(new Date());
+			 tr.setProcessDate(new Date());
 			 tr.setPath(path);
 			 tr.setStatusID(ts.getId());
 			 tr.setScore(ts.getScore());
@@ -78,13 +69,29 @@ public class ResourceProcessor extends Thread
 			 tr.setType(TwiConstant.TypeText);
 			 tr.setUserName(username);
 			 tr.setDate(createDat);
-			 tr.setDate(new Date());
+			 tr.setProcessDate(new Date());
 			 tr.setPath(null);
 			 tr.setStatusID(ts.getId());
 			 tr.setScore(ts.getScore());
 			 ret.add(tr);			
 		 }
 		 
+		 return ret;
+	 }
+	 
+	 public List<TwitResources> process(List<TwitStatus> lts)
+	 {
+		 List<TwitResources> ret = new ArrayList<TwitResources>();
+		 
+		 if(lts == null)
+			 return ret;
+		 
+		 for(TwitStatus ts: lts)
+		 {
+			 List<TwitResources> tmp = this.process(ts);
+			 if(tmp!=null)
+				 ret.addAll(tmp);
+		 }
 		 return ret;
 	 }
 	 
