@@ -46,7 +46,7 @@ public class TwitterUtils {
 
 	
 	private static  MongoOperations mongoOps = null;
-	private static String host = "42.96.143.59";
+	private static String host = "127.0.0.1";
 	private static int port = 27017;
 	private static String name = "twitter";
 	private static String password="1234abcd1";
@@ -198,14 +198,28 @@ public class TwitterUtils {
 	{
 		return mongoOps.findById(id, cls);
 	}
+	public static Object get(Object id ,Class cls)
+	{
+		return mongoOps.findById(id, cls);
+	}
 
 	public static List<TwitStatus> getTwitStatus(String userid,Date date, int limit)
 	{
 		List<TwitStatus> ret = null;
 		Criteria c = Criteria.where("userid").is(userid).and("date").lte(date);
-		Query q = new Query(c);
+		Query q = new Query();
 		q.sort().on("date",Order.DESCENDING);
 		ret = mongoOps.find(q, TwitStatus.class);	
+		return ret;
+	}
+	
+	public static List<TwitResources> getTwitResource(String userName,Date date, int limit)
+	{
+		List<TwitResources> ret = null;
+		Criteria c = Criteria.where("userName").is(userName).and("date").lte(date);
+		Query q = new Query(c);
+		q.sort().on("date",Order.DESCENDING);
+		ret = mongoOps.find(q, TwitResources.class);	
 		return ret;
 	}
 	
