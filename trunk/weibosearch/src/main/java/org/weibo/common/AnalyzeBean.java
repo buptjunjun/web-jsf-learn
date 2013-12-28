@@ -7,6 +7,11 @@ package org.weibo.common;
  */
 public class AnalyzeBean {
 
+	// sina:1,tx:2
+	private int type= Constants.SINA;
+	
+	private String keyword = null;
+	
 	// content of the html
 	private String content = null;
 
@@ -15,6 +20,14 @@ public class AnalyzeBean {
 	
 	// the encode of the html
 	private String encode = "utf-8";
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
 
 	public String getContent() {
 		return content;
@@ -41,5 +54,17 @@ public class AnalyzeBean {
 		this.encode = encode;
 	}
 	
+	public String getKeyword() {
+		return keyword;
+	}
 
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	@Override
+	public String toString() 
+	{
+		return this.keyword+" ;  "+this.httpstatus+" , "+this.content;
+	}
 }

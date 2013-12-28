@@ -5,10 +5,19 @@ package org.weibo.common;
  * @author junjun
  *
  */
-public class FetchBean {
-
+public class FetchBean 
+{
+	// sina:1,tx:2
+	private int type= Constants.SINA;
 	private String keyword = null;
 	private String url = null;
+	
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
 	private void generateUrlFromKeyword()
 	{
 		

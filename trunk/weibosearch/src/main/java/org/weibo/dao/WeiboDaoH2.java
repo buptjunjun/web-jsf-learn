@@ -3,7 +3,7 @@ package org.weibo.dao;
 import org.weibo.common.SearchResultID;
 import org.weibo.common.SearchResultWeibo;
 
-public class WeiboDaoTxt implements WeiboDao{
+public class WeiboDaoH2 implements WeiboDao{
 
 
 	public String save(SearchResultWeibo weibos) {

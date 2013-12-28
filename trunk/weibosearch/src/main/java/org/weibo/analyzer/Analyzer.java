@@ -7,5 +7,5 @@ import org.weibo.common.SearchResultID;
 
 public interface Analyzer 
 {
-	List<SearchResultID> analyze(AnalyzeBean ab);
+	SearchResultID analyze(AnalyzeBean ab);
 }
