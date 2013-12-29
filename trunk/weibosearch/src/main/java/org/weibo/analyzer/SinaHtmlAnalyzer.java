@@ -38,7 +38,7 @@ public class SinaHtmlAnalyzer implements Analyzer{
 				ret.getIds().add(id);
 			}
 			
-			logger.info(ab.getKeyword()+" ; "+ab.getHttpstatus()+" ; "+ret.toString());
+			logger.info("Analyze resulst:"+ab.getKeyword()+" ; "+ab.getHttpstatus()+" ;  "+ret.toString());
 			
 		}
 		catch(Exception e)

@@ -2,6 +2,7 @@ package org.weibo.main;
 
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
 import org.weibo.analyzer.Analyzer;
 import org.weibo.analyzer.SinaHtmlAnalyzer;
 import org.weibo.common.AnalyzeBean;
@@ -9,7 +10,6 @@ import org.weibo.common.Constants;
 import org.weibo.common.FetchBean;
 import org.weibo.common.ParamStore;
 import org.weibo.common.SearchResultID;
-import org.weibo.common.Weiboh2;
 import org.weibo.dao.WeiboDao;
 import org.weibo.dao.WeiboDaoH2;
 import org.weibo.fetcher.Fetcher;
@@ -17,20 +17,26 @@ import org.weibo.fetcher.SinaHtmlFetcher;
 
 public class WeiboCrawlerThread extends Thread{
 
+	private static final Logger logger = Logger.getLogger( WeiboCrawlerThread.class);
+	
 	private Fetcher fetcher = null;
 	private Analyzer analyzer = null;
 	private WeiboDao weibodao = null;
-	
-	private boolean flag = true;
 	private FetchBean fb = null;
+	
+	private int interval = 30;             // interval between two fetching rounds .
+	private boolean flag = true;           // flag of stop 
+	           
 	public WeiboCrawlerThread(FetchBean fb)
 	{
+		this.interval = fb.getInterval();
 		this.fb = fb;
 		if(fb.getType() == Constants.SINA)
 		{
 			fetcher = new SinaHtmlFetcher(true);
 			analyzer = new SinaHtmlAnalyzer();
 		}
+		
 		
 		weibodao = new WeiboDaoH2();
 		
@@ -47,7 +53,10 @@ public class WeiboCrawlerThread extends Thread{
 	    	
 	    	try 
 	    	{
-				TimeUnit.SECONDS.sleep(Integer.parseInt(ParamStore.getMessage("interval")));
+	    		
+				logger.info("thread:'"+ fb.getKeyword()+ "' will sleep " + this.interval + " seconds ");
+	    		TimeUnit.SECONDS.sleep(this.interval);
+				
 			}
 	    	catch (NumberFormatException e) 
 			{
@@ -61,5 +70,16 @@ public class WeiboCrawlerThread extends Thread{
 			}	    	
 		}
 		
+	}
+	
+	public void stopMe()
+	{
+		this.flag = false;
+	}
+	
+	public void startMe()
+	{
+		this.flag = true;
+		this.start();
 	}
 }

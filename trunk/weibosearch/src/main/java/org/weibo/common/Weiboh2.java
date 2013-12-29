@@ -38,11 +38,22 @@ public class Weiboh2
     		sql_query_weiboid_by_key_time = ParamStore.getMessage("sql_query_weiboid_by_key_time");
     		sql_update_weiboid = ParamStore.getMessage("sql_update_weiboid");
     		
+    		 try {
+				this.conn = DriverManager.getConnection("jdbc:h2:" + dbDir,user, password);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+    		
+    		 if(this.conn!=null)
+    			 return;
+    		 
     		if(server == null || server.isRunning(false))
     		{	
     			synchronized(Weiboh2.class)
     	    	{
-    				this.createStartServer();
+    				if(server == null || server.isRunning(false))
+    					this.createStartServer();
     	    	}
     		}
 			this.createTables();
@@ -67,27 +78,7 @@ public class Weiboh2
             throw new RuntimeException(e);  
         }  
     }  
-    
-    /**
-     * stop the server
-     */
-    public void stopServer() 
-    {  
-        if (server != null) 
-        {  
-        	try
-        	{
-	           logger.info("stopping h2...");  
-	           server.stop();  
-	           logger.info("stop successed.");
-        	}
-        	catch(Exception e)
-        	{
-        		e.printStackTrace();
-        		logger.error("stop h2 error:"+e.toString());  
-        	}
-        }  
-    }  
+
     
     /**
      * create table from sql file.
@@ -120,12 +111,7 @@ public class Weiboh2
         }  
     }  
     
-    public void test()
-    {
-    	
-    }
-    
-    
+
     /**
      * update the flag of a item
      * @param type
@@ -139,22 +125,22 @@ public class Weiboh2
     	try
     	{
     	 
-    	pstmt = conn.prepareStatement(this.sql_update_weiboid);
-    	
-    	if(StringUtils.isEmpty(id))
-    	   return null;
-    	
-	
-		pstmt.setInt(1, flag);              						//id
-		pstmt.setString(2, id);          							// keyword
-		pstmt.setInt(3,type);   									// type
-
-    		pstmt.execute();
+	    	pstmt = conn.prepareStatement(this.sql_update_weiboid);
+	    	
+	    	if(StringUtils.isEmpty(id))
+	    	   return null;
+	    	
+		
+			pstmt.setInt(1, flag);              						 //id
+			pstmt.setString(2, id);          							// keyword
+			pstmt.setInt(3,type);   									// type
+	    	pstmt.execute();
 
     	}
     	catch(Exception e)
     	{
-    		
+    		e.printStackTrace();
+    		logger.error("update "+ (type==1?"sian":"tx")+":"+id+"  error:"+e.getMessage());
     	}
     	finally
     	{
@@ -191,21 +177,25 @@ public class Weiboh2
     	if(StringUtils.isEmpty(keyword) || ids == null || ids.isEmpty())
     	   return null;
     	
+    	// insert all the ids to database.
     	for(String id : ids)
     	{
+    		Date date = new Date(new java.util.Date().getTime());
     		pstmt.setString(1, id);              						//id
     		pstmt.setString(2, keyword);          						// keyword
     		pstmt.setInt(3, searchIDs.getType());   					// type
     		pstmt.setInt(4,Constants.UNFETCH);                  	    // flag
-    		pstmt.setDate(5, new Date(new java.util.Date().getTime())); //date
+    		pstmt.setDate(5, date); 									//date
     		
     		try
     		{
+    			// perform insert operation
     			pstmt.execute();
+    			logger.info("insert:"+id+","+keyword+","+searchIDs.getType()+","+date);
     		}
     		catch(Exception e)
     		{
-    			logger.error(e.toString());
+    			//logger.error(e.toString());
     		}
     	}
     	}catch(Exception e)
@@ -253,6 +243,34 @@ public class Weiboh2
     		
     	return sri;
     }
+  
+    
+    /**
+     * stop the server
+     */
+    public void stopServer() 
+    {  
+    	synchronized(Weiboh2.class)
+    	{
+	        if (server != null) 
+	        {  
+	        	
+	        	try
+	        	{
+		           logger.info("stopping h2...");  
+		           server.stop();  
+		           logger.info("stop successed.");
+		           server = null;
+	        	}
+	        	catch(Exception e)
+	        	{
+	        		e.printStackTrace();
+	        		logger.error("stop h2 error:"+e.toString());  
+	        	}
+	        }  
+    	}
+    }  
+    
     public static void main(String [] args) 
     {
     	Weiboh2 h2 = new Weiboh2();
@@ -264,8 +282,9 @@ public class Weiboh2
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	h2.stopServer();
+    	//h2.stopServer();
     }
+    
     
     @Override
     protected void finalize() throws Throwable {
@@ -273,4 +292,5 @@ public class Weiboh2
     	super.finalize();
     	this.stopServer();
     }
+    
 }
