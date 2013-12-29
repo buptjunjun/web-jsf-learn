@@ -8,9 +8,13 @@ import org.apache.log4j.Logger;
 import org.weibo.analyzer.Analyzer;
 import org.weibo.analyzer.SinaHtmlAnalyzer;
 import org.weibo.common.AnalyzeBean;
+import org.weibo.common.Constants;
 import org.weibo.common.FetchBean;
+import org.weibo.common.ParamStore;
 import org.weibo.common.SearchResultID;
 import org.weibo.common.Weiboh2;
+import org.weibo.proxy.Proxy;
+import org.weibo.proxy.ProxyManager;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
@@ -85,9 +89,20 @@ public class SinaHtmlFetcher implements Fetcher
             HtmlPage page = null;
             try
             {
+            	// use proxy 
+            	if(ParamStore.getMessage("useproxy").equalsIgnoreCase("true"))
+            	{	
+            		Proxy p =  ProxyManager.getInstance().getOneAvailableProxy();
+	    			this.webClient.getProxyConfig().setProxyHost(p.getIp());
+	    			this.webClient.getProxyConfig().setProxyPort(p.getPort());
+	    			logger.info("HtmlFetcher prepare fetch task , using proxy:"+p);
+            	}
+    		
+    			
+    			logger.info("HtmlFetcher start fetch task: " + (ft.getType()==1?"sian":"tx") + ", keyword:"+ft.getKeyword());
+    			
         	 	// fetch html from the server
                  page = webClient.getPage(url);
-                
                 //System.out.println(page.asXml());
                 
                 WebResponse webresponse = page.getWebResponse();
@@ -111,7 +126,7 @@ public class SinaHtmlFetcher implements Fetcher
                 // if the the httpstatus is 200 , it means we get what we desire and return the content of the html page.
                 ab.setHttpstatus(status);  
                 
-                logger.info("HtmlFetcher # " + (ft.getType()==1?"sian":"tx") + ft.getKeyword()+" httpstatus:"+status);
+                logger.info("HtmlFetcher start fetch task: " + (ft.getType()==1?"sian":"tx") + ", keyword:"+ft.getKeyword()+", httpstatus:"+status+",url="+url);
             }
             catch (Exception e) 
             {                 
@@ -124,6 +139,7 @@ public class SinaHtmlFetcher implements Fetcher
             } 
             finally
             {
+            	webClient.closeAllWindows();
             	page=null;
             }
              
@@ -134,11 +150,12 @@ public class SinaHtmlFetcher implements Fetcher
     {
     	String keywords = "北邮";
     	String url = "http://s.weibo.com/wb/"+URLEncoder.encode(keywords)+"&Refer=index";
-    	FetchBean fb = new FetchBean();
+    	FetchBean fb = new FetchBean(keywords,Constants.SINA);
     	fb.setUrl(url);
     	fb.setKeyword(keywords);
     	SinaHtmlFetcher sf = new SinaHtmlFetcher(true);
     	AnalyzeBean ab = sf.fetch(fb);
+    	System.out.println(ab.getContent());
     	Analyzer sha = new SinaHtmlAnalyzer();
     	SearchResultID srid = sha.analyze(ab);
     	Weiboh2 weiboh2 = new Weiboh2();  	

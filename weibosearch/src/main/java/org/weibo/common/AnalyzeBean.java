@@ -65,6 +65,6 @@ public class AnalyzeBean {
 	@Override
 	public String toString() 
 	{
-		return this.keyword+" ;  "+this.httpstatus+" , "+this.content;
+		return "keywords:"+this.keyword+" ; httpstatus: "+this.httpstatus+" ; "+this.content;
 	}
 }
