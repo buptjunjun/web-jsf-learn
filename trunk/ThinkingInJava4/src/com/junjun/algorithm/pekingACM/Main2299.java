@@ -2,6 +2,7 @@ package com.junjun.algorithm.pekingACM;
 
 import java.util.Scanner;
 
+
 /**
  * 求逆序对的个数：冒泡排序交换的次数等于逆序数的和
  * 采用分治的办法:
