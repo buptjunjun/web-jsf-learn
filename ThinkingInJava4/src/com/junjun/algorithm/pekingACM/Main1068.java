@@ -12,61 +12,60 @@ import java.util.Stack;
 * 
 */
 
-/**
- * 左大括号
- */
-class Leftbrace 
-{
-	public int count = 1;
-}
+
+
 public class Main1068
 {
-	static Stack<Leftbrace> stack = new Stack<Leftbrace>();
-	static  List<Integer> ws = new ArrayList<Integer>();
-	
 	/**
 	 * 根据 括号串来得到W-sequence
 	 * 例如(((()()()))) 的W-sequence 为111456
 	 * 算法:求表达式值的典型算法：用堆栈
-	 * 	         堆栈中只存放左大括号(Leftbrace),count中存放这个括号中所有配对的括号,例如((())())例如第二个左括号应该存放2--(())
-	 *      每当遇到一个")"弹出堆栈中的"(",如果堆栈中还有"(",将当前弹出的"("中的count加入到栈顶
 	 * @param input
 	 * @return
 	 */
-	static String  getWsequence(StringBuffer input)
+	static String  getWsequence(String input)
 	{
-		stack.clear();
-		ws.clear();
-		for(int i = 0;i < input.length();i++)
+		Stack<String> stack = new Stack<String>();
+		input = input.trim();
+		List<Integer> ws = new ArrayList<Integer>();
+		int count = 0;
+		int preStackSize = ws.size();
+		int begin = 0;
+		for(char c: input.toCharArray())
 		{
-			
-			char cur = input.charAt(i);
-			//如果是"("直接压栈
-			if('(' == cur)
+			String cur = c+"";
+			if("(".equals(cur))
 			{
-				stack.push(new Leftbrace());		
+				stack.push(cur);
+				preStackSize = stack.size();
 			}
-			else //如果是")"
+			else
 			{
-				//弹栈
-				Leftbrace curlb = stack.pop();	
-				//如果堆栈中还有"(",将当前弹出的"("中的count加入到栈顶
-				if(stack.size()>0)
-					stack.peek().count+=curlb.count;
-				//加入一个到队列
-				ws.add(curlb.count);
+				String top = stack.peek();
+				if(stack.size() < preStackSize)
+				{
+					int total = 0;
+					for(int i = begin;i < ws.size();i++)
+						total += ws.get(i);
+					total++;
+					
+					ws.add(total);
+					begin = ws.size()-1;
+				}
+				else 
+				{
+					ws.add(1);
+					
+				}
+				stack.pop();
+				
 			}
 			
 		}
 		
-		//统计结果
-		StringBuffer sb = new StringBuffer();
-		for(int i:ws)
-		{
-			sb.append(i+" ");
-		}
-		
-		return sb.toString();			
+		return ws.toString();
+			
+			
 	}
 	
 	/**
@@ -75,12 +74,15 @@ public class Main1068
 	 * @param ps
 	 * @return 括号串
 	 */
-	static public StringBuffer reconstruct(int [] ps)
+	static public String reconstruct(String ps)
 	{
+		ps = ps.trim();
+		String ret = "";
 		StringBuffer sb = new StringBuffer();
 		int currentLeft = 0;
-		for(int countleft:ps)
+		for(char c:ps.toCharArray())
 		{
+			int countleft = Integer.valueOf(c+"");
 			int newLeftParenthesis  = countleft-currentLeft;
 			for(int i = 0;i<newLeftParenthesis;i++)
 			{
@@ -91,40 +93,15 @@ public class Main1068
 			sb.append(")");
 			
 		}
-		return sb;
+		return sb.toString();
 	}
 	
 	public static void main(String[] args)
 	{
-		StringBuffer sb = null;
-		Scanner scan = new Scanner(System.in);
-		List<String> datas = new ArrayList<String>();
-		String line = scan.nextLine();
-		int n = Integer.valueOf(line);
-		for(int i = 0; i < n; i++)
-		{
-			int numcounts = scan.nextInt();
-			int [] nums = new int[numcounts];
-			for(int j = 0;j < numcounts;j++)
-			{
-				int cur = scan.nextInt();
-				nums[j] = cur;
-			}
-			sb= reconstruct(nums);
-			System.out.println(getWsequence(sb));
-		}
-		scan.close();
-		/*String str = null;
-		for(String data:datas)
-		{
-			str = reconstruct(data);
-			System.out.println(getWsequence(str));
-			str = null;
-		}*/
-	/*//	String str = reconstruct("466668999");
-		String str = "(()(()))(()())()";
+		
+		String str = reconstruct("466668999");
 		System.out.println(str);
 		str = getWsequence(str);
-		System.out.println(str);*/
+		System.out.println(str);
 	}
 }
