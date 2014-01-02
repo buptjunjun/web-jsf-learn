@@ -7,12 +7,15 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JOptionPane;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.weibo.common.Constants;
 import org.weibo.common.WeiboDetails;
 
 import weibo4j.Oauth;
 import weibo4j.Timeline;
 import weibo4j.examples.oauth2.Log;
 import weibo4j.model.Status;
+import weibo4j.model.User;
 import weibo4j.model.WeiboException;
 import weibo4j.util.BareBonesBrowserLaunch;
 
@@ -21,17 +24,26 @@ import weibo4j.util.BareBonesBrowserLaunch;
  * @author junjun
  *
  */
-public class WeiboDetailsGetterSina 
+public class WeiboDetailsGetTaskSina extends Thread implements  WeiboDetailsGetTask
 {
-
+	private int type = Constants.SINA;
+	private String id = null;
+	private static Logger logger = Logger.getLogger(WeiboDetailsGetTaskSina.class);
+	
+	WeiboDetailsGetTaskSina(int type,String id)
+	{
+		this.type = type;
+		this.id = id;
+	}
+	
 	private static String accessToken = null;
 	
 	/**
 	 * get the accessToken
 	 */
-	public WeiboDetailsGetterSina() 
+	public WeiboDetailsGetTaskSina() 
 	{
-		synchronized(WeiboDetailsGetterSina.class)
+		synchronized(WeiboDetailsGetTaskSina.class)
 		{
 			if(StringUtils.isEmpty(accessToken))
 			{
@@ -46,19 +58,23 @@ public class WeiboDetailsGetterSina
 					try
 					{
 						accessToken = oauth.getAccessTokenByCode(code).getAccessToken();
+						logger.info("Successfully get access token:"+accessToken);
 					} 
 					catch (WeiboException e) 
 					{
 						if(401 == e.getStatusCode()){
 							Log.logInfo("Unable to get the access token.");
+							logger.info("Unable to get the access token");
 							accessToken = null;
 						}else{
-							e.printStackTrace();
+							logger.info(e.toString());
+							accessToken = null;
 						}
 					}
 				} catch (WeiboException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					logger.info(e1.toString());
 				}
 			}
 		}
@@ -73,19 +89,25 @@ public class WeiboDetailsGetterSina
 	public WeiboDetails process(int type, String id) 
 	{
 		WeiboDetails weibodetails = new WeiboDetails();
-		// TODO Auto-generated method stub
+		
+		logger.info("start to getting weibo:  type="+(type==Constants.SINA?"Sina":"Tecent")+"id="+id);
+		
 		Timeline tm = new Timeline();
 		tm.client.setToken(accessToken);
 		try
 		{
 			// get the details of one weibo according to it's id
 			Status status = tm.showStatus(id);			
-		
+			
 			// convert Status to WeiboDetails
 			weibodetails = Status2WeiboDetails(status);
+			if(weibodetails!=null)
+				logger.info("success to getting weibo: "+weibodetails.toString());
+			
 			return weibodetails;
 		} catch (WeiboException e) {
 			e.printStackTrace();
+			logger.info("fail to getting weibo:  type="+(type==Constants.SINA?"Sina":"Tecent")+"id="+id+";"+e.toString());
 		}
 		catch(Exception e)
 		{
@@ -103,11 +125,34 @@ public class WeiboDetailsGetterSina
 	 */
 	public static WeiboDetails Status2WeiboDetails(Status status)
 	{
-		WeiboDetails weibodetails = new WeiboDetails();
+		if(status == null)
+			return null;
 		
+		WeiboDetails weibodetails = new WeiboDetails();
+		weibodetails.setId(status.getId());
+		weibodetails.setCreateAt(status.getCreatedAt());
+		weibodetails.setContent(status.getText());
+		weibodetails.setCommentCount(status.getCommentsCount());
+		weibodetails.setRettwitCount(status.getRepostsCount());		
+		
+		User user = status.getUser();
+		
+		if(user!=null)
+		{
+			weibodetails.setUserID(user.getId());
+			weibodetails.setUserLocation(user.getLocation());
+			weibodetails.setUserName(user.getName());
+			weibodetails.setUserDescription(user.getDescription());
+		}
 		return weibodetails;
 	}
 	
+	
+	@Override
+	public void run() {
+		
+		
+	}
 	/**
 	 * @param args
 	 */
