@@ -20,7 +20,7 @@ public class WeiboDetails
 	private String userID = null;         // id of user  who creat this weibo
 	private String userName = null;       // name of user create this weibo
 	private String userDescription = null; // description of user  who creat this weibo
-	private String userLocation = null; // loacation of user  who creat this weibo
+	private String userLocation = null;   // loacation of user  who creat this weibo
 
 	public String getUserID() {
 		return userID;
