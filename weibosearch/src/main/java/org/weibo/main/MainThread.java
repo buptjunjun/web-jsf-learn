@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.weibo.common.Constants;
 import org.weibo.common.FetchBean;
 import org.weibo.common.KeywordInfo;
+import org.weibo.common.WeiboUtil;
 
 import com.google.gson.Gson;
 
@@ -125,16 +126,7 @@ public class MainThread {
 	 */
 	public void loadKeyWords()
 	{
-		Gson gson = new Gson();
-		try {
-			List<KeywordInfo> keywords = (List<KeywordInfo>)gson.fromJson(new FileReader(keywords_file),new com.google.gson.reflect.TypeToken<List<KeywordInfo>>() {}.getType());
-			logger.info("load keywords:"+keywords);
-			this.keywords = keywords;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			logger.error("load keywords error :"+e.toString());
-		} 
+		 this.keywords = WeiboUtil.loadKeyWords();		
 	}
 	
 	/**

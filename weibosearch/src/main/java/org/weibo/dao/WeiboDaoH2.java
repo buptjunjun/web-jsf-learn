@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.weibo.common.SearchResultID;
 import org.weibo.common.SearchResultWeibo;
-import org.weibo.common.Weiboh2;
+import org.weibo.common.WeiboMysql;
 
 /**
  * WeiboDao implemented by H2 database.
@@ -14,11 +14,11 @@ import org.weibo.common.Weiboh2;
 
 public class WeiboDaoH2 implements WeiboDao
 {
-	Weiboh2 h2 = null;
+	WeiboMysql h2 = null;
 	
 	public WeiboDaoH2()
 	{
-    	this.h2 = new Weiboh2();
+    	this.h2 = new WeiboMysql();
     	
 	}
 	
@@ -51,10 +51,6 @@ public class WeiboDaoH2 implements WeiboDao
 		return null;
 	}
 	
-	@Override
-	protected void finalize() throws Throwable {
-		// TODO Auto-generated method stub
-		this.h2.stopServer();
-	}
+	
 
 }
