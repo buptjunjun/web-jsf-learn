@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -15,9 +16,12 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.weibo.common.Constants;
+import org.weibo.common.KeywordInfo;
+import org.weibo.common.KeywordInfoManager;
 import org.weibo.common.SearchResultID;
 import org.weibo.common.WeiboDetails;
 import org.weibo.common.WeiboMysql;
+import org.weibo.common.WeiboUtil;
 
 import weibo4j.Oauth;
 import weibo4j.Timeline;
@@ -49,10 +53,7 @@ public class WeiboDetailsGetTaskSina implements  WeiboDetailsGetTask
 		login();
 	}
 	
-	private void reloadWeiboConf()
-	{
-				
-	}
+
 	private void login()
 	{
 		if(StringUtils.isEmpty(accessToken))
@@ -92,12 +93,13 @@ public class WeiboDetailsGetTaskSina implements  WeiboDetailsGetTask
 	
 	
 	public void run() 
-	{
-		
+	{	
 		while(flag)
 		{
+			KeywordInfo ki = KeywordInfoManager.getInstance().getNextKeywordInfo();
+			String k = ki.getKeyword();
 			try {
-				SearchResultID sri =this.database.search("北邮", Constants.UNFETCH, Constants.SINA);
+				SearchResultID sri =this.database.search(k, Constants.UNFETCH, Constants.SINA);
 				List<String> ids = sri.getIds();
 				String keyword = sri.getKeyword();
 				int type = sri.getType();
@@ -105,18 +107,30 @@ public class WeiboDetailsGetTaskSina implements  WeiboDetailsGetTask
 				{
 					for(String id:ids)
 					{
+						// update the flag in db
+						String primaryKey = WeiboUtil.encode(keyword)+id;
+						this.database.update(type, primaryKey, Constants.FETCH);
+						
 						WeiboDetails wd = this.process(keyword, type, id);
 						if(wd==null)
+						{							
+							// update the flag in db
+							primaryKey = WeiboUtil.encode(keyword)+id;
+							this.database.update(type, primaryKey, Constants.UNFETCH);
 							continue;
+						}
 						else
 						{
-							this.save2file(keyword, new Date(), type, wd);
+							// save to file
+							this.save2file(keyword, new Date(), type, wd);							
 						}
+						
+						TimeUnit.SECONDS.sleep(36);
 					}
 				}
 				
 				
-				TimeUnit.SECONDS.sleep(36);
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -141,7 +155,7 @@ public class WeiboDetailsGetTaskSina implements  WeiboDetailsGetTask
 		try
 		{
 			// get the details of one weibo according to it's id
-			Status status = tm.showStatus(id);			
+			Status status = tm.showStatus(id);
 			
 			// convert Status to WeiboDetails
 			weibodetails = Status2WeiboDetails(status);
@@ -149,8 +163,27 @@ public class WeiboDetailsGetTaskSina implements  WeiboDetailsGetTask
 				logger.info("success to getting weibo:keyword="+keyword+ "; "+weibodetails.toString());
 			
 			return weibodetails;
-		} catch (WeiboException e) {
+		}
+		catch (WeiboException e) 
+		{
 			e.printStackTrace();
+			
+			if(e.toString().contains("not exist"))
+			{
+				String primaryKey = WeiboUtil.encode(keyword)+id;
+				this.database.delete(primaryKey);
+			}
+				
+			// sleep 3 minutes if weiboException occurs
+			try 
+			{
+				TimeUnit.MINUTES.sleep(1);
+			}
+			catch (InterruptedException e1) 
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			logger.info("fail to getting weibo::keyword="+ keyword+ "; "+ "  type="+(type==Constants.SINA?"Sina":"Tecent")+"id="+id+";"+e.toString());
 		}
 		catch(Exception e)
@@ -202,20 +235,17 @@ public class WeiboDetailsGetTaskSina implements  WeiboDetailsGetTask
 
 	public void save2file(String keyword,Date date,int type,WeiboDetails weibodetail) throws IOException
 	{
-		String file = this.getfileName(keyword, date, type);
+		String file = WeiboUtil.getfileName(keyword, date, type);
 		File f = new File(file);
 		if(!f.exists())
 		{
 			f.createNewFile();
 			f.setWritable(true);
 		}
-		FileUtils.writeStringToFile(f, weibodetail.toString(), "utf-8", true);
+		FileUtils.writeStringToFile(f, weibodetail.toString()+"\r\n", "utf-8", true);
 		
 		logger.info("save to file:"+f.getAbsolutePath()+": "+weibodetail.toString());
 	}
 	
-	public String getfileName(String keyword,Date date,int type)
-	{
-		return null;
-	}
+
 }
