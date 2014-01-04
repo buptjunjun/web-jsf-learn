@@ -73,11 +73,11 @@ public class WeiboUtil {
 		String t = "Sina";
 		if(type!=Constants.SINA)
 			t = "TX";
-		String folder = "C:/weibo/"+keyword+"/"+t+"/";
+		String folder = "result/"+keyword+"/";
 		File f = new File(folder);
 		if(!f.exists())
 			f.mkdirs();
-		return folder +sdf.format(date)+".txt";
+		return folder +t+"-"+sdf.format(date)+".txt";
 	}
 
 }
