@@ -25,8 +25,8 @@ public class WeiboMysql
     
     private String sql_insert_weiboid ="INSERT INTO WEIBOID VALUES (? , ? , ? , ? , ?,?)";
     private String sql_insert_weibos = "select * from WEIBOID where TYPE=? and FLAG=? and KEYWORD=?";
-    private String sql_query_weiboid_by_key_time = "select * from WEIBOID where TYPE=? and FLAG=? AND KEYWORD='?' LIMIT 1  ORDER BY  FETCHDATE";	
-    private String sql_update_weiboid ="UPDATE WEIBOID SET FLAG=? WHERE ID=? and TYPE=?";
+    private String sql_query_weiboid_by_key_time = "select * from WEIBOID where TYPE=? and FLAG=? AND KEYWORD=? ORDER BY  FETCHDATE  LIMIT 1 ";	
+    private String sql_update_weiboid ="UPDATE WEIBOID SET FLAG=? WHERE PRIMARYKEY=? and TYPE=?";
    
     public WeiboMysql() 
     {
@@ -56,7 +56,7 @@ public class WeiboMysql
      * @param flag
      * @return
      */
-    public String update(int type,String id, int flag) 
+    public String update(int type,String primaykey, int flag) 
     {
     	PreparedStatement pstmt  = null;
     	try
@@ -64,12 +64,12 @@ public class WeiboMysql
     	 
 	    	pstmt = conn.prepareStatement(this.sql_update_weiboid);
 	    	
-	    	if(StringUtils.isEmpty(id))
+	    	if(StringUtils.isEmpty(primaykey))
 	    	   return null;
 	    	
 		
 			pstmt.setInt(1, flag);              						 //id
-			pstmt.setString(2, id);          							// keyword
+			pstmt.setString(2, primaykey);          							// keyword
 			pstmt.setInt(3,type);   									// type
 	    	pstmt.execute();
 
@@ -77,7 +77,7 @@ public class WeiboMysql
     	catch(Exception e)
     	{
     		e.printStackTrace();
-    		logger.error("update "+ (type==1?"sian":"tx")+":"+id+"  error:"+e.getMessage());
+    		logger.error("update "+ (type==1?"sian":"tx")+":"+primaykey+"  error:"+e.getMessage());
     	}
     	finally
     	{
@@ -174,6 +174,7 @@ public class WeiboMysql
     	
     	pstmt.setInt(1, type);
     	pstmt.setInt(2, flag);
+    	pstmt.setString(3,keyword);
     	
     	ResultSet rs = pstmt.executeQuery();
     	while(rs.next())
@@ -190,11 +191,13 @@ public class WeiboMysql
     public static void main(String [] args) 
     {
     	WeiboMysql h2 = new WeiboMysql();
-    	String keywords = "北邮";
+    	String keywords = "北邮 haha";
     	try {
-    		SearchResultID sri = h2.search(keywords, Constants.UNFETCH, Constants.SINA);
-    		System.out.println(sri.toString());
-		} catch (SQLException e) {
+    		//SearchResultID sri = h2.search(keywords, Constants.UNFETCH, Constants.SINA);
+    		h2.update(Constants.SINA, "e0d3da31ceb0a0fdbbe06e232c4b8c443662810632367086", 1);
+    		
+    		//System.out.println(sri.toString());
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
