@@ -17,17 +17,16 @@ import org.apache.log4j.Logger;
 public class WeiboMysql 
 {
 	private static Logger logger = Logger.getLogger(WeiboMysql.class);
-    private String port = "9080";  
     private String url = "jdbc:mysql://localhost:3306/weibo";  
     private String user = "root";  
     private String password = "";  
     private Connection conn =  null;
     
     private String sql_insert_weiboid ="INSERT INTO WEIBOID VALUES (? , ? , ? , ? , ?,?)";
-    private String sql_insert_weibos = "select * from WEIBOID where TYPE=? and FLAG=? and KEYWORD=?";
     private String sql_query_weiboid_by_key_time = "select * from WEIBOID where TYPE=? and FLAG=? AND KEYWORD=? ORDER BY  FETCHDATE  LIMIT 1 ";	
     private String sql_update_weiboid ="UPDATE WEIBOID SET FLAG=? WHERE PRIMARYKEY=? and TYPE=?";
-   
+    private String sql_delete_weiboid ="delete from WEIBOID where PRIMARYKEY=?";
+    
     public WeiboMysql() 
     {
     		// check if the server is not running, create and start it 
@@ -47,6 +46,47 @@ public class WeiboMysql
     	
 	}
     
+    /**
+     * delete a record according to primarykey
+     * @param primaykey
+     * @return
+     */
+    public String delete(String primaykey)
+    {
+      	PreparedStatement pstmt  = null;
+    	try
+    	{
+    	 
+	    	pstmt = conn.prepareStatement(this.sql_delete_weiboid);
+	    	
+	    	if(StringUtils.isEmpty(primaykey))
+	    	   return null;
+	    	
+			pstmt.setString(1, primaykey);          							// keyword		 									
+	    	pstmt.execute();
+
+	    	logger.info("delete "+ "primarykey="+primaykey);
+    	}
+    	catch(Exception e)
+    	{
+    		e.printStackTrace();
+    		logger.error("delete "+ "primarykey="+primaykey+"  error:"+e.getMessage());
+    	}
+    	finally
+    	{
+    		if(pstmt!=null)
+	    	{
+    			try {
+					pstmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	    		pstmt = null;
+	    	}
+    	}
+    	return null;
+    }
    
 
     /**
@@ -72,6 +112,7 @@ public class WeiboMysql
 			pstmt.setString(2, primaykey);          							// keyword
 			pstmt.setInt(3,type);   									// type
 	    	pstmt.execute();
+	    	logger.info("update "+ (type==1?"sian":"tx")+":"+primaykey);
 
     	}
     	catch(Exception e)
@@ -194,7 +235,7 @@ public class WeiboMysql
     	String keywords = "北邮 haha";
     	try {
     		//SearchResultID sri = h2.search(keywords, Constants.UNFETCH, Constants.SINA);
-    		h2.update(Constants.SINA, "e0d3da31ceb0a0fdbbe06e232c4b8c443662810632367086", 1);
+    		h2.delete("e0d3da31ceb0a0fdbbe06e232c4b8c443662810632367086");
     		
     		//System.out.println(sri.toString());
 		} catch (Exception e) {

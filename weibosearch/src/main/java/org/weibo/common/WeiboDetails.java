@@ -121,4 +121,11 @@ public class WeiboDetails
 
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.id+" |+| "+this.createAt+" |+| "+this.commentCount+" |+| "
+			   +this.rettwitCount+" |+| "+this.userID+" |+| "+this.userName+" |+| "
+			   +this.userLocation+" |+| "+this.userDescription+this.content;
+	}
 }
