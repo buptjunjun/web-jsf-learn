@@ -1,7 +1,10 @@
 package org.weibo.common;
 
+import java.io.File;
 import java.io.FileReader;
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -62,5 +65,19 @@ public class WeiboUtil {
 		return null;
 	}
 	
+	
+	static public String getfileName(String keyword,Date date,int type)
+	{
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String t = "Sina";
+		if(type!=Constants.SINA)
+			t = "TX";
+		String folder = "C:/weibo/"+keyword+"/"+t+"/";
+		File f = new File(folder);
+		if(!f.exists())
+			f.mkdirs();
+		return folder +sdf.format(date)+".txt";
+	}
 
 }
