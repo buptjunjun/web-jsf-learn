@@ -24,12 +24,13 @@ public class WeiboCrawlerThread extends Thread{
 	private WeiboDao weibodao = null;
 	private FetchBean fb = null;
 	
-	private int interval = 30;             // interval between two fetching rounds .
+	private int interval = 60;             // interval between two fetching rounds .
 	private boolean flag = true;           // flag of stop 
 	           
 	public WeiboCrawlerThread(FetchBean fb)
 	{
-		this.interval = fb.getInterval();
+		this.interval = 60<fb.getInterval()?fb.getInterval():60;
+		
 		this.fb = fb;
 		if(fb.getType() == Constants.SINA)
 		{

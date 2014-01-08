@@ -19,28 +19,31 @@ public class KeywordInfoManager
 			synchronized(KeywordInfoManager.class)
 			{
 				if(mg==null)
+				{
 					mg = new KeywordInfoManager();
+					// every 10 seconds reload the keywords;
+					new Thread()
+					{
+						public void run() 
+						{
+							synchronized(KeywordInfoManager.class)
+							{
+								keys = WeiboUtil.loadKeyWords();
+							}
+							
+							try {
+								TimeUnit.SECONDS.sleep(10);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						};
+					}.start();
+				}
 			}
 			
 		
-			// every 10 seconds reload the keywords;
-			new Thread()
-			{
-				public void run() 
-				{
-					synchronized(KeywordInfoManager.class)
-					{
-						keys = WeiboUtil.loadKeyWords();
-					}
-					
-					try {
-						TimeUnit.SECONDS.sleep(10);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				};
-			}.start();
+			
 			
 			return mg;
 	}

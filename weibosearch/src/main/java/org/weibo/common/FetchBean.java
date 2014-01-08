@@ -1,5 +1,6 @@
 package org.weibo.common;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 /**
@@ -18,7 +19,12 @@ public class FetchBean
 	
 	public FetchBean(String keyword,int type) 
 	{
-		this.keyword = keyword;
+		try {
+			this.keyword = new String(keyword.getBytes(),"utf-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.type = type;
 		this.generateUrlFromKeywordAndType();
 	}
@@ -49,7 +55,12 @@ public class FetchBean
 	private void generateUrlFromKeywordAndType()
 	{
 		if(this.type == Constants.SINA)
-			this.url = "http://s.weibo.com/wb/"+URLEncoder.encode(this.keyword)+"&Refer=index";
+			try {
+				this.url = "http://s.weibo.com/wb/"+URLEncoder.encode(this.keyword,"utf-8")+"&Refer=index";
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 	
 	

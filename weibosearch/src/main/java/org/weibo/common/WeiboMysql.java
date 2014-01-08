@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
 public class WeiboMysql 
 {
 	private static Logger logger = Logger.getLogger(WeiboMysql.class);
-    private String url = "jdbc:mysql://localhost:3306/weibo";  
+    private String url = "";  
     private String user = "root";  
     private String password = "";  
     private Connection conn =  null;
@@ -29,6 +29,10 @@ public class WeiboMysql
     
     public WeiboMysql() 
     {
+    		this.url = ParamStore.getMessage("url");
+    		this.user =  ParamStore.getMessage("user");
+    		this.password = ParamStore.getMessage("password");
+    		System.out.println("****************url="+url);
     		// check if the server is not running, create and start it 
     		/*sql_insert_weiboid = ParamStore.getMessage("sql_insert_weiboid");
     		sql_query_weiboid_by_key_time = ParamStore.getMessage("sql_query_weiboid_by_key_time");

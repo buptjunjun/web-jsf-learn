@@ -135,6 +135,8 @@ public class MainThread {
 	public void refresh()
 	{
 		this.loadKeyWords();
+		int keywordsSize = this.keywords.size();
+		
 		// for each keyword, create a thread to fetch concerning weibos;
 		for(KeywordInfo keywordinfo :keywords)
 		{
