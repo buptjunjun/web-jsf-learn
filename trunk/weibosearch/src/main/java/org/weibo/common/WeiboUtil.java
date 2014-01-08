@@ -1,7 +1,11 @@
 package org.weibo.common;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -54,7 +58,8 @@ public class WeiboUtil {
 	{
 		Gson gson = new Gson();
 		try {
-			List<KeywordInfo> keywords = (List<KeywordInfo>)gson.fromJson(new FileReader(keywords_file),new com.google.gson.reflect.TypeToken<List<KeywordInfo>>() {}.getType());
+			Reader reader = new BufferedReader((new InputStreamReader(new FileInputStream(keywords_file),"UTF-8")));
+			List<KeywordInfo> keywords = (List<KeywordInfo>)gson.fromJson(reader,new com.google.gson.reflect.TypeToken<List<KeywordInfo>>() {}.getType());
 			logger.info("load keywords:"+keywords);
 			return keywords;
 		} catch (Exception e) {

@@ -17,7 +17,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.weibo.common.Constants;
 import org.weibo.common.KeywordInfo;
-import org.weibo.common.KeywordInfoManager;
 import org.weibo.common.SearchResultID;
 import org.weibo.common.WeiboDetails;
 import org.weibo.common.WeiboMysql;
@@ -108,14 +107,13 @@ public class WeiboDetailsGetTaskSina implements  WeiboDetailsGetTask
 					for(String id:ids)
 					{
 						// update the flag in db
-						String primaryKey = WeiboUtil.encode(keyword)+id;
+						String primaryKey = WeiboUtil.encode(keyword.trim())+id;
 						this.database.update(type, primaryKey, Constants.FETCH);
 						
 						WeiboDetails wd = this.process(keyword, type, id);
 						if(wd==null)
 						{							
 							// update the flag in db
-							primaryKey = WeiboUtil.encode(keyword)+id;
 							this.database.update(type, primaryKey, Constants.UNFETCH);
 							continue;
 						}
@@ -170,7 +168,7 @@ public class WeiboDetailsGetTaskSina implements  WeiboDetailsGetTask
 			
 			if(e.toString().contains("not exist"))
 			{
-				String primaryKey = WeiboUtil.encode(keyword)+id;
+				String primaryKey = WeiboUtil.encode(keyword.trim())+id;
 				this.database.delete(primaryKey);
 			}
 				
