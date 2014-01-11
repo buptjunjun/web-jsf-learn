@@ -1,5 +1,6 @@
 package org.weibo.common;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -121,10 +122,11 @@ public class WeiboDetails
 
 	}
 
+	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		String ret= this.id+" |+| "+this.createAt+" |+| "+this.commentCount+" |+| "
+		String ret= this.id+" |+| "+sdf.format(this.createAt)+" |+| "+this.commentCount+" |+| "
 			   +this.rettwitCount+" |+| "+this.userID+" |+| "+this.userName+" |+| "
 			   /*+this.userLocation+" |+| "+this.userDescription*/+this.content;
 		return ret;
