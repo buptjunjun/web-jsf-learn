@@ -9,9 +9,10 @@ import org.weibo.common.AnalyzeBean;
 import org.weibo.common.Constants;
 import org.weibo.common.FetchBean;
 import org.weibo.common.ParamStore;
-import org.weibo.common.SearchResultID;
+import org.weibo.common.SearchResult;
 import org.weibo.dao.WeiboDao;
 import org.weibo.dao.WeiboDaoH2;
+import org.weibo.dao.WeiboDaoTxt;
 import org.weibo.fetcher.Fetcher;
 import org.weibo.fetcher.SinaHtmlFetcher;
 
@@ -39,7 +40,7 @@ public class WeiboCrawlerThread extends Thread{
 		}
 		
 		
-		weibodao = new WeiboDaoH2();
+		weibodao = new WeiboDaoTxt();
 		
 	}
 	
@@ -49,7 +50,7 @@ public class WeiboCrawlerThread extends Thread{
 		while(flag)
 		{
 	    	AnalyzeBean ab = fetcher.fetch(fb);
-	    	SearchResultID srid = analyzer.analyze(ab);
+	    	SearchResult srid = analyzer.analyze(ab);
 	    	weibodao.save(srid);
 	    	
 	    	try 

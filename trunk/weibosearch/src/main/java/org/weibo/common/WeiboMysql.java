@@ -26,6 +26,7 @@ public class WeiboMysql
     private String sql_query_weiboid_by_key_time = "select * from WEIBOID where TYPE=? and FLAG=? AND KEYWORD=? ORDER BY  FETCHDATE  LIMIT 1 ";	
     private String sql_update_weiboid ="UPDATE WEIBOID SET FLAG=? WHERE PRIMARYKEY=? and TYPE=?";
     private String sql_delete_weiboid ="delete from WEIBOID where PRIMARYKEY=?";
+    private String sql_exist_weiboid ="select * from WEIBOID where PRIMARYKEY=?";
     
     public WeiboMysql() 
     {
@@ -49,6 +50,49 @@ public class WeiboMysql
     			 return;
     	
 	}
+    
+    /**
+     * if one record exist
+     * @param primaykey
+     * @return
+     */
+    public boolean exist(String primaykey)
+    {
+    	PreparedStatement pstmt  = null;
+    	try
+    	{
+    	 
+	    	pstmt = conn.prepareStatement(this.sql_exist_weiboid);
+	    	
+	    	if(StringUtils.isEmpty(primaykey))
+	    	   return false;
+	    	
+			pstmt.setString(1, primaykey);          							// keyword		 									
+	    	ResultSet rs = pstmt.executeQuery();
+	    	//logger.info("delete "+ "primarykey="+primaykey);
+	    	
+	    	return rs.next();
+    	}
+    	catch(Exception e)
+    	{
+    		e.printStackTrace();
+    		logger.error("exist  "+ "primarykey="+primaykey+"  error:"+e.getMessage());
+    	}
+    	finally
+    	{
+    		if(pstmt!=null)
+	    	{
+    			try {
+					pstmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	    		pstmt = null;
+	    	}
+    	}
+    	return false;
+    }
     
     /**
      * delete a record according to primarykey
@@ -146,7 +190,7 @@ public class WeiboMysql
      * @return
      * @throws SQLException
      */
-    public String insert(SearchResultID searchIDs) 
+    public String insert(SearchResult searchIDs) 
     {
     	PreparedStatement pstmt  = null;
     	try
@@ -154,14 +198,15 @@ public class WeiboMysql
 	    	 
 	    	pstmt = conn.prepareStatement(this.sql_insert_weiboid);
 	    	
-	    	List<String> ids = searchIDs.getIds();
+	    	List<WeiboDetails> details = searchIDs.getDetails();
 	    	String keyword = searchIDs.getKeyword();
-	    	if(StringUtils.isEmpty(keyword) || ids == null || ids.isEmpty())
+	    	if(StringUtils.isEmpty(keyword) || details == null || details.isEmpty())
 	    	   return null;
 	    	
 	    	// insert all the ids to database.
-	    	for(String id : ids)
+	    	for(WeiboDetails detail : details)
 	    	{
+	    		String id = detail.getId();
 	    		Date date = new Date(new java.util.Date().getTime());
 	    		pstmt.setString(1, id);              						//id
 	    		pstmt.setString(2, keyword);          						// keyword
@@ -205,10 +250,69 @@ public class WeiboMysql
     }
     
     
-    
-    public SearchResultID search(String keyword,int flag,int type) throws SQLException
+    /**
+     * insert ids to database
+     * 
+     * @throws SQLException
+     */
+    public String insert(String keyword,int type ,WeiboDetails detail) 
     {
-    	SearchResultID sri = new SearchResultID();
+    	PreparedStatement pstmt  = null;
+    	try
+    	{
+	    	 
+	    	pstmt = conn.prepareStatement(this.sql_insert_weiboid);    	
+	    	if(StringUtils.isEmpty(keyword) || detail == null)
+	    	   return null;
+	    	
+	    	keyword = keyword.trim();
+    		String id = detail.getId();
+    		Date date = new Date(new java.util.Date().getTime());
+    		pstmt.setString(1, id);              						//id
+    		pstmt.setString(2, keyword);          						// keyword
+    		pstmt.setInt(3, type);   									// type
+    		pstmt.setInt(4,Constants.UNFETCH);                  	    // flag
+    		pstmt.setDate(5, date); 									//date   		
+    		
+    		String primaryKey = WeiboUtil.encode(keyword)+id;   		
+    		pstmt.setString(6, primaryKey); 						    //primaryKey
+    		
+    		try
+    		{
+    			// perform insert operation
+    			pstmt.execute();
+    			logger.info("insert:"+id+","+keyword+","+type+","+date);
+    		}
+    		catch(Exception e)
+    		{
+    			logger.error(e.toString());
+    		}
+    	
+    	
+    	}catch(Exception e)
+    	{
+    		e.printStackTrace();
+    	}
+    	finally
+    	{
+    		if(pstmt!=null)
+	    	{
+    			try {
+					pstmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	    		pstmt = null;
+	    	}
+    	}
+    	return null;
+    }
+    
+    
+    public SearchResult search(String keyword,int flag,int type) throws SQLException
+    {
+    	SearchResult sri = new SearchResult();
     	sri.setKeyword(keyword.trim());
     	sri.setType(type);
   
@@ -225,7 +329,9 @@ public class WeiboMysql
     	while(rs.next())
     	{
     		String id = rs.getString(1);
-    		sri.getIds().add(id);
+    		WeiboDetails wds = new WeiboDetails();
+    		wds.setId(id);
+    		sri.getDetails().add(wds);
     	}
     		
     	return sri;
