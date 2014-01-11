@@ -19,8 +19,8 @@ public class WeiboDetails
 	// details of the user who create this weibo
 	private String userID = null;         // id of user  who creat this weibo
 	private String userName = null;       // name of user create this weibo
-	private String userDescription = null; // description of user  who creat this weibo
-	private String userLocation = null;   // loacation of user  who creat this weibo
+	//private String userDescription = null; // description of user  who creat this weibo
+	//private String userLocation = null;   // loacation of user  who creat this weibo
 
 	public String getUserID() {
 		return userID;
@@ -42,7 +42,7 @@ public class WeiboDetails
 	}
 
 
-	public String getUserDescription() {
+/*	public String getUserDescription() {
 		return userDescription;
 	}
 
@@ -60,7 +60,7 @@ public class WeiboDetails
 	public void setUserLocation(String userLocation) {
 		this.userLocation = userLocation;
 	}
-
+*/
 
 	public String getId() {
 		return id;
@@ -124,8 +124,9 @@ public class WeiboDetails
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return this.id+" |+| "+this.createAt+" |+| "+this.commentCount+" |+| "
+		String ret= this.id+" |+| "+this.createAt+" |+| "+this.commentCount+" |+| "
 			   +this.rettwitCount+" |+| "+this.userID+" |+| "+this.userName+" |+| "
-			   +this.userLocation+" |+| "+this.userDescription+this.content;
+			   /*+this.userLocation+" |+| "+this.userDescription*/+this.content;
+		return ret;
 	}
 }

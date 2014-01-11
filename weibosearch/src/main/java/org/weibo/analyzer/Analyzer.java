@@ -3,9 +3,9 @@ package org.weibo.analyzer;
 import java.util.List;
 
 import org.weibo.common.AnalyzeBean;
-import org.weibo.common.SearchResultID;
+import org.weibo.common.SearchResult;
 
 public interface Analyzer 
 {
-	SearchResultID analyze(AnalyzeBean ab);
+	SearchResult analyze(AnalyzeBean ab);
 }

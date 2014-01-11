@@ -11,7 +11,7 @@ import org.weibo.common.AnalyzeBean;
 import org.weibo.common.Constants;
 import org.weibo.common.FetchBean;
 import org.weibo.common.ParamStore;
-import org.weibo.common.SearchResultID;
+import org.weibo.common.SearchResult;
 import org.weibo.common.WeiboMysql;
 import org.weibo.proxy.Proxy;
 import org.weibo.proxy.ProxyManager;
@@ -157,7 +157,7 @@ public class SinaHtmlFetcher implements Fetcher
     	AnalyzeBean ab = sf.fetch(fb);
     	//System.out.println(ab.getContent());
     	Analyzer sha = new SinaHtmlAnalyzer();
-    	SearchResultID srid = sha.analyze(ab);
+    	SearchResult srid = sha.analyze(ab);
     	WeiboMysql weiboh2 = new WeiboMysql();  	
 		weiboh2.insert(srid);
     	System.out.println(srid.toString());
