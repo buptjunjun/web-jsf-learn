@@ -1,0 +1,762 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>北邮_广播_腾讯微博</title>
+<script type="text/javascript">document.domain='qq.com';var QosS={t:[+new Date]};QosS.topSpan=function(a){this.site=a;QosS.t[1]=+new Date};QosS.endCheck=function(){var c=function(){window.MI&&MI.pageSpeed&&MI.pageSpeed();};if(window.MIRun){MIRun(function(){c();});}else{c();}};for(var i=3;i<6;i++)QosS["timePoint"+i]=function(a){return function(){return function(){QosS.t[a-1]=+new Date}}}(i);</script><meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta name="viewport" content="width=810"/>
+<link rel="apple-touch-icon-precomposed" href="http://mat1.gtimg.com/www/mb/images/microblog_72_72.png"/>
+<link rel="shortcut icon" href="http://mat1.gtimg.com/www/mb/favicon.ico"/>
+<link href="http://mat1.gtimg.com/www/mb/css/n/style.2013_140110.css" type="text/css" rel="stylesheet" id="mainStyle"/><link type="text/css" rel="stylesheet" id="mainStyle2"/>
+<style type="text/css" id="curTheme" skinId="0">.headWrap .headInside h1 a {
+background: url(http://mat1.gtimg.com/www/mb/images/nav_logo_default131128.png) no-repeat;
+_background: none;
+_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true,sizingMethod=crop,src='http://mat1.gtimg.com/www/mb/images/nav_logo_default131128.png');
+}
+
+.headWrap,.headWrap .topNav .topNavSub{-moz-box-shadow:0 1px 2px rgba(23,87,117,0.5);-webkit-box-shadow:0 1px 2px rgba(23,87,117,0.5);box-shadow:0 1px 2px rgba(23,87,117,0.5)}
+.headWrap a,
+.headWrap .topNav a{ color:#fefefe}
+.headWrap .tSearchNew{ border-color:#2b84a9}
+.headWrap .topNav .active{ color:#fff}
+.headWrap .topNav em{ border-top-color:#fefefe}
+.headWrap .headShadow{ opacity:.9; border-bottom:#2596c2 1px solid; background-color:#36a4d2;background:-webkit-gradient(linear,left top,left bottom,from(#45addd),to(#279cc8));background:-moz-linear-gradient(top,#45addd,#279cc8);background:transparent\9;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#45addd',endColorstr='#279cc8');}
+.headWrap .topNav .topNavItem a:hover i,.headWrap .topNav .topNavItem .active i{ background-color:#0177a7}
+.headWrap .topNav .topNavSub{ background-color:#1084b2}
+.headWrap .topNav .topNavSub a{ color:#fff}
+.headWrap .topNav .topNavSub a:hover{background:#005c86}
+.headWrap .topNav strong{ background-color:#0f87b6; color:#75c5eb}
+.headWrap .topNav .newMsg strong{ background-color:#f56200; color:#fff}
+.headWrap .topNav .topNavSub a{ color:#D0ECF7}
+.headWrap .topNav .func,
+.headWrap .topNav .topNavSub .hr { border-top-color:#005c86}
+.headWrap .topNav .func div,
+.headWrap .topNav .topNavSub .hr i { border-top-color:#1084b2}
+.headWrap .topNav .topNavSub .desc,
+.headWrap .topNav .topNavSub .tit {color:#fff}
+.headWrap .topNav .topNavSub .desc a { background:none}
+
+</style><style type="text/css">
+.bot .sendList{margin-right:6px}
+.n_gallery_o_cmt{display:none!important}
+.focus .cont{border:1px solid #7BD6F6;}</style>
+<style type="text/css">
+.ico_temp{background-image:url(http://mat1.gtimg.com/www/mb/img/temp_icon/temp_icon_20131230b.png);_background_image:url(http://mat1.gtimg.com/www/mb/img/temp_icon/temp_icon_20131230_ie6b.png);}
+</style>    <link href="http://mat1.gtimg.com/www/mb/css/search/search.2013_131121.css" type="text/css" rel="stylesheet"/>
+</head>
+<body id="search">
+    <span class="apS_top_bg"></span>
+    <div class="apSwrap clear"><div class="w_head_outer"><div class="headWrap">
+<div class="headInside" id="header">
+	<h1>
+		<a  href="http://t.qq.com/yangtingjun_1" title="t.qq.com" accesskey="z" boss="btnClickNewLogo">腾讯微博</a>
+	</h1>
+	<ul class="topNav" id="topNav" role="navigation">
+		<li class="topNavItem"><a href="http://t.qq.com/yangtingjun_1"><u>首页</u><i></i></a></li>
+                 
+                        <li class="topNavItem"><a href="http://b.t.qq.com"  boss="btnExposeNavHomeBar"><u>爆新鲜<sup class="ico_hot_mini"></sup></u><i></i></a></li>
+                        <li class="topNavItem"><a href="http://c.t.qq.com/k/default?pgv_ref=web.wide.page.nav.text"><u>微频道</u><i></i></a></li>
+                		<li class="topNavItem"><a href="http://zhaoren.t.qq.com/people?from=top&pgv_ref=web.wide.nav.people"><u>找人</u><i></i></a></li>
+		<li class="topNavItem"><a href="http://event.t.qq.com/" boss="btnTopMenuEvent"><u>活动</u><i></i></a></li>
+		<li class="topNavItem apps" id="app"><a href="http://app.t.qq.com?pgv_ref=WB.TQQ.NAV.APP" boss="btnTopMenuApp"><u>应用<em>&nbsp;</em></u><i></i></a></li>
+	</ul>
+		<ul class="topNav right qk_nav" id="newMsgBox">
+		<li class="topNavItem qk_nav_item task"  style="display:none" ><a href="javascript:;" name="task" boss="btnIcoHeaderTask" title="任务"><span class="t">任务</span><i></i><sub class="ui_tx_count" style="display:none"></sub></a></li>
+		<li class="topNavItem qk_nav_item at"><a href="http://t.qq.com/at" name="at" title="提到我的"  ><span class="t"  >@提到我的</span><i></i><sub class="ui_tx_count" style="display:none"></sub></a></li>
+		<li class="topNavItem qk_nav_item message"><a href="http://t.qq.com/messages/inbox" name="msg" title="私信" ><span class="t">私信</span><i></i><sub class="ui_tx_count" style="display:none"></sub></a></li>
+		<li class="topNavItem qk_nav_item fans"><a href="http://t.qq.com/yangtingjun_1/follower" name="fans" title="听众" ><span class="t">听众</span><i></i><sub class="ui_tx_count" style="display:none"></sub></a></li>
+		<li class="topNavItem qk_nav_item notice"><a href="http://t.qq.com/messages/notice" name="notice" title="通知" ><span class="t">通知</span><i></i><sub class="ui_tx_count" style="display:none"></sub></a></li>
+		<li class="topNavItem accountItem" id="topNav1">
+			<a href="http://t.qq.com/yangtingjun_1?preview" class="txt" onclick="if(document.body.className.indexOf('ipad') != -1){this.nextSibling.style.display='block';this.className+=' active';return false}" title="杨廷君(@yangtingjun_1)"><u>杨廷君<em>&nbsp;</em></u><i></i></a><ul class="topNavSub" style="display:none">
+		<li><a href="http://p.t.qq.com/setting" boss="btn_settingNewNav">设置</a></li>
+		<li><a href="http://t.qq.com/yangtingjun_1?setTheme=1" id="setTheme" title="皮肤设置" onmousedown="window.scrollTo(0,0);" boss="btn_themeNewNav">换肤</a></li>
+                <li><a href="http://vip.t.qq.com" boss="btn_vipNewNav" target="_blank">会员</a></li>
+				<li><a href="http://p.t.qq.com/help.php">帮助</a></li>
+                <li><a target="_blank" boss="topNavSetTimeAxisClick" href="http://p.t.qq.com/timeaxis/timeline/index" >我的时光轴<sup class="ico_hot_mini"></sup></a></li>
+                        		<li><a href="http://p.t.qq.com/help.php?page=wb2013" boss="newVersionIntro">新版介绍</a></li>
+                                			<li><a href="http://t.qq.com/logout.php" id="logout">退出</a></li>
+	</ul>
+	</li>
+</ul>
+        		<div class="tSearchNew" role="search">
+			<form id="searchForm" method="get" action="http://search.t.qq.com/index.php">
+				<label for="searchKey">搜名字/帐号/广播</label><input type="text" id="searchKey" maxlength="50" name="k" autocomplete="off" class="inputTxtNew" accesskey="s">
+				<input type="hidden" name="pos" value="174">
+				<input type="hidden" name="s_source" value="">
+				<input type="submit" class="inputBtn" value="搜索">
+				<a href="#" class="btn_ldrop"><em></em></a>
+			</form>
+		</div>
+		<div id="nav_pub_wrap" class="nav_pub_wrap" style="display:none;">
+			<a href="#" class="btn_nav_pub" title="写微博">
+				<b class="ic ico_pubBlog"></b>
+			</a>
+		</div>
+		<div id="nav_fix_wrap" class="nav_fix_wrap"></div>
+	</div>
+	<div class="head_tack_w">
+            <ul class="topNav">
+                <li class="topNavItem testversion"><a href="http://1.t.qq.com/yangtingjun_1" boss="btn_gotoNanoVersion"><u>体验版</u><i></i></a></li>
+            </ul>
+        </div>	<div class="headShadow"></div>
+</div>
+
+
+
+</div>
+
+
+<div id="topWrap">
+    
+
+
+    <div id="mainWrapper" class="clear">
+<!--search top begin-->
+<div class="soso clear">
+    <ul class="category clear">
+        <li class="on"><a class="noborder" href="javascript:void(0)">广播</a><em></em></li>
+        <li><a href="http://search.t.qq.com/user.php?pos=436&k=%E5%8C%97%E9%82%AE" onclick="MI.Bos('btnSearchIndexUser');" >用户</a><em></em></li>
+        <li><a href="http://search.t.qq.com/qun.php?pos=1205&k=%E5%8C%97%E9%82%AE" onclick="MI.Bos('btnSearchIndexQun');">微群</a><em></em></li>
+        <li><a href="http://search.t.qq.com/app.php?pos=578&k=%E5%8C%97%E9%82%AE" onclick="MI.Bos('btnSearchIndexApp');">应用</a><em></em></li>
+    </ul>
+    <div class="sosoBox">
+        <em class="mbsearch"></em>
+        <div class="sosoTextBox">
+            <form id="f1" action="http://search.t.qq.com/index.php?k=%E5%8C%97%E9%82%AE" method="get">
+                <input type="hidden" name="pos" value="201" />
+                <input type="hidden" name="smart" value="1" />
+                <div class="text">
+                    <input type="text" maxlength="64" value="北邮" name="k" id="k2" autocomplete="off" />
+                </div>
+                <div class="sosologo">
+                    <a href="http://www.soso.com/" title="搜搜 www.soso.com"></a>
+                </div>
+                <button class="button" type="button" onclick="MI.Bos('btnSearchIndexTopButton');" id="btn_top_search"></button>
+            </form>
+        </div>
+
+    </div>
+    <div class="sosoTips" style="display:none">为了提供多样性结果，我们省略了<span class="cSign">130</span>条相似微博，您可以<a href="javascript:void(0)">在全部结果中重新搜索</a></div>
+</div>
+<!--search top end-->
+<div class="main">
+            <div class="search_tab">
+        <ul>
+            <li><strong>全部</strong></li>
+            <li><a href="http://search.t.qq.com/index.php?pos=212&s_source=1&k=%E5%8C%97%E9%82%AE">认证</a><sup class="ico_hot_mini"></sup></li>
+            <li><a href="http://search.t.qq.com/index.php?pos=213&s_source=3&k=%E5%8C%97%E9%82%AE">已收听</a></li>
+            <li><a href="http://search.t.qq.com/index.php?pos=214&s_source=4&k=%E5%8C%97%E9%82%AE">我的</a></li>
+            <li><a href="http://search.t.qq.com/index.php?pos=218&s_type=1&s_mode=1&k=%E5%8C%97%E9%82%AE">图片</a></li>
+            <li><a href="http://search.t.qq.com/index.php?pos=219&s_type=2&k=%E5%8C%97%E9%82%AE">视频</a></li>
+            <li><a href="http://search.t.qq.com/index.php?pos=220&s_type=3&k=%E5%8C%97%E9%82%AE">音乐</a></li>
+            <li class="advanced_filter"><a id="btn_advance" href="http://search.t.qq.com/index.php?pos=241&k=%E5%8C%97%E9%82%AE&s_advanced=1" class="ffsong">高级筛选&gt;&gt;</a></li>
+        </ul>
+        </div>
+        
+
+    
+      
+<!-- 搜人直达区start -->
+<!-- 搜人直达区end -->
+
+
+<!--相册and搜索图片 begin-->
+   
+<!--相册and搜索图片 end-->
+
+
+<!-- 无结果 begin -->
+<!-- 无结果 end -->
+
+    <script>try{QosS.topSpan("mblog_search_full", 50);}catch(e){}</script>    <div class="AL">
+        <div class="tabStyle3 clear">
+        <span class="tabNum left">约<b>87,100</b>条相关广播</span>
+    <span class="right">
+            <label class="left">
+            <input type="checkbox" class="checkBox"  onclick="window.location = 'http://search.t.qq.com/index.php?k=%E5%8C%97%E9%82%AE&pos=237&s_m_type=1'"> 仅原创</label>
+    <a href="http://search.t.qq.com/index.php?k=%E5%8C%97%E9%82%AE&pos=235&s_hot=0" class="on">实时</a>
+    <a href="http://search.t.qq.com/index.php?k=%E5%8C%97%E9%82%AE&pos=234&s_hot=1" class="">热门</a>
+    </span>
+    
+    </div>
+        
+    <!-- 广播框 -->
+        <div class="topic_talk messageHideModel">
+                            <!--  用户头像   -->
+                <div class="userpic">
+                    <a href="http://t.qq.com/yangtingjun_1" target="_blank"><img src="http://t0.qlogo.cn/mbloghead/9831bcd80badc86422d2/50" alt=""></a>
+                </div>
+                <!-- 发表框-->
+                <div id="talkBox" class="talkBox clear condensed" >
+                    <style type="text/css">
+.talkBoxBg { 
+	background: #fff url(http://mat1.gtimg.com/www/mb/img/p2/2013_mongolia.png) no-repeat 30px 3px;
+}
+.talkBoxBg h2 { 
+	height: 40px;
+	padding: 0;
+	overflow: visible;
+font-size:0;
+}
+.talkBoxBg h2 a.tit_tx { 
+	float: left;
+	width: 247px;
+             height:40px;
+	line-height:40px;
+	text-indent: -9999px;
+}
+.talkBoxBg h2 a.tit_topic {
+	float: right;
+	font-family: Simsun;
+	margin-top: 13px;
+	color:#889db6;
+             font-size: 12px;
+}
+</style>
+<!--[if !IE]>|xGv00|b0438e583675721fac11ac944250c019<![endif]--><div class="sendCnt">
+	<div class="cntBox">
+			    <textarea id="msgTxt" class="cNote" style="height_:63px;" accesskey="u" name="content" autocomplete="off" tabindex="1" 
+	    >来，跟大家聊聊 &quot;北邮&quot;</textarea>
+    </div>
+    <div class="countTxtBox">
+        <span class="countTxt">还能输入<em>140</em>字</span>
+    </div>
+	<div class="sendStatusBox">
+		<div class="sendStatus clear"></div>
+	</div>
+</div>
+<div class="insertFun clear">
+				<div class="sendList insertFace"><a class="txt" href="#" title="表情" tabindex="3"><em class="sico ico_face"></em>表情</a></div>		<div class="sendList uploadPic"><a href="#" class="txt sendPic" tabindex="3" title="支持单图、多图、截屏、长文转图、搜图等"><em class="sico ico_pic"></em>图片</a></div>        <div class="sendList uploadVideo"><a href="#" class="txt" title="腾讯视频、优酷、土豆、酷六、CNTV可直接播放，也可自己上传"><em class="sico ico_videos"></em>视频</a></div>				    <div class="sendList uploadMusic"><a class="txt" href="#" title="可按歌名、歌手名搜索并添加音乐" tabindex="3"><em class="sico ico_audio"></em>音乐</a></div>
+						<div class="sendList atSome"><a class="txt" href="#" title="@朋友帐号就可以提到他" tabindex="3"><em class="sico ico_at"></em>朋友</a></div>
+												                        	<div class="sendFun">
+				<input type="button" class="sendBtn btnHasStr" value="发送" title="广播 (快捷键 Ctrl+Enter)" tabindex="2"/>
+			</div>
+</div>
+<div class="left" style="">
+    <label style="">
+            </label>
+</div>
+<span class="bg"></span>
+                </div>
+                    </div>
+   <!-- 广播框结束 -->
+
+    <div id="talkNew" class="newsBox"></div>
+   
+    <!-------  大括号过来的时候有自己的广播的时候 --------->
+        <!--  热门广播  -->
+        <!--  热门广播 end  -->
+
+    <!--  好友在说  -->
+        <!--  好友在说 end  -->
+
+        <ul id="talkList" class="LC"><li  id="364341086180864" rel="1389424205" from="1"><div class="mFun"><a href="#" class="feed_opt"><em class="btn_ldrop"></em></a><div class="mFunDrop"> <b></b> <b class="mask"></b><div class="shareBtn"><p><a href="#">分享...</a></p></div><p><a href="http://t.qq.com/p/t/364341086180864" class="detail line" target="_blank">详情</a></p><p><a href="#" class="alarm">举报</a></p></div></div><div class="userPic"><a href="http://t.qq.com/chunli1245234827" title="聪聪(@chunli1245234827)" account="chunli1245234827" boss="" tabIndex="-1"  target="_blank"  ><img src="http://t3.qlogo.cn/mbloghead/6bc686c0d164011052f0/50"/></a></div><div class="msgBox">
+                <div class="userName" rel="chunli1245234827"><strong><a href="http://t.qq.com/chunli1245234827" title="聪聪(@chunli1245234827)" boss="" gender="他"  target="_blank">聪聪</a></strong>&nbsp;</div><div class="msgCnt"><a href="http://k.t.qq.com/k/%E8%A1%97%E6%99%AF%E5%BE%AE%E5%8D%9A" target="_blank">#街景微博#</a>分享<span class='cKeyword'>北京邮电大学</span>街景：&quot;回家，倒计时，3天哦&quot;</div><div class="clear multiMedia">
+<div class="mediaWrap">	
+<div class="picBox " >
+<a href="http://t3.qpic.cn/mblogpic/0218803b5c3728468336/460" target="_blank" class="pic"><img class="crs" show="1" crs="http://t3.qpic.cn/mblogpic/0218803b5c3728468336/120">
+       </a></div>
+
+
+</div>
+<div class="miniMultiMedia clear">
+<div class="mMM mMPic" style='display:none'><a href="#"><i class="ic ico_pic"></i><span
+					class="tx_nowrap">查看图片</span></a></div></div>
+</div>
+<div class="pubInfo c_tx5"><span class="left c_tx5"><a href="http://t.qq.com/client.php?t=android" target="_blank"><i class="sico ico_mobile" title="其他来源"></i></a><span style="display:none"><a class="f" href="http://t.qq.com/client.php?t=android" target="_blank">来自Android客户端</a></span><a class="time" target="_blank" href="http://t.qq.com/p/t/364341086180864" rel="1389424205" from="7">今天 15:10</a> <span class="cNote" title="该广播已被阅读238次">阅读(238)</span> </span><div class="funBox"><a href="http://t.qq.com/p/t/364341086180864" class="relay" num="0" >转播</a><span>|</span><a href="http://t.qq.com/p/t/364341086180864" class="comt" num="0" >评论</a><span>|</span><a href="#" class="fav">收藏</a></div></div></div></li><li  id="391120012563534" rel="1389424067" from="1"><div class="mFun"><a href="#" class="feed_opt"><em class="btn_ldrop"></em></a><div class="mFunDrop"> <b></b> <b class="mask"></b><div class="shareBtn"><p><a href="#">分享...</a></p></div><p><a href="http://t.qq.com/p/t/391120012563534" class="detail line" target="_blank">详情</a></p><p><a href="#" class="alarm">举报</a></p></div></div><div class="userPic"><a href="http://t.qq.com/XY1518627089" title="开心(@XY1518627089)" account="XY1518627089" boss="" tabIndex="-1"  target="_blank"  ><img src="http://t1.qlogo.cn/mbloghead/9867e0e35ec4354e8a70/50"/></a></div><div class="msgBox">
+                <div class="userName" rel="XY1518627089"><strong><a href="http://t.qq.com/XY1518627089" title="开心(@XY1518627089)" boss="" gender="他"  target="_blank">开心</a></strong>&nbsp;</div><div class="msgCnt">我刚刚在【问我】提了一个问题：&quot;2013年<span class='cKeyword'>北京邮电大学</span>艺术文科分数是多少&quot; 【有问题<em rel="@问我"><a href="http://t.qq.com/wenwocom" title="问我(@wenwocom)" target="_blank">@问我</a></em> 微博也能提问】你也来一起回答下吧～ <a href="http://url.cn/Izosax" class="url" target="_blank">http://url.cn/Izosax</a>  (来自问我官方微博)</div><div class="clear multiMedia">
+<div class="mediaWrap">	
+<div class="picBox " >
+<a href="http://t3.qpic.cn/mblogpic/cecdef32c35e73d4d486/460" target="_blank" class="pic"><img class="crs" show="1" crs="http://t3.qpic.cn/mblogpic/cecdef32c35e73d4d486/120">
+       </a></div>
+
+
+</div>
+<div class="miniMultiMedia clear">
+<div class="mMM mMPic" style='display:none'><a href="#"><i class="ic ico_pic"></i><span
+					class="tx_nowrap">查看图片</span></a></div></div>
+</div>
+<div class="pubInfo c_tx5"><span class="left c_tx5"><a href="http://www.wenwo.com" target="_blank"><i class="sico ico_3rdApp" title="其他来源"></i></a><span style="display:none"><a class="f" href="http://www.wenwo.com" target="_blank">来自问我官网</a></span><a class="time" target="_blank" href="http://t.qq.com/p/t/391120012563534" rel="1389424067" from="1365192">今天 15:07</a> <span class="cNote" title="该广播已被阅读26次">阅读(26)</span> </span><div class="funBox"><a href="http://t.qq.com/p/t/391120012563534" class="relay" num="0" >转播</a><span>|</span><a href="http://t.qq.com/p/t/391120012563534" class="comt" num="0" >评论</a><span>|</span><a href="#" class="fav">收藏</a></div></div></div></li><li  id="171527077706605" rel="1389421729" from="1"><div class="mFun"><a href="#" class="feed_opt"><em class="btn_ldrop"></em></a><div class="mFunDrop"> <b></b> <b class="mask"></b><div class="shareBtn"><p><a href="#">分享...</a></p></div><p><a href="http://t.qq.com/p/t/171527077706605" class="detail line" target="_blank">详情</a></p><p><a href="#" class="alarm">举报</a></p></div></div><div class="userPic"><a href="http://t.qq.com/shangcezi" title="永远的阿步(@shangcezi)" account="shangcezi" boss="" tabIndex="-1"  target="_blank"  ><img src="http://t0.qlogo.cn/mbloghead/a84f1bca7c1c43c5ed94/50"/></a></div><div class="msgBox">
+                <div class="userName" rel="shangcezi"><strong><a href="http://t.qq.com/shangcezi" title="永远的阿步(@shangcezi)" boss="" gender="他"  target="_blank">永远的阿步</a></strong>&nbsp;</div><div class="msgCnt">【<span class='cKeyword'>北邮</span>通信网排队论论文】 (分享自 <em rel="@QQ空间"><a href="http://t.qq.com/Qzone" title="QQ空间(@Qzone)" target="_blank">@QQ空间</a></em>) <a target="_blank" href="http://url.cn/Pm4A8r" class="ico_video" shorturl="Pm4A8r"  reltitle="北邮通信网排队论论文">http://url.cn/Pm4A8r</a></div><div class="clear multiMedia">
+<div class="mediaWrap">	
+<div class="videoBox"  realurl="http://wenku.baidu.com/view/257dae3a10a6f524ccbf85bf.html?from&#61;share_qq" shorturl="Pm4A8r" playurl="http://wenku.baidu.com/static/flash/apireader.swf?docurl&#61;http://wenku.baidu.com/play&amp;docid&#61;257dae3a10a6f524ccbf85bf&amp;title&#61;北邮通信网排队论论文&amp;doctype&#61;doc&amp;fpn&#61;11&amp;npn&#61;5&amp;readertype&#61;external&amp;catal&#61;0&amp;cdnurl&#61;http://txt.wenku.baidu.com/play" minipicurl="http://retype.wenku.bdimg.com/img/d67b09e181c758f5f61f67bc" reltitle="北邮通信网排队论论文" 
+                >
+                <div class="vTools"><a href="#" class="vClose"><em></em>收起</a>
+<a href="http://wenku.baidu.com/view/257dae3a10a6f524ccbf85bf.html?from&#61;share_qq" class="vUrl" target="_blank"><em></em>北邮通信网排队论论文</a></div>
+<div class="vWrap"
+	thumbs="1"><a class="vThumbsBox" title="点击播放视频"
+	><span class="vThumbs"
+	><span class="mask"
+	><em></em></span><img class="crs"
+	show="1"	crs="http://retype.wenku.bdimg.com/img/d67b09e181c758f5f61f67bc"></span><span class="vSimple"
+	><img class="crs"
+	crs="http://mat1.gtimg.com/www/mb/images/vSimple.png"></span></a></div>
+</div> 
+
+</div>
+<div class="miniMultiMedia clear">
+<div class="mMM mMVideo" style='display:none'><a href="#"><i class="ic ico_videos"></i><span
+					 class="tx_nowrap">北邮通信网排队论论文</span></a></div></div>
+</div>
+<div class="pubInfo c_tx5"><span class="left c_tx5"><a href="http://www.baidu.com" target="_blank"><i class="sico ico_3rdApp" title="其他来源"></i></a><span style="display:none"><a class="f" href="http://www.baidu.com" target="_blank">来自百度</a></span><a class="time" target="_blank" href="http://t.qq.com/p/t/171527077706605" rel="1389421729" from="1521957">今天 14:28</a> <span class="cNote" title="该广播已被阅读31次">阅读(31)</span> </span><div class="funBox"><a href="http://t.qq.com/p/t/171527077706605" class="relay" num="0" >转播</a><span>|</span><a href="http://t.qq.com/p/t/171527077706605" class="comt" num="0" >评论</a><span>|</span><a href="#" class="fav">收藏</a></div></div></div></li><li  id="344259075389565" rel="1389418858" from="1"><div class="mFun"><a href="#" class="feed_opt"><em class="btn_ldrop"></em></a><div class="mFunDrop"> <b></b> <b class="mask"></b><div class="shareBtn"><p><a href="#">分享...</a></p></div><p><a href="http://t.qq.com/p/t/344259075389565" class="detail line" target="_blank">详情</a></p><p><a href="#" class="alarm">举报</a></p></div></div><div class="userPic"><a href="http://t.qq.com/XIAOXUE--888" title="小雪(@XIAOXUE--888)" account="XIAOXUE--888" boss="" tabIndex="-1"  target="_blank"  ><img src="http://t3.qlogo.cn/mbloghead/17f68b12915d1a51debe/50"/></a></div><div class="msgBox">
+                <div class="userName" rel="XIAOXUE--888"><strong><a href="http://t.qq.com/XIAOXUE--888" title="小雪(@XIAOXUE--888)" boss="" gender="他"  target="_blank">小雪</a></strong>&nbsp;</div><div class="msgCnt">我穿越到了<span class='cKeyword'>北京邮电大学</span>：&quot;挥别过去……&quot;</div><div class="pubInfo c_tx5"><span class="left c_tx5"><a href="#"><i class="sico ico_mobile" title="其他来源"></i></a><span style="display:none"><span class="f">来自OPPO 智能手机</span></span><a class="time" target="_blank" href="http://t.qq.com/p/t/344259075389565" rel="1389418858" from="1784">今天 13:40</a> <span class="cNote" title="该广播已被阅读33次">阅读(33)</span> </span><div class="funBox"><a href="http://t.qq.com/p/t/344259075389565" class="relay" num="0" >转播</a><span>|</span><a href="http://t.qq.com/p/t/344259075389565" class="comt" num="0" >评论</a><span>|</span><a href="#" class="fav">收藏</a></div></div></div></li><li  id="388820008398668" rel="1389418845" from="1"><div class="mFun"><a href="#" class="feed_opt"><em class="btn_ldrop"></em></a><div class="mFunDrop"> <b></b> <b class="mask"></b><div class="shareBtn"><p><a href="#">分享...</a></p></div><p><a href="http://t.qq.com/p/t/388820008398668" class="detail line" target="_blank">详情</a></p><p><a href="#" class="alarm">举报</a></p></div></div><div class="userPic"><a href="http://t.qq.com/songdan19890724" title="猫猫(@songdan19890724)" account="songdan19890724" boss="" tabIndex="-1"  target="_blank"  ><img src="http://t2.qlogo.cn/mbloghead/f732cbcd9fd77b1221f0/50"/></a></div><div class="msgBox">
+                <div class="userName" rel="songdan19890724"><strong><a href="http://t.qq.com/songdan19890724" title="猫猫(@songdan19890724)" boss="" gender="他"  target="_blank">猫猫</a></strong>&nbsp;</div><div class="msgCnt">【对&quot;尚诺比萨(<span class='cKeyword'>北邮</span>店)&quot;的点评，总体评价&quot;二星&quot;】这是我写的关于尚诺比萨(北邮店)的点评 (分享自 <em rel="@QQ空间"><a href="http://t.qq.com/Qzone" title="QQ空间(@Qzone)" target="_blank">@QQ空间</a></em>) <a href="http://url.cn/UMFV7k" class="url" target="_blank">http://url.cn/UMFV7k</a></div><div class="pubInfo c_tx5"><span class="left c_tx5"><a href="http://www.dianping.com/" target="_blank"><i class="sico ico_3rdApp" title="其他来源"></i></a><span style="display:none"><a class="f" href="http://www.dianping.com/" target="_blank">来自大众点评</a></span><a class="time" target="_blank" href="http://t.qq.com/p/t/388820008398668" rel="1389418845" from="50001799">今天 13:40</a> <span class="cNote" title="该广播已被阅读31次">阅读(31)</span> </span><div class="funBox"><a href="http://t.qq.com/p/t/388820008398668" class="relay" num="0" >转播</a><span>|</span><a href="http://t.qq.com/p/t/388820008398668" class="comt" num="0" >评论</a><span>|</span><a href="#" class="fav">收藏</a></div></div></div></li><script>try{QosS.topSpan("mblog_search_full",1);}catch(e){}</script><li  id="171727076229723" rel="1389416293" from="1"><div class="mFun"><a href="#" class="feed_opt"><em class="btn_ldrop"></em></a><div class="mFunDrop"> <b></b> <b class="mask"></b><div class="shareBtn"><p><a href="#">分享...</a></p></div><p><a href="http://t.qq.com/p/t/171727076229723" class="detail line" target="_blank">详情</a></p><p><a href="#" class="alarm">举报</a></p></div></div><div class="userPic"><a href="http://t.qq.com/xt942213174" title="徐涛(@xt942213174)" account="xt942213174" boss="" tabIndex="-1"  target="_blank"  ><img src="http://t2.qlogo.cn/mbloghead/44bc10fa4e7e0b6298ca/50"/></a></div><div class="msgBox">
+                <div class="userName" rel="xt942213174"><strong><a href="http://t.qq.com/xt942213174" title="徐涛(@xt942213174)" boss="" gender="他"  target="_blank">徐涛</a></strong>&nbsp;</div><div class="msgCnt">【<span class='cKeyword'>北邮</span>数字电路实验报告—ps2键盘接口设计】 (分享自 <em rel="@QQ空间"><a href="http://t.qq.com/Qzone" title="QQ空间(@Qzone)" target="_blank">@QQ空间</a></em>) <a target="_blank" href="http://url.cn/AmZoFb" class="ico_video" shorturl="AmZoFb"  reltitle="北邮数字电路实验报告—ps2键盘接口设计">http://url.cn/AmZoFb</a></div><div class="clear multiMedia">
+<div class="mediaWrap">	
+<div class="videoBox"  realurl="http://wenku.baidu.com/view/c66ca6a0284ac850ad0242a9.html?from&#61;share_qq" shorturl="AmZoFb" playurl="http://wenku.baidu.com/static/flash/apireader.swf?docurl&#61;http://wenku.baidu.com/play&amp;docid&#61;c66ca6a0284ac850ad0242a9&amp;title&#61;北邮数字电路实验报告—p...&amp;doctype&#61;doc&amp;fpn&#61;11&amp;npn&#61;5&amp;readertype&#61;external&amp;catal&#61;0&amp;cdnurl&#61;http://txt.wenku.baidu.com/play" minipicurl="http://retype.wenku.bdimg.com/img/c66ca6a0284ac850ad0242a9" reltitle="北邮数字电路实验报告—ps2键盘接口设计" 
+                >
+                <div class="vTools"><a href="#" class="vClose"><em></em>收起</a>
+<a href="http://wenku.baidu.com/view/c66ca6a0284ac850ad0242a9.html?from&#61;share_qq" class="vUrl" target="_blank"><em></em>北邮数字电路实验报告—ps2键盘接口设计</a></div>
+<div class="vWrap"
+	thumbs="1"><a class="vThumbsBox" title="点击播放视频"
+	><span class="vThumbs"
+	><span class="mask"
+	><em></em></span><img class="crs"
+	show="1"	crs="http://retype.wenku.bdimg.com/img/c66ca6a0284ac850ad0242a9"></span><span class="vSimple"
+	><img class="crs"
+	crs="http://mat1.gtimg.com/www/mb/images/vSimple.png"></span></a></div>
+</div> 
+
+</div>
+<div class="miniMultiMedia clear">
+<div class="mMM mMVideo" style='display:none'><a href="#"><i class="ic ico_videos"></i><span
+					 class="tx_nowrap">北邮数字电路实验报告...</span></a></div></div>
+</div>
+<div class="pubInfo c_tx5"><span class="left c_tx5"><a href="http://www.baidu.com" target="_blank"><i class="sico ico_3rdApp" title="其他来源"></i></a><span style="display:none"><a class="f" href="http://www.baidu.com" target="_blank">来自百度</a></span><a class="time" target="_blank" href="http://t.qq.com/p/t/171727076229723" rel="1389416293" from="1521957">今天 12:58</a> <span class="cNote" title="该广播已被阅读32次">阅读(32)</span> </span><div class="funBox"><a href="http://t.qq.com/p/t/171727076229723" class="relay" num="0" >转播</a><span>|</span><a href="http://t.qq.com/p/t/171727076229723" class="comt" num="0" >评论</a><span>|</span><a href="#" class="fav">收藏</a></div></div></div></li><li  id="386920005574229" rel="1389415172" from="1"><div class="mFun"><a href="#" class="feed_opt"><em class="btn_ldrop"></em></a><div class="mFunDrop"> <b></b> <b class="mask"></b><div class="shareBtn"><p><a href="#">分享...</a></p></div><p><a href="http://t.qq.com/p/t/386920005574229" class="detail line" target="_blank">详情</a></p><p><a href="#" class="alarm">举报</a></p></div></div><div class="userPic"><a href="http://t.qq.com/VeryTeacher" title="仝老师(@VeryTeacher)" account="VeryTeacher" boss="" tabIndex="-1"  target="_blank"  ><img src="http://t3.qlogo.cn/mbloghead/348cc21a9f618bcf8270/50"/></a></div><div class="msgBox">
+                <div class="userName" rel="VeryTeacher"><strong><a href="http://t.qq.com/VeryTeacher" title="仝老师(@VeryTeacher)" boss="" gender="他"  target="_blank">仝老师</a><a href="http://p.t.qq.com/wbstar.php" title="微博之星" target="_blank" class="tIcon ico_master_star"></a></strong>&nbsp;</div><div class="msgCnt"><a href="http://k.t.qq.com/k/%E5%8C%97%E4%BA%AC%E9%82%AE%E7%94%B5%E5%A4%A7%E5%AD%A6" target="_blank">#<span class='cKeyword'>北京邮电大学</span>#</a>对于这种监考老师，同学们只能说，这世界需要你！<img class='crs dn' crs='http://mat1.gtimg.com/www/mb/images/face/99.gif' title='鼓掌'></div><div class="clear multiMedia">
+<div class="mediaWrap">	
+<div class="picBox " >
+<a href="http://t3.qpic.cn/mblogpic/7ef4777cf91116dceb2c/460" target="_blank" class="pic"><img class="crs" show="1" crs="http://t3.qpic.cn/mblogpic/7ef4777cf91116dceb2c/120">
+       </a></div>
+
+
+</div>
+<div class="miniMultiMedia clear">
+<div class="mMM mMPic" style='display:none'><a href="#"><i class="ic ico_pic"></i><span
+					class="tx_nowrap">查看图片</span></a></div></div>
+</div>
+<div class="areaInfo"><em title="地理位置" class="ico_area"></em><a nopop="1" boss="btn_check_tweetNear" href="http://p.t.qq.com/map/lbs.php?lat=39.961318&lng=116.358909&addr=北京市海淀区 杏坛路" target="_blank">北京市海淀区 杏坛路</a> - <a href="#" pano="1" address="北京市海淀区 杏坛路" pos="116.358909,39.961318"  merchant="北京邮电大学">街景地图</a><i class="ico_new_mini"></i></div><div class="pubInfo c_tx5"><span class="left c_tx5"><a href="http://t.qq.com/client.php?t=android" target="_blank"><i class="sico ico_mobile" title="其他来源"></i></a><span style="display:none"><a class="f" href="http://t.qq.com/client.php?t=android" target="_blank">来自Android客户端</a></span><a class="time" target="_blank" href="http://t.qq.com/p/t/386920005574229" rel="1389415172" from="7">今天 12:39</a> <span class="cNote" title="该广播已被阅读1399次">阅读(1399)</span> <a class="zfNum" href="http://t.qq.com/p/t/386920005574229" target="_blank">全部转播和评论(<b class="relayNum">3</b>)</a></span><div class="funBox"><a href="http://t.qq.com/p/t/386920005574229" class="relay" num="2" >转播</a><span>|</span><a href="http://t.qq.com/p/t/386920005574229" class="comt" num="1" >评论</a><span>|</span><a href="#" class="fav">收藏</a></div></div></div></li><li  id="366041109085696" rel="1389415129" from="1"><div class="mFun"><a href="#" class="feed_opt"><em class="btn_ldrop"></em></a><div class="mFunDrop"> <b></b> <b class="mask"></b><div class="shareBtn"><p><a href="#">分享...</a></p></div><p><a href="http://t.qq.com/p/t/366041109085696" class="detail line" target="_blank">详情</a></p><p><a href="#" class="alarm">举报</a></p></div></div><div class="userPic"><a href="http://t.qq.com/q70206330" title="艾(@q70206330)" account="q70206330" boss="" tabIndex="-1"  target="_blank"  ><img src="http://t3.qlogo.cn/mbloghead/b50d1a16ac7d83a295f0/50"/></a></div><div class="msgBox">
+                <div class="userName" rel="q70206330"><strong><a href="http://t.qq.com/q70206330" title="艾(@q70206330)" boss="" gender="他"  target="_blank">艾</a></strong>&nbsp;</div><div class="msgCnt">【<span class='cKeyword'>北京邮电大学</span>灵异事件!&quot;幸存者&quot;用手机记录最后10分钟】快来看呀 (分享自 <em rel="@QQ空间"><a href="http://t.qq.com/Qzone" title="QQ空间(@Qzone)" target="_blank">@QQ空间</a></em>) <a target="_blank" href="http://url.cn/MYQIXi" class="ico_video" shorturl="MYQIXi"  reltitle="北京邮电大学灵异事件!&quot;幸存者&quot;用手机记录最后10分钟">http://url.cn/MYQIXi</a></div><div class="clear multiMedia">
+<div class="mediaWrap">	
+<div class="videoBox"  realurl="http://www.tudou.com/programs/view/dq8BX--9jiw/" shorturl="MYQIXi" playurl="http://www.tudou.com/v/dq8BX--9jiw/v.swf" minipicurl="http://g4.tdimg.com/272ae928edd7ae9ff168b65c6f92eedd/w_2.jpg" reltitle="北京邮电大学灵异事件!&quot;幸存者&quot;用手机记录最后10分钟" 
+                >
+                <div class="vTools"><a href="#" class="vClose"><em></em>收起</a>
+<a href="http://www.tudou.com/programs/view/dq8BX--9jiw/" class="vUrl" target="_blank"><em></em>北京邮电大学灵异事件!&quot;幸存者&quot;用手机记录...</a></div>
+<div class="vWrap"
+	thumbs="1"><a class="vThumbsBox" title="点击播放视频"
+	><span class="vThumbs"
+	><span class="mask"
+	><em></em></span><img class="crs"
+	show="1"	crs="http://g4.tdimg.com/272ae928edd7ae9ff168b65c6f92eedd/w_2.jpg"></span><span class="vSimple"
+	><img class="crs"
+	crs="http://mat1.gtimg.com/www/mb/images/vSimple.png"></span></a></div>
+</div> 
+
+</div>
+<div class="miniMultiMedia clear">
+<div class="mMM mMVideo" style='display:none'><a href="#"><i class="ic ico_videos"></i><span
+					 class="tx_nowrap">北京邮电大学灵异事件...</span></a></div></div>
+</div>
+<div class="pubInfo c_tx5"><span class="left c_tx5"><a href="http://www.tudou.com" target="_blank"><i class="sico ico_3rdApp" title="其他来源"></i></a><span style="display:none"><a class="f" href="http://www.tudou.com" target="_blank">来自土豆网</a></span><a class="time" target="_blank" href="http://t.qq.com/p/t/366041109085696" rel="1389415129" from="50001779">今天 12:38</a> <span class="cNote" title="该广播已被阅读43次">阅读(43)</span> </span><div class="funBox"><a href="http://t.qq.com/p/t/366041109085696" class="relay" num="0" >转播</a><span>|</span><a href="http://t.qq.com/p/t/366041109085696" class="comt" num="0" >评论</a><span>|</span><a href="#" class="fav">收藏</a></div></div></div></li><li  id="357442006038542" rel="1389414788" from="1"><div class="mFun"><a href="#" class="feed_opt"><em class="btn_ldrop"></em></a><div class="mFunDrop"> <b></b> <b class="mask"></b><div class="shareBtn"><p><a href="#">分享...</a></p></div><p><a href="http://t.qq.com/p/t/357442006038542" class="detail line" target="_blank">详情</a></p><p><a href="#" class="alarm">举报</a></p></div></div><div class="userPic"><a href="http://t.qq.com/d903466785" title="王培丹(@d903466785)" account="d903466785" boss="" tabIndex="-1"  target="_blank"  ><img src="http://t1.qlogo.cn/mbloghead/969d9ff53125213b7ca6/50"/></a></div><div class="msgBox">
+                <div class="userName" rel="d903466785"><strong><a href="http://t.qq.com/d903466785" title="王培丹(@d903466785)" boss="" gender="他"  target="_blank">王培丹</a></strong>&nbsp;</div><div class="msgCnt">来<span class='cKeyword'>北邮</span>食堂吃点东西！</div><div class="clear multiMedia">
+<div class="mediaWrap">	
+<div class="picBox " >
+<a href="http://t1.qpic.cn/mblogpic/61e7130ea9f19700ed9a/460" target="_blank" class="pic"><img class="crs" show="1" crs="http://t1.qpic.cn/mblogpic/61e7130ea9f19700ed9a/120">
+       </a></div>
+
+
+</div>
+<div class="miniMultiMedia clear">
+<div class="mMM mMPic" style='display:none'><a href="#"><i class="ic ico_pic"></i><span
+					class="tx_nowrap">查看图片</span></a></div></div>
+</div>
+<div class="pubInfo c_tx5"><span class="left c_tx5"><a href="http://weixin.qq.com/" target="_blank"><i class="sico ico_webmb" title="腾讯微博"></i></a><span style="display:none"><a class="f" href="http://weixin.qq.com/" target="_blank">来自微信</a></span><a class="time" target="_blank" href="http://t.qq.com/p/t/357442006038542" rel="1389414788" from="1086">今天 12:33</a> <span class="cNote" title="该广播已被阅读52次">阅读(52)</span> </span><div class="funBox"><a href="http://t.qq.com/p/t/357442006038542" class="relay" num="0" >转播</a><span>|</span><a href="http://t.qq.com/p/t/357442006038542" class="comt" num="0" >评论</a><span>|</span><a href="#" class="fav">收藏</a></div></div></div></li><li  id="367841090619140" rel="1389414580" from="1"><div class="mFun"><a href="#" class="feed_opt"><em class="btn_ldrop"></em></a><div class="mFunDrop"> <b></b> <b class="mask"></b><div class="shareBtn"><p><a href="#">分享...</a></p></div><p><a href="http://t.qq.com/p/t/367841090619140" class="detail line" target="_blank">详情</a></p><p><a href="#" class="alarm">举报</a></p></div></div><div class="userPic"><a href="http://t.qq.com/yanfeiyan437461" title="嫣霏烟(@yanfeiyan437461)" account="yanfeiyan437461" boss="" tabIndex="-1"  target="_blank"  ><img src="http://mat1.gtimg.com/www/mb/img/p1/head_normal_50.png"/></a></div><div class="msgBox">
+                <div class="userName" rel="yanfeiyan437461"><strong><a href="http://t.qq.com/yanfeiyan437461" title="嫣霏烟(@yanfeiyan437461)" boss="" gender="他"  target="_blank">嫣霏烟</a></strong>&nbsp;</div><div class="msgCnt">你好！同学！我现在在<span class='cKeyword'>北邮</span>教四刷计基的题！我太tm的痛苦了！我表示下学期一定tmd好好听网页设计！！！<img class='crs dn' crs='http://mat1.gtimg.com/www/mb/images/face/5.gif' title='流泪'><img class='crs dn' crs='http://mat1.gtimg.com/www/mb/images/face/30.gif' title='奋斗'><em rel="@A913542130"><a href="http://t.qq.com/A913542130" title="阿世(@A913542130)" target="_blank">阿世</a></em><em rel="@jinniandebeiwo"><a href="http://t.qq.com/jinniandebeiwo" title="堇年的被窝(@jinniandebeiwo)" target="_blank">堇年的被窝</a></em><em rel="@ly1209910389"><a href="http://t.qq.com/ly1209910389" title="ly(@ly1209910389)" target="_blank">ly</a></em>... <a href="http://url.cn/O8gApz" class="url" target="_blank">http://url.cn/O8gApz</a></div><div class="clear multiMedia">
+<div class="mediaWrap">	
+<div class="picBox " >
+<a href="http://t3.qpic.cn/mblogpic/5b2c2995df5e4c7d9ad2/460" target="_blank" class="pic"><img class="crs" show="1" crs="http://t3.qpic.cn/mblogpic/5b2c2995df5e4c7d9ad2/120">
+       </a></div>
+
+
+</div>
+<div class="miniMultiMedia clear">
+<div class="mMM mMPic" style='display:none'><a href="#"><i class="ic ico_pic"></i><span
+					class="tx_nowrap">查看图片</span></a></div></div>
+</div>
+<div class="areaInfo"><em title="地理位置" class="ico_area"></em><a nopop="1" boss="btn_check_tweetNear" href="http://p.t.qq.com/map/lbs.php?lat=39.962949&lng=116.3572&addr=北京市海淀区" target="_blank">北京市海淀区</a> - <a href="#" pano="1" address="北京市海淀区" pos="116.3572,39.962949"  merchant="北京市海淀区">街景地图</a><i class="ico_new_mini"></i></div><div class="pubInfo c_tx5"><span class="left c_tx5"><a href="http://mobile.qq.com/qzone/android/" target="_blank"><i class="sico ico_tencent" title="腾讯平台产品"></i></a><span style="display:none"><a class="f" href="http://mobile.qq.com/qzone/android/" target="_blank">来自QQ空间Android版</a></span><a class="time" target="_blank" href="http://t.qq.com/p/t/367841090619140" rel="1389414580" from="1700">今天 12:29</a> <span class="cNote" title="该广播已被阅读47次">阅读(47)</span> </span><div class="funBox"><a href="http://t.qq.com/p/t/367841090619140" class="relay" num="0" >转播</a><span>|</span><a href="http://t.qq.com/p/t/367841090619140" class="comt" num="0" >评论</a><span>|</span><a href="#" class="fav">收藏</a></div></div></div></li><li  id="385220007419457" rel="1389413397" from="1"><div class="mFun"><a href="#" class="feed_opt"><em class="btn_ldrop"></em></a><div class="mFunDrop"> <b></b> <b class="mask"></b><div class="shareBtn"><p><a href="#">分享...</a></p></div><p><a href="http://t.qq.com/p/t/385220007419457" class="detail line" target="_blank">详情</a></p><p><a href="#" class="alarm">举报</a></p></div></div><div class="userPic"><a href="http://t.qq.com/BOSS-001" title="梦想之路(@BOSS-001)" account="BOSS-001" boss="" tabIndex="-1"  target="_blank"  ><img src="http://t2.qlogo.cn/mbloghead/fef5c820c39f8cd6261a/50"/></a></div><div class="msgBox">
+                <div class="userName" rel="BOSS-001"><strong><a href="http://t.qq.com/BOSS-001" title="梦想之路(@BOSS-001)" boss="" gender="他"  target="_blank">梦想之路</a></strong>&nbsp;</div><div class="msgCnt">【<span class='cKeyword'>北京邮电大学</span>2009年电路分析基础期末试题及答案】 (分享自 <em rel="@QQ空间"><a href="http://t.qq.com/Qzone" title="QQ空间(@Qzone)" target="_blank">@QQ空间</a></em>) <a target="_blank" href="http://url.cn/GCCAv2" class="ico_video" shorturl="GCCAv2"  reltitle="北京邮电大学2009年电路分析基础期末试题及答案">http://url.cn/GCCAv2</a></div><div class="clear multiMedia">
+<div class="mediaWrap">	
+<div class="videoBox"  realurl="http://wenku.baidu.com/view/215563c189eb172ded63b783.html?from&#61;share_qq" shorturl="GCCAv2" playurl="http://wenku.baidu.com/static/flash/apireader.swf?docurl&#61;http://wenku.baidu.com/play&amp;docid&#61;215563c189eb172ded63b783&amp;title&#61;北京邮电大学2009年电...&amp;doctype&#61;doc&amp;fpn&#61;6&amp;npn&#61;5&amp;readertype&#61;external&amp;catal&#61;0&amp;cdnurl&#61;http://txt.wenku.baidu.com/play" minipicurl="http://retype.wenku.bdimg.com/img/215563c189eb172ded63b783" reltitle="北京邮电大学2009年电路分析基础期末试题及答案" 
+                >
+                <div class="vTools"><a href="#" class="vClose"><em></em>收起</a>
+<a href="http://wenku.baidu.com/view/215563c189eb172ded63b783.html?from&#61;share_qq" class="vUrl" target="_blank"><em></em>北京邮电大学2009年电路分析基础期末试题及...</a></div>
+<div class="vWrap"
+	thumbs="1"><a class="vThumbsBox" title="点击播放视频"
+	><span class="vThumbs"
+	><span class="mask"
+	><em></em></span><img class="crs"
+	show="1"	crs="http://retype.wenku.bdimg.com/img/215563c189eb172ded63b783"></span><span class="vSimple"
+	><img class="crs"
+	crs="http://mat1.gtimg.com/www/mb/images/vSimple.png"></span></a></div>
+</div> 
+
+</div>
+<div class="miniMultiMedia clear">
+<div class="mMM mMVideo" style='display:none'><a href="#"><i class="ic ico_videos"></i><span
+					 class="tx_nowrap">北京邮电大学2009年电...</span></a></div></div>
+</div>
+<div class="pubInfo c_tx5"><span class="left c_tx5"><a href="http://www.baidu.com" target="_blank"><i class="sico ico_3rdApp" title="其他来源"></i></a><span style="display:none"><a class="f" href="http://www.baidu.com" target="_blank">来自百度</a></span><a class="time" target="_blank" href="http://t.qq.com/p/t/385220007419457" rel="1389413397" from="1521957">今天 12:09</a> <span class="cNote" title="该广播已被阅读66次">阅读(66)</span> </span><div class="funBox"><a href="http://t.qq.com/p/t/385220007419457" class="relay" num="0" >转播</a><span>|</span><a href="http://t.qq.com/p/t/385220007419457" class="comt" num="0" >评论</a><span>|</span><a href="#" class="fav">收藏</a></div></div></div></li><li  id="358541121017254" rel="1389406300" from="1"><div class="mFun"><a href="#" class="feed_opt"><em class="btn_ldrop"></em></a><div class="mFunDrop"> <b></b> <b class="mask"></b><div class="shareBtn"><p><a href="#">分享...</a></p></div><p><a href="http://t.qq.com/p/t/358541121017254" class="detail line" target="_blank">详情</a></p><p><a href="#" class="alarm">举报</a></p></div></div><div class="userPic"><a href="http://t.qq.com/zm13753644724" title="张敏(@zm13753644724)" account="zm13753644724" boss="" tabIndex="-1"  target="_blank"  ><img src="http://t2.qlogo.cn/mbloghead/dd1db7eb65870e115f7c/50"/></a></div><div class="msgBox">
+                <div class="userName" rel="zm13753644724"><strong><a href="http://t.qq.com/zm13753644724" title="张敏(@zm13753644724)" boss="" gender="他"  target="_blank">张敏</a></strong>&nbsp;</div><div class="msgCnt">【大学物理学 第三版下册 赵近芳 <span class='cKeyword'>北邮</span>出版社 课后习题答案】 (分享自 <em rel="@QQ空间"><a href="http://t.qq.com/Qzone" title="QQ空间(@Qzone)" target="_blank">@QQ空间</a></em>) <a target="_blank" href="http://url.cn/D0hhz7" class="ico_video" shorturl="D0hhz7"  reltitle="大学物理学 第三版下册 赵近芳 北邮出版社 课后习题答案">http://url.cn/D0hhz7</a></div><div class="clear multiMedia">
+<div class="mediaWrap">	
+<div class="videoBox"  realurl="http://wenku.baidu.com/view/324e77b769dc5022aaea00be.html?from&#61;share_qq" shorturl="D0hhz7" playurl="http://wenku.baidu.com/static/flash/apireader.swf?docurl&#61;http://wenku.baidu.com/play&amp;docid&#61;324e77b769dc5022aaea00be&amp;title&#61;大学物理学 第三版下册 ...&amp;doctype&#61;doc&amp;fpn&#61;105&amp;npn&#61;5&amp;readertype&#61;external&amp;catal&#61;0&amp;cdnurl&#61;http://txt.wenku.baidu.com/play" minipicurl="http://retype.wenku.bdimg.com/img/e768de166c175f0e7cd137e9" reltitle="大学物理学 第三版下册 赵近芳 北邮出版社 课后习题答案" 
+                >
+                <div class="vTools"><a href="#" class="vClose"><em></em>收起</a>
+<a href="http://wenku.baidu.com/view/324e77b769dc5022aaea00be.html?from&#61;share_qq" class="vUrl" target="_blank"><em></em>大学物理学 第三版下册 赵近芳 北邮出版社 ...</a></div>
+<div class="vWrap"
+	thumbs="1"><a class="vThumbsBox" title="点击播放视频"
+	><span class="vThumbs"
+	><span class="mask"
+	><em></em></span><img class="crs"
+	show="1"	crs="http://retype.wenku.bdimg.com/img/e768de166c175f0e7cd137e9"></span><span class="vSimple"
+	><img class="crs"
+	crs="http://mat1.gtimg.com/www/mb/images/vSimple.png"></span></a></div>
+</div> 
+
+</div>
+<div class="miniMultiMedia clear">
+<div class="mMM mMVideo" style='display:none'><a href="#"><i class="ic ico_videos"></i><span
+					 class="tx_nowrap">大学物理学 第三版下...</span></a></div></div>
+</div>
+<div class="pubInfo c_tx5"><span class="left c_tx5"><a href="http://www.baidu.com" target="_blank"><i class="sico ico_3rdApp" title="其他来源"></i></a><span style="display:none"><a class="f" href="http://www.baidu.com" target="_blank">来自百度</a></span><a class="time" target="_blank" href="http://t.qq.com/p/t/358541121017254" rel="1389406300" from="1521957">今天 10:11</a> <span class="cNote" title="该广播已被阅读59次">阅读(59)</span> </span><div class="funBox"><a href="http://t.qq.com/p/t/358541121017254" class="relay" num="0" >转播</a><span>|</span><a href="http://t.qq.com/p/t/358541121017254" class="comt" num="0" >评论</a><span>|</span><a href="#" class="fav">收藏</a></div></div></div></li><li  id="386419122149934" rel="1389405825" from="1"><div class="mFun"><a href="#" class="feed_opt"><em class="btn_ldrop"></em></a><div class="mFunDrop"> <b></b> <b class="mask"></b><div class="shareBtn"><p><a href="#">分享...</a></p></div><p><a href="http://t.qq.com/p/t/386419122149934" class="detail line" target="_blank">详情</a></p><p><a href="#" class="alarm">举报</a></p></div></div><div class="userPic"><a href="http://t.qq.com/xiaoping6688" title="小瓶(@xiaoping6688)" account="xiaoping6688" boss="" tabIndex="-1"  target="_blank"  ><img src="http://t3.qlogo.cn/mbloghead/15ded34daaddbe9ff464/50"/></a></div><div class="msgBox">
+                <div class="userName" rel="xiaoping6688"><strong><a href="http://t.qq.com/xiaoping6688" title="小瓶(@xiaoping6688)" boss="" gender="他"  target="_blank">小瓶</a></strong>&nbsp;</div><div class="msgCnt"><span class='cKeyword'>北邮</span>卖烤鱿鱼的那位师傅已经退休了，那是我吃过的最好吃的烤鱿鱼。</div><div class="pubInfo c_tx5"><span class="left c_tx5"><a href="http://t.qq.com/" target="_blank"><i class="sico ico_webmb" title="腾讯微博"></i></a><span style="display:none"><a class="f" href="http://t.qq.com/" target="_blank">来自腾讯微博</a></span><a class="time" target="_blank" href="http://t.qq.com/p/t/386419122149934" rel="1389405825" from="1842">今天 10:03</a> <span class="cNote" title="该广播已被阅读39次">阅读(39)</span> </span><div class="funBox"><a href="http://t.qq.com/p/t/386419122149934" class="relay" num="0" >转播</a><span>|</span><a href="http://t.qq.com/p/t/386419122149934" class="comt" num="0" >评论</a><span>|</span><a href="#" class="fav">收藏</a></div></div></div></li><li  id="384117051744318" rel="1389405367" from="1"><div class="mFun"><a href="#" class="feed_opt"><em class="btn_ldrop"></em></a><div class="mFunDrop"> <b></b> <b class="mask"></b><div class="shareBtn"><p><a href="#">分享...</a></p></div><p><a href="http://t.qq.com/p/t/384117051744318" class="detail line" target="_blank">详情</a></p><p><a href="#" class="alarm">举报</a></p></div></div><div class="userPic"><a href="http://t.qq.com/Qianya3845" title="千雅制片人(@Qianya3845)" account="Qianya3845" boss="" tabIndex="-1"  target="_blank"  ><img src="http://t3.qlogo.cn/mbloghead/65f73865951ea2bae69a/50"/></a></div><div class="msgBox">
+                <div class="userName" rel="Qianya3845"><strong><a href="http://t.qq.com/Qianya3845" title="千雅制片人(@Qianya3845)" boss="" gender="他"  target="_blank">千雅制片人</a><a href="http://zhaoren.t.qq.com/people.php" title="腾讯个人认证" target="_blank" class="vip"></a></strong>&nbsp;</div><div class="msgCnt">&quot;既然选择了远方，便只顾风雨兼程&quot;。汪国真的这首诗曾经激励一个孩子考上了<span class='cKeyword'>北京邮电大学</span>，诗歌是真的可以帮助人的，这也是一种公益文化。现在的汪国真正在给中国古诗词谱曲，为中国诗词文化传播赋予更多的方式。</div><div class="pubInfo c_tx5"><span class="left c_tx5"><a href="http://t.qq.com/client.php?t=iphone" target="_blank"><i class="sico ico_mobile" title="其他来源"></i></a><span style="display:none"><a class="f" href="http://t.qq.com/client.php?t=iphone" target="_blank">来自iPhone客户端</a></span><a class="time" target="_blank" href="http://t.qq.com/p/t/384117051744318" rel="1389405367" from="6">今天 09:56</a> <span class="cNote" title="该广播已被阅读194次">阅读(194)</span> </span><div class="funBox"><a href="http://t.qq.com/p/t/384117051744318" class="relay" num="0" >转播</a><span>|</span><a href="http://t.qq.com/p/t/384117051744318" class="comt" num="0" >评论</a><span>|</span><a href="#" class="fav">收藏</a></div></div></div></li><li  id="385319103602918" rel="1389395407" from="1"><div class="mFun"><a href="#" class="feed_opt"><em class="btn_ldrop"></em></a><div class="mFunDrop"> <b></b> <b class="mask"></b><div class="shareBtn"><p><a href="#">分享...</a></p></div><p><a href="http://t.qq.com/p/t/385319103602918" class="detail line" target="_blank">详情</a></p><p><a href="#" class="alarm">举报</a></p></div></div><div class="userPic"><a href="http://t.qq.com/xiangnanyibei999" title="吊儿郎0-0当(@xiangnanyibei999)" account="xiangnanyibei999" boss="" tabIndex="-1"  target="_blank"  ><img src="http://mat1.gtimg.com/www/mb/img/p1/head_normal_50.png"/></a></div><div class="msgBox">
+                <div class="userName" rel="xiangnanyibei999"><strong><a href="http://t.qq.com/xiangnanyibei999" title="吊儿郎0-0当(@xiangnanyibei999)" boss="" gender="他"  target="_blank">吊儿郎0-0当</a></strong>&nbsp;</div><div class="msgCnt">如果，如果，你的目标是北理或是北航该多好。我可以安心去<span class='cKeyword'>北邮</span>。你不是，那我就随你想着去武汉吧。<a href="http://k.t.qq.com/k/%E9%99%88%E5%90%8C%E5%AD%A6%EF%BC%8C%E4%BD%A0%E6%B0%B8%E8%BF%9C%E6%AF%94%E6%88%91%E7%9A%84%E7%90%86%E6%83%B3%E9%87%8D%E8%A6%81" target="_blank">#陈同学，你永远比我的理想重要#</a></div><div class="pubInfo c_tx5"><span class="left c_tx5"><a href="http://mb.qq.com/" target="_blank"><i class="sico ico_mobile" title="其他来源"></i></a><span style="display:none"><a class="f" href="http://mb.qq.com/" target="_blank">来自手机QQ浏览器</a></span><a class="time" target="_blank" href="http://t.qq.com/p/t/385319103602918" rel="1389395407" from="1436">今天 07:10</a> <span class="cNote" title="该广播已被阅读55次">阅读(55)</span> </span><div class="funBox"><a href="http://t.qq.com/p/t/385319103602918" class="relay" num="0" >转播</a><span>|</span><a href="http://t.qq.com/p/t/385319103602918" class="comt" num="0" >评论</a><span>|</span><a href="#" class="fav">收藏</a></div></div></div></li>    </ul>
+    
+    <!--  搜索结果的全量和部分  -->
+        <div class="del_similar">以上结果已去除相似微博，您可查看        <a href="http://search.t.qq.com/index.php?k=%E5%8C%97%E9%82%AE&pos=239&s_dup=1" name="dup" rel="1">全量结果</a>
+    </div>
+        <!--  搜索结果的全量和部分 end  -->
+</div>
+    <div class="pageNav blueFoot">
+<strong>1</strong><a href="http://search.t.qq.com/index.php?k=%E5%8C%97%E9%82%AE&pos=211&p=2">2</a><a href="http://search.t.qq.com/index.php?k=%E5%8C%97%E9%82%AE&pos=211&p=3">3</a><a href="http://search.t.qq.com/index.php?k=%E5%8C%97%E9%82%AE&pos=211&p=4">4</a><a href="http://search.t.qq.com/index.php?k=%E5%8C%97%E9%82%AE&pos=211&p=5">5</a><a href="http://search.t.qq.com/index.php?k=%E5%8C%97%E9%82%AE&pos=211&p=6">6</a><a href="http://search.t.qq.com/index.php?k=%E5%8C%97%E9%82%AE&pos=211&p=7">7</a><a href="http://search.t.qq.com/index.php?k=%E5%8C%97%E9%82%AE&pos=211&p=8">8</a><a href="http://search.t.qq.com/index.php?k=%E5%8C%97%E9%82%AE&pos=211&p=9">9</a><span>...</span><a href="http://search.t.qq.com/index.php?k=%E5%8C%97%E9%82%AE&pos=211&p=2" class="pageBtn">下一页 &gt;&gt;</a></div><div class="footSearch clear">
+        <div class="xgss">
+        <strong>相关搜索</strong>
+        <ul class="clear">                <li><a onclick="MI.Bos('btnSearchIndexSearchListBottom');" href="http://search.t.qq.com/index.php?pos=229&k=2013%E5%8C%97%E9%82%AE%E5%86%9B%E8%AE%AD" title="2013北邮军训">2013北邮军训</a></li>
+                                <li><a onclick="MI.Bos('btnSearchIndexSearchListBottom');" href="http://search.t.qq.com/index.php?pos=229&k=%E5%8C%97%E9%82%AE%E6%95%99%E5%8A%A1%E7%B3%BB%E7%BB%9F" title="北邮教务系统">北邮教务系统</a></li>
+                                <li><a onclick="MI.Bos('btnSearchIndexSearchListBottom');" href="http://search.t.qq.com/index.php?pos=229&k=%E5%8C%97%E9%82%AE%E4%BA%BA%E8%AE%BA%E5%9D%9B" title="北邮人论坛">北邮人论坛</a></li>
+                                <li><a onclick="MI.Bos('btnSearchIndexSearchListBottom');" href="http://search.t.qq.com/index.php?pos=229&k=%E5%8C%97%E9%82%AE%E4%BA%BA%E7%A4%BE%E5%8C%BA" title="北邮人社区">北邮人社区</a></li>
+                                <li><a onclick="MI.Bos('btnSearchIndexSearchListBottom');" href="http://search.t.qq.com/index.php?pos=229&k=%E5%8C%97%E9%82%AEiptv" title="北邮iptv">北邮iptv</a></li>
+                                <li><a onclick="MI.Bos('btnSearchIndexSearchListBottom');" href="http://search.t.qq.com/index.php?pos=229&k=%E5%8C%97%E9%82%AE%E4%BA%BA%20%E6%AF%95%E4%B8%9A%E7%94%9F%E5%B7%A5%E4%BD%9C" title="北邮人 毕业生工作">北邮人 毕业生工作</a></li>
+                                <li><a onclick="MI.Bos('btnSearchIndexSearchListBottom');" href="http://search.t.qq.com/index.php?pos=229&k=%E5%8C%97%E9%82%AEsns" title="北邮sns">北邮sns</a></li>
+                                <li><a onclick="MI.Bos('btnSearchIndexSearchListBottom');" href="http://search.t.qq.com/index.php?pos=229&k=%E5%8C%97%E9%82%AE%E7%BD%91%E7%BB%9C%E5%AD%A6%E9%99%A2" title="北邮网络学院">北邮网络学院</a></li>
+                        </ul>
+    </div>
+        <div class="sosoTextBox">
+        <div class="text">
+            <input type="text" id="k4" value="北邮" atuocomplete="off" __onkeydown="footSearchKeyDown(event, 'http://search.t.qq.com/index.php?pos=934&')" />
+        </div><input type="button" class="button" onclick="MI.Bos('btnSearchIndexBottomButton');" id="btn_foot_search" />
+        <div class="sosologo"><a href="http://www.soso.com/" title="搜搜 www.soso.com"></a></div>
+    </div><p class="poweredBy"><span>Powered by</span><em class="mbsearch">soso</em></p></div>
+</div><!-- main end//-->
+
+
+<div class="side">
+</div><!-- side //-->
+<div id="keywordUserInput" style="display:none">北邮</div>
+<script type="text/javascript">if(!window._MIRun){_MIRun=[];MIRun=function(o){_MIRun.push(o)};} _MIVersion={"lib\/jquery":"1.8.3.3","lib\/highcharts":"130606","lib\/zepto":"131112a","lib\/hammer":"1.0.5","lib\/iscroll":"130905","lib\/underscore":"1.5.2","lib\/mustache":"0.7.2","utils\/addQQ":"130609","utils\/addNote":"130828","utils\/tip":"130827","utils\/banner":"130609","utils\/getTalk":"140109","utils\/login":"131106","utils\/swipeSch":"131106","module\/Page":"130517","module\/ToggleBox":"130516","module\/TalkBox.LongWB":"131028","module\/TalkBox.addFace":"131106","module\/AreaPicker":"130704","module\/Animate":"130821a","module\/TalkBox":"140110","module\/ClipBoard":"131219a","module\/TalkList.Share":"140109","m\/module\/Confirm":"140107a","m\/module\/ShowBanner":"140110","m\/module\/ImgViewer":"140108","m\/utils\/checker":"140110","m\/t\/disclose":"140107a","m\/t\/wechat":"131204c","m\/t\/imgVote":"140109","DatePicker":"131031","ColorPicker":"110107","Base":"140107a","Tmpl":"140109","NewMsgBox":"131029","MapPop":"120222","LbsMap":"130226","WebQQ":"131112","WebQQFull":"131125","PrivateChat":"130131","Radio":"110905","FAQBox":"111104","NonTx":"110318","TalkBoxRich":"140108","Mood":"131125","Capture":"140108","TransformST":"110823","FileUploader":"120222","TalkListRich":"140108a","TalkListFav":"130701","TalkListUpdate":"120221","TalkListShare":"130816","Scroll":"101111","QQDownload":"111115b","Music":"131121","QQMusicInstance":"111029","QQMusicPlayer":"130715","QQMusicWmpPlayer":"110711","QQMuicHtml5Player":"130715","Validate":"130517","ValidateNew":"110920","Slide":"131029","PicList":"131225a","PicViewer":"140108a","RelateSelect":"130813a","City":"130911","CityAll":"130911","Occupation":"130305","ItemSelect":"130416","Message":"140109a","c\/player\/mi.cSlide.player":"130418m","QmEditor":"131114","t\/mi.TalkListTab":"131129","c\/mi.cWaterfall":"130924","c\/mi.cTumblr":"130422","t\/mi.Expose.Tutorial":"131112a","ImageVote":"140109","GiftBox":"131108","Theme":"140108","Tag":"130426","List":"121224","SettingEdu":"130115","SettingWork":"121002","Face":"130427","Sidebar":"131113a","Wide":"130826","Vote":"121214","MicroTopic":"130307","SubjectPublish":"130128a","t\/mi.RealWord":"130524","t\/mi.Widget.admin":"130326","t\/mi.App":"131016a","t\/mi.TimeAxis":"131224","p\/mi.TalkPic":"131001","p\/ImgVote":"140106a","Group":"111228","QunList":"110804","_CallOver":"130105","_ShuoShuoUploader":"121114","_NewMultiPic":"130626","_MultiBeautify":"130626","_Mood":"130422a","_MoodDemo":"110805","_MusicRecord":"111101","_VideoRecord":"111104","_CameraPhoto":"111001","_Text2Pic":"110926","_SinglePhoto":"120621","_PingtuEditor":"120920","ad\/crystal":"http:\/\/ra.gtimg.com\/web\/crystal\/s1.2Beta06Build064\/crystal-min.js","datePicker":"130514","colorPicker":"101228","base":"140107","mood":"131127","talkListShare":"120221","picList":"130906","picViewer":"140102","itemSelect":"130314","message":"140109","wide":"131107","apollo":"131106","privateChat":"130131","Task":"131226","c\/mi.cSlide.tumblr":"120917a","k\/subscribeTopic":"130407","p\/medal":"130808b","p\/guanjia":"131230","p\/silenceCntPopup":"130507","r\/qqFriendSelector":"131014","r\/qqFriendsBanner":"121219","r\/famousPersonDialog":"121029","r\/homeRecommendBanner":"121105a","r\/sFollowDialog":"130509","r\/qqFriendPush":"130401","r\/silenceFrdPopup":"131025","quan\/quanDialog":"131030","p\/silenceChnPopup":"130522","quan\/quanSort":"130723","quan\/quanRec":"130709","t\/mi.Cash":"131107a","t\/mi.Member":"131129"};MILang='';</script><script type="text/javascript" src="http://mat1.gtimg.com/www/mb/js/mi_140109.js"></script><script type="text/javascript">
+MI.user={"account":"yangtingjun_1","name":"\u6768\u5ef7\u541b","chName":"yangtingjun_1","flag":{"govCert":0,"passCert":1},"pic":"http:\/\/t0.qlogo.cn\/mbloghead\/9831bcd80badc86422d2\/50","fun":{"openQuickLogin":0,"widgetFloat":1,"wideStyle":1,"newAdmin":1,"wideLabHeaderFloat":0,"wideLibCloseTip":1,"wideGuide":1,"search":1,"favGroup":1,"report":1,"autoPic":1,"hasThirdAppShield":1,"followList":0,"goTop":1,"isNewSidebar":1,"newRelay2":1,"note":1,"chat":1,"app":1,"msgBox":1,"noti":1,"syncQzone":1,"messageShare":1,"notIframe":1,"viewOriginal":0,"followTips":1,"selfVideo":1,"autoMoreContinue":1,"atShield":0,"notEmpty":0,"atAgg":0,"feedSpecial":1,"apiMove":1,"msgOpenPage":1,"reportRead":1,"polyNotice":1,"level":3,"looseMar":0,"widgetAdmin":1,"newvote":1,"newAppDrop":1,"newPicUpload":1,"rtPicPub":1,"readTimes":1,"showBotAd":0,"hasLike":1,"youdaoShare":1,"operFace":1,"picCode":1,"fromIcon":1,"newMultiPicFun":1,"hasLongtxtBlog":1,"newTalkBoxFun":1,"apolloStyle":1,"fobbidMessage":1,"Vip":1,"isMember":1,"relayComt":1,"richcombination":0,"usedExpose":0,"hasVipTheme":1,"hasViewGuide":0},"medal":[],"atType":4,"uin":"f0194af52e619dfc43a59d39fdfd901f","follower":null,"following":null}; MI.rope={}; MI.skinAccessories={};MI.videoJson = {};UI.ready(function(){
+MI.app('Base',function(){
+	var apolloStyle = MI.user.fun.apolloStyle;
+	MI.user.fun.apolloStyle = 1; 
+	MI.navMenu();
+	MI.user.fun.apolloStyle = apolloStyle;
+});
+MI.pageClick(['#pageSetLink','.wideSetLink']);
+
+MI.app('Wide');MI.api.type = 14;});//QrCode
+var qrCode = $('erweima');
+if(qrCode){
+    if(UI.windowWidth() > 1220){
+        qrCode.style.display = '';
+    }
+}
+</script>
+<script type="text/javascript" src="http://mat1.gtimg.com/www/mb/js/s/mi.Search_131001.js"></script>
+
+<script type="text/javascript" src="http://mat1.gtimg.com/www/mb/js/search/ui.q.common_121019.js"></script>
+<script type="text/javascript" src="http://mat1.gtimg.com/www/mb/js/search/ui.q_121019.js"></script>
+<script type="text/javascript" src="http://mat1.gtimg.com/www/mb/js/s/s.window_131001.js"></script>
+<script type="text/javascript" src="http://mat1.gtimg.com/www/mb/js/s/s.side_131001.js"></script>
+<script type="text/javascript">
+function setBottom(id){var curObj=$(id);if(curObj){var pNode=UI.parent(curObj);var totalHeight=0;UI.each(UI.children(pNode),function(o){if(o.nodeType==1){totalHeight+=UI.height(o);}});var detaHeight=UI.height(pNode)-totalHeight;if(detaHeight>1){UI.C(curObj,'marginTop',detaHeight+'px');}}}
+function isBottom(){var scrollTop=0;var clientHeight=0;var scrollHeight=0;if(document.documentElement&&document.documentElement.scrollTop){scrollTop=document.documentElement.scrollTop;}else if(document.body){scrollTop=document.body.scrollTop;}
+if(document.body.clientHeight&&document.documentElement.clientHeight){clientHeight=(document.body.clientHeight<document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight;}else{clientHeight=(document.body.clientHeight>document.documentElement.clientHeight)?document.body.clientHeight:document.documentElement.clientHeight;}
+scrollHeight=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);if(scrollTop+clientHeight==scrollHeight){return true;}else{return false;}}
+function setSearchBottom()
+{var lists=$$('.main .LC');if(lists.length){list=lists[lists.length-1];UI.C(list,'marginBottom',0);var wrapHeight=UI.height($('mainWrapper'));var sosoHeight=UI.height($$('.soso')[0]);var conHeight=UI.height($$('.main')[0]);var y=wrapHeight-conHeight-sosoHeight;UI.C(list,'marginBottom',y>0?y+'px':'');}
+var wbHeight=UI.height($$('.wbSearch')[0]);var conHeight=UI.height($$('.main')[0]);if(wbHeight>conHeight){//UI.C($$('.main')[0],'height',(wbHeight-conHeight)+'px');
+}}function searchFoot(link) {  $('k2').value = $('k4').value;  searchSubmit_new(link);}function footSearchKeyDown(e, link) { if (!e) return; var E = UI.E(e); if (E.key == 13) { searchFoot_new(link);  }}function searchFoot_new(link) {    $('k2').value = $('k4').value;    searchSubmit(link);}</script>
+</div><!-- mainWrapper //-->
+</div><span class="apSBottom">
+        <i class="apSGraph_A"></i>
+        <i class="apSGraph_B"></i>
+</span>
+<script type="text/javascript">
+function changeLang(event){
+	var e = window.event || event || {};
+	var dom = e.target || e.srcElement,
+		href = document.location.href,
+		lang = dom.getAttribute('href'),
+		index = href.indexOf('?'),
+		newHref = href;
+	if(lang!=null){
+		var indexL = lang.indexOf('lang='),
+			langTxt = lang.substring(indexL);
+		if(index == -1){
+			newHref = newHref + '?' + langTxt; 
+		}
+		else{
+			var hasLang = href.indexOf('lang');
+			if(hasLang == -1)
+				newHref += '&' + langTxt;
+			else{
+				newHref = newHref.substring(0,hasLang) + langTxt;
+			}
+		}
+		document.location.href = newHref;
+	}
+}
+</script>
+<div id="Copyright" role="contentinfo"><div class="wrapper"><div><a href="http://www.qq.com" target="_blank">腾讯网</a>|<a href="http://www.qq.com/map" target="_blank">网站导航</a>|<a href="http://t.qq.com/certification">认证服务</a>|<a href="http://ad.t.qq.com" target="_blank" boss="footer_adtqqcom">企业服务</a>|<a href="http://open.t.qq.com" target="_blank">开放平台</a>|<a href="http://service.qq.com/special_auto/weibo.html" target="_blank">腾讯客服</a>|<a href="http://k.t.qq.com/k/%25E6%2584%258F%25E8%25A7%2581%25E5%258F%258D%25E9%25A6%2588">意见反馈</a>|<div class="langSet" onmouseover="UI.addClass(this,'hover');" onmouseout="UI.removeClass(this,'hover');" onclick="if(MI.changeLang && (MI.user.account != null && MI.user.account != '')){MI.changeLang(event); return false;}else{changeLang(event);return false;}">
+<a href="?">Language<span class="btn_arr"><span><em>◆</em></span></span></a><div class="subNav"><p><a data-flag="3" href="?lang=zh_CN ">简体中文</a></p><p class="second"><a data-flag="1" href="?lang=zh_CHT">繁體中文</a></p><p class="last"><a data-flag="2" href="?lang=en_US">English</a></p>
+        <p></p></div></div></div><div>Copyright &copy; 1998 - 2014 Tencent. All Rights Reserved</div></div></div>
+<script>try{QosS.timePoint3()();}catch(e){}</script>
+<script>MIRun(function(){setTimeout(function(){UI.getScript('http://pingjs.qq.com/ping.js',function(){if(typeof(pgvMain) == 'function'){if(window.vsPgvCol){vsPgvCol=vsPgvCol+";t_apollo"}else{window.vsPgvCol="t_apollo"}if(MI&&MI.user.fun.wideStyle){}pgvMain()}})},1000)});</script><div id="cssCheck"></div>
+<script>try{QosS.endCheck();}catch(e){}</script>
+
+<!--admaster上报通过img标签src属性上报-->
+
+</body>
+<script>
+   try{
+       $$('.feeds_type a')[0].href= '';
+   }catch(e){}
+
+   MI.Search.data = [{"output":"\u003cdiv class=\"SC\" id=\"SideSearchUser\" index=\"11\"\u003e        \u003ch3\u003e\u641c\u4eba\u7ed3\u679c\u003c\/h3\u003e\r\n        \u003cul class=\"imgList qqFriend relatedUser\"\u003e\r\n                            \u003cli class=\"spcialRec\"\u003e\r\n                    \u003ca opType=\"toPage\" account=\"summerstar7\" boss=\"{\u0027name\u0027:\u0027SearchSrRecClick\u0027,\u0027id\u0027:\u00271194\u0027,\u0027sBak2\u0027:\u0027toImage\u0027,\u0027iBak1\u0027:\u00271922429951614687027\u0027,\u0027sBak1\u0027:\u0027%E5%8C%97%E9%82%AE\u0027,\u0027sText\u0027:\u0027summerstar7\u0027,\u0027iPos\u0027:\u00271\u0027}\" href=\"http:\/\/t.qq.com\/summerstar7\" title=\"\u590f\u65e5\u661f_\u5317\u90ae\u51fa\u7248\u793e(@summerstar7)\"\u003e\u003cimg src=\"http:\/\/t1.qlogo.cn\/mbloghead\/387fa1f3ff9192fe5714\/100\"\u003e\u003c\/a\u003e\r\n                    \u003cp\u003e\u003ca opType=\"toPage\" boss=\"{\u0027name\u0027:\u0027SearchSrRecClick\u0027,\u0027id\u0027:\u00271194\u0027,\u0027sBak2\u0027:\u0027toName\u0027 ,\u0027iBak1\u0027:\u00271922429951614687027\u0027,\u0027sBak1\u0027:\u0027%E5%8C%97%E9%82%AE\u0027,\u0027sText\u0027:\u0027summerstar7\u0027,\u0027iPos\u0027:\u00271\u0027}\" href=\"http:\/\/t.qq.com\/summerstar7\" title=\"\u590f\u65e5\u661f_\u5317\u90ae\u51fa\u7248\u793e(@summerstar7)\"\u003e\u590f\u65e5\u661f_..\u003c\/a\u003e\u003ca href=\"http:\/\/zhaoren.t.qq.com\/people.php?id=114\" title=\"\u817e\u8baf\u673a\u6784\u8ba4\u8bc1\" target=\"_blank\" class=\"tIcon ico_cvip\"\u003e\u003c\/a\u003e\u003c\/p\u003e\r\n                                        \u003ca href=\"http:\/\/t.qq.com\/summerstar7\" boss=\"{\u0027name\u0027:\u0027SearchSrRecClick\u0027,\u0027id\u0027:\u00271194\u0027,\u0027sBak2\u0027:\u0027addAttention\u0027,\u0027iBak1\u0027:\u00271922429951614687027\u0027,\u0027sBak1\u0027:\u0027%E5%8C%97%E9%82%AE\u0027,\u0027sText\u0027:\u0027summerstar7\u0027,\u0027iPos\u0027:\u00271\u0027}\" class=\"foFun addAttention\"\u003e+\u6536\u542c\u003c\/a\u003e\r\n                                    \u003c\/li\u003e\r\n                                \u003cli class=\"spcialRec\"\u003e\r\n                    \u003ca opType=\"toPage\" account=\"buptmba\" boss=\"{\u0027name\u0027:\u0027SearchSrRecClick\u0027,\u0027id\u0027:\u00271194\u0027,\u0027sBak2\u0027:\u0027toImage\u0027,\u0027iBak1\u0027:\u00271922429951614687027\u0027,\u0027sBak1\u0027:\u0027%E5%8C%97%E9%82%AE\u0027,\u0027sText\u0027:\u0027buptmba\u0027,\u0027iPos\u0027:\u00272\u0027}\" href=\"http:\/\/t.qq.com\/buptmba\" title=\"\u5317\u90aeMBA(@buptmba)\"\u003e\u003cimg src=\"http:\/\/t0.qlogo.cn\/mbloghead\/2b70cd622ffd1aedfd28\/100\"\u003e\u003c\/a\u003e\r\n                    \u003cp\u003e\u003ca opType=\"toPage\" boss=\"{\u0027name\u0027:\u0027SearchSrRecClick\u0027,\u0027id\u0027:\u00271194\u0027,\u0027sBak2\u0027:\u0027toName\u0027 ,\u0027iBak1\u0027:\u00271922429951614687027\u0027,\u0027sBak1\u0027:\u0027%E5%8C%97%E9%82%AE\u0027,\u0027sText\u0027:\u0027buptmba\u0027,\u0027iPos\u0027:\u00272\u0027}\" href=\"http:\/\/t.qq.com\/buptmba\" title=\"\u5317\u90aeMBA(@buptmba)\"\u003e\u5317\u90aeMBA\u003c\/a\u003e\u003ca href=\"http:\/\/zhaoren.t.qq.com\/people.php?id=114\" title=\"\u817e\u8baf\u673a\u6784\u8ba4\u8bc1\" target=\"_blank\" class=\"tIcon ico_cvip\"\u003e\u003c\/a\u003e\u003c\/p\u003e\r\n                                        \u003ca href=\"http:\/\/t.qq.com\/buptmba\" boss=\"{\u0027name\u0027:\u0027SearchSrRecClick\u0027,\u0027id\u0027:\u00271194\u0027,\u0027sBak2\u0027:\u0027addAttention\u0027,\u0027iBak1\u0027:\u00271922429951614687027\u0027,\u0027sBak1\u0027:\u0027%E5%8C%97%E9%82%AE\u0027,\u0027sText\u0027:\u0027buptmba\u0027,\u0027iPos\u0027:\u00272\u0027}\" class=\"foFun addAttention\"\u003e+\u6536\u542c\u003c\/a\u003e\r\n                                    \u003c\/li\u003e\r\n                                \u003cli class=\"spcialRec\"\u003e\r\n                    \u003ca opType=\"toPage\" account=\"bupt3g\" boss=\"{\u0027name\u0027:\u0027SearchSrRecClick\u0027,\u0027id\u0027:\u00271194\u0027,\u0027sBak2\u0027:\u0027toImage\u0027,\u0027iBak1\u0027:\u00271922429951614687027\u0027,\u0027sBak1\u0027:\u0027%E5%8C%97%E9%82%AE\u0027,\u0027sText\u0027:\u0027bupt3g\u0027,\u0027iPos\u0027:\u00273\u0027}\" href=\"http:\/\/t.qq.com\/bupt3g\" title=\"\u5317\u90ae3G(@bupt3g)\"\u003e\u003cimg src=\"http:\/\/t0.qlogo.cn\/mbloghead\/db14121c212806a2fd0c\/100\"\u003e\u003c\/a\u003e\r\n                    \u003cp\u003e\u003ca opType=\"toPage\" boss=\"{\u0027name\u0027:\u0027SearchSrRecClick\u0027,\u0027id\u0027:\u00271194\u0027,\u0027sBak2\u0027:\u0027toName\u0027 ,\u0027iBak1\u0027:\u00271922429951614687027\u0027,\u0027sBak1\u0027:\u0027%E5%8C%97%E9%82%AE\u0027,\u0027sText\u0027:\u0027bupt3g\u0027,\u0027iPos\u0027:\u00273\u0027}\" href=\"http:\/\/t.qq.com\/bupt3g\" title=\"\u5317\u90ae3G(@bupt3g)\"\u003e\u5317\u90ae3G\u003c\/a\u003e\u003ca href=\"http:\/\/zhaoren.t.qq.com\/people.php?id=114\" title=\"\u817e\u8baf\u673a\u6784\u8ba4\u8bc1\" target=\"_blank\" class=\"tIcon ico_cvip\"\u003e\u003c\/a\u003e\u003c\/p\u003e\r\n                                        \u003ca href=\"http:\/\/t.qq.com\/bupt3g\" boss=\"{\u0027name\u0027:\u0027SearchSrRecClick\u0027,\u0027id\u0027:\u00271194\u0027,\u0027sBak2\u0027:\u0027addAttention\u0027,\u0027iBak1\u0027:\u00271922429951614687027\u0027,\u0027sBak1\u0027:\u0027%E5%8C%97%E9%82%AE\u0027,\u0027sText\u0027:\u0027bupt3g\u0027,\u0027iPos\u0027:\u00273\u0027}\" class=\"foFun addAttention\"\u003e+\u6536\u542c\u003c\/a\u003e\r\n                                    \u003c\/li\u003e\r\n                                \u003cli class=\"spcialRec\"\u003e\r\n                    \u003ca opType=\"toPage\" account=\"yq2317000206\" boss=\"{\u0027name\u0027:\u0027SearchSrRecClick\u0027,\u0027id\u0027:\u00271194\u0027,\u0027sBak2\u0027:\u0027toImage\u0027,\u0027iBak1\u0027:\u00271922429951614687027\u0027,\u0027sBak1\u0027:\u0027%E5%8C%97%E9%82%AE\u0027,\u0027sText\u0027:\u0027yq2317000206\u0027,\u0027iPos\u0027:\u00274\u0027}\" href=\"http:\/\/t.qq.com\/yq2317000206\" title=\"\u5317\u90ae3G\u5b9e\u8bad\u57fa\u5730(@yq2317000206)\"\u003e\u003cimg src=\"http:\/\/t2.qlogo.cn\/mbloghead\/39c10ef85d0da5c3102a\/100\"\u003e\u003c\/a\u003e\r\n                    \u003cp\u003e\u003ca opType=\"toPage\" boss=\"{\u0027name\u0027:\u0027SearchSrRecClick\u0027,\u0027id\u0027:\u00271194\u0027,\u0027sBak2\u0027:\u0027toName\u0027 ,\u0027iBak1\u0027:\u00271922429951614687027\u0027,\u0027sBak1\u0027:\u0027%E5%8C%97%E9%82%AE\u0027,\u0027sText\u0027:\u0027yq2317000206\u0027,\u0027iPos\u0027:\u00274\u0027}\" href=\"http:\/\/t.qq.com\/yq2317000206\" title=\"\u5317\u90ae3G\u5b9e\u8bad\u57fa\u5730(@yq2317000206)\"\u003e\u5317\u90ae3G\u5b9e..\u003c\/a\u003e\u003ca href=\"http:\/\/zhaoren.t.qq.com\/people.php?id=114\" title=\"\u817e\u8baf\u673a\u6784\u8ba4\u8bc1\" target=\"_blank\" class=\"tIcon ico_cvip\"\u003e\u003c\/a\u003e\u003c\/p\u003e\r\n                                        \u003ca href=\"http:\/\/t.qq.com\/yq2317000206\" boss=\"{\u0027name\u0027:\u0027SearchSrRecClick\u0027,\u0027id\u0027:\u00271194\u0027,\u0027sBak2\u0027:\u0027addAttention\u0027,\u0027iBak1\u0027:\u00271922429951614687027\u0027,\u0027sBak1\u0027:\u0027%E5%8C%97%E9%82%AE\u0027,\u0027sText\u0027:\u0027yq2317000206\u0027,\u0027iPos\u0027:\u00274\u0027}\" class=\"foFun addAttention\"\u003e+\u6536\u542c\u003c\/a\u003e\r\n                                    \u003c\/li\u003e\r\n                        \u003c\/ul\u003e\r\n        \u003cdiv class=\"SC_more\"\u003e\u003ca href=\"http:\/\/search.t.qq.com\/user.php?pos=332\u0026k=%E5%8C%97%E9%82%AE\" class=\"text_more\"\u003e\u66f4\u591a\u0026gt;\u0026gt;\u003c\/a\u003e\u003c\/div\u003e\r\n        \u003c\/div\u003e","index":"11","key":"SideSearchUser","syns":1,"pageScence":null,"pagePos":"side"},{"output":"\u003cdiv class=\"SC\" id=\"AdvUser\" index=\"21\"\u003e\u003ch3\u003e\u62d3\u5c55\u8bdd\u9898\u003c\/h3\u003e    \u003cul class=\"hotTopicList\"\u003e\r\n                    \u003cli\u003e\u003ca onclick=\"MI.Bos(\u0027btnSearchIndexTopicList\u0027);\" href=\"http:\/\/t.qq.com\/k\/%E5%8C%97%E9%82%AE\" title=\"\u5317\u90ae\"\u003e#\u5317\u90ae#\u003c\/a\u003e\u003c\/li\u003e\r\n                            \u003cli\u003e\u003ca onclick=\"MI.Bos(\u0027btnSearchIndexTopicList\u0027);\" href=\"http:\/\/search.t.qq.com\/index.php?pos=232\u0026k=%E6%96%B9%E6%BB%A8%E5%85%B4%E5%8D%B8%E4%BB%BB%E5%8C%97%E9%82%AE%E6%A0%A1%E9%95%BF\" title=\"\u65b9\u6ee8\u5174\u5378\u4efb\u5317\u90ae\u6821\u957f\"\u003e\u65b9\u6ee8\u5174\u5378\u4efb\u5317\u90ae\u6821\u957f\u003c\/a\u003e\u003c\/li\u003e\r\n                \u003c\/ul\u003e\r\n    \u003c\/div\u003e","index":"21","key":"SideAddTopic","syns":1,"pageScence":null,"pagePos":"side"},{"output":"\u003cdiv class=\"SC\"  index=\"10000\"\u003e        \u003cdiv class=\"proposal\"\u003e\r\n            \u003ca href=\"#\" id=\"searchFeedback\" hidefocus=\"true\" onclick=\"MI.SearchFeedBack();return false;\"\u003e\u5fae\u535a\u641c\u7d22\u610f\u89c1\u53cd\u9988\u003cspan class=\"ffsong\"\u003e\u0026gt;\u0026gt;\u003c\/span\u003e\u003c\/a\u003e\r\n        \u003c\/div\u003e\r\n        \u003c\/div\u003e","index":"10000","key":"SideFeedBack","syns":1,"pageScence":null,"pagePos":"side"}];
+   MI.Search.scenceId = 1;
+   MI.Search.keyWord = "北邮";
+   MI.Search.posMap = {'box_top':201,'box_smart':1002,'box_below':934,'dadvance_cho':241};
+MIRun(function(){
+        MI.boss = 93;
+        MI.api.boss = 1154;
+        MI.api.type = 12;//微博搜索
+		MI.user.fun.selfVideo = 0; //搜索结果页去掉拍摄视频功能
+        if (MI.bottom) {
+
+        }
+
+        //设置hasMore的链接
+        if($('hasmore')){
+            var moreUrl = document.location.href;
+            if (moreUrl.indexOf('?')) {
+                moreUrl = moreUrl.substr(moreUrl.indexOf('?') + 1);
+                UI.A($('hasmore'), 'rel', 'http://search.t.qq.com/asyn/searchPageMsg.php?' + moreUrl);
+            }
+        }
+        var hotMsgBlock = $('newHotList');
+
+        if(hotMsgBlock){
+            MI.talkListHot = new MI.TalkList('newHotList',{_new:null,_more:null,followBtn:1});
+        }
+        if($('selfList'))
+        {
+            MI.talkListSelf = new MI.TalkList('selfList',{_new:null,_more:null,followBtn:1});
+        }
+        if($('friendTalkList'))
+        {
+            MI.talkListFriendTalk = new MI.TalkList('friendTalkList',{_new:null,_more:null,followBtn:1});
+        }
+        if ($('talkList')) {
+            MI.talkList=new MI.TalkList('talkList');
+            MI.talkList.followBtn=1;
+            MI.talkList.newlyUrl = 'http://search.t.qq.com/asyn/searchMsgNew.php?pos=227&s_dup=0';
+            MI.talkList.refreshUrl = 'http://search.t.qq.com/index.php?hmh=1&pos=222';
+            MI.talkList.newlyCall = function(e) {
+                if ($('newHotList')) {
+                    UI.remove($('newHotList'));
+                }
+                if ($$('.moreHotList') && $$('.moreHotList')[0]) {
+                    UI.remove($$('.moreHotList')[0]);
+                }
+
+                var messageHideModel = $$('.messageHideModel');
+                UI.each(messageHideModel,function(o){
+                    UI.hide(o);
+                });
+            };
+        }
+    }
+
+);
+
+UI.ready(function(){
+    var url = UI.parseUrl();
+    var param = {};
+    var autoUpdate = true;
+    if (url['s_hot'] && !url['s_hot']) {
+        autoUpdate = false;
+    }
+
+    for (var urlHash in url) {
+        if ('p' == urlHash && url['p'] >1) {autoUpdate = false; break;}
+        if ('s_hot' == urlHash && url['s_hot'] >= 1) {autoUpdate = false; break;}
+        if ('s_source' == urlHash && url['s_source'] == 4) {autoUpdate = false; break;}
+        if (!urlHash) {continue;}
+        if ('pos' == urlHash) {continue;}
+        if ('time' == urlHash) {continue;}
+        if ('id' == urlHash) {continue;}
+        param[urlHash] = url[urlHash];
+    }
+
+    if (true == autoUpdate) {
+        for (var i in param) {
+            MI.newCount.data[i] = encodeURIComponent(decodeURIComponent(param[i]));
+        }
+        if (!MI.newCount.data.sort){
+            MI.newCount.data['sort'] = 0;
+        }
+
+        var pos = 228;
+        function getMsgFunc()
+        {
+            MI.newCount('1,2,4,13,19,20', 'http://search.t.qq.com/asyn/searchMsgNew.php?count=1&s_dup=0&pos=' + pos, 10, function(count){
+                if (count.times == 240){
+                    count.abort();
+                }
+            });
+        }
+
+                if ($('talkList')){
+            MI.newCount.showNum = true;
+            setTimeout(getMsgFunc, 3000);
+        }
+            }
+
+    //boss
+    setTimeout(addIndexBoss, 1000);
+
+    MI.app({
+        Base: function(){
+            //广告扣费
+        
+            //广告上报
+                }
+    });
+
+});
+
+   function addIndexBoss()
+   {
+       try{
+           //底部导航
+           var pageNav = $$('.pageNav a');
+           if (pageNav.length > 0) {
+               UI.each(pageNav, function(o, i){
+                   UI.EA(o, 'mousedown', function(){
+                       MI.Bos('btnSearchIndexPageNav');
+                   });
+               });
+           }
+
+           //添加统计 头像、昵称、收听
+           var hotMsgBlock = $('newHotList');
+           if (hotMsgBlock) {
+               var hotPic = $$(hotMsgBlock, '.userPic img');
+               if (hotPic.length > 0) {
+                   UI.EA(hotPic[0], 'mousedown', function(){
+                       MI.Bos('btnSearchIndexHotPic');
+                   })
+               }
+
+               //热门区域收听
+               var o = $$(hotMsgBlock, '.addAttention');
+               if (o.length > 0) {
+                   UI.EA(o[0], 'mousedown', function(){
+                       MI.Bos('btnSearchIndexHotAdd');
+                   });
+               }
+               o = $$(hotMsgBlock, '.delAttention');
+               if (o.length > 0) {
+                   UI.EA(o[0], 'mousedown', function(){
+                       MI.Bos('btnSearchIndexHotDel');
+                   });
+               }
+               //名称
+               UI.each($$(hotMsgBlock, '.userName a'), function(o, i){
+                   UI.EA(o, 'mousedown', function(){
+                       MI.Bos('btnSearchIndexHotName');
+                   });
+               });
+               var temp = $$(hotMsgBlock, '.funBox .relay');
+               if (temp.length > 0){
+                   UI.EA(temp[0], 'mousedown', function(){
+                       MI.Bos('btnSearchIndexHotRelay');
+                   });
+               }
+               temp = $$(hotMsgBlock, '.funBox .comt');
+               if (temp.length > 0){
+                   UI.EA(temp[0], 'mousedown', function(){
+                       MI.Bos('btnSearchIndexHotComt');
+                   });
+               }
+               temp = $$(hotMsgBlock, '.funBox .mFun a');
+               if (temp.length > 0){
+                   UI.EA(temp[0], 'mousedown', function(){
+                       MI.Bos('btnSearchIndexHotFun');
+                   });
+               }
+
+           }
+
+           //搜索前端点击统计
+           (function() {
+               var sid = '9986609041915264000';
+               var userSid = '1922429951614687027';
+               var keyword = $('keywordUserInput').innerHTML;
+               var url = document.location.href;
+               var idx = 1;
+               if ($('newHotList')) {
+                   idx = 0;
+               }
+
+                 //广播区的boss数据上报
+               UI.each($$('.AL li'), function(li) {
+                   var id = li.id;
+                   (function(i) {
+                       UI.each($$(li, '.time, .f, a, input, .relay, .comt, reply'), function(o) {
+                           UI.EA(o, 'click', function() {
+                               MI.Bos({id:1194, name: 'searchMsgClick', sUrl: url, iPos: i, iBak1:sid, sBak1:encodeURIComponent(keyword), iBak2:id, sBak2:o.className});
+                           });
+                       });
+                   })(idx);
+                   idx++;
+               });
+                          var account = '';
+               var hotId = '';
+               if ($$('.li .userPic a').length > 0) {
+                   account = $$('.suggest .userPic a')[0].href.split(/\//).pop() + ';'
+               }
+               if ($('newHotList')) {
+                   hotId = $$('#newHotList li')[0].id;
+               }
+               MI.Bos({id:1194, name: 'searchMsgSuggest', iBak1:sid, sBak1:account, sBak2:encodeURIComponent(keyword), iBak2: hotId});
+                          })();
+       }catch(e){}
+   }
+
+</script>
+
+
+<script type="text/javascript" src="http://mat1.gtimg.com/www/mb/js/s/s.index_131122.js"></script>
+</html>

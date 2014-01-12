@@ -148,7 +148,7 @@ public class MainThread {
 				String keyword_trim = keyword.trim();
 				
 				// create the thread but not start
-				FetchBean fb = new FetchBean(keyword_trim,Constants.SINA,interval);
+				FetchBean fb = new FetchBean(keyword_trim,Constants.TX,interval);
 				if(!crawlerMap.containsKey(keyword_trim))
 				{
 					WeiboCrawlerThread t = new WeiboCrawlerThread(fb);

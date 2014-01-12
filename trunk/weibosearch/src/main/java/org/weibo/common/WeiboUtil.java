@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -74,9 +75,8 @@ public class WeiboUtil {
 	static public String getfileName(String keyword,Date date,int type)
 	{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
 		String t = "Sina";
-		if(type!=Constants.SINA)
+		if(type == Constants.TX)
 			t = "TX";
 		String folder = "result/"+keyword+"/";
 		File f = new File(folder);
@@ -84,5 +84,22 @@ public class WeiboUtil {
 			f.mkdirs();
 		return folder +t+"-"+sdf.format(date)+".txt";
 	}
+	
+	 /**
+     * get the date whic is count day before "date",if count < 0 it change to  "getDateAfter".
+     * @param date
+     * @param days
+     */
+    public static Date getDateBefore(Date date,int count)
+    {
+        // weekly 
+        Calendar c = Calendar.getInstance();     
+	    c.setTime(date);  
+	    int day = c.get(Calendar.DATE);  
+	    c.set(Calendar.DATE, day - count);  
+	    
+	    Date newdate = c.getTime();
+	    return newdate;
+    }
 
 }

@@ -55,12 +55,22 @@ public class FetchBean
 	private void generateUrlFromKeywordAndType()
 	{
 		if(this.type == Constants.SINA)
-			try {
+		{	try {
 				this.url = "http://s.weibo.com/wb/"+URLEncoder.encode(this.keyword,"utf-8")+"&Refer=index";
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		else if(this.type == Constants.TX)
+		{
+			try {
+				this.url = "http://search.t.qq.com/index.php?k="+URLEncoder.encode(this.keyword,"utf-8")+"&pos=174&s_source=";
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	
