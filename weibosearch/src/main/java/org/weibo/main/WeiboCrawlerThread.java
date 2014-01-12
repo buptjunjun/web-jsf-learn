@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 import org.weibo.analyzer.Analyzer;
 import org.weibo.analyzer.SinaHtmlAnalyzer;
+import org.weibo.analyzer.TXHtmlAnalyzer;
 import org.weibo.common.AnalyzeBean;
 import org.weibo.common.Constants;
 import org.weibo.common.FetchBean;
@@ -15,6 +16,7 @@ import org.weibo.dao.WeiboDaoH2;
 import org.weibo.dao.WeiboDaoTxt;
 import org.weibo.fetcher.Fetcher;
 import org.weibo.fetcher.SinaHtmlFetcher;
+import org.weibo.fetcher.TXHtmlFetcher;
 
 public class WeiboCrawlerThread extends Thread{
 
@@ -37,6 +39,11 @@ public class WeiboCrawlerThread extends Thread{
 		{
 			fetcher = new SinaHtmlFetcher(true);
 			analyzer = new SinaHtmlAnalyzer();
+		}
+		else if(fb.getType() == Constants.TX)
+		{
+			fetcher = new TXHtmlFetcher(true);
+			analyzer = new TXHtmlAnalyzer();
 		}
 		
 		

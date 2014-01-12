@@ -30,7 +30,8 @@ public class SinaHtmlAnalyzer implements Analyzer{
 	public SearchResult analyze(AnalyzeBean ab) 
 	{
 		SearchResult ret = new SearchResult(ab.getKeyword());
-	
+		ret.setType(ab.getType());
+		
 		if(ab.getHttpstatus() != 200 || StringUtils.isEmpty(ab.getContent()))
 			return ret;
 		
