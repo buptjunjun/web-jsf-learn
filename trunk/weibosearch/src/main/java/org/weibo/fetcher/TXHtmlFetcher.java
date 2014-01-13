@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.SQLException;
 
@@ -49,7 +50,7 @@ public class TXHtmlFetcher implements Fetcher
     private WebClient webClient = null;
     private String defaultEncode = "UTF-8";
     private boolean enableJs = true;                // enable javascript or not
-    private int jsTimeout = 6;                      // timeout of javascript by second
+    private int jsTimeout = 10;                      // timeout of javascript by second
     private int conTimeout = 20;                    // timeout of connection to server  by second 
     
     public TXHtmlFetcher()
@@ -180,24 +181,41 @@ public class TXHtmlFetcher implements Fetcher
             ImageReader imageReader = image.getImageReader();
             BufferedImage bufferedImage = imageReader.read(0);
 
-            JFrame f2 = new JFrame();
+            JFrame f2 = new JFrame("captcha");
             JLabel l = new JLabel();
             l.setIcon(new ImageIcon(bufferedImage));
             f2.getContentPane().add(l);
-            f2.setSize(100, 100);
+            f2.setSize(200, 200);
             f2.setTitle("img");
             f2.setVisible(true);
-            String ret = JOptionPane.showInputDialog("code");
-          
+            String ret = JOptionPane.showInputDialog("please inpu the Captcha:");
+            f2.setVisible(false);
+            
             page2.getElementById("verifycode").setAttribute("value",ret);
             HtmlPage page3 = page2.getElementById("login_button").click();
-            Thread.sleep(1000*5);
+            URL u = page3.getUrl();
+            if( u!=null )
+            {
+            	String urlString = u.toString();
+            	if(urlString.contains("ui.ptlogin2.qq.com"))
+            	{
+            		loginAgain();   			
+            	}
+            }
+            else
+            {
+            	loginAgain();   		
+            }
+            
+            //System.out.println(u.toString());
+            
+  /* //         Thread.sleep(1000*10);
             //String page3Str = page3.asXml();
             //System.out.println(page3Str);
             
-            //String urlsearch = "http://search.t.qq.com/index.php?k=%E7%88%B8%E7%88%B8%E5%8E%BB%E5%93%AA%E5%84%BF&pos=174&s_source=";
-            //HtmlPage searchpage = webclient.getPage(urlsearch);
-            //String searchHtm = searchpage.asXml();
+            String urlsearch = "http://search.t.qq.com/index.php?k=%E7%88%B8%E7%88%B8%E5%8E%BB%E5%93%AA%E5%84%BF&pos=174&s_source=";
+            HtmlPage searchpage = webclient.getPage(urlsearch);
+            URL searchHtm = searchpage.getUrl();*/
             //System.out.println(searchHtm);
             
 		} catch (FailingHttpStatusCodeException e) {
@@ -216,18 +234,25 @@ public class TXHtmlFetcher implements Fetcher
 		return false;
 		
     }
+    
+    private void loginAgain()
+    {
+    	int choice = JOptionPane.showConfirmDialog(null, "login failed ,are you going to do it agon?");
+		if(choice== JOptionPane.YES_OPTION)
+			this.login();
+    }
     static public void main(String [] args) throws IOException
     {
   	String keywords = "北邮";
- /*   	FetchBean fb = new FetchBean(keywords,Constants.TX);
+    	FetchBean fb = new FetchBean(keywords,Constants.TX);
     	TXHtmlFetcher sf = new TXHtmlFetcher(true);
     	AnalyzeBean ab = sf.fetch(fb);
     	   	String file="a.txt"; 
     	//FileUtils.writeStringToFile(new File(file), ab.getContent(), false);
-    	*/
+    	
   	
-  		String file="a.txt"; 
-    	AnalyzeBean ab = new AnalyzeBean();
+  		//String file="a.txt"; 
+    	//AnalyzeBean ab = new AnalyzeBean();
     	ab.setKeyword(keywords);
     	ab.setHttpstatus(200);
     	ab.setType(Constants.TX);
