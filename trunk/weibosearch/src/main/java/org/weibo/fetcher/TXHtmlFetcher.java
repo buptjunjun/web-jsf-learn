@@ -193,11 +193,17 @@ public class TXHtmlFetcher implements Fetcher
             
             page2.getElementById("verifycode").setAttribute("value",ret);
             HtmlPage page3 = page2.getElementById("login_button").click();
+            try {
+				Thread.sleep(1000*5);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             URL u = page3.getUrl();
             if( u!=null )
             {
             	String urlString = u.toString();
-            	if(urlString.contains("ui.ptlogin2.qq.com"))
+            	if(urlString.contains("ptlogin2"))
             	{
             		loginAgain();   			
             	}
@@ -239,7 +245,10 @@ public class TXHtmlFetcher implements Fetcher
     {
     	int choice = JOptionPane.showConfirmDialog(null, "login failed ,are you going to do it agon?");
 		if(choice== JOptionPane.YES_OPTION)
+		{
+			
 			this.login();
+		}
     }
     static public void main(String [] args) throws IOException
     {
