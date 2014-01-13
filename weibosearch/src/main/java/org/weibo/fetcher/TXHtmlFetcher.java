@@ -175,6 +175,12 @@ public class TXHtmlFetcher implements Fetcher
 			page1.getElementById("p").setAttribute("value", ParamStore.getMessage("TXPassWord"));
 			
 			HtmlPage page2 = page1.getElementById("login_button").click();
+			 try {
+					Thread.sleep(1000*2);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		//	System.out.println(page2.asXml());
 			
 			HtmlImage image = (HtmlImage) page2.getElementById("verifyimg");
