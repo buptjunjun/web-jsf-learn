@@ -74,15 +74,15 @@ public class WeiboUtil {
 	
 	static public String getfileName(String keyword,Date date,int type)
 	{
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
 		String t = "Sina";
 		if(type == Constants.TX)
 			t = "TX";
-		String folder = "result/"+keyword+"/";
+		String folder = "result/"+keyword+"/"+t+"/";
 		File f = new File(folder);
 		if(!f.exists())
 			f.mkdirs();
-		return folder +t+"-"+sdf.format(date)+".txt";
+		return folder+sdf.format(date);
 	}
 	
 	 /**
@@ -102,4 +102,9 @@ public class WeiboUtil {
 	    return newdate;
     }
 
+    public static  void main(String [] args)
+    {
+    	String file = getfileName("北航", new Date(), 0);
+    	System.out.println(file);
+    }
 }
