@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>byr.crawler</groupId>
+	<artifactId>byr.crawler</artifactId>
+	<version>0.1</version>
+	<name>byr.crawler</name>
+	<description>html crawler for byr forum</description>
+	<dependencies>
+	
+		<!-- mongo db spring -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<version>1.0.3.RELEASE</version>
+		</dependency>
+
+		<!-- htmluni -->
+		<dependency>
+			  <groupId>net.sourceforge.htmlunit</groupId>
+			  <artifactId>htmlunit</artifactId>
+			  <version>2.13</version>
+			</dependency>
+
+		<!-- json google -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.9</version>
+		</dependency>
+
+		<!-- jsoup HTML parser library @ http://jsoup.org/ -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.6.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+
+	</dependencies>
+</project>
