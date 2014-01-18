@@ -104,8 +104,9 @@ public class RotateHostURLScheduler extends URLScheduler
 			tmpurl.setFlag(Url.UNCRAWLED);
 			tmpurl.setHost(curl.getHost());
 			tmpurl.setLastCrawled(new Date());	
+			tmpurl.setType(status);
 			
-			if(i++ % 30 == 0)
+			if(i++ % 10 == 0)
 			{
 				System.out.println(Thread.currentThread().getName()+"-"+ "@@RotateHostURLScheduler: insert  a url:"+tmpurl);
 				loger.info(Thread.currentThread().getName()+"-"+ "@@RotateHostURLScheduler: insert  a url:"+tmpurl);

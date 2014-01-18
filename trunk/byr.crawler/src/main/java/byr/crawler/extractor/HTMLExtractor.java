@@ -56,12 +56,6 @@ public class HTMLExtractor extends Extractor
 		{
 			// create a jsoup Document from a string
 			Document doc = Jsoup.parse(docContent);
-			try {
-				FileUtils.writeStringToFile(new File("test.html"), docContent,curl.getEncode());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 	
 			// find the elments whose type is "<a>" and  value of  "href"  begins with "http";  
 			Elements hrefs = doc.select("a[href]");
