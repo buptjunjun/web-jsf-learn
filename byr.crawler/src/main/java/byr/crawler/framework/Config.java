@@ -29,7 +29,7 @@ public class Config
 	public static String url_hold_pattern=null;
 	
 	
-	static String conf = "conf/conf.properties";	
+	static String conf = "conf.properties";	
 	static {
 		init();
 		
@@ -84,6 +84,18 @@ public class Config
 
 	public static void main(String [] args)
 	{
+		String [] testurls = {
+				"http://bbs.byr.cn/article/AimGraduate/858711",                      //0
+				"http://bbs.byr.cn/article/AimGraduate/857978?p=2",                  //0
+				"http://bbs.byr.cn/board/AimGraduate",                               //1
+				"http://bbs.byr.cn/board/AimGraduate?p=2",                           //1
+				"http://bbs.byr.cn/section/3"                                        //2
+				
+		};
 		
+		for(String url: testurls)
+		{
+			System.out.println(classifyUrl(url));
+		}
 	}
 }
