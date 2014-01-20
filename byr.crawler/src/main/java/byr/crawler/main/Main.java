@@ -26,6 +26,7 @@ public class Main {
 			URLScheduler scheduler = new  RotateHostURLScheduler(Config.host,Config.first_url,Config.db_name);			
 			
 			Crawler c = new Crawler( fetcher,  extractor, scheduler,  docWriter,  Config.host);
+			c.setName(Config.host+"-"+i);
 			c.setDaemon(true);
 			c.startCrawl();
 		}

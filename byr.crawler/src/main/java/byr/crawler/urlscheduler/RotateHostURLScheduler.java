@@ -24,7 +24,7 @@ public class RotateHostURLScheduler extends URLScheduler
 {
 	Logger loger =  Logger.getLogger(RotateHostURLScheduler.class);
 	
-	private Queue<CrawlURI> urlQueue = new LinkedBlockingQueue<CrawlURI>(); 
+	private static Queue<CrawlURI> urlQueue = new LinkedBlockingQueue<CrawlURI>(); 
 	private DAOMongo dao = null;
 	public static String UNKNOW_HOST = "unknow"; 
 	private String host = "";
@@ -186,13 +186,13 @@ public class RotateHostURLScheduler extends URLScheduler
 			constrains.put("host", host);
 			constrains.put("flag", Url.UNCRAWLED);
 			// querying a blog's probability is  70% 
-			if( new Random().nextInt(10) < 7)
+			if( new Random().nextInt(10) < 2)
 			{
 				lurl = this.dao.search(constrains, "lastCrawled", DAOMongo.ASCENDING, limit, Url.class);
 			}
 			else
 			{
-				constrains.put("type", Url.URL_REPEAT);
+				constrains.put("type", Url.URL_SAVE);
 				lurl = this.dao.search(constrains, "lastCrawled", DAOMongo.ASCENDING, limit, Url.class);
 			}
 	        
