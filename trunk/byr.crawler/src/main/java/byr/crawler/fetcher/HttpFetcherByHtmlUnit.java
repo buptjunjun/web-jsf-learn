@@ -90,7 +90,7 @@ public class HttpFetcherByHtmlUnit extends Fetcher
             
                
              WebResponse webresponse = page.getWebResponse();
-             TimeUnit.SECONDS.sleep(3);
+             TimeUnit.SECONDS.sleep(5);
              // the content of the page
              String res = page.asXml();
              curl.setContent(res);
@@ -106,7 +106,7 @@ public class HttpFetcherByHtmlUnit extends Fetcher
              
              // if the the httpstatus is 200 , it means we get what we desire and return the content of the html page.
              curl.setHttpstatus(status);  
-             System.out.println(page.asText());
+             //System.out.println(page.asText());
 			 System.out.println(Thread.currentThread().getName()+"-"+ "##HttpFetcherByHtmlUnit: curl="+curl);
 			
 			
