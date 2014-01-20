@@ -2,13 +2,15 @@
 <application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd">
 
 	<classpath>
-		<dir name="/home/junjun/workplace/myspringMVC/target/classes">
+		<dir name="D:/movie/byr.web/target/classes">
+		</dir>
+		<dir name="D:/movie/byr.web/target/test-classes">
 		</dir>
 	</classpath>
 
 	<web>
 		<link target="/">
-			<dir name="/home/junjun/workplace/myspringMVC/src/main/webapp">
+			<dir name="D:/movie/byr.web/src/main/">
 			</dir>
 		</link>
 	</web>
