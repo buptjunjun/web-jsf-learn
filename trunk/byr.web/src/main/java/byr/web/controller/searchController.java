@@ -1,4 +1,4 @@
-package org.junju.controller.part1;
+package byr.web.controller;
 
 import java.util.Map;
 
@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class HelloController {
+public class searchController {
 	 
-	@RequestMapping(value = "/hello", method = RequestMethod.GET)
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	 public String showHomePage (Map<String,Object> model ){
-		         model.put("message", "SpringMVC hello world -222-!");
-	         return "hello";
+		         model.put("result", "test");
+	         return "search";
     }
 }
 
