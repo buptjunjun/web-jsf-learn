@@ -1,27 +1,26 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>4BYR search engine, search entire site.</title>
+<title>${search_title}</title>
 <style>
 #main
 {
 	width:1040px;	
-	margin:auto;
-	
-	
+	margin:auto;	
 }
 
 #head
 {
-	margin-top:50px;
+	margin-top:20px;
 	width:1024px;
-	height:100px;
-	background: 0 0 white;	
+	height:60px;
+	background: 0 0 white;
+	text-align:center;	
 }
 
 #head_title
 {
-	font-size:60px;
+	font-size:40px;
 	margin-left:40px;
 }
 
@@ -83,18 +82,18 @@
 <body>
 <div id="main">
 	<div id = "head">
-		<span id="head_title">4BYR search engine</span>
-		<span id="head_desc">search entire site at one time.</span>
+		<span id="head_title">${search_head_title}</span>
+		<span id="head_desc">${search_head_desc}</span>
 	</div>
 	<div id="content">
 		<div id="search_input">
-			<input type="text" id="key" value="key"></input>
-			<input id="btn" value="search"></input>
+			<input type="text" id="key" ></input>
+			<input id="btn" value="${search_searchbtn}"></input>
 		</div>
 	</div>
 	<div id="footer">
 		<div id="contact">
-			<span>Any question, please email 4byr@gmail.com.</span>
+			<span>${contact }</span>
 		</div>
 	</div>
 </div>
