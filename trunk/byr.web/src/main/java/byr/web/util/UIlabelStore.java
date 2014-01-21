@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -29,15 +30,11 @@ public class UIlabelStore
 	static private void load()
 	{
 		
-		FileInputStream fi = null;		
+		InputStream in=null;		
 		try
 		{
-			String confFile = Thread.currentThread().getContextClassLoader().getResource(UILabelfile).getFile();
-			File f = new File(confFile);
-			if (!f.exists() || !f.canRead() || f.isHidden())
-				return ;
-			fi = new FileInputStream(f);		
-			p.load(fi);
+			in = Thread.currentThread().getContextClassLoader().getResourceAsStream(UILabelfile);
+			p.load(in);
 		}
 		catch (FileNotFoundException e1)
 		{
@@ -55,8 +52,8 @@ public class UIlabelStore
 		{
 			try
 			{
-				if (fi != null)
-					fi.close();
+				if (in != null)
+					in.close();
 			} 
 			catch (IOException e)
 			{
