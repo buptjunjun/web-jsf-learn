@@ -19,7 +19,7 @@ public class AnalyzerUtil {
 			+"<field name=\"content\">"+html.getContent()+"</field>\n"
 			+"<field name=\"imgs\">"+html.getImgs()+"</field>\n"
 			+"<field name=\"videos\">"+html.getVideos()+"</field>\n"
-			+"<field name=\"id\">"+(html.getCreatedDate()==null?sdf.format(new Date()):sdf.format(html.getCreatedDate()))+"/HOUR</field>\n"
+			+"<field name=\"date\">"+(html.getCreatedDate()==null?sdf.format(new Date()):sdf.format(html.getCreatedDate()))+"/HOUR</field>\n"
 			+"</doc>\n";
 		return ret;
 	}
