@@ -80,7 +80,10 @@ public class ByrHtmlAnalyzer
 		Html html = new Html();
 		String text = FileUtils.readFileToString(new File("byr.html"));
 		html.setHtml(text);
+		html.setUrl("http://bbs.byr.cn/#!article/VideoCool/34193");
+		html.setEncode("gbk");
 		HtmlStructuredData hsd = analyzer.analyse(html);
-		System.out.println();
+		
+		System.out.println(AnalyzerUtil.toxml(hsd));
 	}
 }
