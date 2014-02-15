@@ -2,6 +2,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${search_title}</title>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	
+	$("#advanced_btn").on("click", function(){
+		alert("aaaa");
+	});
+
+</script>
 <style>
 #main
 {
@@ -45,6 +54,8 @@
 	vertical-align:center;
 	margin-top:20px;
 }
+
+
 #key
 {
 	font-size:20px;
@@ -52,7 +63,7 @@
 	height:40px;
 	
 }
-#btn
+.btn
 {
 	width:80px;
 	height:40px;
@@ -77,6 +88,7 @@
 	margin:auto;
 }
 
+
 </style>
 </head>
 <body>
@@ -88,12 +100,16 @@
 	<div id="content">
 		<div id="search_input">
 			<input type="text" id="key" ></input>
-			<input id="btn" value="${search_searchbtn}"></input>
-		</div>
+			<input id="btn" class="btn" value="${search_searchbtn}"></input>
+			<input id="advanced_btn" class="btn" value="advanced"></input>
+		</div>	
+		<div id="advanced_option">
+			test
+		</div>	
 	</div>
 	<div id="footer">
 		<div id="contact">
-			<span>${contact }</span>
+			<span>${contact}</span>
 		</div>
 	</div>
 </div>
