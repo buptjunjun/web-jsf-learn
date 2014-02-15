@@ -33,15 +33,15 @@ public class Main {
 		DAOMongo<HtmlStructuredData> daoStructuredData = new DAOMongo<HtmlStructuredData>(ip1,port1,dbname1);
 		
 		Map htmlConstrain = new HashMap();
-		htmlConstrain.put("magicNum", 0);
+		htmlConstrain.put("magicNum", 1);
 		
 		Map<String,String> htmlConstrain1 = new HashMap<String,String>();
 		htmlConstrain1.put("id", "");
 		
 		ByrHtmlAnalyzer analyzer = new ByrHtmlAnalyzer();
-		
-		List<Html> lh = daoHtml.search(htmlConstrain, 100, Html.class);		
-		while(lh!=null || lh.size() > 0)
+		List<Html> lh = daoHtml.search(htmlConstrain, 100, Html.class);
+		String ret = "<add>"; 
+		while(lh!=null && lh.size() > 0)
 		{
 			for(Html html:lh)
 			{
@@ -55,11 +55,12 @@ public class Main {
 				if(hsd != null )
 				{
 					daoStructuredData.insert(hsd);
+					ret+=AnalyzerUtil.toxml(hsd);
 				}
 				
 				logger.info("analyze:"+html.getId()+" "+html.getUrl());
 	
-				html.setMagicNum(1);
+				html.setMagicNum(2);
 				htmlConstrain1.put("id", html.getId());
 				daoHtml.update(html, htmlConstrain1,fieldNames);
 				
@@ -70,7 +71,12 @@ public class Main {
 					e.printStackTrace();
 				}
 			}
+			
+			lh = daoHtml.search(htmlConstrain, 100, Html.class);
 		}
+		
+		ret+="</add>";
+		System.out.println(ret);
 	}
 
 }
