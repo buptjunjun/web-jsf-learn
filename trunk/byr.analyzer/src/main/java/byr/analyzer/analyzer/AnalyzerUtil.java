@@ -3,6 +3,8 @@ package byr.analyzer.analyzer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.solr.common.SolrInputDocument;
+
 import byr.crawler.framework.Html;
 
 public class AnalyzerUtil {
@@ -22,6 +24,21 @@ public class AnalyzerUtil {
 			+"<field name=\"date\">"+(html.getCreatedDate()==null?sdf.format(new Date()):sdf.format(html.getCreatedDate()))+"/HOUR</field>\n"
 			+"</doc>\n";
 		return ret;
+	}
+	
+	static SolrInputDocument toDoc(HtmlStructuredData html)
+	{
+		SolrInputDocument  doc = new SolrInputDocument();
+	
+		doc.setField("id",html.getId());
+		doc.setField("url",html.getUrl());
+		doc.setField("title",html.getTitle());
+		doc.setField("content",html.getContent());
+		doc.setField("imgs",html.getImgs());
+		doc.setField("videos",html.getVideos());
+		doc.setField("date",(html.getCreatedDate()==null?sdf.format(new Date()):sdf.format(html.getCreatedDate()))+"/HOUR");
+		
+		return doc;
 	}
 	/**
 	 * @param args
