@@ -1,11 +1,16 @@
 package org.weibo.common;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.lang.StringUtils;
 public class KeywordInfoManager 
 {
 
 	private static List<KeywordInfo> keys = null;
+	private static Map<String,KeywordInfo> mapKeys = null;
 	private static KeywordInfoManager mg = null;
 	private int current = 0;
 	private KeywordInfoManager()
@@ -29,6 +34,14 @@ public class KeywordInfoManager
 							synchronized(KeywordInfoManager.class)
 							{
 								keys = WeiboUtil.loadKeyWords();
+								if(keys!=null)
+								{
+									mapKeys = new HashMap<String,KeywordInfo>();
+									for(KeywordInfo key:keys)
+									{
+										mapKeys.put(key.getKeyword(), key);
+									}
+								}
 							}
 							
 							try {
@@ -48,6 +61,19 @@ public class KeywordInfoManager
 			return mg;
 	}
 	
+	/**
+	 * get keyWordInfo according to keyword
+	 * @param keyword
+	 * @return
+	 */
+	public KeywordInfo getKeyWordInfo(String keyword)
+	{
+		if(keys == null || keys.size() == 0 || StringUtils.isEmpty(keyword))
+			return null;
+		
+		return this.mapKeys.get(keyword);
+		
+	}
 	public synchronized KeywordInfo  getNextKeywordInfo()
 	{
 		

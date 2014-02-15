@@ -74,11 +74,13 @@ public class WeiboUtil {
 	
 	static public String getfileName(String keyword,Date date,int type)
 	{
+		KeywordInfo key = KeywordInfoManager.getInstance().getKeyWordInfo(keyword);
+		String contentId = key.getContentId();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
 		String t = "Sina";
 		if(type == Constants.TX)
 			t = "TX";
-		String folder = "result/"+keyword+"/"+t+"/";
+		String folder = "result/"+contentId+"/"+keyword+"/"+t+"/";
 		File f = new File(folder);
 		if(!f.exists())
 			f.mkdirs();
