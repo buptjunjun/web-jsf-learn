@@ -9,7 +9,7 @@ import byr.crawler.framework.Html;
 
 public class AnalyzerUtil {
 
-	static private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MMdd'T'HH:mm:ssZ");
+	static private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	static String toxml(HtmlStructuredData html)
 	{
 		
