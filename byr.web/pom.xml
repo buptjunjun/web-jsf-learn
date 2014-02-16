@@ -88,8 +88,6 @@
 			<artifactId>solr-solrj</artifactId>
 			<groupId>org.apache.solr</groupId>
 			<version>4.1.0</version>
-			<type>jar</type>
-			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 
