@@ -2,6 +2,10 @@ package byr.web.bean;
 
 import java.util.Date;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.google.gson.Gson;
+
 public class SearchCriteria 
 {
 	public static final int DES= 0;
@@ -42,13 +46,14 @@ public class SearchCriteria
 	{
 		this.keywords = keywords;
 	}
-	
+	@JsonSerialize(using=JsonDateSerializer.class) 
 	public Date getDate1() {
 		return date1;
 	}
 	public void setDate1(Date date1) {
 		this.date1 = date1;
 	}
+	@JsonSerialize(using=JsonDateSerializer.class) 
 	public Date getDate2() {
 		return date2;
 	}
@@ -61,5 +66,14 @@ public class SearchCriteria
 	public void setSort(int sort) {
 		this.sort = sort;
 	}
-
+	
+	static public void main(String [] args)
+	{
+		Gson gson = new Gson();
+		SearchCriteria sc = new SearchCriteria();
+		sc.setKeywords("±±” ");
+		sc.setDate1(new Date());
+		sc.setDate2(new Date());
+		System.out.println(gson.toJson(sc));
+	}
 }

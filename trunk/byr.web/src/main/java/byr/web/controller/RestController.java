@@ -19,7 +19,7 @@ import byr.web.logic.ResultSearcher;
 import byr.web.util.UIlabelStore;
 
 @Controller
-@RequestMapping(value="/search")
+@RequestMapping(value="/searchapi")
 public class RestController 
 {
 	Logger logger = Logger.getLogger(RestController.class);
@@ -30,7 +30,7 @@ public class RestController
 	 * get result 
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.GET,headers="Accept=application/json")
+	@RequestMapping(method=RequestMethod.POST,headers="Accept=application/json")
 	@ResponseBody
 	public Result getform(@RequestBody SearchCriteria sc)
 	{

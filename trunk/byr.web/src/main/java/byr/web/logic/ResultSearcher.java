@@ -30,7 +30,7 @@ import byr.web.util.WebConfig;
 public class ResultSearcher 
 {
 	static private ExecutorService executorService = Executors.newFixedThreadPool(WebConfig.taskThreads);
-	private static String serverUrl ="http://localhost:8983/solr/collection1";
+	private static String serverUrl ="http://localhost:8983/solr/collection2";
 	private static SolrServer solr = new HttpSolrServer(serverUrl);
 	
 	public ResultSearcher() 
@@ -47,7 +47,7 @@ public class ResultSearcher
 		Future<List<ResultItem>> future =  executorService.submit(st);
 		ret = future.get(WebConfig.waitLimit, TimeUnit.MINUTES);
 		
-		return null;
+		return ret;
 	}
 	
 	
@@ -78,11 +78,11 @@ class SearchTask implements Callable<List<ResultItem>>
 		List<ResultItem> ret = null;
 		String  query= "";
 		
-		if(sc.getSearch_position()!=SearchCriteria.TITLE)  //search title only
+		if(sc.getSearch_position() == SearchCriteria.TITLE)  //search title only
 		{
 			query= TITLE+":"+sc.getKeywords();
 		}
-		else if(sc.getSearch_position()!=SearchCriteria.CONTENT) // search content only
+		else if(sc.getSearch_position() == SearchCriteria.CONTENT) // search content only
 		{
 			query= CONTENT+":"+sc.getKeywords();
 		}
@@ -142,9 +142,9 @@ class SearchTask implements Callable<List<ResultItem>>
 			
 			// get title with hilighting keywords
 			String title = "";
-			if (highlighting !=null && highlighting.containsKey(ID) && highlighting.get(ID).containsKey(TITLE))
+			if (highlighting !=null && highlighting.containsKey(id) && highlighting.get(id).containsKey(TITLE))
 			{
-				List<String> tmp=highlighting.get(ID).get(TITLE);
+				List<String> tmp=highlighting.get(id).get(TITLE);
 				if(tmp!=null && tmp.size() > 0)
 				{
 					for(String str:tmp)
@@ -156,13 +156,14 @@ class SearchTask implements Callable<List<ResultItem>>
 				else 
 					title = (String) doc.getFieldValue(TITLE);
 			}
-			
+			else 
+				title = (String) doc.getFieldValue(TITLE);
 			
 			// get content with hilighting keywords
 			String content = "";
-			if (highlighting !=null && highlighting.containsKey(ID) && highlighting.get(ID).containsKey(CONTENT))
+			if (highlighting !=null && highlighting.containsKey(id) && highlighting.get(id).containsKey(CONTENT))
 			{
-				List<String> tmp=highlighting.get(ID).get(CONTENT);
+				List<String> tmp=highlighting.get(id).get(CONTENT);
 				if(tmp!=null && tmp.size() > 0)
 				{
 					for(String str:tmp)
@@ -174,6 +175,8 @@ class SearchTask implements Callable<List<ResultItem>>
 				else 
 					content = (String) doc.getFieldValue(CONTENT);
 			}
+			else 
+				content = (String) doc.getFieldValue(CONTENT);
 			
 			ResultItem r = new ResultItem();
 			r.setId(id);
@@ -181,6 +184,9 @@ class SearchTask implements Callable<List<ResultItem>>
 			r.setTitle(title);
 			r.setContent(content);
 			r.setDate(date);
+			
+			if(ret == null)
+				ret = new ArrayList<ResultItem>();
 			ret.add(r);
 			
 		}
