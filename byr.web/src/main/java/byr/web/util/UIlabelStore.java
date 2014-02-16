@@ -14,6 +14,7 @@ public class UIlabelStore
 	static private Logger logger = Logger.getLogger(UIlabelStore.class);
 	private static Properties p = new Properties();
 	private static String UILabelfile = "UILabel.properties";
+	private static String WebConfFile = "webconf.properties";
 	
 	static 
 	{
