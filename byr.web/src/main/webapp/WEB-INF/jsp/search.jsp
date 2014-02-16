@@ -143,16 +143,16 @@ a,p
 	});
 
 	function submit() {
-		var url1 = "/api/comment";
+		var url1 = "http://localhost:8080/byrweb/search";
 		var keywords = $("#key").val();
 		var date1 = $("#from").val();
 		var date2 = $("#to").val();
 		var sort = $("#sort_time_select option:selected").val();
-		var page = "";
+		var page = "0";
 		var search_position =$("#search_position_select option:selected").val();
 		var mydata = '{"keywords":"' + keywords + '","date1":"' + date1
 				+ '","date2":"' + date2 + '","sort":"' + sort + '","page":"'
-				+ page + '","pagesearch_position":"' + search_position + '"}';
+				+ page + '","search_position":"' + search_position + '"}';
 		$.ajax({
 			type : "post",
 			url : url1,
