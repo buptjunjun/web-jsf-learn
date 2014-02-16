@@ -6,15 +6,23 @@ public class SearchCriteria
 {
 	public static final int DES= 0;
 	public static final int ASC = 1;
-
+	public static final int TITLE= 0;
+	public static final int CONTENT = 1;
+	
 	private String keywords = null;
 	private Date date1 = null;
 	private Date date2 = null;
-	private int  sort  = DES;
+	private int  sort  = -1;    // DES or ASC
 	private int limit = 10;
 	private int page = 0;
-
+	private int search_position = -1; //TITLE or CONTENT	
 	
+	public int getSearch_position() {
+		return search_position;
+	}
+	public void setSearch_position(int search_position) {
+		this.search_position = search_position;
+	}
 	public int getPage() {
 		return page;
 	}
