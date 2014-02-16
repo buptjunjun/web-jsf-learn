@@ -38,9 +38,10 @@ public class Main {
 		fieldNames.add("magicNum");
 		DAOMongo<Html> daoHtml = new DAOMongo<Html>(ip,port,dbname);
 		DAOMongo<HtmlStructuredData> daoStructuredData = new DAOMongo<HtmlStructuredData>(ip1,port1,dbname1);
-		
+		int before_index = 3;
+		int after_index = 2;
 		Map htmlConstrain = new HashMap();
-		htmlConstrain.put("magicNum", 1);
+		htmlConstrain.put("magicNum", before_index);
 		
 		Map<String,String> htmlConstrain1 = new HashMap<String,String>();
 		htmlConstrain1.put("id", "");
@@ -73,7 +74,7 @@ public class Main {
 				
 				logger.info("analyze:"+html.getId()+" "+html.getUrl());
 	
-				html.setMagicNum(2);
+				html.setMagicNum(after_index);
 				htmlConstrain1.put("id", html.getId());
 				daoHtml.update(html, htmlConstrain1,fieldNames);
 				
@@ -86,15 +87,16 @@ public class Main {
 			}
 			
 			lh = daoHtml.search(htmlConstrain, 100, Html.class);
+			indexSolr(docs);
 		}
 		FileUtils.writeStringToFile(new File(fileName), "</add>", "UTF-8", true);
 		
-		indexSolr(docs);
+		
 	}
 	
 	public static void indexSolr(List<SolrInputDocument> docs)
 	{
-		String serverUrl = "http://localhost:8983/solr/collection1";
+		String serverUrl = "http://localhost:8983/solr/collection2";
 		SolrServer solr = new HttpSolrServer(serverUrl);
 		try {
 			solr.add(docs);
