@@ -122,7 +122,14 @@ a,p
 	margin-bottom:5px;
 	margin-top:5px;
 }
-
+em
+{
+	color:red;
+}
+.result_item_hidden
+{
+	display:none;
+}
 </style>
 <script type="text/javascript">
 	$(function()
@@ -143,7 +150,7 @@ a,p
 	});
 
 	function submit() {
-		var url1 = "http://localhost:8080/byrweb/search";
+		var url1 = "http://localhost:8080/byrweb/searchapi";
 		var keywords = $("#key").val();
 		var date1 = $("#from").val();
 		var date2 = $("#to").val();
@@ -161,7 +168,43 @@ a,p
 			contentType : "application/json; charset=utf-8",
 			success : function(data) // request success.
 			{
-				alert(data);
+				if(data == null || data == "undefined")
+				{
+					alert("error1");
+					return;
+				}
+				
+				if(data.success=="false")
+				{
+					alert("error:"+data.errorMessge);
+				}
+				else
+				{
+					var rets = data.data;
+					if(rets == null || rets == "undefined")
+					{
+						alert("empty data");	
+					}
+					else
+					{
+						$("#result_div").empty();
+						for(var i = 0; i < rets.length; i++)
+						{
+							 var item = rets[i];
+							 var $copy =$(".result_item_hidden").clone(true);
+							 $copy.find(".title_a").html(item.title);
+							 $copy.find(".title_a").prop("href",item.url);
+							 
+							 $copy.find(".content_p").html(item.content);
+							 
+							 $copy.find(".url_a").html(item.url);
+							 $copy.find(".url_a").prop("href",item.url);
+							 $copy.prop("class","result_item");
+							 $("#result_div").append($copy);
+						}
+					}
+				}
+				
 			}
 		});
 	}
@@ -203,18 +246,15 @@ a,p
 				 </select>
 			</div>
 	</div>
-	<div id="result_div">
-		<div class="result_item">
-			<a class="url_a" href="http://bbs.csdn.net/topics/370134496">Starting ProtocolHandler ["http-bio-8080"]</a> <br/>
-			<p class="content_p" name="content">NFO: HTMLManager: init: Global resources are available
-二月 16, 2014 3:50:45 下午 org.apache.catalina.startup.HostConfig deployDirectory
-INFO: Deploying web application directorva\software\apache-tomcat-7.0.34\webapps\ROOT
-二月 16, 2014 3:50:45 下午 org.apache.coyote.AbstractProtocol start
-INFO: Starting ProtocolHandler ["http-bio-8080"]
+			<div class="result_item_hidden">
+			<a class="title_a" name="title" href="http://bbs.csdn.net/topics/370134496"></a> <br/>
+			<p class="content_p">
 			</p>
-			<a class="url_a" href="http://bbs.csdn.net/topics/370134496">http://bbs.csdn.net/topics/370134496</a>
-			<span sytle="time_span">2014-2-14 12:00</span>
+			<a class="url_a" name="url" href="http://bbs.csdn.net/topics/370134496"></a>
+			<span class="time_span">2014-2-14 12:00</span>
 		</div>
+	<div id="result_div">
+
 	</div>
 </div>
 <div id="footer">
