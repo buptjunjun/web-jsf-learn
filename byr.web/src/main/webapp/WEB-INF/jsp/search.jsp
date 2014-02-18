@@ -136,7 +136,7 @@ em
 	{
 
 		$("#advanced_btn").toggle(function(){
-			$("#advanced_option").hide();
+			$("#advanced_option_div").hide();
 		},
 		function(){
 			$("#advanced_option_div").show();
@@ -157,9 +157,26 @@ em
 		var sort = $("#sort_time_select option:selected").val();
 		var page = "0";
 		var search_position =$("#search_position_select option:selected").val();
-		var mydata = '{"keywords":"' + keywords + '","date1":"' + date1
-				+ '","date2":"' + date2 + '","sort":"' + sort + '","page":"'
-				+ page + '","search_position":"' + search_position + '"}';
+		var $advanced = $("#advanced_option_div");
+		if($advanced.is(":visible"))
+		{	
+			var mydata = '{"keywords":"' + keywords +'","page":"'+page;
+			
+			if(date1 !=null && date1 != "undefined" && date1 != "")
+				mydata += '","date1":"' + date1;
+			if(date2 !=null && date2 != "undefined" && date2 != "")
+				mydata += '","date2":"' + date2;
+			if(sort !=null && sort != "undefined" && sort != "")
+				mydata += '","sort":"' + sort ;
+			if(search_position !=null && search_position != "undefined" && search_position != "")
+				mydata += '","search_position":"' + search_position; 
+			
+			mydata += '"}';
+		}
+		else
+		{
+			var mydata = '{"keywords":"' + keywords +'","page":"'+page+'"}';
+		}
 		$.ajax({
 			type : "post",
 			url : url1,
@@ -233,15 +250,15 @@ em
 			</div>
 			<div id="sort_time_div">
 				 <label for="sort">sort:</label>
-				 <select id="sort_time_select">
+				 <select id="sort_time_select" >
 					 <option value="0">ASC</option>
-					 <option value="1" >DSE</option>
+					 <option value="1" selected>DSE</option>
 				 </select>
 			</div>	
 			<div id="search_position">
 				 <label for="sort">I only search:</label>
-				 <select id="search_position_select">
-					 <option value="0">title</option>
+				 <select id="search_position_select"  va>
+					 <option value="0" selected>title</option>
 					 <option value="1">content</option>
 				 </select>
 			</div>

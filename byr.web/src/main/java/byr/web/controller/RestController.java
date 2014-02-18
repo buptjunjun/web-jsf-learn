@@ -44,7 +44,7 @@ public class RestController
 			ret = rs.search(sc);
 			result.setData(ret);
 			result.setSuccess(true);
-			logger.info("success: keywords="+sc.getKeywords()+"  result.size="+ret==null?0:ret.size());
+			logger.info("success: keywords="+sc.getKeywords()+"  result.size="+(ret==null?0:ret.size()));
 		}
 		catch (Exception e) {
 			// TODO Auto-generated catch block
