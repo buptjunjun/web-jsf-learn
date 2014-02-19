@@ -12,6 +12,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.js"></script>
 <style>
+a:link { text-decoration: none}
 #main
 {
 	width:1040px;	
@@ -102,6 +103,7 @@
 	margin:auto;
 	padding:4px;
 	text-align: left;
+	display:none;
 }
 
 #timespan_div
@@ -128,13 +130,14 @@
 #result_div
 {
 	border: solid 1px;
-	width:900px;
+	width:800px;
 	margin:auto;
 }
 
 .result_item
 {
-	float:left;
+	padding-top:10px;
+	margin:auto;
 	text-align:left;
 	width:780px;
 	margin-top:10px;
@@ -150,7 +153,7 @@ a,p
 em
 {
 	color:red;
-	font:bold;
+	font-weight:bold;
 }
 .result_item_hidden
 {
@@ -160,10 +163,12 @@ em
 #paging
 {
 	border: solid 1px;
-	width:900px;
+	width:780px;
 	margin:auto;
+	padding-bottom:5px;
+	padding-top:5px;
 }
-span:hover
+#paging  span:hover
 {
 	background:blue;
 }
@@ -174,6 +179,22 @@ span:hover
 	padding-left:5px;
 	padding-right:5px;
 	border:1px solid;
+}
+
+.title_a
+{
+	font-size:20px;
+}
+
+.content_p
+{
+	font-size:16px;
+}
+
+.url_a
+{
+	color:#008000;
+	font-size:13px;
 }
 </style>
 <script type="text/javascript">
@@ -191,7 +212,7 @@ span:hover
         $("#to").datepicker({ dateFormat: "yy-mm-dd" }).val();
         
         $("#btn").bind("click",function(){default_submit();});
-		$("#paging span").bind("click",function(){ $(this).css("background","blue"); submit($(this).text());});
+		$("#paging span").bind("click",function(){submit($(this).text());});
 	});
 
 	function default_submit()
@@ -282,7 +303,6 @@ span:hover
 	}
 	
 	
-	
 	// 顯示讀取遮罩
 	function ShowProgressBar() {
 	    displayProgress();
@@ -321,7 +341,7 @@ span:hover
 	<!-- mask frame and loading -->
 	<div id="divProgress" style="text-align:center; display: none; position: fixed; top: 50%;  left: 50%;" >
     <br />
-    	<font color="#1B3563" size="3px">loading。。。。。</font>
+    	<font color="#1B3563" size="3px">loading ....</font>
     </div>    
     <div id="divMaskFrame" style="background-color: #F2F4F7; display: none; left: 0px; position: absolute; top: 0px;">
 	</div>
@@ -363,20 +383,39 @@ span:hover
 				 </select>
 			</div>
 	</div>
-			<div class="result_item_hidden">
-			<a class="title_a" name="title" href="http://bbs.csdn.net/topics/370134496"></a> <br/>
+		
+	<div id="result_div">
+		<div class="result_item">
+			<a class="title_a" name="title" href="http://bbs.csdn.net/topics/370134496">aaaaaaaaaaaaaaaaa</a> <br/>
 			<p class="content_p">
+				bbbbbbbbbbbbbbbbbb<em>bbbbbb</em>bb
 			</p>
-			<a class="url_a" name="url" href="http://bbs.csdn.net/topics/370134496"></a>
+			<a class="url_a" name="url" href="http://bbs.csdn.net/topics/370134496">http://bbs.csdn.net/topics/370134496</a>
 			<span class="time_span">2014-2-14 12:00</span>
 		</div>
-	<div id="result_div">
-
+		
+		<div class="result_item">
+			<a class="title_a" name="title" href="http://bbs.csdn.net/topics/370134496">aaaaaaaaaaaaaaaaa</a> <br/>
+			<p class="content_p">
+				bbbbbbbbbbbbbbbbbbbbbbbbbb
+			</p>
+			<a class="url_a" name="url" href="http://bbs.csdn.net/topics/370134496">http://bbs.csdn.net/topics/370134496</a>
+			<span class="time_span">2014-2-14 12:00</span>
+		</div>
 	</div>
 </div>
 <div id="paging">
+		<span>0</span> 
 		<span>1</span> 
 		<span>2</span>
+		<span>3</span>
+		<span>4</span>
+		<span>5</span>
+		<span>6</span> 
+		<span>7</span>
+		<span>8</span>
+		<span>9</span>
+
 	</div>
 <div id="footer">
 		<div id="contact">
