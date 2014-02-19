@@ -75,6 +75,12 @@
  	font-size:18px;
  	cursor:pointer;
 }
+#advanced_btn
+{
+	font-size:13px;
+	border-bottom:solid 1px;;
+	cursor:pointer;
+}
 
 #footer
 {
@@ -94,7 +100,30 @@
 	border:1px solid;
 	width:780px;
 	margin:auto;
+	padding:4px;
+	text-align: left;
 }
+
+#timespan_div
+{
+	
+	display:block;
+	margin:2px;
+}
+
+#sort_time_div
+{	
+		display:block;
+		margin:2px;
+}
+
+#search_position_div
+{
+		margin:2px;
+		display:block;
+}
+
+
 
 #result_div
 {
@@ -111,10 +140,6 @@
 	margin-top:10px;
 	border-bottom:1px dashed;
 }
-.time_span
-{
-
-}
 a,p
 {
 	line-height:15px;
@@ -125,10 +150,30 @@ a,p
 em
 {
 	color:red;
+	font:bold;
 }
 .result_item_hidden
 {
 	display:none;
+}
+
+#paging
+{
+	border: solid 1px;
+	width:900px;
+	margin:auto;
+}
+span:hover
+{
+	background:blue;
+}
+#paging span
+{
+	cursor:pointer;
+	marging:5px;
+	padding-left:5px;
+	padding-right:5px;
+	border:1px solid;
 }
 </style>
 <script type="text/javascript">
@@ -145,17 +190,25 @@ em
 		$("#from").datepicker({ dateFormat: "yy-mm-dd" }).val();
         $("#to").datepicker({ dateFormat: "yy-mm-dd" }).val();
         
-        $("#btn").bind("click",function(){submit();});
-	
+        $("#btn").bind("click",function(){default_submit();});
+		$("#paging span").bind("click",function(){ $(this).css("background","blue"); submit($(this).text());});
 	});
 
-	function submit() {
+	function default_submit()
+	{
+		submit(0);
+	}
+	
+	function submit( page ) {
 		var url1 = "http://localhost:8080/byrweb/searchapi";
+		
+		if(page == "undefined" || page == null)
+			page = 0;
+		
 		var keywords = $("#key").val();
 		var date1 = $("#from").val();
 		var date2 = $("#to").val();
 		var sort = $("#sort_time_select option:selected").val();
-		var page = "0";
 		var search_position =$("#search_position_select option:selected").val();
 		var $advanced = $("#advanced_option_div");
 		if($advanced.is(":visible"))
@@ -183,6 +236,8 @@ em
 			dataType : "json",
 			data : mydata,
 			contentType : "application/json; charset=utf-8",
+			beforeSend:function(){ShowProgressBar();},
+			complete:function(){HideProgressBar();},
 			success : function(data) // request success.
 			{
 				if(data == null || data == "undefined")
@@ -225,11 +280,52 @@ em
 			}
 		});
 	}
+	
+	
+	
+	// 顯示讀取遮罩
+	function ShowProgressBar() {
+	    displayProgress();
+	    displayMaskFrame();
+	}
+
+	// 隱藏讀取遮罩
+	function HideProgressBar() {
+	    var progress = $('#divProgress');
+	    var maskFrame = $("#divMaskFrame");
+	    progress.hide();
+	    maskFrame.hide();
+	}
+	// 顯示讀取畫面
+	function displayProgress() {
+	    var w = $(document).width();
+	    var h = $(window).height();
+	    var progress = $('#divProgress');
+	    progress.css({ "z-index": 999999, "top": (h / 2) - (progress.height() / 2), "left": (w / 2) - (progress.width() / 2) });
+	    progress.show();
+	}
+	// 顯示遮罩畫面
+	function displayMaskFrame() {
+	    var w = $(window).width();
+	    var h = $(document).height();
+	    var maskFrame = $("#divMaskFrame");
+	    maskFrame.css({ "z-index": 999998, "opacity": 0.7, "width": w, "height": h });
+	    maskFrame.show();
+	}
 </script>
 
 </head>
 <body>
 <div id="main">
+	
+	<!-- mask frame and loading -->
+	<div id="divProgress" style="text-align:center; display: none; position: fixed; top: 50%;  left: 50%;" >
+    <br />
+    	<font color="#1B3563" size="3px">loading。。。。。</font>
+    </div>    
+    <div id="divMaskFrame" style="background-color: #F2F4F7; display: none; left: 0px; position: absolute; top: 0px;">
+	</div>
+
 	<div id = "head">
 		<span id="head_title">${search_head_title}</span>
 		<span id="head_desc">${search_head_desc}</span>
@@ -239,26 +335,30 @@ em
 			<input id="page" style="display:none" value="0"></input>
 			<input type="text" id="key" ></input>
 			<input id="btn" class="btn" value="${search_searchbtn}"></input>
-			<input id="advanced_btn" class="btn" value="advanced"></input>
+			<span id="advanced_btn" >高级搜索</span>
 		</div>	
 		<div id="advanced_option_div">
+			
 			<div id="timespan_div" style="float">
+				<label >搜索时间段:</label>
 				<label for="from">From</label>
 				<input type="text" id="from" name="from">
 				<label for="to">to</label>
 				<input type="text" id="to" name="to">
 			</div>
 			<div id="sort_time_div">
-				 <label for="sort">sort:</label>
+				 <label for="sort">搜索结果排序方式:</label>
 				 <select id="sort_time_select" >
-					 <option value="0">ASC</option>
-					 <option value="1" selected>DSE</option>
+				 	 <option value="-1" selected>relevance</option>
+					 <option value="0">DATE ASC</option>
+					 <option value="1" >DATE DSE</option>
 				 </select>
 			</div>	
-			<div id="search_position">
-				 <label for="sort">I only search:</label>
-				 <select id="search_position_select"  va>
-					 <option value="0" selected>title</option>
+			<div id="search_position_div">
+				 <label for="sort">搜索的字段</label>
+				 <select id="search_position_select" >
+				 	 <option value="-1" selected>title and content</option>
+					 <option value="0" >title</option>
 					 <option value="1">content</option>
 				 </select>
 			</div>
@@ -274,6 +374,10 @@ em
 
 	</div>
 </div>
+<div id="paging">
+		<span>1</span> 
+		<span>2</span>
+	</div>
 <div id="footer">
 		<div id="contact">
 			<span>${contact}</span>
