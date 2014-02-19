@@ -17,7 +17,6 @@ a:link { text-decoration: none}
 {
 	width:1040px;	
 	margin:auto;
-	border:1px solid;	
 }
 
 #head
@@ -98,7 +97,7 @@ a:link { text-decoration: none}
 
 #advanced_option_div
 {
-	border:1px solid;
+	
 	width:780px;
 	margin:auto;
 	padding:4px;
@@ -129,7 +128,7 @@ a:link { text-decoration: none}
 
 #result_div
 {
-	border: solid 1px;
+	border-top:solid 1px;
 	width:800px;
 	margin:auto;
 }
@@ -162,11 +161,11 @@ em
 
 #paging
 {
-	border: solid 1px;
 	width:780px;
 	margin:auto;
 	padding-bottom:5px;
 	padding-top:5px;
+	
 }
 #paging  span:hover
 {
@@ -179,6 +178,7 @@ em
 	padding-left:5px;
 	padding-right:5px;
 	border:1px solid;
+	display:none;
 }
 
 .title_a
@@ -274,6 +274,28 @@ em
 				else
 				{
 					var rets = data.data;
+					var count = null;
+					if( data.count != null &&  data.count != "" &&  data.count != "undefined")
+					  count = data.count/10;
+					
+					if(data.count%10==0 && data.count > 0)
+						count=count-1;
+					
+					$("#paging span").each(function(i){
+						
+						if(count != null )
+						{
+							if(i<=count)
+								$(this).show();
+							else
+								$(this).hide();
+						}
+						if(i == page)
+							$(this).css("background","blue");
+						else
+							$(this).css("background","");
+						});
+					
 					if(rets == null || rets == "undefined")
 					{
 						alert("empty data");	
@@ -383,9 +405,7 @@ em
 				 </select>
 			</div>
 	</div>
-		
-	<div id="result_div">
-		<div class="result_item">
+		<div class="result_item_hidden">
 			<a class="title_a" name="title" href="http://bbs.csdn.net/topics/370134496">aaaaaaaaaaaaaaaaa</a> <br/>
 			<p class="content_p">
 				bbbbbbbbbbbbbbbbbb<em>bbbbbb</em>bb
@@ -393,15 +413,7 @@ em
 			<a class="url_a" name="url" href="http://bbs.csdn.net/topics/370134496">http://bbs.csdn.net/topics/370134496</a>
 			<span class="time_span">2014-2-14 12:00</span>
 		</div>
-		
-		<div class="result_item">
-			<a class="title_a" name="title" href="http://bbs.csdn.net/topics/370134496">aaaaaaaaaaaaaaaaa</a> <br/>
-			<p class="content_p">
-				bbbbbbbbbbbbbbbbbbbbbbbbbb
-			</p>
-			<a class="url_a" name="url" href="http://bbs.csdn.net/topics/370134496">http://bbs.csdn.net/topics/370134496</a>
-			<span class="time_span">2014-2-14 12:00</span>
-		</div>
+	<div id="result_div">
 	</div>
 </div>
 <div id="paging">
@@ -415,6 +427,16 @@ em
 		<span>7</span>
 		<span>8</span>
 		<span>9</span>
+		<span>10</span> 
+		<span>11</span> 
+		<span>12</span>
+		<span>13</span>
+		<span>14</span>
+		<span>15</span>
+		<span>16</span> 
+		<span>17</span>
+		<span>18</span>
+		<span>19</span>
 
 	</div>
 <div id="footer">

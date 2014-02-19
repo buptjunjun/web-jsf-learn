@@ -1,9 +1,7 @@
 package byr.web.controller;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -34,6 +32,18 @@ public class RestController
 	@ResponseBody
 	public Result getform(@RequestBody SearchCriteria sc)
 	{
+		if(sc.getDate1() == null)
+		{
+			Date date1 = new Date();
+			date1.setYear(0);
+			sc.setDate1(date1);
+		}
+		
+		if(sc.getDate2() == null)
+		{
+			sc.setDate2(new Date());
+		}
+			
 		Result result = new Result();
 		result.setSuccess(false);
 		result.setErrorMessge("");
@@ -41,10 +51,8 @@ public class RestController
 		
 		try 
 		{
-			ret = rs.search(sc);
-			result.setData(ret);
-			result.setSuccess(true);
-			logger.info("success: keywords="+sc.getKeywords()+"  result.size="+(ret==null?0:ret.size()));
+			result = rs.search(sc);			
+			logger.info("success: keywords="+sc.getKeywords()+"  result.size="+(result==null?0:result.getCount()));
 		}
 		catch (Exception e) {
 			// TODO Auto-generated catch block

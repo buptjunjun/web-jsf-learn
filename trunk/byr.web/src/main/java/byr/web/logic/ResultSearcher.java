@@ -17,10 +17,13 @@ import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.response.RangeFacet;
+import org.apache.solr.client.solrj.response.RangeFacet.Count;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 
 import byr.analyzer.analyzer.HtmlStructuredData;
+import byr.web.bean.Result;
 import byr.web.bean.ResultItem;
 import byr.web.bean.SearchCriteria;
 import byr.web.dao.MongoDao;
@@ -38,13 +41,13 @@ public class ResultSearcher
 		// TODO Auto-generated constructor stub
 	}
 
-	public  List<ResultItem> search(SearchCriteria sc) throws InterruptedException, ExecutionException, TimeoutException
+	public  Result search(SearchCriteria sc) throws InterruptedException, ExecutionException, TimeoutException
 	{
 		SearchTask st = new SearchTask(sc,solr);
 		
-		List<ResultItem> ret = null;
+		Result ret = null;
 		
-		Future<List<ResultItem>> future =  executorService.submit(st);
+		Future<Result> future =  executorService.submit(st);
 		ret = future.get(WebConfig.waitLimit, TimeUnit.MINUTES);
 		
 		return ret;
@@ -54,7 +57,7 @@ public class ResultSearcher
 }
 
 
-class SearchTask implements Callable<List<ResultItem>> 
+class SearchTask implements Callable<Result> 
 {
 	
 	static public String TITLE="title";
@@ -73,8 +76,9 @@ class SearchTask implements Callable<List<ResultItem>>
 		this.solr = solr;
 	}
 	
-	public List<ResultItem> call() throws Exception {
+	public Result call() throws Exception {
 		
+		Result result = new Result();
 		List<ResultItem> ret = null;
 		String  query= "";
 		
@@ -112,7 +116,7 @@ class SearchTask implements Callable<List<ResultItem>>
 		if(sc.getDate1()!=null && sc.getDate2()!=null&& sc.getDate1().before(sc.getDate2()))
 		{		
 			// +1HOUR indecates precision of 1 hour 
-			solrQuery.addDateRangeFacet("date", sc.getDate1(), sc.getDate2(), "+1HOUR");
+			solrQuery.addDateRangeFacet("date", sc.getDate1(), sc.getDate2(), "+1YEAR");
 		}
 		
 		// sort by date
@@ -126,7 +130,16 @@ class SearchTask implements Callable<List<ResultItem>>
 		}
 		
 		QueryResponse resp = solr.query(solrQuery); 
-		
+
+		int count = 0;
+		List<RangeFacet> rangeFacets = resp.getFacetRanges();
+		if(rangeFacets !=null && rangeFacets.size() > 0)
+		{
+			List<Count> counts = rangeFacets.get(0).getCounts();
+			if(counts !=null)
+				for(Count c:counts)
+					count+= c.getCount();
+		}
 		
 		// results
 		SolrDocumentList hits = resp.getResults();
@@ -190,6 +203,9 @@ class SearchTask implements Callable<List<ResultItem>>
 			ret.add(r);
 			
 		}
-		return ret;
+		result.setSuccess(true);
+		result.setData(ret);
+		result.setCount(count);
+		return result;
 	}
 }
