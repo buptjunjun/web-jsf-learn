@@ -325,6 +325,8 @@ em
 							 
 							 $copy.find(".url_a").html(item.url);
 							 $copy.find(".url_a").prop("href",item.url);
+							 $copy.find(".time_span").text(item.date);
+							 
 							 $copy.prop("class","result_item");
 							 $("#result_div").append($copy);
 						}
