@@ -40,6 +40,8 @@ public class SearchCriteria
 		this.limit = limit;
 	}
 	public String getKeywords() {
+		if(this.keywords !=null )
+			this.keywords = this.keywords.replaceAll(" ", "");
 		return keywords;
 	}
 	public void setKeywords(String keywords) 
