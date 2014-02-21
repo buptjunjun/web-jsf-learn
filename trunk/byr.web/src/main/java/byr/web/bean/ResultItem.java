@@ -2,6 +2,8 @@ package byr.web.bean;
 
 import java.util.Date;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 public class ResultItem 
 {
 	private String id = null;
@@ -34,6 +36,8 @@ public class ResultItem
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
+	@JsonSerialize(using=JsonDateSerializer.class) 
 	public Date getDate() {
 		return date;
 	}
