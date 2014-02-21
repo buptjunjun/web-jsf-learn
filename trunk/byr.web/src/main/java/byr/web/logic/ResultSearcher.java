@@ -28,6 +28,7 @@ import byr.web.bean.ResultItem;
 import byr.web.bean.SearchCriteria;
 import byr.web.dao.MongoDao;
 import byr.web.util.ByrUtils;
+import byr.web.util.UIlabelStore;
 import byr.web.util.WebConfig;
 
 public class ResultSearcher 
@@ -206,6 +207,8 @@ class SearchTask implements Callable<Result>
 		result.setSuccess(true);
 		result.setData(ret);
 		result.setCount(count);
+		if(ret==null||ret.size() == 0)
+			result.setErrorMessge(UIlabelStore.getMessage("search_result_empty"));
 		return result;
 	}
 }

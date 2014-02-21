@@ -32,11 +32,13 @@ a:link { text-decoration: none}
 {
 	font-size:40px;
 	margin-left:40px;
+	color:#0000FF;
 }
 
 #head_desc
 {
 	font-size:15px;
+	color:red;
 }
 #content_div
 {
@@ -50,7 +52,7 @@ a:link { text-decoration: none}
 #search_input
 {
 	width:800px;
-	height:60px;
+	height:50px;
 	margin:auto;
 	vertical-align:center;
 	margin-top:20px;
@@ -78,21 +80,25 @@ a:link { text-decoration: none}
 #advanced_btn
 {
 	font-size:13px;
+	color:red;
 	border-bottom:solid 1px;;
 	cursor:pointer;
 }
 
 #footer
 {
-	border-top:1px solid;
+	border-top:2px solid #598EDE;
+	margin-top:10px;
 	width:1024px;
 	background:none repeat scroll 0 0 white;	
 	text-align: center;
+	font-size:14px;
 }
 #contact
 {
 	width:1000px;	
 	margin:auto;
+	padding-top:8px;
 }
 
 #advanced_option_div
@@ -109,26 +115,29 @@ a:link { text-decoration: none}
 {
 	
 	display:block;
-	margin:2px;
+	margin-left:12px;
+	margin-bottom:2px;
 }
 
 #sort_time_div
 {	
-		display:block;
-		margin:2px;
+	display:block;
+	margin-left:12px;
+	margin-bottom:2px;
 }
 
 #search_position_div
 {
-		margin:2px;
-		display:block;
+	margin-left:12px;
+	margin-bottom:2px;
+	display:block;
 }
 
 
 
 #result_div
 {
-	border-top:solid 1px;
+	border-top:solid 1px #598EDE;
 	width:800px;
 	margin:auto;
 }
@@ -140,7 +149,7 @@ a:link { text-decoration: none}
 	text-align:left;
 	width:780px;
 	margin-top:10px;
-	border-bottom:1px dashed;
+	border-bottom:1px dashed #598EDE;
 }
 a,p
 {
@@ -221,7 +230,8 @@ em
 	}
 	
 	function submit( page ) {
-		var url1 = "http://localhost:8080/byrweb/searchapi";
+	    var host = window.location.host;
+		var url1 = "http://"+host+"/searchapi";
 		
 		if(page == "undefined" || page == null)
 			page = 0;
@@ -263,7 +273,7 @@ em
 			{
 				if(data == null || data == "undefined")
 				{
-					alert("error1");
+					alert("error");
 					return;
 				}
 				
@@ -298,7 +308,7 @@ em
 					
 					if(rets == null || rets == "undefined")
 					{
-						alert("empty data");	
+						alert(data.errorMessge);	
 					}
 					else
 					{
@@ -377,36 +387,35 @@ em
 			<input id="page" style="display:none" value="0"></input>
 			<input type="text" id="key" ></input>
 			<input id="btn" class="btn" value="${search_searchbtn}"></input>
-			<span id="advanced_btn" >高级搜索</span>
+			<span id="advanced_btn" >${search_advanced }</span>
 		</div>	
 		<div id="advanced_option_div">
-			
 			<div id="timespan_div" style="float">
-				<label >搜索时间段:</label>
-				<label for="from">From</label>
+				<label >${search_date}</label>
+				<label for="from">${search_date_from }</label>
 				<input type="text" id="from" name="from">
-				<label for="to">to</label>
+				<label for="to">${search_date_to}</label>
 				<input type="text" id="to" name="to">
 			</div>
 			<div id="sort_time_div">
-				 <label for="sort">搜索结果排序方式:</label>
+				 <label for="sort">${search_sort }</label>
 				 <select id="sort_time_select" >
-				 	 <option value="-1" selected>relevance</option>
-					 <option value="0">DATE ASC</option>
-					 <option value="1" >DATE DSE</option>
+				 	 <option value="-1" selected>${search_sort_relevance }</option>
+					 <option value="0">${search_sort_asc }</option>
+					 <option value="1" >${search_sort_desc }</option>
 				 </select>
 			</div>	
 			<div id="search_position_div">
-				 <label for="sort">搜索的字段</label>
+				 <label for="sort">${search_field }</label>
 				 <select id="search_position_select" >
-				 	 <option value="-1" selected>title and content</option>
-					 <option value="0" >title</option>
-					 <option value="1">content</option>
+				 	 <option value="-1" selected>${search_field_all }</option>
+					 <option value="0" >${search_field_title }</option>
+					 <option value="1">${search_field_content }</option>
 				 </select>
 			</div>
 	</div>
 		<div class="result_item_hidden">
-			<a class="title_a" name="title" href="http://bbs.csdn.net/topics/370134496">aaaaaaaaaaaaaaaaa</a> <br/>
+			<a class="title_a" name="title" href="http://bbs.csdn.net/topics/370134496"  target="_blank">aaaaaaaaaaaaaaaaa</a> <br/>
 			<p class="content_p">
 				bbbbbbbbbbbbbbbbbb<em>bbbbbb</em>bb
 			</p>
@@ -437,7 +446,6 @@ em
 		<span>17</span>
 		<span>18</span>
 		<span>19</span>
-
 	</div>
 <div id="footer">
 		<div id="contact">
