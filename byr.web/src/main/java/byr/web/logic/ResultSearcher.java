@@ -117,7 +117,7 @@ class SearchTask implements Callable<Result>
 		if(sc.getDate1()!=null && sc.getDate2()!=null&& sc.getDate1().before(sc.getDate2()))
 		{		
 			// +1HOUR indecates precision of 1 hour 
-			solrQuery.addDateRangeFacet("date", sc.getDate1(), sc.getDate2(), "+1YEAR");
+			solrQuery.addDateRangeFacet("date", sc.getDate1(), sc.getDate2(), "+1DAY");
 		}
 		
 		// sort by date
