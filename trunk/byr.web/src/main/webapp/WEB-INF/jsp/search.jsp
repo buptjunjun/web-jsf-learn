@@ -79,10 +79,11 @@ a:link { text-decoration: none}
 }
 #advanced_btn
 {
-	font-size:13px;
+	font-size:15px;
 	color:red;
 	border-bottom:solid 1px;;
 	cursor:pointer;
+	padding:4px;
 }
 
 #footer
