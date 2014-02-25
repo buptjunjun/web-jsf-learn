@@ -393,21 +393,6 @@ em
 			<span id="advanced_btn" >${search_advanced }</span>
 		</div>	
 		<div id="advanced_option_div">
-			<div id="timespan_div" style="float">
-				<label >${search_date}</label>
-				<label for="from">${search_date_from }</label>
-				<input type="text" id="from" name="from">
-				<label for="to">${search_date_to}</label>
-				<input type="text" id="to" name="to">
-			</div>
-			<div id="sort_time_div">
-				 <label for="sort">${search_sort }</label>
-				 <select id="sort_time_select" >
-				 	 <option value="-1" selected>${search_sort_relevance }</option>
-					 <option value="0">${search_sort_asc }</option>
-					 <option value="1" >${search_sort_desc }</option>
-				 </select>
-			</div>	
 			<div id="search_position_div">
 				 <label for="sort">${search_field }</label>
 				 <select id="search_position_select" >
@@ -416,6 +401,24 @@ em
 					 <option value="1">${search_field_content }</option>
 				 </select>
 			</div>
+			
+			<div id="sort_time_div">
+				 <label for="sort">${search_sort }</label>
+				 <select id="sort_time_select" >
+				 	 <option value="-1" selected>${search_sort_relevance }</option>
+					 <option value="0">${search_sort_asc }</option>
+					 <option value="1" >${search_sort_desc }</option>
+				 </select>
+			</div>	
+			
+			<div id="timespan_div" style="float">
+				<label >${search_date}</label>
+				<label for="from">${search_date_from }</label>
+				<input type="text" id="from" name="from">
+				<label for="to">${search_date_to}</label>
+				<input type="text" id="to" name="to">
+			</div>
+			
 	</div>
 		<div class="result_item_hidden">
 			<a class="title_a" name="title" href="http://bbs.csdn.net/topics/370134496"  target="_blank">aaaaaaaaaaaaaaaaa</a> <br/>

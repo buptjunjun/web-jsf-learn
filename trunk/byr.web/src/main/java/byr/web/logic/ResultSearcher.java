@@ -29,18 +29,60 @@ import byr.web.bean.ResultItem;
 import byr.web.bean.SearchCriteria;
 import byr.web.dao.MongoDao;
 import byr.web.util.ByrUtils;
+import byr.web.util.ConfStore;
 import byr.web.util.UIlabelStore;
-import byr.web.util.WebConfig;
 
 public class ResultSearcher 
 {
-	static private ExecutorService executorService = Executors.newFixedThreadPool(WebConfig.taskThreads);
-	private static String serverUrl ="http://localhost:8983/solr/collection2";
-	private static SolrServer solr = new HttpSolrServer(serverUrl);
-	
+	static private ExecutorService executorService = null;
+	private static String serverUrl = null;
+	private static SolrServer solr = null;
+	private static int wait_limit = 2;  //second
+	private static int task_limt = 20;
 	public ResultSearcher() 
 	{
-		// TODO Auto-generated constructor stub
+		
+		
+		
+		synchronized(ResultSearcher.class)
+		{
+			
+			if(serverUrl == null)
+				serverUrl = ConfStore.getMessage("solr_server_url");
+			
+			
+			if(executorService == null)
+			{
+				String task_limt_str = ConfStore.getMessage("task_limit");
+				
+				try
+				{
+					task_limt = Integer.parseInt(task_limt_str);
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+					task_limt = 20;
+				}
+				executorService = Executors.newFixedThreadPool(task_limt);
+			}
+			
+			if(solr == null)
+				solr = new HttpSolrServer(serverUrl);
+			
+			String wait_limt_str = ConfStore.getMessage("wait_limt");
+			
+			try
+			{
+				wait_limit = Integer.parseInt(wait_limt_str);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				wait_limit = 3;
+			}
+		}
+			
 	}
 
 	public  Result search(SearchCriteria sc) throws InterruptedException, ExecutionException, TimeoutException
@@ -50,7 +92,7 @@ public class ResultSearcher
 		Result ret = null;
 		
 		Future<Result> future =  executorService.submit(st);
-		ret = future.get(WebConfig.waitLimit, TimeUnit.MINUTES);
+		ret = future.get(wait_limit, TimeUnit.MINUTES);
 		
 		return ret;
 	}
