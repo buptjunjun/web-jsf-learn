@@ -1,5 +1,6 @@
 package byr.web.logic;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -67,6 +68,7 @@ class SearchTask implements Callable<Result>
 	static public String DATE="date";
 	static public String ID="id";
 	static public int TIMELIMIT=3; //second
+	static private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	
 	private SearchCriteria sc = null;
 	private SolrServer solr =null;
@@ -82,7 +84,7 @@ class SearchTask implements Callable<Result>
 		Result result = new Result();
 		List<ResultItem> ret = null;
 		String  query= "";
-		
+		SolrQuery solrQuery = new SolrQuery();
 		if(sc.getSearch_position() == SearchCriteria.TITLE)  //search title only
 		{
 			query= TITLE+":"+sc.getKeywords();
@@ -94,11 +96,22 @@ class SearchTask implements Callable<Result>
 		else  // search both title and content
 		{
 			// title is double important by "^2"
-			query= TITLE+":("+sc.getKeywords()+")^2 "+CONTENT+":"+sc.getKeywords();
+			query= TITLE+":("+sc.getKeywords()+")^2 OR "+CONTENT+":"+sc.getKeywords();
 		}
 
+		solrQuery.setQuery(query);
+
+		//search by date range
+		if(sc.getDate1()!=null && sc.getDate2()!=null&& sc.getDate1().before(sc.getDate2()))
+		{		
+			String datefilter = "date:["+sdf.format(sc.getDate1())+ "  TO  " + sdf.format(sc.getDate2())+"]";
+			solrQuery.addFilterQuery(datefilter);
+			// +1HOUR indecates precision of 1 hour 
+			//solrQuery.addDateRangeFacet("date", sc.getDate1(), sc.getDate2(), "+1YEAR");
+		}
 		
-		SolrQuery solrQuery = new SolrQuery(query);
+		
+	
 		
 		// time limit
 		solrQuery.setTimeAllowed(1000*TIMELIMIT);
@@ -113,12 +126,6 @@ class SearchTask implements Callable<Result>
 		solrQuery.setStart(sc.getPage()*sc.getLimit());
 		solrQuery.setRows(sc.getLimit()); 
 		
-		//search by date range
-		if(sc.getDate1()!=null && sc.getDate2()!=null&& sc.getDate1().before(sc.getDate2()))
-		{		
-			// +1HOUR indecates precision of 1 hour 
-			solrQuery.addDateRangeFacet("date", sc.getDate1(), sc.getDate2(), "+1DAY");
-		}
 		
 		// sort by date
 		if(this.sc.getSort() == SearchCriteria.ASC )
@@ -131,19 +138,12 @@ class SearchTask implements Callable<Result>
 		}
 		
 		QueryResponse resp = solr.query(solrQuery); 
-
-		int count = 0;
-		List<RangeFacet> rangeFacets = resp.getFacetRanges();
-		if(rangeFacets !=null && rangeFacets.size() > 0)
-		{
-			List<Count> counts = rangeFacets.get(0).getCounts();
-			if(counts !=null)
-				for(Count c:counts)
-					count+= c.getCount();
-		}
+	
 		
 		// results
 		SolrDocumentList hits = resp.getResults();
+		long count = hits.getNumFound();
+		
 		// hilighting 
 		Map<String, Map<String, List<String>>> highlighting = resp.getHighlighting();
 		
