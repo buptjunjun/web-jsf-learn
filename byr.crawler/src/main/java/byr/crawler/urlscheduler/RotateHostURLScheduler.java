@@ -186,7 +186,7 @@ public class RotateHostURLScheduler extends URLScheduler
 			constrains.put("host", host);
 			constrains.put("flag", Url.UNCRAWLED);
 			// querying a blog's probability is  70% 
-			if( new Random().nextInt(10) < 2)
+			if( new Random().nextInt(10) < 5)
 			{
 				lurl = this.dao.search(constrains, "lastCrawled", DAOMongo.ASCENDING, limit, Url.class);
 			}
