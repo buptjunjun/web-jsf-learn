@@ -39,8 +39,19 @@ public class MyBatisTest {
 	public static void main(String[] args) {
 		SqlSession sqlSession = getSessionFactory().openSession();
 		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		
+		// test select
 		User user = userMapper.findByName("andy");
 		System.out.println(user.getName());
+		
+		// test insert
+		User user1 = new User();
+		user1.setName("xl");
+		user1.setAge(22);		
+		userMapper.insertUser(user1);
+		//it is a must or no data will be insert into server.
+		sqlSession.commit();
+		
 
 	}
 
