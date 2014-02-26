@@ -12,9 +12,8 @@ import org.junjun.mybatis.dao.UserMapper;
 
 
 /**
- * myBatis数据库连接测试
+ * myBatis数据库测试
  * 
- * @author db2admin
  * 
  */
 public class MyBatisTest {
