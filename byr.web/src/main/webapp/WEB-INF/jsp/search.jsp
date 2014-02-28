@@ -406,8 +406,8 @@ em
 				 <label for="sort">${search_sort }</label>
 				 <select id="sort_time_select" >
 				 	 <option value="-1" selected>${search_sort_relevance }</option>
-					 <option value="0">${search_sort_asc }</option>
-					 <option value="1" >${search_sort_desc }</option>
+					 <option value="1">${search_sort_asc }</option>
+					 <option value="0" >${search_sort_desc }</option>
 				 </select>
 			</div>	
 			
