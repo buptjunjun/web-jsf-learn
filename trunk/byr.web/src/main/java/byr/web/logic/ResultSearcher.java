@@ -39,6 +39,7 @@ public class ResultSearcher
 	private static SolrServer solr = null;
 	private static int wait_limit = 2;  //second
 	private static int task_limt = 20;
+	static public int content_limit = 500;
 	public ResultSearcher() 
 	{
 		
@@ -71,15 +72,17 @@ public class ResultSearcher
 				solr = new HttpSolrServer(serverUrl);
 			
 			String wait_limt_str = ConfStore.getMessage("wait_limt");
-			
+			String content_limit_str = ConfStore.getMessage("content_limt");
 			try
 			{
 				wait_limit = Integer.parseInt(wait_limt_str);
+				content_limit = Integer.parseInt(content_limit_str);
 			}
 			catch(Exception e)
 			{
 				e.printStackTrace();
 				wait_limit = 3;
+				content_limit=500;
 			}
 		}
 			
@@ -110,6 +113,7 @@ class SearchTask implements Callable<Result>
 	static public String DATE="date";
 	static public String ID="id";
 	static public int TIMELIMIT=3; //second
+
 	static private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	
 	private SearchCriteria sc = null;
@@ -233,6 +237,13 @@ class SearchTask implements Callable<Result>
 			}
 			else 
 				content = (String) doc.getFieldValue(CONTENT);
+			
+			// in case the length of content is so large.
+			if(content!=null)
+			{
+				int limit = content.length() > ResultSearcher.content_limit?ResultSearcher.content_limit: content.length() ;
+				content = content.substring(0,limit);
+			}
 			
 			ResultItem r = new ResultItem();
 			r.setId(id);
