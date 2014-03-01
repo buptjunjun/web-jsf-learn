@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<!-- 为 BraveKnight注入 一个quest的实现 SlayDragonQuest 使用的是构造注入 constructor-arg -->
+	<bean id="knight" class="org.junjun.spring.charpter1.first_di.BraveKnight">
+		<constructor-arg ref="quest" />
+	</bean>
+	
+	<!-- Spring 会实例化一个SlayDragoQuest -->
+	<bean id="quest" class="org.junjun.spring.charpter1.first_di.SlayDragonQuest" />
+</beans>
