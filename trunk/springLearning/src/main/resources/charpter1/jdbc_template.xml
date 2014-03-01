@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<!-- 定义一个datasource -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/weibo" />
+		<property name="username" value="root" />
+		<property name="password" value="123456" />
+	</bean>
+	
+	<!-- 给 UserDAO注入 datasource  -->
+	<bean id="userDaoImpl" class = "org.junjun.spring.charpter1.third_template.UserDAOImpl">
+		<property name="ds" ref="dataSource" />
+	</bean>
+	
+	
+</beans>
