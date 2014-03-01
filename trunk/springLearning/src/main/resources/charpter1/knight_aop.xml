@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+				
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+						"><!-- 添加aop的namespace 并指定地址 -->
+						
+	<bean id="minstrel" class="org.junjun.spring.charpter1.second_aop.Minstrel"></bean>
+	
+	<aop:config>
+		<aop:aspect ref="minstrel"> <!-- 引用 minstrel -->
+			<aop:pointcut id="embark"  expression="execution(* *.embarkOnQuest(..))" /> <!-- 定义了一个切面 embark  -->
+			<aop:before pointcut-ref="embark" method="singBeforeQeust" /> <!-- 在embarkOnQuest执行前 (embark这个切面执行前)调用 -->
+			<aop:after pointcut-ref="embark" method="singAfterQeust" />   <!-- 在embarkOnQuest执行后(embark这个切面执行后)调用 -->
+		</aop:aspect>
+	</aop:config>
+</beans>
