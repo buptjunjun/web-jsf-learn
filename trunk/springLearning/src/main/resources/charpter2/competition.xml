@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- 没有 使用了constructor-arg, spring 会使用Juggler的默认构造方法来创建duke -->
+	<bean id="duke" class="org.junjun.spring.charpter2.first_competetion.Juggler"> </bean>
+	
+	<!-- 使用了constructor-arg 从构造方法注入参数，使用 Juggler( int beanBags)构造函数  -->
+	<bean id="dukee" class="org.junjun.spring.charpter2.first_competetion.Juggler">
+		<constructor-arg value="15"></constructor-arg> 
+	</bean>
+	
+	<!-- 实例化一个14行诗 -->
+	<bean id="sonnet29" class="org.junjun.spring.charpter2.first_competetion.Sonnet29"></bean>
+	
+	<!-- 实例化一个会吟诗的杂耍者 注意 使用ref引用另一个bean
+		 Poem sonnet29 = new Sonnet29();
+		 Performer duke = new PoeticJuggler(15, sonnet29);
+	-->
+	<bean id="poeticDuke" class="org.junjun.spring.charpter2.first_competetion.PoeticJuggler">
+		<!-- 注意交换参数位置也可以 给参数命名也可以 -->
+		<constructor-arg name="poem" ref="sonnet29"></constructor-arg> <!-- 这里ref通过id引用一个其他的bean -->
+		<constructor-arg name="beanBags" value="15"></constructor-arg>
+	</bean>
+	
+	<!-- 使用静态方法(例如工厂类的方法)创建一个类 可以使用 factory-method-->
+	<bean id="stage"  class="org.junjun.spring.charpter2.first_competetion.Stage"
+					  factory-method="getInstance">
+	</bean>
+	
+	<!--實例化演奏者kenny 通過setter注入 使用property-->
+	<bean id="kenny" class="org.junjun.spring.charpter2.first_competetion.Instrumentalist"
+		init-method="tuneInstrument"
+		destroy-method="cleanInstrument">
+		<property name="song" value="Jingle bell"></property><!-- 哥的名字 -->
+		<property name="instrument" ref="saxphone"></property><!--使用ref引用 saxphone -->
+	</bean>
+	
+	<!-- 樂器saxphone -->
+	<bean id="saxphone" class="org.junjun.spring.charpter2.first_competetion.SaxPhone"></bean>
+	
+	<!-- innerbean 
+		如果lucy不喜歡使用別人使用過的saxphone，她想有一個自己的saxphone，可以使用inner bean來實現
+		這個inner bean只被lucy一個人使用
+	-->
+	<bean id="lucy"  class="org.junjun.spring.charpter2.first_competetion.Instrumentalist"
+		init-method="tuneInstrument"
+		destroy-method="cleanInstrument">
+		<property name="song" value="Jingle bell"></property><!-- 哥的名字 -->
+		<property name="instrument" > 
+			<bean class="org.junjun.spring.charpter2.first_competetion.SaxPhone"></bean>
+		</property><!--inner bean saxphone 只被lucy使用-->
+	</bean>
+	
+	<!-- 
+		使用p名字空間代替property
+	-->
+	<bean id="lucyp"  class="org.junjun.spring.charpter2.first_competetion.Instrumentalist"
+		init-method="tuneInstrument"
+		destroy-method="cleanInstrument"
+		p:song="jingle bell"
+		p:instrument-ref="saxphone"
+	/>
+</beans>
