@@ -64,4 +64,17 @@
 		p:song="jingle bell"
 		p:instrument-ref="saxphone"
 	/>
+	
+	
+	<!-- 注入一个collection
+		 hank 表演多种乐器 
+	-->
+	<bean id="hank" class="org.junjun.spring.charpter2.first_competetion.OneManBand">
+		<property name="instruments">
+			<list>
+				<bean class="org.junjun.spring.charpter2.first_competetion.Guitar"></bean>
+				<ref bean="saxphone"/>
+			</list>
+		</property>
+	</bean>
 </beans>

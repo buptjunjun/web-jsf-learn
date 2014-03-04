@@ -18,28 +18,34 @@ public class Main {
 		duke.perform();
 		
 		//構造器注入 value
+		System.out.println("\n 構造器注入 value");
 		Performer dukee = (Performer) app.getBean("dukee");
 		dukee.perform();
 		
 		//構造器注入 ref
-		System.out.println("構造器注入 ref");
+		System.out.println("\n 構造器注入 ref");
 		Performer poeticDuke = (Performer) app.getBean("poeticDuke");
 		poeticDuke.perform();
 		
 		// init-method destroy-method 屬性注入
-		System.out.println("init-method destroy-method 屬性注入");
+		System.out.println("\n init-method destroy-method 屬性注入");
 		Performer kenny = (Performer) app.getBean("kenny");
 		kenny.perform();
 		
 		//inner bean
-		System.out.println("inner bean");
+		System.out.println("\ninner bean");
 		Performer lucy = (Performer) app.getBean("lucy");
 		lucy.perform();
 		
 		//使用p名字空間代替property
-		System.out.println("使用p名字空間代替property");
+		System.out.println("\n使用p名字空間代替property");
 		Performer lucyp = (Performer) app.getBean("lucyp");
 		lucyp.perform();
-	}
+
+		//注入一个list
+		System.out.println("\n注入一个list");
+		Performer hank = (Performer) app.getBean("hank");
+		hank.perform();
+	}			
 
 }
