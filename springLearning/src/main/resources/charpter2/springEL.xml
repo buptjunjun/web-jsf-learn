@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						 http://www.springframework.org/schema/util  
+						 http://www.springframework.org/schema/util/spring-util-3.0.xsd
+						">
+						
+						
+	<!-- Spring 的EL 表达式 Spring Expression Language -->
+	
+	<!-- 基本类型
+		#{}表示括号内的是一个el表达式 
+	-->
+	<bean id="basicType" class="org.junjun.spring.charpter2.second_spEL.SpELBasicType">
+		<property name="typeInt" value="#{10}"></property>
+		<property name="typeString" value="gingle #{'bell'}"></property>
+		<property name="typeNull" value="#{null}"></property>
+		<property name="typeFloat" value="#{1.1}"></property>
+		<property name="typeBoolean" value="#{true}"></property>
+	</bean>
+	
+	<!-- 乐器吉他 -->
+	<bean id="guitar" class="org.junjun.spring.charpter2.first_competetion.Guitar"></bean>
+	<!-- 樂器saxphone -->
+	<bean id="saxphone" class="org.junjun.spring.charpter2.first_competetion.SaxPhone"></bean>
+	
+	<!-- 
+		使用 el引用其他bean 引用其他bean的属性 
+	-->
+	<bean id="lucy"  class="org.junjun.spring.charpter2.first_competetion.Instrumentalist"
+		init-method="tuneInstrument"
+		destroy-method="cleanInstrument">
+		
+		<!-- 歌的名字  注意 basicType是id typeString是名字-->
+		<property name="song" value="#{basicType.typeString}"></property>
+		
+		<!-- 相当于<property name="instrument" ref="#{saxhpone}"></property> -->
+		<property name="instrument" value="#{saxphone}" ></property>
+	</bean>
+	
+	<!-- 
+		使用 el引用其他bean 调用其他bean的方法
+	-->
+	<bean id="lucyy"  class="org.junjun.spring.charpter2.first_competetion.Instrumentalist"
+		init-method="tuneInstrument"
+		destroy-method="cleanInstrument">
+		
+		<!-- 歌的名字  注意 basicType是id typeString是名字-->
+		<property name="song" value="#{basicType.typeNull== null ? basicType.getOurStringAndInt().toUpperCase():basicType.typeString}"></property>
+		
+		<!-- 相当于<property name="instrument" ref="#{saxhpone}"></property> -->
+		<property name="instrument" value="#{guitar}" ></property>
+	</bean>
+	
+	
+	<!-- 要使用 静态方法 或者class级别的参数需要使用，T()-->
+	<bean id="basicType1" class="org.junjun.spring.charpter2.second_spEL.SpELBasicType">
+		<property name="typeInt" value="#{10}"></property>
+		<property name="typeString" value="gingle #{'bell'}"></property>
+		<property name="typeNull" value="#{null}"></property>
+		<!-- #{T(java.lang.Math).PI} 使用静态的方法或者属性 -->
+		<property name="typeFloat" value="#{T(java.lang.Math).random()}"></property>
+		<property name="typeBoolean" value="#{true}"></property>
+	</bean>
+	
+	
+	<!-- 加减乘除乘方等：+ - * / % ^  , 字符串连接 逻辑运算 正则表达式-->
+	<bean id="basicType2" class="org.junjun.spring.charpter2.second_spEL.SpELBasicType">
+		<property name="typeInt" value="#{10}"></property>
+		
+		<!-- 字符串连接 -->
+		<property name="typeString" value="#{T(java.lang.Math).random()+basicType.typeString}"></property>		
+		<property name="typeNull" value="#{null}"></property>
+		
+		<!-- 加减乘除乘方等：+ - * / % ^ -->
+		<property name="typeFloat" value="#{ (T(java.lang.Math).random() * 100 - basicType.typeInt % 100)^2 }"></property>		
+		
+		<!-- 逻辑运算 注意字符串比较 -->
+		<property name="typeBoolean" value="#{ (T(java.lang.Math).random()*100 gt 10) OR (basicType.typeString matches 'gingle [a-zA-Z]+') OR (basicType.typeString == 'abc')}"></property>
+		
+	</bean>
+	
+	
+	<!-- spring EL 操作 map 和 collection -->
+	<!-- 城市列表  list-->
+	<util:list id="cities">
+		<bean class="org.junjun.spring.charpter2.second_spEL.City" p:name="beijing" p:state="beijing" p:population="1000000"/>
+		<bean class="org.junjun.spring.charpter2.second_spEL.City" p:name="shanghai" p:state="shanghai" p:population="900000"/>
+		<bean class="org.junjun.spring.charpter2.second_spEL.City" p:name="chengdu" p:state="sichuang" p:population="200000"/>
+	</util:list>
+	
+	<!-- 城市列表  map-->
+	<util:map id="cityMap">
+		<entry key="beijing">
+			<bean class="org.junjun.spring.charpter2.second_spEL.City" p:name="beijing" p:state="beijing" p:population="1000000"/>
+		</entry>
+		<entry key="shanghai">
+			<bean class="org.junjun.spring.charpter2.second_spEL.City" p:name="shanghai" p:state="shanghai" p:population="900000"/>
+		</entry>
+		<entry key="chengdu">
+			<bean class="org.junjun.spring.charpter2.second_spEL.City" p:name="chengdu" p:state="sichang" p:population="200000"/>
+		</entry>
+	</util:map>
+	
+	<bean id="country" class="org.junjun.spring.charpter2.second_spEL.Country">
+		<!-- 使用id[index]选择一个city -->
+		<property name="capital" value="#{cities[2]}"></property>
+		
+		<!-- 随机选择一个城市 -->
+		<property name="biggestCity" value="#{cities[T(java.lang.Math).random() * cities.size()]}"></property>
+		
+		<!-- 从map中选一个 -->
+		<property name="smallestCity" value="#{cityMap['beijing']}"></property>
+	</bean>
+		
+		
+	<!-- 加载properties 文件 -->
+	<util:properties id="settings"
+					 location="classpath:charpter2/settings1.properties"
+	/>
+	<!--
+		 从集合中选择满足条件的元素.?[] 
+		从集合中选择满足条件的第一个元素.^[] 
+		从集合中选择满足条件的第最后一个元素.$[]
+		将集合中元素的属性映射到一个list .![]
+	 --> 
+	<bean id="country1" class="org.junjun.spring.charpter2.second_spEL.Country">
+		<!--选择人口大于 200000的第一个元素-->
+		<property name="capital" value="#{cities.^[population > 200000]}"></property>
+		
+		<!-- 选择人口大于 200000的第最后个元素 -->
+		<property name="biggestCity" value="#{cities.$[population > 200000]}"></property>
+				
+		<!-- 从map中选一个 -->
+		<property name="smallestCity" value="#{cityMap['beijing']}"></property>
+	</bean>
+	
+	<!-- 选择人口大于10000的所有city -->
+	<util:list id="cityes3">
+		<value >#{cities.?[population > 10000]}</value>
+	</util:list>
+	
+	<!-- 将所有city的名字和省份提取出来组成一个String的list -->
+	<util:list id="cityNameState">
+		<value>#{cities.![name+','+state]}</value>
+	</util:list>
+</beans>

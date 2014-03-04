@@ -19,7 +19,7 @@ public class Instrumentalist implements Performer
 	 */
 	public void perform() throws PerformanceException
 	{
-		System.out.println("Playing a song");
+		System.out.println("Playing a song "+this.song);
 		instrument.play();
 	}
 
