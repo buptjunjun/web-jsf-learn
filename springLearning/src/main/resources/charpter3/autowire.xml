@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+						default-autowire="byType" ><!-- 使用默认的注入方式 可以在下面自己指定 覆盖 -->
+						
+	<!-- 樂器saxphone
+	  primary="false" 表示在autowire=byType需要选择时候，这个bean不会选择
+	 -->
+	<bean id="instrument"  primary="false" class="org.junjun.spring.charpter2.first_competetion.SaxPhone"></bean>
+	
+	<!-- primay 默认为true -->
+	<bean id="guitar"  primary="true" class="org.junjun.spring.charpter2.first_competetion.Guitar"></bean>
+	
+	<!-- autowire-candidate=false表示在autowire=byType需要选择时候，这个bean不在考虑的范围 -->
+	<bean id="guitar1" autowire-candidate="false" class="org.junjun.spring.charpter2.first_competetion.Guitar" ></bean>
+
+	<!--
+		autowire="byName" Instrumentalist 有一个属性是instrument 它会在application中查找name(id)为instrument
+		的bean 然后自动注入 ，这里saxphone满足条件
+	-->
+	<bean id="kenny" class="org.junjun.spring.charpter2.first_competetion.Instrumentalist"
+		autowire="byName">
+		<property name="song" value="Jingle bell"></property><!-- 哥的名字 -->
+	</bean>
+	
+	<!--
+		autowire="byType" Instrumentalist 有一个属性是instrument 它会在application中查找type为Instrument
+		的bean 然后自动注入 ，当有多个bean满足条件时候，spring会抛出异常。这里有3个满足条件 所以，spring需要选择其他的一个，
+		通过设置bean的primary属性来达到目的primary=true的会选中，为false不会选择，autowire-candidate=false表示不在考虑这个bean。注意primary 默认为true
+		所以需要将其显示地设置为false。
+	-->
+	<bean id="kenny1" class="org.junjun.spring.charpter2.first_competetion.Instrumentalist"
+		autowire="byType">
+		<property name="song" value="Jingle bell"></property><!-- 哥的名字 -->
+	</bean>
+	
+	<!-- 通过构造函数进行自动注入，当有多个构造函数都满足的时候，spring会抛出异常  ，bean的选择跟 byType一样-->
+	<!-- 实例化一个14行诗 primary=true的会被选中-->
+	<bean id="sonnet29"  primary="true" class="org.junjun.spring.charpter2.first_competetion.Sonnet29"></bean>
+	<bean id="sonnet291" primary="false" class="org.junjun.spring.charpter2.first_competetion.Sonnet29"></bean>
+	<bean id="sonnet292" autowire-candidate="false" class="org.junjun.spring.charpter2.first_competetion.Sonnet29"></bean>
+	
+	<!-- sonnet29会被选种 作为注入参数 -->
+	<bean id="poeticDuke" class="org.junjun.spring.charpter2.first_competetion.PoeticJuggler"
+		  autowire="constructor">
+		<constructor-arg name="beanBags" value="#{15}"></constructor-arg>
+	</bean>
+</beans>
