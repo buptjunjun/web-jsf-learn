@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+				
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+						"><!-- 添加aop的namespace 并指定地址 -->
+	
+	<!--读心魔术师  要传递参数 -->	
+	<bean id="magician" class="org.junjun.spring.charpter4.first_apowithxml.Magician" />
+	<bean id="volunteer" class="org.junjun.spring.charpter4.first_apowithxml.Volunteer" />
+	
+	<bean id="dukee" class="org.junjun.spring.charpter2.first_competetion.Juggler">
+		<constructor-arg value="15"></constructor-arg> 
+	</bean>
+	
+	<aop:config>
+		<aop:aspect ref="magician">
+			<!-- 切面  类型 给参数一个名字t-->
+			<aop:pointcut id="thinking" expression="execution(* org.junjun.spring.charpter4.first_apowithxml.Thinker.thinkOfSomething(String)) and args(t)" />
+			
+			<!-- advisor 在thinker think之前就得到她的thought 得到的t这个参数-->
+			<aop:before pointcut-ref="thinking" method="interceptThoughts" arg-names="t" />
+			
+		</aop:aspect>
+		
+		
+	</aop:config>
+</beans>
