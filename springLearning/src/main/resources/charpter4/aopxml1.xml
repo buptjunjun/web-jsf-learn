@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+				
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+						"><!-- 添加aop的namespace 并指定地址 -->
+		
+	<!-- 使用了constructor-arg 从构造方法注入参数，使用 Juggler( int beanBags)构造函数  -->
+	<bean id="dukee" class="org.junjun.spring.charpter2.first_competetion.Juggler">
+		<constructor-arg value="15"></constructor-arg> 
+	</bean>
+	
+	<bean id="audience" class=" org.junjun.spring.charpter4.first_apowithxml.Audience1" />
+	<aop:config>
+		<aop:aspect ref="audience">
+			<!-- 切面 -->
+			<aop:pointcut expression="execution(* org.junjun.spring.charpter2.first_competetion.Performer.perform(..))" id="performance"/>
+			
+			<!-- advisor -->
+			<aop:around pointcut-ref="performance" method="watchPerformance"/>
+			
+		</aop:aspect>
+		
+		<!-- 动态往类加入方法 -->
+		<aop:aspect>
+			<aop:declare-parents types-matching="org.junjun.spring.charpter2.first_competetion.Performer+" 
+								 implement-interface="org.junjun.spring.charpter4.first_apowithxml.Contestant"
+								 default-impl="org.junjun.spring.charpter4.first_apowithxml.GraciousContestant"
+								 />
+		</aop:aspect>
+	</aop:config>
+</beans>
