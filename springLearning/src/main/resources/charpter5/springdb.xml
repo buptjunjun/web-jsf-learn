@@ -12,16 +12,18 @@
  						http://www.springframework.org/schema/jee 
  						http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
 						"><!-- 添加jee的namespace 并指定地址 -->
-	<jee:jndi-lookup id="dataResource" jndi-name="/jdbc/SpitterDS" resource-ref="true" />
+	
 		
 	<!-- 数据源 使用Jakarta 的Commons Database Connection Pools -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/weibo" />
-		<property name="username" value="root" />
-		<property name="password" value="123456" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
 		<property name="initialSize" value="5" />
 		<property name="maxActive" value="10" />
 	</bean>
+	
+	<context:property-placeholder location="charpter5/database.properties"></context:property-placeholder>
 
 </beans>
