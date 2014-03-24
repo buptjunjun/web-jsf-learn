@@ -24,6 +24,22 @@
 		<property name="maxActive" value="10" />
 	</bean>
 	
+	<!-- 加载properties 文件 -->
 	<context:property-placeholder location="charpter5/database.properties"></context:property-placeholder>
 
+	<!-- JdbcTemplate 需要用到数据源(dataSource)-->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource"></constructor-arg>
+	</bean>
+	
+	<!-- NamedParameterJdbcTemplate 需要用到数据源(dataSource)-->
+	<bean id="NamedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="dataSource"></constructor-arg>
+	</bean>
+	
+	<bean id="jdbcTemplateSpitterDao" class="org.junjun.spring.charpter5.second_jdbcTemplate.JdbcTemplateSpitterDAO">
+		<property name="jdbcTeplate" ref="jdbcTemplate"></property>
+		<property name="NPjdbcTeplate" ref="NamedParameterJdbcTemplate"></property>
+	 </bean>
+	 
 </beans>

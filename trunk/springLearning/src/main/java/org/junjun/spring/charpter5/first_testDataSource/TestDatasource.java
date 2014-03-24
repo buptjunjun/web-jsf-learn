@@ -1,4 +1,4 @@
-package org.junjun.spring.charpter5;
+package org.junjun.spring.charpter5.first_testDataSource;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +10,11 @@ import javax.sql.DataSource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+/**
+ * ≤‚ ‘ datasource µƒ¡¨Ω”
+ * @author junjun
+ *
+ */
 public class TestDatasource
 {
 	public static void main(String [] args)
