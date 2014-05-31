@@ -2,6 +2,7 @@ package com.buptjunjun.stuff;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -22,11 +23,27 @@ public class forSyntax
 		}
 		
 		// container 的情况下使用 for(var v: l) 语法
-		List<String> list = Arrays.asList("wan,xiao,lan".split(","));	
+		List<String> list = new ArrayList<String>();
+		list.addAll(Arrays.asList("wan,xiao,lan".split(",")));	
 		for(String s: list)
 		{
 			System.out.println(s);
 		}
+		
+		Iterator<String> i = list.iterator();
+		while(i.hasNext())
+		{
+			String tmp = (String) i.next();
+			if(tmp.equals("wan"))
+				i.remove();
+		}
+		
+		for(String s: list)
+		{
+			System.out.println(s);
+		}
+		
+		
 	}
 
 }
