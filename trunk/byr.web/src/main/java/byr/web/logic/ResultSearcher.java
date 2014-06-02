@@ -107,6 +107,7 @@ public class ResultSearcher
 class SearchTask implements Callable<Result> 
 {
 	
+	static public String SECTION="section";
 	static public String TITLE="title";
 	static public String URL="url";
 	static public String CONTENT="content";
@@ -183,12 +184,16 @@ class SearchTask implements Callable<Result>
 			solrQuery.setSortField("date", ORDER.desc);
 		}
 		
+		solrQuery.setFacet(true);
+		solrQuery.addFacetField(SECTION);
+		
 		QueryResponse resp = solr.query(solrQuery); 
 	
 		
 		// results
 		SolrDocumentList hits = resp.getResults();
 		long count = hits.getNumFound();
+		
 		
 		// hilighting 
 		Map<String, Map<String, List<String>>> highlighting = resp.getHighlighting();
@@ -199,6 +204,7 @@ class SearchTask implements Callable<Result>
 			String id = (String )doc.getFieldValue(ID);
 			String url = (String) doc.getFieldValue(URL);
 			Date date= (Date) doc.getFieldValue(DATE);
+			String section = (String) doc.getFieldValue(SECTION);
 			
 			// get title with hilighting keywords
 			String title = "";
@@ -251,7 +257,7 @@ class SearchTask implements Callable<Result>
 			r.setTitle(title);
 			r.setContent(content);
 			r.setDate(date);
-			
+			r.setSection(section);
 			if(ret == null)
 				ret = new ArrayList<ResultItem>();
 			ret.add(r);

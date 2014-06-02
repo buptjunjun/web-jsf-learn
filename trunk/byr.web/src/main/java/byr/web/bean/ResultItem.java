@@ -10,8 +10,19 @@ public class ResultItem
 	private String url = null;
 	private String title = null;
 	private String content = null;
+	private String section = null;
 	private Date date = null;
 	
+	
+	
+	public String getSection()
+	{
+		return section;
+	}
+	public void setSection(String section)
+	{
+		this.section = section;
+	}
 	public String getId() {
 		return id;
 	}
