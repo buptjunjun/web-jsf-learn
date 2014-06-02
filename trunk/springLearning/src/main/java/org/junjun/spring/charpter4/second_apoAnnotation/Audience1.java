@@ -1,5 +1,4 @@
 package org.junjun.spring.charpter4.second_apoAnnotation;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -34,8 +33,14 @@ public class Audience1
 		//记录时间
 		long start = System.currentTimeMillis();
 		
-		//调用performer.perform()
-		jointpoint.proceed();
+		//获取方法的参数 并打印
+		Object[] args = (Object[]) jointpoint.getArgs();	
+		System.out.println("args:");
+		for(Object arg:args)
+			System.out.print(arg.toString());
+		
+		//调用performer.perform() 还可以把参数传递过去
+		jointpoint.proceed(args);
 		
 		//还可以调用2次
 		jointpoint.proceed();
@@ -49,6 +54,7 @@ public class Audience1
 		}
 		catch(Throwable e)
 		{
+			System.out.println(e);
 			System.out.println("I want my money back");
 		}
 	}
