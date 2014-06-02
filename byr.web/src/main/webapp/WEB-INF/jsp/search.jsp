@@ -232,7 +232,7 @@ em
 	
 	function submit( page ) {
 	    var host = window.location.host;
-		var url1 = "http://"+host+"/searchapi";
+		var url1 ="http://localhost:8080/byrweb/searchapi";
 		
 		if(page == "undefined" || page == null)
 			page = 0;
