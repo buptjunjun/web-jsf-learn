@@ -123,6 +123,37 @@ public class Test2 {
 		}
 	}
 	
+	
+	//@Test
+	public void testSingleAnalyze() throws IOException
+	{
+		// TODO Auto-generated method stub
+		File file = new File("C:\\Users\\junjun\\Desktop\\result.txt");
+		 File errorfile =  new File("C:\\Users\\junjun\\Desktop\\error.txt");
+		//";
+		//String [] words = "business,hello,busy,about,accurate,machine,master,objection,physician".split(",");
+		 List<Word> words = Word.parseWord("C:\\Users\\junjun\\Desktop\\cet4word.txt");
+		 Map<String,Word> wordsmap = new HashMap<String,Word>();
+			
+		for(Word w :words)
+		{
+			wordsmap.put(w.getWord(), w);
+		}
+		Word w = wordsmap.get("bright");
+			Word word1 = PhonogramAnalyzer.analyze(w.getWord());
+			if(word1!=null)
+			{
+				if(word1.testlength())
+					FileUtils.writeStringToFile(file, word1.getWord()+"|"+word1.getPhonogram()+"|"+word1.getPhongrams()+"|"+word1.getLetters()+"\n","UTF-8",true);
+				else
+					FileUtils.writeStringToFile(errorfile, word1.getWord()+"|"+word1.getPhonogram()+"|"+word1.getPhongrams()+"|"+word1.getLetters()+"\n","UTF-8",true);			
+			}
+			else
+				;//FileUtils.writeStringToFile(errorfile,w+"  null\n","UTF-8",true);
+		
+	}
+	
+	
 	//@Test
 	public void testParseWord()
 	{
