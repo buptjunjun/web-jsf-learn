@@ -79,12 +79,26 @@ public class Phonogram {
 		return ret;
 	}
 	
+	static int listStrLength(List<String> lstr)
+	{
+		if(lstr == null)
+			return 0;
+		int length = 0;
+		for(String s:lstr)
+		{
+			if( s != null)
+				length+=s.length();
+		}
+		
+		return length;
+	}
 	static int trycount = 0; //如果没有匹配的 比如不发声的 try3次
+	public static List<String> saving = null;
 	static public List<String> breakWord(List<String> phonograms,String word,List<String> ret ,int phonindex,int wordindex,Boolean finished)
 	{	
 		
 		try{
-			if(wordindex >= word.length()|| finished == true || phonindex >= phonograms.size())
+			if(wordindex >= word.length()|| finished == true)
 			{
 				return ret;
 			}
@@ -112,12 +126,31 @@ public class Phonogram {
 				
 				if(w3 !=null && p.getLetters().contains(w3))
 				{
-					
-					ret.set(phonindex,w3);
+//					//第一个的情况					
+//					if(phonindex == 0)
+//					{
+//						int index = word.indexOf(w3);
+//						w3 = word.substring(0, index+w3.length());
+//					}
+//						
+//						
+					ret.set(phonindex,w3);					
 					if(phonindex == phonograms.size()-1)
 					{
-						finished = true;
-						return ret;
+						w3 = word.substring(word.lastIndexOf(w3), word.length());
+						ret.set(phonindex,w3);	
+						
+						if(saving == null)
+							saving = new ArrayList<String>(ret);
+						else
+						{
+							if(listStrLength(ret) < listStrLength(saving))
+								ret = new ArrayList<String>(saving);
+							else
+								saving = new ArrayList<String>(ret);
+						}
+						//finished = true;
+						return saving;
 					}
 					
 					breakWord(phonograms, word, ret,phonindex+1,wordindex+3,finished);
@@ -125,14 +158,32 @@ public class Phonogram {
 
 				if(wordindex >= word.length()|| finished == true || phonindex >= phonograms.size())
 				{
-					return ret;
+					return saving;
 				}
 				if(w2 !=null && p.getLetters().contains(w2))
 				{
+//					//第一个的情况					
+//					if(phonindex == 0)
+//					{
+//						int index = word.indexOf(w2);
+//						w2 = word.substring(0, index+w2.length());
+//					}
+					
 					ret.set(phonindex,w2);
 					if(phonindex == phonograms.size()-1)
 					{
-						finished = true;
+						w2 = word.substring(word.lastIndexOf(w2), word.length());
+						ret.set(phonindex,w2);	
+						//finished = true;
+						if(saving == null)
+							saving = new ArrayList<String>(ret);
+						else
+						{
+							if(listStrLength(ret) < listStrLength(saving))
+								ret = new ArrayList<String>(saving);
+							else
+								saving = new ArrayList<String>(ret);
+						}
 						return ret;
 					}
 					
@@ -141,16 +192,33 @@ public class Phonogram {
 				
 				if(wordindex >= word.length()|| finished == true || phonindex >= phonograms.size())
 				{
-					return ret;
+					return saving;
 				}
 				
 				if(w1 !=null && p.getLetters().contains(w1))
 				{
+//					//第一个的情况					
+//					if(phonindex == 0)
+//					{
+//						int index = word.indexOf(w1);
+//						w1 = word.substring(0, index+w1.length());
+//					}
 					ret.set(phonindex,w1);
 					if(phonindex == phonograms.size()-1)
 					{
-						finished = true;
-						return ret;
+						w1 = word.substring(word.lastIndexOf(w1), word.length());
+						ret.set(phonindex,w1);	
+						//finished = true;
+						if(saving == null)
+							saving = new ArrayList<String>(ret);
+						else
+						{
+							if(listStrLength(ret) < listStrLength(saving))
+								ret = new ArrayList<String>(saving);
+							else
+								saving = new ArrayList<String>(ret);
+						}
+						return saving;
 					}
 					
 					breakWord(phonograms, word, ret,phonindex+1,wordindex+1,finished);				
@@ -158,7 +226,7 @@ public class Phonogram {
 				
 				if(wordindex >= word.length()|| finished == true || phonindex >= phonograms.size())
 				{
-					return ret;
+					return saving;
 				}
 				
 				if(!p.getLetters().contains(w1) && !p.getLetters().contains(w2)&&!p.getLetters().contains(w3))
@@ -168,17 +236,17 @@ public class Phonogram {
 				
 				if(wordindex >= word.length()|| finished == true || phonindex >= phonograms.size())
 				{
-					return ret;
+					return saving;
 				}
 			}
 			
-			return ret;
+			return saving;
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 			ret.add("-");
-			return ret;
+			return saving;
 		}
 	}
 	
