@@ -10,6 +10,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +59,7 @@ public class Phonogram {
 				i+=3;
 				ret.add(p3);
 			}
-			if(map.containsKey(p2))
+			else if(map.containsKey(p2))
 			{
 				i+=2;
 				ret.add(p2);
@@ -78,22 +79,25 @@ public class Phonogram {
 		return ret;
 	}
 	
-	static public List<String> breakWord(List<String> phonograms,String word)
+	static int trycount = 0; //如果没有匹配的 比如不发声的 try3次
+	static public List<String> breakWord(List<String> phonograms,String word,List<String> ret ,int phonindex,int wordindex,Boolean finished)
 	{	
-		List<String> ret = new ArrayList<String>();
-		int wordindex = 0;
-		int phonindex = 0;
-		int trycount = 0; //如果没有匹配的 比如不发声的 try3次
+		
 		try{
+			if(wordindex >= word.length()|| finished == true || phonindex >= phonograms.size())
+			{
+				return ret;
+			}
+				
 			if (phonindex < phonograms.size())
 			{
 				String phonogram = phonograms.get(phonindex);
 				Phonogram p = map.get(phonogram);
 				if(p.getType() == Phonogram.seperator)
 				{
-					ret.add(p.getPhonogram());
+					ret.set(phonindex,p.getPhonogram());
 					phonindex++;
-					continue;
+					breakWord(phonograms, word, ret,phonindex,wordindex ,finished);
 				}
 	
 				String w1 = null;
@@ -106,44 +110,65 @@ public class Phonogram {
 				if(wordindex+3<=word.length())
 					w3 = word.substring(wordindex,wordindex+3);
 				
-				List<String> ret1 = null;
-				List<String> ret2 = null;
-				List<String> ret3 = null;
 				if(w3 !=null && p.getLetters().contains(w3))
 				{
-					wordindex+=3;
-					phonindex++;
-					ret.add(w3);
-					List<String> substrings = phonograms.subList(wordindex, phonograms.size());
-					String subword = word.substring(wordindex, word.length());
-					ret1 = breakWord(substrings,subword);
 					
-				} 
-				else if(w2 !=null && p.getLetters().contains(w2))
-				{
-					wordindex+=2;
-					ret.add(w2);
-					phonindex++;
-					
-					if(trycount!=0) //不是后来尝试的
+					ret.set(phonindex,w3);
+					if(phonindex == phonograms.size()-1)
 					{
-						trycount = 0;
+						finished = true;
+						return ret;
 					}
-				}
-				else if(w1 !=null && p.getLetters().contains(w1))
-				{
-					wordindex+=1;
-					phonindex++;
-					ret.add(w1);
 					
-					if(trycount!=0) //不是后来尝试的
-					{
-						trycount = 0;
-					}
+					breakWord(phonograms, word, ret,phonindex+1,wordindex+3,finished);
 				}
-				else
+
+				if(wordindex >= word.length()|| finished == true || phonindex >= phonograms.size())
 				{
-					return null;
+					return ret;
+				}
+				if(w2 !=null && p.getLetters().contains(w2))
+				{
+					ret.set(phonindex,w2);
+					if(phonindex == phonograms.size()-1)
+					{
+						finished = true;
+						return ret;
+					}
+					
+					breakWord(phonograms, word, ret,phonindex+1,wordindex+2,finished);
+				}
+				
+				if(wordindex >= word.length()|| finished == true || phonindex >= phonograms.size())
+				{
+					return ret;
+				}
+				
+				if(w1 !=null && p.getLetters().contains(w1))
+				{
+					ret.set(phonindex,w1);
+					if(phonindex == phonograms.size()-1)
+					{
+						finished = true;
+						return ret;
+					}
+					
+					breakWord(phonograms, word, ret,phonindex+1,wordindex+1,finished);				
+				}
+				
+				if(wordindex >= word.length()|| finished == true || phonindex >= phonograms.size())
+				{
+					return ret;
+				}
+				
+				if(!p.getLetters().contains(w1) && !p.getLetters().contains(w2)&&!p.getLetters().contains(w3))
+				{
+					breakWord(phonograms, word, ret,phonindex,wordindex+1,finished);
+				}
+				
+				if(wordindex >= word.length()|| finished == true || phonindex >= phonograms.size())
+				{
+					return ret;
 				}
 			}
 			
@@ -152,7 +177,8 @@ public class Phonogram {
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			return null;
+			ret.add("-");
+			return ret;
 		}
 	}
 	
@@ -249,7 +275,9 @@ public class Phonogram {
 		for(Word word: lword)
 		{
 			List<String> l = Phonogram.breakPhonograms(word.getPhonogram());
-			List<String> letters = breakWord(l,word.getWord());
+			List<String> tmpletters = new ArrayList<String>();
+			Boolean finished = false;
+			List<String> letters = breakWord(l,word.getWord(),tmpletters,0,0,finished);
 			try {
 				FileUtils.writeStringToFile(file, word.getWord()+"| " +word.getPhonogram()+" | "+l+"|"+letters+"\n", "UTF-8", true);
 			} catch (IOException e) {
