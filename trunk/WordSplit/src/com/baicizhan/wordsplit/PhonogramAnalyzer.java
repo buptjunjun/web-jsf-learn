@@ -27,16 +27,19 @@ public class PhonogramAnalyzer {
 			List<String> ps = Phonogram.breakPhonograms(word.getPhonogram());
 			List<String> tmpletters = new ArrayList<String>(Arrays.asList(new String[ps.size()]));
 			Boolean finished = false;
-			List<String> letters = Phonogram.breakWord(ps, word.getWord(),tmpletters,0,0,finished);			
-			if(letters.size()!=ps.size() || letters.toString().contains("-")||letters.toString().contains("null"))
+			List<String> letters = Phonogram.breakWord(ps, word.getWord(),tmpletters,0,0,finished);
+			Phonogram.saving = null;
+			if(letters == null || letters.size()!=ps.size() || letters.toString().contains("-")||letters.toString().contains("null"))
 			{
 				System.out.println(w+" error or  size not match:"+ps+"|"+letters);
 				return null;
 			}
 			List<String> phonogram = new ArrayList<String>();
 			List<String> wordparts = new ArrayList<String>();
+			StringBuffer sb = new StringBuffer(word.getWord());
 			
 			int i = 0;
+			int currentindex = 0;
 			while(i<ps.size())
 			{
 				// 取得打散后的第i i+1,i+2个音标
@@ -58,10 +61,42 @@ public class PhonogramAnalyzer {
 				else if(p1.getType() == Phonogram.fuyin)//辅音音标
 				{
 					String tmp = p1.getPhonogram();
-					String partword = letters.get(i);
+					String partword1 = letters.get(i);
+					int start = sb.indexOf(partword1,currentindex);
+					currentindex = start + partword1.length();
 					if(p2!=null && p2.getType() == Phonogram.yuanyin)//看看后面有没有元音音标
 					{
-						partword += letters.get(i+1);
+						String partword2=letters.get(i+1);						
+						int end = sb.indexOf(partword2,currentindex)+partword2.length();
+
+						partword1 = sb.substring(start, end);
+						currentindex = end;
+						
+						tmp+=p2.getPhonogram();
+						i+=2;
+					}
+					else
+					{
+						i++;
+						currentindex=start;
+					}
+					phonogram.add(tmp);
+					wordparts.add(partword1);
+				}
+				else if(p1.getType() == Phonogram.yuanyin)
+				{
+					String tmp = p1.getPhonogram();
+					String partword1 = letters.get(i);
+					int start = sb.indexOf(partword1,currentindex);
+					currentindex = start + partword1.length();
+					
+					if(p2!=null && p2.getType() == Phonogram.yuanyin)//看看后面有没有元音音标
+					{
+						String partword2=letters.get(i+1);
+						int end = sb.indexOf(partword2,currentindex)+partword2.length();
+						partword1 = sb.substring(start, end);
+						currentindex = end;
+						
 						tmp+=p2.getPhonogram();
 						i+=2;
 					}
@@ -69,16 +104,9 @@ public class PhonogramAnalyzer {
 					{
 						i++;
 					}
-					phonogram.add(tmp);
-					wordparts.add(partword);
-				}
-				else if(p1.getType() == Phonogram.yuanyin)
-				{
-					String partword =  letters.get(i);
-					wordparts.add(partword);
 					
-					phonogram.add(p1.getPhonogram());
-					i++;
+					wordparts.add(partword1);
+					phonogram.add(tmp);
 				}
 				
 				
@@ -86,8 +114,6 @@ public class PhonogramAnalyzer {
 			
 			word.setPhongrams(phonogram);
 			word.setLetters(wordparts);
-			
-			word = remerge(word);
 			return word;
 			
 	}// end of main

@@ -74,6 +74,31 @@ public class Test2 {
 		 }
 	}
 	
+
+	//@Test
+	public void testSingleBreakWord() throws IOException {
+		File file = new File("C:\\Users\\junjun\\Desktop\\result.txt");
+		List<Word> words = Word.parseWord("C:\\Users\\junjun\\Desktop\\cet4word.txt");
+		Map<String,Word> wordsmap = new HashMap<String,Word>();
+	
+		for(Word w :words)
+		{
+			wordsmap.put(w.getWord(), w);
+		}
+	
+		Word word = wordsmap.get("visible");
+	 
+		List<String> ret = Phonogram.breakPhonograms(word.getPhonogram());
+		List<String> tmp = new ArrayList<String>(Arrays.asList(new String[ret.size()]));
+		Boolean finished = false;
+		
+		List<String> wordparts = Phonogram.breakWord(ret, word.getWord(),tmp,0,0,finished);
+		Phonogram.saving = null;
+		FileUtils.writeStringToFile(file,word+" | "+ret.toString()+"|"+wordparts+"\n","UTF-8",true);
+		 
+	}
+	
+	
 	@Test
 	public void testAnalyze() throws IOException
 	{
