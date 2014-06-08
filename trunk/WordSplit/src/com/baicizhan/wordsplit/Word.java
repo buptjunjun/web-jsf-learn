@@ -27,7 +27,19 @@ public class Word {
 		this.meaning = meaning;
 	}
 
-
+	public boolean testlength()
+	{
+		if (letters ==null )
+			return false;
+		StringBuffer sb = new StringBuffer();
+		for(String letter: letters)
+		{
+			sb.append(letter);
+		}
+		
+		return sb.toString().equals(this.word);
+			
+	}
 	static public List<Word> parseWord(String file)
 	{
 		
@@ -50,7 +62,7 @@ public class Word {
 				if(m.matches())
 				{
 					String [] splits = line.split("/");
-					String word = splits[0];
+					String word = splits[0].toLowerCase();
 					String phonogram = splits[1];	
 					String meaning = splits[2];		
 					
