@@ -63,22 +63,35 @@ public class PhonogramAnalyzer {
 					String tmp = p1.getPhonogram();
 					String partword1 = letters.get(i);
 					int start = sb.indexOf(partword1,currentindex);
-					currentindex = start + partword1.length();
+					
+					if(i==0) start = 0;
 					if(p2!=null && p2.getType() == Phonogram.yuanyin)//看看后面有没有元音音标
 					{
 						String partword2=letters.get(i+1);						
 						int end = sb.indexOf(partword2,currentindex)+partword2.length();
 
-						partword1 = sb.substring(start, end);
+						partword1 = sb.substring(currentindex, end);
 						currentindex = end;
 						
 						tmp+=p2.getPhonogram();
 						i+=2;
 					}
+					else if(p2!=null && p2.getType() == Phonogram.fuyin)//看看后面有没有元音音标
+					{
+						String partword2=letters.get(i+1);						
+						int end = sb.indexOf(partword2,currentindex);
+
+						partword1 = sb.substring(currentindex, end);
+						currentindex = end;
+						i++;
+					}
 					else
 					{
 						i++;
-						currentindex=start;
+						if(p2 == null)
+							partword1 = sb.substring(currentindex, sb.length());
+						
+						currentindex = start + partword1.length();
 					}
 					phonogram.add(tmp);
 					wordparts.add(partword1);
@@ -88,21 +101,34 @@ public class PhonogramAnalyzer {
 					String tmp = p1.getPhonogram();
 					String partword1 = letters.get(i);
 					int start = sb.indexOf(partword1,currentindex);
-					currentindex = start + partword1.length();
 					
-					if(p2!=null && p2.getType() == Phonogram.yuanyin)//看看后面有没有元音音标
+					if(i==0) start = 0;
+					int end = -1;
+					if(p2!=null && p2.getType() == Phonogram.yuanyin)//元音后面跟元音
 					{
 						String partword2=letters.get(i+1);
-						int end = sb.indexOf(partword2,currentindex)+partword2.length();
-						partword1 = sb.substring(start, end);
+						end = sb.indexOf(partword2,currentindex)+partword2.length();					
+						partword1 = sb.substring(currentindex, end);
 						currentindex = end;
 						
 						tmp+=p2.getPhonogram();
 						i+=2;
 					}
-					else
+					else if(p2!=null && p2.getType() == Phonogram.fuyin) //元音后面跟辅音
 					{
+						String partword2=letters.get(i+1);
+						end = sb.indexOf(partword2,currentindex);					
+						partword1 = sb.substring(currentindex, end);
+						currentindex = end;
+						
 						i++;
+					}
+					else 
+					{
+						if(p2 == null)
+							partword1 = sb.substring(currentindex, sb.length());
+						i++;
+						currentindex = start + partword1.length();
 					}
 					
 					wordparts.add(partword1);
