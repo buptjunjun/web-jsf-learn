@@ -40,18 +40,22 @@ public class PhonogramAnalyzer {
 			
 			int i = 0;
 			int currentindex = 0;
+			int partcount = 0;
 			while(i<ps.size())
 			{
 				// 取得打散后的第i i+1,i+2个音标
 				Phonogram p1 = map.get(ps.get(i));
 				Phonogram p2 =null;
 				Phonogram p3 =null;
-				
+				Phonogram p4 = null;
 				if(i+1 < ps.size())
 					p2 = map.get(ps.get(i+1));
 				
 				if(i+2 < ps.size())
 					p3 = map.get(ps.get(i+2));
+				
+				if(i+3 < ps.size())
+					p4 = map.get(ps.get(i+3));
 				
 				//是分隔符号
 				if(p1.getType() == Phonogram.seperator)
@@ -67,16 +71,30 @@ public class PhonogramAnalyzer {
 					if(i==0) start = 0;
 					if(p2!=null && p2.getType() == Phonogram.yuanyin)//看看后面有没有元音音标
 					{
-						String partword2=letters.get(i+1);						
+						if(p3!=null && p3.getType()== Phonogram.fuyin && (p4!=null && p4.getType()== Phonogram.fuyin|| (p4==null && partcount>0)))
+						{
+							String partword2=letters.get(i+2); 
+							int end = sb.indexOf(partword2,currentindex)+partword2.length();
+							partword1 = sb.substring(currentindex, end);
+							currentindex = end;
+	
+							tmp+=p2.getPhonogram();
+							tmp+=p3.getPhonogram();
+							i+=3;
+						}
+						else
+						{
+						String partword2=letters.get(i+1); 
 						int end = sb.indexOf(partword2,currentindex)+partword2.length();
-
 						partword1 = sb.substring(currentindex, end);
 						currentindex = end;
-						
+
 						tmp+=p2.getPhonogram();
 						i+=2;
+						}
+
 					}
-					else if(p2!=null && p2.getType() == Phonogram.fuyin)//看看后面有没有元音音标
+					else if(p2!=null && p2.getType() == Phonogram.fuyin)//看看后面有没有辅音
 					{
 						String partword2=letters.get(i+1);						
 						int end = sb.indexOf(partword2,currentindex);
@@ -95,6 +113,7 @@ public class PhonogramAnalyzer {
 					}
 					phonogram.add(tmp);
 					wordparts.add(partword1);
+					partcount++;
 				}
 				else if(p1.getType() == Phonogram.yuanyin)
 				{
@@ -133,6 +152,7 @@ public class PhonogramAnalyzer {
 					
 					wordparts.add(partword1);
 					phonogram.add(tmp);
+					partcount++;
 				}
 				
 				

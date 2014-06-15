@@ -100,7 +100,7 @@ public class Phonogram {
 		try{
 			if(wordindex >= word.length()|| finished == true)
 			{
-				return ret;
+				return saving;
 			}
 				
 			if (phonindex < phonograms.size())
@@ -110,8 +110,7 @@ public class Phonogram {
 				if(p.getType() == Phonogram.seperator)
 				{
 					ret.set(phonindex,p.getPhonogram());
-					phonindex++;
-					breakWord(phonograms, word, ret,phonindex,wordindex ,finished);
+					 return breakWord(phonograms, word, ret,phonindex+1,wordindex ,finished);
 				}
 	
 				String w1 = null;
@@ -184,7 +183,7 @@ public class Phonogram {
 							else
 								saving = new ArrayList<String>(ret);
 						}
-						return ret;
+						return saving;
 					}
 					
 					breakWord(phonograms, word, ret,phonindex+1,wordindex+2,finished);
@@ -225,12 +224,13 @@ public class Phonogram {
 				}
 				
 				if(wordindex >= word.length()|| finished == true || phonindex >= phonograms.size())
-				{
+				{					
 					return saving;
 				}
 				
 				if(!p.getLetters().contains(w1) && !p.getLetters().contains(w2)&&!p.getLetters().contains(w3))
 				{
+					System.err.println("^^"+word+" ["+phonograms+"] "+ret+"  "+p.getPhonogram()+" "+p.getLetters()+" no matches:"+w3+","+w2+","+w1);
 					breakWord(phonograms, word, ret,phonindex,wordindex+1,finished);
 				}
 				
@@ -252,7 +252,8 @@ public class Phonogram {
 	
 	static public Map parsePhonogram(String file)
 	{	
-		Pattern p = Pattern.compile(" +");		
+		Pattern p = Pattern.compile(" +");	
+		Pattern p1 = Pattern.compile(".*/.*");
 		BufferedReader br = null;
 		Map<String, Phonogram> ret = new HashMap<String, Phonogram>();
 				
@@ -282,6 +283,12 @@ public class Phonogram {
 					continue;
 				}
 					
+				if(!p1.matcher(line).matches())
+				{
+					line = br.readLine();
+					continue;
+				}
+				
 				String [] splits = line.split("/");
 				String phonogram = splits[0].trim();
 				List<String> letters = 	Arrays.asList(p.split(splits[1].trim()));
