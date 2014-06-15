@@ -67,10 +67,17 @@ public class Test2 {
 			List<String> tmp = new ArrayList<String>(Arrays.asList(new String[ret.size()]));
 			Boolean finished = false;
 			List<String> wordparts = Phonogram.breakWord(ret, word.getWord(),tmp,0,0,finished);
+			Phonogram.saving = null;
 			if(wordparts == null  || wordparts.toString().contains("-") || wordparts.toString().contains("null"))
+			{
+				System.out.println("---------------");
 				FileUtils.writeStringToFile(errorfile,word+" | "+ret.toString()+"|"+wordparts+"\n","UTF-8",true);
+			}
 			else
+			{
+				
 				FileUtils.writeStringToFile(file,word+" | "+ret.toString()+"|"+wordparts+"\n","UTF-8",true);
+			}
 		 }
 	}
 	
@@ -86,7 +93,7 @@ public class Test2 {
 			wordsmap.put(w.getWord(), w);
 		}
 	
-		Word word = wordsmap.get("visible");
+		Word word = wordsmap.get("often");
 	 
 		List<String> ret = Phonogram.breakPhonograms(word.getPhonogram());
 		List<String> tmp = new ArrayList<String>(Arrays.asList(new String[ret.size()]));
@@ -114,12 +121,12 @@ public class Test2 {
 			if(word1!=null)
 			{
 				if(word1.testlength())
-					FileUtils.writeStringToFile(file, word1.getWord()+"|"+word1.getPhonogram()+"|"+word1.getPhongrams()+"|"+word1.getLetters()+"\n","UTF-8",true);
+					FileUtils.writeStringToFile(file, word1.getWord()+"|"+word1.getMeaning()+"|"+word1.getPhonogram()+"|"+word1.getPhongrams()+"|"+word1.getLetters()+"\n","UTF-8",true);
 				else
 					FileUtils.writeStringToFile(errorfile, word1.getWord()+"|"+word1.getPhonogram()+"|"+word1.getPhongrams()+"|"+word1.getLetters()+"\n","UTF-8",true);			
 			}
 			else
-				;//FileUtils.writeStringToFile(errorfile,w+"  null\n","UTF-8",true);
+				FileUtils.writeStringToFile(errorfile,w.getWord()+"|"+w.getPhonogram()+"|"+"\n","UTF-8",true);			
 		}
 	}
 	
