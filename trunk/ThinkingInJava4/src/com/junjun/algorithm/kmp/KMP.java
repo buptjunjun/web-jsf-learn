@@ -93,7 +93,7 @@ public class KMP
 		for(int o:next) System.out.print(o+" ");
 		System.out.println();
 		
-		int index = KMP.index("agctagcagctagctg", "agca");
+		int index = KMP.index("asdf;ljsadfjisljfdslalssldfjsald;fj", "ppp");
 		System.out.println("------index------");
 		System.out.println("index ="+index);
 		
