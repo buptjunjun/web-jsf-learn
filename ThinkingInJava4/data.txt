@@ -1,0 +1,12 @@
+Lakewood,regular,weekday,110
+Lakewood,regular,weekend,90
+Lakewood,rewards,weekday,80
+Lakewood,rewards,weekend,80
+Bridgewood,regular,weekday,160
+Bridgewood,regular,weekend,60
+Bridgewood,rewards,weekday,110
+Bridgewood,rewards,weekend,50
+Ridgewood,regular,weekday,220
+Ridgewood,regular,weekend,150
+Ridgewood,rewards,weekday,100
+Ridgewood,rewards,weekend,40
